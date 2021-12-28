@@ -393,6 +393,7 @@ $('#ui_tracker').slider({//슬라이더 작동
         $('.subnav a:eq('+menuArry[1]+')').addClass('current');        		
 	}
 	
+	/*
 	//단독 페이지 처리
 	var navParam = "nav"; //메뉴 파라미터
 	$('header a, .subnav a').each(function() {//메뉴 파라미터 제공
@@ -409,8 +410,8 @@ $('#ui_tracker').slider({//슬라이더 작동
     	$('.ui_guideline').css("margin-top","20px");
     	$('.project_gude').remove();
     }
-	//단독 페이지 처리.end
-	
+	//단독 페이지 처리.end 211228 주석처리함
+	*/
 });	
 
 
