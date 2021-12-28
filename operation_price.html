@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>frontUxer</title>
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/frontUxer.css">
+<script src="js/jquery-1.11.2.min.js"></script>
+<script src="js/jquery-ui.min.js"></script><!-- 제이쿼리 ui 추가 -->
+<script src="js/jquery.ui.touch-punch.js"></script><!-- 제이쿼리 ui  모바일 터치 추가 -->
+<script type="text/javascript">         
+    var menuArry = ['2','5'];//1depth, 2depth
+    $(function() {
+        $('nav a:eq('+menuArry[0]+')').addClass('current');
+        $('.subnav a:eq('+menuArry[1]+')').addClass('current');             
+    });
+</script>
+</head>
+<body calss="wrap">
+<script src="js/guide.js"></script><!-- site guide -->
+	
+	<div class="start_dim"><span></span></div>
+	
+	<h1 class="hide"> Operation</h1>
+
+    <div class="contents"><!-- contents -->
+    
+        <!--##################### 시세 조회 #####################-->
+		<section class="aws_box">
+	        <h1 class="aws_tl"> 시세 조회</h1>
+			<ul class="dcs">
+				<li>상품별 시세 정보 Json Ux(상품정보, 가격정보, 선호도, 잔존가치 그래프 )</li>
+			</ul>	
+				        
+	        <div class="code_area">
+	        
+	            <div class="play_box">
+	                
+					<!-- run_sample -->
+					<div class="run_sample">
+					
+						<!-- sample_box -->	                    
+	                    <article class="sample_box">
+
+							<style>
+/* jQuery UI */.ui-helper-hidden{display:none}.ui-helper-hidden-accessible{border:0;clip:rect(0 0 0 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}.ui-helper-reset{margin:0;padding:0;border:0;outline:0;line-height:1.3;text-decoration:none;font-size:100%;list-style:none}.ui-helper-clearfix:before,.ui-helper-clearfix:after{content:"";display:table;border-collapse:collapse}.ui-helper-clearfix:after{clear:both}.ui-helper-zfix{width:100%;height:100%;top:0;left:0;position:absolute;opacity:0;filter:Alpha(Opacity=0)}.ui-front{z-index:100}.ui-state-disabled{cursor:default!important;pointer-events:none}.ui-icon{display:inline-block;vertical-align:middle;margin-top:-.25em;position:relative;text-indent:-99999px;overflow:hidden;background-repeat:no-repeat}.ui-widget-icon-block{left:50%;margin-left:-8px;display:block}.ui-widget-overlay{position:fixed;top:0;left:0;width:100%;height:100%}.ui-accordion .ui-accordion-header{display:block;cursor:pointer;position:relative;margin:2px 0 0 0;padding:.5em .5em .5em .7em;font-size:100%}.ui-accordion .ui-accordion-content{padding:1em 2.2em;border-top:0;overflow:auto}.ui-autocomplete{position:absolute;top:0;left:0;cursor:default}.ui-menu{list-style:none;padding:0;margin:0;display:block;outline:0}.ui-menu .ui-menu{position:absolute}.ui-menu .ui-menu-item{margin:0;cursor:pointer;list-style-image:url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7")}.ui-menu .ui-menu-item-wrapper{position:relative;padding:3px 1em 3px .4em}.ui-menu .ui-menu-divider{margin:5px 0;height:0;font-size:0;line-height:0;border-width:1px 0 0 0}.ui-menu .ui-state-focus,.ui-menu .ui-state-active{margin:-1px}.ui-menu-icons{position:relative}.ui-menu-icons .ui-menu-item-wrapper{padding-left:2em}.ui-menu .ui-icon{position:absolute;top:0;bottom:0;left:.2em;margin:auto 0}.ui-menu .ui-menu-icon{left:auto;right:0}.ui-button{padding:.4em 1em;display:inline-block;position:relative;line-height:normal;margin-right:.1em;cursor:pointer;vertical-align:middle;text-align:center;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;overflow:visible}.ui-button,.ui-button:link,.ui-button:visited,.ui-button:hover,.ui-button:active{text-decoration:none}.ui-button-icon-only{width:2em;box-sizing:border-box;text-indent:-9999px;white-space:nowrap}input.ui-button.ui-button-icon-only{text-indent:0}.ui-button-icon-only .ui-icon{position:absolute;top:50%;left:50%;margin-top:-8px;margin-left:-8px}.ui-button.ui-icon-notext .ui-icon{padding:0;width:2.1em;height:2.1em;text-indent:-9999px;white-space:nowrap}input.ui-button.ui-icon-notext .ui-icon{width:auto;height:auto;text-indent:0;white-space:normal;padding:.4em 1em}input.ui-button::-moz-focus-inner,button.ui-button::-moz-focus-inner{border:0;padding:0}.ui-controlgroup{vertical-align:middle;display:inline-block}.ui-controlgroup > .ui-controlgroup-item{float:left;margin-left:0;margin-right:0}.ui-controlgroup > .ui-controlgroup-item:focus,.ui-controlgroup > .ui-controlgroup-item.ui-visual-focus{z-index:9999}.ui-controlgroup-vertical > .ui-controlgroup-item{display:block;float:none;width:100%;margin-top:0;margin-bottom:0;text-align:left}.ui-controlgroup-vertical .ui-controlgroup-item{box-sizing:border-box}.ui-controlgroup .ui-controlgroup-label{padding:.4em 1em}.ui-controlgroup .ui-controlgroup-label span{font-size:80%}.ui-controlgroup-horizontal .ui-controlgroup-label + .ui-controlgroup-item{border-left:none}.ui-controlgroup-vertical .ui-controlgroup-label + .ui-controlgroup-item{border-top:none}.ui-controlgroup-horizontal .ui-controlgroup-label.ui-widget-content{border-right:none}.ui-controlgroup-vertical .ui-controlgroup-label.ui-widget-content{border-bottom:none}.ui-controlgroup-vertical .ui-spinner-input{width:75%;width:calc( 100% - 2.4em )}.ui-controlgroup-vertical .ui-spinner .ui-spinner-up{border-top-style:solid}.ui-checkboxradio-label .ui-icon-background{box-shadow:inset 1px 1px 1px #ccc;border-radius:.12em;border:none}.ui-checkboxradio-radio-label .ui-icon-background{width:16px;height:16px;border-radius:1em;overflow:visible;border:none}.ui-checkboxradio-radio-label.ui-checkboxradio-checked .ui-icon,.ui-checkboxradio-radio-label.ui-checkboxradio-checked:hover .ui-icon{background-image:none;width:8px;height:8px;border-width:4px;border-style:solid}.ui-checkboxradio-disabled{pointer-events:none}.ui-datepicker{width:17em;padding:.2em .2em 0;display:none}.ui-datepicker .ui-datepicker-header{position:relative;padding:.2em 0}.ui-datepicker .ui-datepicker-prev,.ui-datepicker .ui-datepicker-next{position:absolute;top:2px;width:1.8em;height:1.8em}.ui-datepicker .ui-datepicker-prev-hover,.ui-datepicker .ui-datepicker-next-hover{top:1px}.ui-datepicker .ui-datepicker-prev{left:2px}.ui-datepicker .ui-datepicker-next{right:2px}.ui-datepicker .ui-datepicker-prev-hover{left:1px}.ui-datepicker .ui-datepicker-next-hover{right:1px}.ui-datepicker .ui-datepicker-prev span,.ui-datepicker .ui-datepicker-next span{display:block;position:absolute;left:50%;margin-left:-8px;top:50%;margin-top:-8px}.ui-datepicker .ui-datepicker-title{margin:0 2.3em;line-height:1.8em;text-align:center}.ui-datepicker .ui-datepicker-title select{font-size:1em;margin:1px 0}.ui-datepicker select.ui-datepicker-month,.ui-datepicker select.ui-datepicker-year{width:45%}.ui-datepicker table{width:100%;font-size:.9em;border-collapse:collapse;margin:0 0 .4em}.ui-datepicker th{padding:.7em .3em;text-align:center;font-weight:bold;border:0}.ui-datepicker td{border:0;padding:1px}.ui-datepicker td span,.ui-datepicker td a{display:block;padding:.2em;text-align:right;text-decoration:none}.ui-datepicker .ui-datepicker-buttonpane{background-image:none;margin:.7em 0 0 0;padding:0 .2em;border-left:0;border-right:0;border-bottom:0}.ui-datepicker .ui-datepicker-buttonpane button{float:right;margin:.5em .2em .4em;cursor:pointer;padding:.2em .6em .3em .6em;width:auto;overflow:visible}.ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current{float:left}.ui-datepicker.ui-datepicker-multi{width:auto}.ui-datepicker-multi .ui-datepicker-group{float:left}.ui-datepicker-multi .ui-datepicker-group table{width:95%;margin:0 auto .4em}.ui-datepicker-multi-2 .ui-datepicker-group{width:50%}.ui-datepicker-multi-3 .ui-datepicker-group{width:33.3%}.ui-datepicker-multi-4 .ui-datepicker-group{width:25%}.ui-datepicker-multi .ui-datepicker-group-last .ui-datepicker-header,.ui-datepicker-multi .ui-datepicker-group-middle .ui-datepicker-header{border-left-width:0}.ui-datepicker-multi .ui-datepicker-buttonpane{clear:left}.ui-datepicker-row-break{clear:both;width:100%;font-size:0}.ui-datepicker-rtl{direction:rtl}.ui-datepicker-rtl .ui-datepicker-prev{right:2px;left:auto}.ui-datepicker-rtl .ui-datepicker-next{left:2px;right:auto}.ui-datepicker-rtl .ui-datepicker-prev:hover{right:1px;left:auto}.ui-datepicker-rtl .ui-datepicker-next:hover{left:1px;right:auto}.ui-datepicker-rtl .ui-datepicker-buttonpane{clear:right}.ui-datepicker-rtl .ui-datepicker-buttonpane button{float:left}.ui-datepicker-rtl .ui-datepicker-buttonpane button.ui-datepicker-current,.ui-datepicker-rtl .ui-datepicker-group{float:right}.ui-datepicker-rtl .ui-datepicker-group-last .ui-datepicker-header,.ui-datepicker-rtl .ui-datepicker-group-middle .ui-datepicker-header{border-right-width:0;border-left-width:1px}.ui-datepicker .ui-icon{display:block;text-indent:-99999px;overflow:hidden;background-repeat:no-repeat;left:.5em;top:.3em}.ui-dialog{position:absolute;top:0;left:0;padding:.2em;outline:0}.ui-dialog .ui-dialog-titlebar{padding:.4em 1em;position:relative}.ui-dialog .ui-dialog-title{float:left;margin:.1em 0;white-space:nowrap;width:90%;overflow:hidden;text-overflow:ellipsis}.ui-dialog .ui-dialog-titlebar-close{position:absolute;right:.3em;top:50%;width:20px;margin:-10px 0 0 0;padding:1px;height:20px}.ui-dialog .ui-dialog-content{position:relative;border:0;padding:.5em 1em;background:none;overflow:auto}.ui-dialog .ui-dialog-buttonpane{text-align:left;border-width:1px 0 0 0;background-image:none;margin-top:.5em;padding:.3em 1em .5em .4em}.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset{float:right}.ui-dialog .ui-dialog-buttonpane button{margin:.5em .4em .5em 0;cursor:pointer}.ui-dialog .ui-resizable-n{height:2px;top:0}.ui-dialog .ui-resizable-e{width:2px;right:0}.ui-dialog .ui-resizable-s{height:2px;bottom:0}.ui-dialog .ui-resizable-w{width:2px;left:0}.ui-dialog .ui-resizable-se,.ui-dialog .ui-resizable-sw,.ui-dialog .ui-resizable-ne,.ui-dialog .ui-resizable-nw{width:7px;height:7px}.ui-dialog .ui-resizable-se{right:0;bottom:0}.ui-dialog .ui-resizable-sw{left:0;bottom:0}.ui-dialog .ui-resizable-ne{right:0;top:0}.ui-dialog .ui-resizable-nw{left:0;top:0}.ui-draggable .ui-dialog-titlebar{cursor:move}.ui-draggable-handle{-ms-touch-action:none;touch-action:none}.ui-resizable{position:relative}.ui-resizable-handle{position:absolute;font-size:0.1px;display:block;-ms-touch-action:none;touch-action:none}.ui-resizable-disabled .ui-resizable-handle,.ui-resizable-autohide .ui-resizable-handle{display:none}.ui-resizable-n{cursor:n-resize;height:7px;width:100%;top:-5px;left:0}.ui-resizable-s{cursor:s-resize;height:7px;width:100%;bottom:-5px;left:0}.ui-resizable-e{cursor:e-resize;width:7px;right:-5px;top:0;height:100%}.ui-resizable-w{cursor:w-resize;width:7px;left:-5px;top:0;height:100%}.ui-resizable-se{cursor:se-resize;width:12px;height:12px;right:1px;bottom:1px}.ui-resizable-sw{cursor:sw-resize;width:9px;height:9px;left:-5px;bottom:-5px}.ui-resizable-nw{cursor:nw-resize;width:9px;height:9px;left:-5px;top:-5px}.ui-resizable-ne{cursor:ne-resize;width:9px;height:9px;right:-5px;top:-5px}.ui-progressbar{height:2em;text-align:left;overflow:hidden}.ui-progressbar .ui-progressbar-value{margin:-1px;height:100%}.ui-progressbar .ui-progressbar-overlay{background:url("data:image/gif;base64,R0lGODlhKAAoAIABAAAAAP///yH/C05FVFNDQVBFMi4wAwEAAAAh+QQJAQABACwAAAAAKAAoAAACkYwNqXrdC52DS06a7MFZI+4FHBCKoDeWKXqymPqGqxvJrXZbMx7Ttc+w9XgU2FB3lOyQRWET2IFGiU9m1frDVpxZZc6bfHwv4c1YXP6k1Vdy292Fb6UkuvFtXpvWSzA+HycXJHUXiGYIiMg2R6W459gnWGfHNdjIqDWVqemH2ekpObkpOlppWUqZiqr6edqqWQAAIfkECQEAAQAsAAAAACgAKAAAApSMgZnGfaqcg1E2uuzDmmHUBR8Qil95hiPKqWn3aqtLsS18y7G1SzNeowWBENtQd+T1JktP05nzPTdJZlR6vUxNWWjV+vUWhWNkWFwxl9VpZRedYcflIOLafaa28XdsH/ynlcc1uPVDZxQIR0K25+cICCmoqCe5mGhZOfeYSUh5yJcJyrkZWWpaR8doJ2o4NYq62lAAACH5BAkBAAEALAAAAAAoACgAAAKVDI4Yy22ZnINRNqosw0Bv7i1gyHUkFj7oSaWlu3ovC8GxNso5fluz3qLVhBVeT/Lz7ZTHyxL5dDalQWPVOsQWtRnuwXaFTj9jVVh8pma9JjZ4zYSj5ZOyma7uuolffh+IR5aW97cHuBUXKGKXlKjn+DiHWMcYJah4N0lYCMlJOXipGRr5qdgoSTrqWSq6WFl2ypoaUAAAIfkECQEAAQAsAAAAACgAKAAAApaEb6HLgd/iO7FNWtcFWe+ufODGjRfoiJ2akShbueb0wtI50zm02pbvwfWEMWBQ1zKGlLIhskiEPm9R6vRXxV4ZzWT2yHOGpWMyorblKlNp8HmHEb/lCXjcW7bmtXP8Xt229OVWR1fod2eWqNfHuMjXCPkIGNileOiImVmCOEmoSfn3yXlJWmoHGhqp6ilYuWYpmTqKUgAAIfkECQEAAQAsAAAAACgAKAAAApiEH6kb58biQ3FNWtMFWW3eNVcojuFGfqnZqSebuS06w5V80/X02pKe8zFwP6EFWOT1lDFk8rGERh1TTNOocQ61Hm4Xm2VexUHpzjymViHrFbiELsefVrn6XKfnt2Q9G/+Xdie499XHd2g4h7ioOGhXGJboGAnXSBnoBwKYyfioubZJ2Hn0RuRZaflZOil56Zp6iioKSXpUAAAh+QQJAQABACwAAAAAKAAoAAACkoQRqRvnxuI7kU1a1UU5bd5tnSeOZXhmn5lWK3qNTWvRdQxP8qvaC+/yaYQzXO7BMvaUEmJRd3TsiMAgswmNYrSgZdYrTX6tSHGZO73ezuAw2uxuQ+BbeZfMxsexY35+/Qe4J1inV0g4x3WHuMhIl2jXOKT2Q+VU5fgoSUI52VfZyfkJGkha6jmY+aaYdirq+lQAACH5BAkBAAEALAAAAAAoACgAAAKWBIKpYe0L3YNKToqswUlvznigd4wiR4KhZrKt9Upqip61i9E3vMvxRdHlbEFiEXfk9YARYxOZZD6VQ2pUunBmtRXo1Lf8hMVVcNl8JafV38aM2/Fu5V16Bn63r6xt97j09+MXSFi4BniGFae3hzbH9+hYBzkpuUh5aZmHuanZOZgIuvbGiNeomCnaxxap2upaCZsq+1kAACH5BAkBAAEALAAAAAAoACgAAAKXjI8By5zf4kOxTVrXNVlv1X0d8IGZGKLnNpYtm8Lr9cqVeuOSvfOW79D9aDHizNhDJidFZhNydEahOaDH6nomtJjp1tutKoNWkvA6JqfRVLHU/QUfau9l2x7G54d1fl995xcIGAdXqMfBNadoYrhH+Mg2KBlpVpbluCiXmMnZ2Sh4GBqJ+ckIOqqJ6LmKSllZmsoq6wpQAAAh+QQJAQABACwAAAAAKAAoAAAClYx/oLvoxuJDkU1a1YUZbJ59nSd2ZXhWqbRa2/gF8Gu2DY3iqs7yrq+xBYEkYvFSM8aSSObE+ZgRl1BHFZNr7pRCavZ5BW2142hY3AN/zWtsmf12p9XxxFl2lpLn1rseztfXZjdIWIf2s5dItwjYKBgo9yg5pHgzJXTEeGlZuenpyPmpGQoKOWkYmSpaSnqKileI2FAAACH5BAkBAAEALAAAAAAoACgAAAKVjB+gu+jG4kORTVrVhRlsnn2dJ3ZleFaptFrb+CXmO9OozeL5VfP99HvAWhpiUdcwkpBH3825AwYdU8xTqlLGhtCosArKMpvfa1mMRae9VvWZfeB2XfPkeLmm18lUcBj+p5dnN8jXZ3YIGEhYuOUn45aoCDkp16hl5IjYJvjWKcnoGQpqyPlpOhr3aElaqrq56Bq7VAAAOw==");height:100%;filter:alpha(opacity=25);opacity:0.25}.ui-progressbar-indeterminate .ui-progressbar-value{background-image:none}.ui-selectable{-ms-touch-action:none;touch-action:none}.ui-selectable-helper{position:absolute;z-index:100;border:1px dotted black}.ui-selectmenu-menu{padding:0;margin:0;position:absolute;top:0;left:0;display:none}.ui-selectmenu-menu .ui-menu{overflow:auto;overflow-x:hidden;padding-bottom:1px}.ui-selectmenu-menu .ui-menu .ui-selectmenu-optgroup{font-size:1em;font-weight:bold;line-height:1.5;padding:2px 0.4em;margin:0.5em 0 0 0;height:auto;border:0}.ui-selectmenu-open{display:block}.ui-selectmenu-text{display:block;margin-right:20px;overflow:hidden;text-overflow:ellipsis}.ui-selectmenu-button.ui-button{text-align:left;white-space:nowrap;width:14em}.ui-selectmenu-icon.ui-icon{float:right;margin-top:0}.ui-slider{position:relative;text-align:left}.ui-slider .ui-slider-handle{position:absolute;z-index:2;width:1.2em;height:1.2em;cursor:default;-ms-touch-action:none;touch-action:none}.ui-slider .ui-slider-range{position:absolute;z-index:1;font-size:.7em;display:block;border:0;background-position:0 0}.ui-slider.ui-state-disabled .ui-slider-handle,.ui-slider.ui-state-disabled .ui-slider-range{filter:inherit}.ui-slider-horizontal{height:.8em}.ui-slider-horizontal .ui-slider-handle{top:-.3em;margin-left:-.6em}.ui-slider-horizontal .ui-slider-range{top:0;height:100%}.ui-slider-horizontal .ui-slider-range-min{left:0}.ui-slider-horizontal .ui-slider-range-max{right:0}.ui-slider-vertical{width:.8em;height:100px}.ui-slider-vertical .ui-slider-handle{left:-.3em;margin-left:0;margin-bottom:-.6em}.ui-slider-vertical .ui-slider-range{left:0;width:100%}.ui-slider-vertical .ui-slider-range-min{bottom:0}.ui-slider-vertical .ui-slider-range-max{top:0}.ui-sortable-handle{-ms-touch-action:none;touch-action:none}.ui-spinner{position:relative;display:inline-block;overflow:hidden;padding:0;vertical-align:middle}.ui-spinner-input{border:none;background:none;color:inherit;padding:.222em 0;margin:.2em 0;vertical-align:middle;margin-left:.4em;margin-right:2em}.ui-spinner-button{width:1.6em;height:50%;font-size:.5em;padding:0;margin:0;text-align:center;position:absolute;cursor:default;display:block;overflow:hidden;right:0}.ui-spinner a.ui-spinner-button{border-top-style:none;border-bottom-style:none;border-right-style:none}.ui-spinner-up{top:0}.ui-spinner-down{bottom:0}.ui-tabs{position:relative;padding:.2em}.ui-tabs .ui-tabs-nav{margin:0;padding:.2em .2em 0}.ui-tabs .ui-tabs-nav li{list-style:none;float:left;position:relative;top:0;margin:1px .2em 0 0;border-bottom-width:0;padding:0;white-space:nowrap}.ui-tabs .ui-tabs-nav .ui-tabs-anchor{float:left;padding:.5em 1em;text-decoration:none}.ui-tabs .ui-tabs-nav li.ui-tabs-active{margin-bottom:-1px;padding-bottom:1px}.ui-tabs .ui-tabs-nav li.ui-tabs-active .ui-tabs-anchor,.ui-tabs .ui-tabs-nav li.ui-state-disabled .ui-tabs-anchor,.ui-tabs .ui-tabs-nav li.ui-tabs-loading .ui-tabs-anchor{cursor:text}.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-active .ui-tabs-anchor{cursor:pointer}.ui-tabs .ui-tabs-panel{display:block;border-width:0;padding:1em 1.4em;background:none}.ui-tooltip{padding:8px;position:absolute;z-index:9999;max-width:300px}body .ui-tooltip{border-width:2px}.ui-widget{font-family:Arial,Helvetica,sans-serif;font-size:1em}.ui-widget .ui-widget{font-size:1em}.ui-widget input,.ui-widget select,.ui-widget textarea,.ui-widget button{font-family:Arial,Helvetica,sans-serif;font-size:1em}.ui-widget.ui-widget-content{border:1px solid #c5c5c5}.ui-widget-content{border:1px solid #ddd;background:#fff;color:#333}.ui-widget-content a{color:#333}.ui-widget-header{border:1px solid #ddd;background:#e9e9e9;color:#333;font-weight:bold}.ui-widget-header a{color:#333}.ui-state-default,.ui-widget-content .ui-state-default,.ui-widget-header .ui-state-default,.ui-button,html .ui-button.ui-state-disabled:hover,html .ui-button.ui-state-disabled:active{border:1px solid #c5c5c5;background:#f6f6f6;font-weight:normal;color:#454545}.ui-state-default a,.ui-state-default a:link,.ui-state-default a:visited,a.ui-button,a:link.ui-button,a:visited.ui-button,.ui-button{color:#454545;text-decoration:none}.ui-state-hover,.ui-widget-content .ui-state-hover,.ui-widget-header .ui-state-hover,.ui-state-focus,.ui-widget-content .ui-state-focus,.ui-widget-header .ui-state-focus,.ui-button:hover,.ui-button:focus{border:1px solid #ccc;background:#ededed;font-weight:normal;color:#2b2b2b}.ui-state-hover a,.ui-state-hover a:hover,.ui-state-hover a:link,.ui-state-hover a:visited,.ui-state-focus a,.ui-state-focus a:hover,.ui-state-focus a:link,.ui-state-focus a:visited,a.ui-button:hover,a.ui-button:focus{color:#2b2b2b;text-decoration:none}.ui-visual-focus{box-shadow:0 0 3px 1px rgb(94,158,214)}.ui-state-active,.ui-widget-content .ui-state-active,.ui-widget-header .ui-state-active,a.ui-button:active,.ui-button:active,.ui-button.ui-state-active:hover{border:1px solid #003eff;background:#007fff;font-weight:normal;color:#fff}.ui-icon-background,.ui-state-active .ui-icon-background{border:#003eff;background-color:#fff}.ui-state-active a,.ui-state-active a:link,.ui-state-active a:visited{color:#fff;text-decoration:none}.ui-state-highlight,.ui-widget-content .ui-state-highlight,.ui-widget-header .ui-state-highlight{border:1px solid #dad55e;background:#fffa90;color:#777620}.ui-state-checked{border:1px solid #dad55e;background:#fffa90}.ui-state-highlight a,.ui-widget-content .ui-state-highlight a,.ui-widget-header .ui-state-highlight a{color:#777620}.ui-state-error,.ui-widget-content .ui-state-error,.ui-widget-header .ui-state-error{border:1px solid #f1a899;background:#fddfdf;color:#5f3f3f}.ui-state-error a,.ui-widget-content .ui-state-error a,.ui-widget-header .ui-state-error a{color:#5f3f3f}.ui-state-error-text,.ui-widget-content .ui-state-error-text,.ui-widget-header .ui-state-error-text{color:#5f3f3f}.ui-priority-primary,.ui-widget-content .ui-priority-primary,.ui-widget-header .ui-priority-primary{font-weight:bold}.ui-priority-secondary,.ui-widget-content .ui-priority-secondary,.ui-widget-header .ui-priority-secondary{opacity:.7;filter:Alpha(Opacity=70);font-weight:normal}.ui-state-disabled,.ui-widget-content .ui-state-disabled,.ui-widget-header .ui-state-disabled{opacity:.35;filter:Alpha(Opacity=35);background-image:none}.ui-state-disabled .ui-icon{filter:Alpha(Opacity=35)}.ui-icon{width:16px;height:16px}.ui-icon,.ui-widget-content .ui-icon{background-image:url("images/ui-icons_444444_256x240.png")}.ui-widget-header .ui-icon{background-image:url("images/ui-icons_444444_256x240.png")}.ui-state-hover .ui-icon,.ui-state-focus .ui-icon,.ui-button:hover .ui-icon,.ui-button:focus .ui-icon{background-image:url("images/ui-icons_555555_256x240.png")}.ui-state-active .ui-icon,.ui-button:active .ui-icon{background-image:url("images/ui-icons_ffffff_256x240.png")}.ui-state-highlight .ui-icon,.ui-button .ui-state-highlight.ui-icon{background-image:url("images/ui-icons_777620_256x240.png")}.ui-state-error .ui-icon,.ui-state-error-text .ui-icon{background-image:url("images/ui-icons_cc0000_256x240.png")}.ui-button .ui-icon{background-image:url("images/ui-icons_777777_256x240.png")}.ui-icon-blank{background-position:16px 16px}.ui-icon-caret-1-n{background-position:0 0}.ui-icon-caret-1-ne{background-position:-16px 0}.ui-icon-caret-1-e{background-position:-32px 0}.ui-icon-caret-1-se{background-position:-48px 0}.ui-icon-caret-1-s{background-position:-65px 0}.ui-icon-caret-1-sw{background-position:-80px 0}.ui-icon-caret-1-w{background-position:-96px 0}.ui-icon-caret-1-nw{background-position:-112px 0}.ui-icon-caret-2-n-s{background-position:-128px 0}.ui-icon-caret-2-e-w{background-position:-144px 0}.ui-icon-triangle-1-n{background-position:0 -16px}.ui-icon-triangle-1-ne{background-position:-16px -16px}.ui-icon-triangle-1-e{background-position:-32px -16px}.ui-icon-triangle-1-se{background-position:-48px -16px}.ui-icon-triangle-1-s{background-position:-65px -16px}.ui-icon-triangle-1-sw{background-position:-80px -16px}.ui-icon-triangle-1-w{background-position:-96px -16px}.ui-icon-triangle-1-nw{background-position:-112px -16px}.ui-icon-triangle-2-n-s{background-position:-128px -16px}.ui-icon-triangle-2-e-w{background-position:-144px -16px}.ui-icon-arrow-1-n{background-position:0 -32px}.ui-icon-arrow-1-ne{background-position:-16px -32px}.ui-icon-arrow-1-e{background-position:-32px -32px}.ui-icon-arrow-1-se{background-position:-48px -32px}.ui-icon-arrow-1-s{background-position:-65px -32px}.ui-icon-arrow-1-sw{background-position:-80px -32px}.ui-icon-arrow-1-w{background-position:-96px -32px}.ui-icon-arrow-1-nw{background-position:-112px -32px}.ui-icon-arrow-2-n-s{background-position:-128px -32px}.ui-icon-arrow-2-ne-sw{background-position:-144px -32px}.ui-icon-arrow-2-e-w{background-position:-160px -32px}.ui-icon-arrow-2-se-nw{background-position:-176px -32px}.ui-icon-arrowstop-1-n{background-position:-192px -32px}.ui-icon-arrowstop-1-e{background-position:-208px -32px}.ui-icon-arrowstop-1-s{background-position:-224px -32px}.ui-icon-arrowstop-1-w{background-position:-240px -32px}.ui-icon-arrowthick-1-n{background-position:1px -48px}.ui-icon-arrowthick-1-ne{background-position:-16px -48px}.ui-icon-arrowthick-1-e{background-position:-32px -48px}.ui-icon-arrowthick-1-se{background-position:-48px -48px}.ui-icon-arrowthick-1-s{background-position:-64px -48px}.ui-icon-arrowthick-1-sw{background-position:-80px -48px}.ui-icon-arrowthick-1-w{background-position:-96px -48px}.ui-icon-arrowthick-1-nw{background-position:-112px -48px}.ui-icon-arrowthick-2-n-s{background-position:-128px -48px}.ui-icon-arrowthick-2-ne-sw{background-position:-144px -48px}.ui-icon-arrowthick-2-e-w{background-position:-160px -48px}.ui-icon-arrowthick-2-se-nw{background-position:-176px -48px}.ui-icon-arrowthickstop-1-n{background-position:-192px -48px}.ui-icon-arrowthickstop-1-e{background-position:-208px -48px}.ui-icon-arrowthickstop-1-s{background-position:-224px -48px}.ui-icon-arrowthickstop-1-w{background-position:-240px -48px}.ui-icon-arrowreturnthick-1-w{background-position:0 -64px}.ui-icon-arrowreturnthick-1-n{background-position:-16px -64px}.ui-icon-arrowreturnthick-1-e{background-position:-32px -64px}.ui-icon-arrowreturnthick-1-s{background-position:-48px -64px}.ui-icon-arrowreturn-1-w{background-position:-64px -64px}.ui-icon-arrowreturn-1-n{background-position:-80px -64px}.ui-icon-arrowreturn-1-e{background-position:-96px -64px}.ui-icon-arrowreturn-1-s{background-position:-112px -64px}.ui-icon-arrowrefresh-1-w{background-position:-128px -64px}.ui-icon-arrowrefresh-1-n{background-position:-144px -64px}.ui-icon-arrowrefresh-1-e{background-position:-160px -64px}.ui-icon-arrowrefresh-1-s{background-position:-176px -64px}.ui-icon-arrow-4{background-position:0 -80px}.ui-icon-arrow-4-diag{background-position:-16px -80px}.ui-icon-extlink{background-position:-32px -80px}.ui-icon-newwin{background-position:-48px -80px}.ui-icon-refresh{background-position:-64px -80px}.ui-icon-shuffle{background-position:-80px -80px}.ui-icon-transfer-e-w{background-position:-96px -80px}.ui-icon-transferthick-e-w{background-position:-112px -80px}.ui-icon-folder-collapsed{background-position:0 -96px}.ui-icon-folder-open{background-position:-16px -96px}.ui-icon-document{background-position:-32px -96px}.ui-icon-document-b{background-position:-48px -96px}.ui-icon-note{background-position:-64px -96px}.ui-icon-mail-closed{background-position:-80px -96px}.ui-icon-mail-open{background-position:-96px -96px}.ui-icon-suitcase{background-position:-112px -96px}.ui-icon-comment{background-position:-128px -96px}.ui-icon-person{background-position:-144px -96px}.ui-icon-print{background-position:-160px -96px}.ui-icon-trash{background-position:-176px -96px}.ui-icon-locked{background-position:-192px -96px}.ui-icon-unlocked{background-position:-208px -96px}.ui-icon-bookmark{background-position:-224px -96px}.ui-icon-tag{background-position:-240px -96px}.ui-icon-home{background-position:0 -112px}.ui-icon-flag{background-position:-16px -112px}.ui-icon-calendar{background-position:-32px -112px}.ui-icon-cart{background-position:-48px -112px}.ui-icon-pencil{background-position:-64px -112px}.ui-icon-clock{background-position:-80px -112px}.ui-icon-disk{background-position:-96px -112px}.ui-icon-calculator{background-position:-112px -112px}.ui-icon-zoomin{background-position:-128px -112px}.ui-icon-zoomout{background-position:-144px -112px}.ui-icon-search{background-position:-160px -112px}.ui-icon-wrench{background-position:-176px -112px}.ui-icon-gear{background-position:-192px -112px}.ui-icon-heart{background-position:-208px -112px}.ui-icon-star{background-position:-224px -112px}.ui-icon-link{background-position:-240px -112px}.ui-icon-cancel{background-position:0 -128px}.ui-icon-plus{background-position:-16px -128px}.ui-icon-plusthick{background-position:-32px -128px}.ui-icon-minus{background-position:-48px -128px}.ui-icon-minusthick{background-position:-64px -128px}.ui-icon-close{background-position:-80px -128px}.ui-icon-closethick{background-position:-96px -128px}.ui-icon-key{background-position:-112px -128px}.ui-icon-lightbulb{background-position:-128px -128px}.ui-icon-scissors{background-position:-144px -128px}.ui-icon-clipboard{background-position:-160px -128px}.ui-icon-copy{background-position:-176px -128px}.ui-icon-contact{background-position:-192px -128px}.ui-icon-image{background-position:-208px -128px}.ui-icon-video{background-position:-224px -128px}.ui-icon-script{background-position:-240px -128px}.ui-icon-alert{background-position:0 -144px}.ui-icon-info{background-position:-16px -144px}.ui-icon-notice{background-position:-32px -144px}.ui-icon-help{background-position:-48px -144px}.ui-icon-check{background-position:-64px -144px}.ui-icon-bullet{background-position:-80px -144px}.ui-icon-radio-on{background-position:-96px -144px}.ui-icon-radio-off{background-position:-112px -144px}.ui-icon-pin-w{background-position:-128px -144px}.ui-icon-pin-s{background-position:-144px -144px}.ui-icon-play{background-position:0 -160px}.ui-icon-pause{background-position:-16px -160px}.ui-icon-seek-next{background-position:-32px -160px}.ui-icon-seek-prev{background-position:-48px -160px}.ui-icon-seek-end{background-position:-64px -160px}.ui-icon-seek-start{background-position:-80px -160px}.ui-icon-seek-first{background-position:-80px -160px}.ui-icon-stop{background-position:-96px -160px}.ui-icon-eject{background-position:-112px -160px}.ui-icon-volume-off{background-position:-128px -160px}.ui-icon-volume-on{background-position:-144px -160px}.ui-icon-power{background-position:0 -176px}.ui-icon-signal-diag{background-position:-16px -176px}.ui-icon-signal{background-position:-32px -176px}.ui-icon-battery-0{background-position:-48px -176px}.ui-icon-battery-1{background-position:-64px -176px}.ui-icon-battery-2{background-position:-80px -176px}.ui-icon-battery-3{background-position:-96px -176px}.ui-icon-circle-plus{background-position:0 -192px}.ui-icon-circle-minus{background-position:-16px -192px}.ui-icon-circle-close{background-position:-32px -192px}.ui-icon-circle-triangle-e{background-position:-48px -192px}.ui-icon-circle-triangle-s{background-position:-64px -192px}.ui-icon-circle-triangle-w{background-position:-80px -192px}.ui-icon-circle-triangle-n{background-position:-96px -192px}.ui-icon-circle-arrow-e{background-position:-112px -192px}.ui-icon-circle-arrow-s{background-position:-128px -192px}.ui-icon-circle-arrow-w{background-position:-144px -192px}.ui-icon-circle-arrow-n{background-position:-160px -192px}.ui-icon-circle-zoomin{background-position:-176px -192px}.ui-icon-circle-zoomout{background-position:-192px -192px}.ui-icon-circle-check{background-position:-208px -192px}.ui-icon-circlesmall-plus{background-position:0 -208px}.ui-icon-circlesmall-minus{background-position:-16px -208px}.ui-icon-circlesmall-close{background-position:-32px -208px}.ui-icon-squaresmall-plus{background-position:-48px -208px}.ui-icon-squaresmall-minus{background-position:-64px -208px}.ui-icon-squaresmall-close{background-position:-80px -208px}.ui-icon-grip-dotted-vertical{background-position:0 -224px}.ui-icon-grip-dotted-horizontal{background-position:-16px -224px}.ui-icon-grip-solid-vertical{background-position:-32px -224px}.ui-icon-grip-solid-horizontal{background-position:-48px -224px}.ui-icon-gripsmall-diagonal-se{background-position:-64px -224px}.ui-icon-grip-diagonal-se{background-position:-80px -224px}.ui-corner-all,.ui-corner-top,.ui-corner-left,.ui-corner-tl{border-top-left-radius:3px}.ui-corner-all,.ui-corner-top,.ui-corner-right,.ui-corner-tr{border-top-right-radius:3px}.ui-corner-all,.ui-corner-bottom,.ui-corner-left,.ui-corner-bl{border-bottom-left-radius:3px}.ui-corner-all,.ui-corner-bottom,.ui-corner-right,.ui-corner-br{border-bottom-right-radius:3px}.ui-widget-overlay{background:#aaa;opacity:.003;filter:Alpha(Opacity=.3)}.ui-widget-shadow{-webkit-box-shadow:0 0 5px #666;box-shadow:0 0 5px #666}
+/* jquery-ui-slider */.ui-slider {position:relative;text-align:left}.ui-slider .ui-slider-handle {position:absolute;z-index:2;width:1.2em;	height:1.2em;cursor:default;-ms-touch-action:none;touch-action:none}.ui-slider .ui-slider-range {position:absolute;z-index:1;display:block;height:6px;background:#2e81f8;border-radius:8px}.ui-slider.ui-state-disabled .ui-slider-handle,.ui-slider.ui-state-disabled .ui-slider-range {filter:inherit}.ui-slider-horizontal {height:6px;border-radius:5px}.desktop .ui-slider-horizontal {height:10px}.ui-slider-horizontal .ui-slider-handle {top:-.3em;margin-left:-.6em}.ui-slider-horizontal .ui-slider-range {top:0;height:100%}.ui-slider-horizontal .ui-slider-range-min {left:0}.ui-slider-horizontal .ui-slider-range-max {right:0}.ui-slider-vertical {width:.8em;height:100px}.ui-slider-vertical .ui-slider-handle {left:-.3em;margin-left:0;margin-bottom:-.6em}.ui-slider-vertical .ui-slider-range {left:0;width:100%}.ui-slider-vertical .ui-slider-range-min {bottom:0}.ui-slider-vertical .ui-slider-range-max {top:0}.ui-sortable-handle {-ms-touch-action:none;touch-action:none}.ui-widget-content {border:1px solid #ddd;background:#d6d4d5;color:#444;box-shadow:0 1px 0 #b6b7b9 inset}.ui-slider.ui-slider-horizontal {margin-bottom:4em}.ui-slider.ui-slider-horizontal .ui-slider-handle {position:absolute;display:block;cursor:default;z-index:1;width:26px;height:26px;top:-11px;border-radius:50%;background:#fff;border:1px solid #cfcfcf;box-shadow:0 1px 1px #b6b7b9;box-sizing:border-box}.desktop .ui-slider.ui-slider-horizontal .ui-slider-handle {top:-10px}.desktop .star_point_box .ui_starpoint.ui-slider-horizontal .ui-slider-handle {top:0}.ui-slider.ui-slider-horizontal .ui-slider-handle:after {content:'';position:absolute;left:7px;top:7px;width:10px;height:10px;border-radius:50%;background:#1f2631;-webkit-transition-duration:0.1s;box-shadow:1px 1px 1px #416ecb inset}.ui-slider.ui-slider-vertical .ui-slider-handle {width:25px;height:15px;margin-bottom:-7px;left:-7px}.ui-widget-content .ui-slider-handle.ui-state-focus {outline:0;border-color:#434d5a}#steps-fivepercent-slider .ui-slider-tip {visibility:visible;opacity:1;top:-30px}#steps-fivepercent-slider .ui-slider-tip {visibility:visible;opacity:1;top:-30px}.ui-slider-horizontal.ui-slider-pips {margin-bottom:1.4em}.ui-slider-pips .ui-slider-label,.ui-slider-pips .ui-slider-pip-hide {display:none}.ui-slider-pips .ui-slider-pip-label .ui-slider-label {display:block}.ui-slider-pips .ui-slider-pip {width:0;height:1em;line-height:1em;position:absolute;font-size:.8em;color:#999;overflow:visible;text-align:center;top:0;left:20px;cursor:pointer;-webkit-touch-callout:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.ui-state-disabled.ui-slider-pips .ui-slider-pip {cursor:default}.ui-slider-pips .ui-slider-line {position:absolute;left:50%;top:0;width:2px;height:6px;background:#dedede;box-shadow:inset 1px 0 1px 1px rgba(0, 0, 0, .3)}.desktop .ui-slider-pips .ui-slider-line {height:10px}.ui-slider-pips .ui-slider-label {position:absolute;top:25px;left:50%;margin-left:-24px;font-size:12px;color:#616161;white-space:nowrap;text-align:center}.desktop .ui-slider-pips .ui-slider-label {font-size:14px}.ui-slider-pips:not (.ui-slider-disabled ) .ui-slider-pip:hover .ui-slider-label{color:#000;font-weight:700}.ui-slider-vertical.ui-slider-pips {margin-bottom:1em;margin-right:2em}.ui-slider-vertical.ui-slider-pips .ui-slider-pip {text-align:left;top:auto;left:20px;margin-left:0;margin-bottom:-.5em}.ui-slider-vertical.ui-slider-pips .ui-slider-line {width:3px;height:1px;position:absolute;top:50%;left:0}.ui-slider-vertical.ui-slider-pips .ui-slider-label {top:50%;left:.5em;margin-left:0;margin-top:-.5em;width:2em}.ui-slider-float .ui-slider-handle.ui-state-focus .ui-slider-tip-label,.ui-slider-float .ui-slider-handle:focus,.ui-slider-float .ui-slider-handle:focus .ui-slider-tip,.ui-slider-float .ui-slider-handle:focus .ui-slider-tip-label .ui-slider-float .ui-slider-handle.ui-state-focus .ui-slider-tip-label{outline:0}.ui-slider-float .ui-slider-tip,.ui-slider-float .ui-slider-tip-label {position:absolute;visibility:hidden;top:-40px;display:block;width:34px;margin-left:-18px;left:50%;height:20px;line-height:20px;background:#fff;border-radius:3px;border:1px solid #888;text-align:center;font-size:12px;opacity:0;color:#333;-webkit-transition-property:opacity, top, visibility;transition-property:opacity, top, visibility;-webkit-transition-timing-function:ease-in;transition-timing-function:ease-in;-webkit-transition-duration:200ms, 200ms, 0ms;transition-duration:200ms, 200ms, 0ms;-webkit-transition-delay:0ms, 0ms, 200ms;transition-delay:0ms, 0ms, 200ms}.ui-slider-float .ui-slider-handle.ui-state-active .ui-slider-tip,.ui-slider-float .ui-slider-handle.ui-state-focus .ui-slider-tip,.ui-slider-float .ui-slider-handle.ui-state-hover .ui-slider-tip,.ui-slider-float .ui-slider-handle:focus .ui-slider-tip,.ui-slider-float .ui-slider-handle:hover .ui-slider-tip,.ui-slider-float .ui-slider-pip:hover .ui-slider-tip-label{opacity:0;top:-30px;visibility:visible;-webkit-transition-timing-function:ease-out;transition-timing-function:ease-out;-webkit-transition-delay:200ms, 200ms, 0ms;transition-delay:200ms, 200ms, 0ms}.ui-slider-float .ui-slider-pip .ui-slider-tip-label {top:42px}.ui-slider-float .ui-slider-pip:hover .ui-slider-tip-label {top:32px;font-weight:400}.ui-slider-float .ui-slider-pip .ui-slider-tip-label:after,.ui-slider-float .ui-slider-tip:after{content:"";width:0;height:0;border:5px solid rgba(255, 255, 255, 0);border-top-color:#fff;position:absolute;bottom:-10px;left:50%;margin-left:-5px}.ui-slider-float .ui-slider-pip .ui-slider-tip-label:before,.ui-slider-float .ui-slider-tip:before	{content:"";width:0;height:0;border:5px solid rgba(255, 255, 255, 0);border-top-color:#888;position:absolute;bottom:-11px;left:50%;margin-left:-5px}.ui-slider-float .ui-slider-pip .ui-slider-tip-label:after {border:5px solid rgba(255, 255, 255, 0);border-bottom-color:#fff;top:-10px}.ui-slider-float .ui-slider-pip .ui-slider-tip-label:before {border:5px solid rgba(255, 255, 255, 0);border-bottom-color:#888;top:-11px}.ui-slider-pip-1000 {margin-left:8px}.ui-slider-pip-5000 {margin-left:-8px}.ui-slider-pips .ui-slider-line{position:absolute;left:50%;top:0;width:2px;height:6px;box-shadow:none;background:#fff}.ui-slider.ui-slider-horizontal .ui-slider-handle{position:absolute;display:block;width:26px;height:26px;top:-11px;border-radius:50%;background:#fff;box-shadow:0 1px 1px #b6b7b9;box-sizing:border-box;border:1px solid #2e81f8;cursor:default;z-index:1}.ui-slider.ui-slider-horizontal .ui-slider-handle:last-child{border:1px solid #2f81f8}.ui-slider.ui-slider-horizontal .ui-slider-handle:after{display:none}.ui-slider .ui-slider-range{background:#2e81f8}.ui-slider-pip-1500 .ui-slider-label,.ui-slider-pip-2500 .ui-slider-label,.ui-slider-pip-3500 .ui-slider-label,.ui-slider-pip-4500 .ui-slider-label{display:none !important}.ui-slider-pip-1500 .ui-slider-line,.ui-slider-pip-2500 .ui-slider-line,.ui-slider-pip-3500 .ui-slider-line,.ui-slider-pip-4500 .ui-slider-line{box-shadow:1px 0 1px #B9B9B9}.ui-slider-pip-1000 .ui-slider-line,.ui-slider-pip-5000 .ui-slider-line{display:none !important}
+
+/*상단 슬라이더 css 패치*/
+.ui_guideline .ui-widget.ui-widget-content { border: none; margin-bottom: 0; background: #c4d3e4; box-shadow: none; height: 3px; padding:0;}
+.ui_guideline .ui-slider.ui-slider-horizontal .ui-slider-handle {
+    background: #f2f6fb;
+    box-shadow: inset 1px 1px 3px 0px rgb(255, 255, 255), inset -1px -1px 4px 0px rgb(192, 217, 245), 0px 0px 5px 0px rgb(137, 163, 189);
+	width: 18px;
+    height: 18px;
+    border-radius: 50%;
+}
+.price_sec .ui_graph .ui-slider-range{background:#3b3d40;}
+.price_sec .ui_graph .ui-widget.ui-widget-content {background:#e4e4e4;}
+/*전체 레이아웃 수정 */
+.contents .basic_sec:after,
+.contents .price_sec:after,
+.contents .etc_sec:after {display:block; content:''; clear:both;}
+
+.contents h2{font-size:16px; font-weight:bold;}
+
+/*전체 레이아웃 end */
+
+.data_info.info2,
+.data_info.info3{display:none;}
+.basic_sec #image{width:150px; float:left;}
+.basic_sec .info{float:left;margin-top:10px;}
+
+.basic_sec,
+.price_sec,
+.price_sec .distance_box, 
+.etc_sec{margin-top:20px; padding:0 15px;}
+
+
+.price_sec h2{display:block; position:absolute; top:0; left:0; font-size:16px; font-weight:bold; color:#0b0d0f;}
+.price_sec h2 em{display:block; font-weight:normal;}
+
+.price_sec .distance_box{ position:relative; padding:0 0 0 150px;}
+.price_sec .price_box{ position:relative; padding:0 0 0 150px;}
+
+.price_sec .distance_box .disance{display:block; text-align:center; font-weight:normal; margin-top:10px; font-size:20px; color:#2e81f8; line-height:1.0em;}
+.price_sec .distance_box .disance strong em{font-weight:normal;}
+
+.price_sec .ui_graph{margin-top:20px;}
+.price_sec .ui_graph:after{display:block; content:''; clear:both;}
+.price_sec .ui_graph .ui_track {border-radius:5px; margin-bottom:0; box-shadow:none;}
+.price_sec .ui_graph .ui_track:after{content:''; display:block; background:red; position:absolute; top:0px; left:0px; width:100%; height:40px; opacity:0;}
+.price_sec .ui_graph .ui-slider-range{position:absolute; top:0; left:0; height:11px; border-radius:5px 0 0 5px; background-color:#5b5b5b;}
+.price_sec .ui_graph .progresscontrol-handle {position:absolute; z-index:2; top:27px;}
+.price_sec .ui_graph .ui-widget-content{border:none;}
+.price_sec .ui_graph .ui-slider.ui-slider-horizontal .ui-slider-handle{content:' '; display:block; width:20px; height:20px; margin-left:-10px;  cursor: pointer; top:-5px; border-radius:10px; border:1px solid #5b5b5b;}
+.price_sec .ui_graph .ui-slider-handle.ui-state-default.ui-corner-all{transition: all .1s; z-index:2;     box-shadow: 0 0 3px rgba(0, 0, 0, 0.83), 0 0 10px rgba(0, 0, 0, 0.12);     margin-top: 3px;}
+.price_sec .ui_graph .ui-slider-handle.ui-state-default.ui-corner-all.ui-state-active{transition: none;}
+
+.price_sec .ui_graph .lf{display:block; float:left; margin-top:15px; font-size:15px; padding-left:10px; color:#0b0d0f;}
+.price_sec .ui_graph .rt{display:block; float:right; margin-top:15px; font-size:15px; padding-right:10px; color:#0b0d0f;}
+.price_sec .price_box{color:#2b2e38;}
+.price_sec .price_box strong{font-size:20px; letter-spacing:-0.01em;  color:#2e81f8; line-height:21px; font-weight:normal;}
+.price_sec .price_box strong em{display:inline-block; font-size:20px;  vertical-align:top; font-weight:bold;}
+.price_sec .price_box .icn.help{display:inline-block; width:26px; height:26px;}
+.price_sec .price_box .price{padding:0px 0px 16px 0px;}
+.price_sec .ui_graph label{position:absolute; top:12px; width:1px; height:15px; margin-left:-1px; font-size:0; text-indent:-9999px; }
+
+.etc_sec .rate{ padding-bottom:32px;}
+
+.etc_sec .popular_graph{padding:10px 0 0 0; }
+.etc_sec .popular_graph #step_tit{display:block; float:left; margin-left:15px;}
+.etc_sec .popular_graph #step_dcs{clear:both; padding-top:10px; display:block;}
+.etc_sec .popular_graph #star_graph{font-size:0px;  float:left;}
+.etc_sec .popular_graph #star_graph em{display:inline-block; width:17px; height:17px; margin:0 1px; background-image:url('img/icn_etc.svg'); background-repeat:no-repeat;  
+	background-position:-192px -216px; opacity:0.2; background-size:auto 450px;}
+.etc_sec .popular_graph #star_graph .on.cl0,
+.etc_sec .popular_graph #star_graph .on.cl1,
+.etc_sec .popular_graph #star_graph .on.cl2,
+.etc_sec .popular_graph #star_graph .on.cl3,
+.etc_sec .popular_graph #star_graph .on.cl4,
+.etc_sec .popular_graph #star_graph .on.cl5,
+.etc_sec .popular_graph #star_graph .on.cl6,
+.etc_sec .popular_graph #star_graph .on.cl7{opacity:1.0;}
+.etc_sec .rate{margin-top:50px;}
+
+.etc_sec .rate_graph {padding:60px 0 0px 0; margin-top:10px;}
+.etc_sec .rate_graph #bar_graph{display:block; border-top:1px solid #7a7d86;}
+.etc_sec .rate_graph #bar_graph:after{display:block; content:''; clear:both;}
+.etc_sec .rate_graph #bar_graph li{display:block; width:25%; text-align:center; float:left; position:relative;  height:155px; font-size:14px;}
+.etc_sec .rate_graph #bar_graph li span{display:block; position:absolute; width:100%;}
+.etc_sec .rate_graph #bar_graph li .term{top:-60px; left:0; text-align:center; color:#2b2e38;}
+.etc_sec .rate_graph #bar_graph li .price{display:block; top:-35px; left:0; text-align:center; color:#2b2e38; }
+.etc_sec .rate_graph #bar_graph li .price.minus{color:#2b2e38; font-size:14px; margin-top:15px;}
+.etc_sec .rate_graph #bar_graph li:last-child .price.minus{font-weight:bold;}
+.etc_sec .rate_graph #bar_graph li .bnr{display:block; position:absolute; top:0; left:50%; width:60px; margin-left:-30px; height:100%; font-size:0; text-indent:-9999px;
+	background:url('img/bg_bar1.svg');}
+.etc_sec .rate_graph #bar_graph li:last-child .bnr{background:url('img/bg_bar2.svg');}
+
+/*20180128 로딩 추가*/
+.loading_dim{display:block; position:fixed; width:100%; height:100%; left: 0; top: 0; z-index: 10; background: rgba(0, 0, 0, 0.75);}
+.loading_el{display:block; position:absolute; width:60px; height:60px; left: 50%; top: 50%; margin:-30px 0 0 -30px; border-radius:50%;
+border: 3px solid #fff0; border-right-color: #fff; border-top-color: #fff; border-left-color: #fff;
+	background-size:auto 60px; 	-webkit-animation: spin 800ms infinite linear; 
+	animation: spin 800ms infinite linear;
+	transition:0.6s;}
+
+@-webkit-keyframes "spin" {
+	from {	
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+		}
+	to {
+		-webkit-transform: rotate(359deg);
+		transform: rotate(359deg);
+		}
+}
+@keyframes "spin" {
+	from {	
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+		}
+	to {
+		-webkit-transform: rotate(359deg);
+		transform: rotate(359deg);
+		}
+}
+
+			               </style>	 
+	            
+	            
+			               <div class="option_txt">
+		
+								<div class="data_info info1">
+<pre class="incodebox">
+<code class="language-javascript">
+ var mycarInfo1 = {//차량정보 데이터1 (json 1)	
+	maker: '르노삼성', //제조사명: 단일
+	name: '뉴 SM5', //모델명: 단일
+	trim: ['가솔린 A/T'], //상세옵션명: 단일
+	imgUrl: 'img/data/321_3238.svg', //이미지 경로
+	price: '2,110', //출고가(단위: 만원): 단일
+	date: '2005.03.25', //최초등록일: 단일
+	distancePrice: [//주행거리, 최소가격, 최대가격 (단위: 만원): array단위 10개
+  		['2만 미만','850','880'], ['2만 이상 ~ 2만 미만','830','860'], ['4만 이상 ~ 6만 미만','810','840'], ['6만 이상 ~ 8만 미만','750','780'], ['8만 이상 ~ 10만 미만','690','720'], 
+  		['10만 이상 ~ 12만 미만','630','660'], ['12만 이상 ~ 14만 미만','570','630'], ['14만 이상 ~ 16만 미만','510','530'], ['16만 이상 ~ 18만 미만','450','490'], ['18만 이상 ~ 20만 미만','340','380'], ['20만 이상','230','270'],
+	],
+	papular: 5,//인기도(n/7): 단일
+	rate: [//잔가율(단위: 만원): array 4개 [가격, %] (현재가, 1년후, 2년후, 3년후)
+		['4,000','100'], ['3,100','80'], ['2,650','65'], ['900','45'] 
+	]
+ }
+ </code>
+ </pre>
+								</div><!-- info1 -->
+								<div class="data_info info2">
+<pre class="incodebox">
+<code class="language-javascript">
+ var mycarInfo2 = {//차량정보 데이터2 (json 2)
+	maker: '벤츠', //제조사명: 단일
+	name: 'C-class', //모델명: 단일
+	trim: ['쿠페 디젤 2.1'], //상세옵션명: 단일
+	imgUrl: 'img/data/349_3140.svg', //이미지 경로
+	price: '5,930', //출고가(단위: 만원): 단일
+	date: '2008.05.13', //최초등록일: 단일
+	distancePrice: [//주행거리, 최소가격, 최대가격 (단위: 만원): array단위 10개
+		['2만 미만','5,160','5,180'],['2만 이상 ~ 4만 미만','5,120','5,140'],['4만 이상 ~ 6만 미만','5,080','5,100'],['6만 이상 ~ 8만 미만','5,000','5,020'],['8만 이상 ~ 10만 미만','4,860','4,960'],
+		['10만 이상 ~ 12만 미만','4,740','4,840'],['12만 이상 ~ 14만 미만','4,520','4,620'],['14만 이상 ~ 16만 미만','4,310','4,410'],['16만 이상 ~ 18만 미만','4,090','4,290'],['18만 이상 ~ 20만 미만','3,890','4,090'],['20만 이상','2,980','3,080']
+	],
+	papular: 4,//인기도(n/7): 단일
+	rate: [//잔가율(단위: 만원): array 4개 [가격, %]
+		['2,000','100'],['1,500','75'],['1,100','55'],['600','30']
+	]
+ }
+ </code>
+ </pre>
+								</div><!--//info2  -->					
+								<div class="data_info info3">
+<pre class="incodebox">
+<code class="language-javascript">
+ var mycarInfo3 = {//차량정보 데이터3 (json 3)
+	maker: '쉐보레', //제조사명: 단일
+	name: '스파크', //모델명: 단일
+	trim: ['베이직 M/T'], //상세옵션명: 단일
+	imgUrl: 'img/data/312_3594.svg', //이미지 경로
+	price: '972', //출고가(단위: 만원): 단일
+	date: '2012.07.04', //최초등록일: 단일
+	distancePrice: [//주행거리, 최소가격, 최대가격 (단위: 만원): array단위 10개
+  		['2만 미만','280','330'],['2만 이상 ~ 4만 미만','270','320'],['4만 이상 ~ 6만 미만','280','330'],['6만 이상 ~ 8만 미만','260','310'],['8만 이상 ~ 10만 미만','240','290'],
+  		['10만 이상 ~ 12만 미만','220','270'],['12만 이상 ~ 14만 미만','200','250'],['14만 이상 ~ 16만 미만','180','230'],['16만 이상 ~ 18만 미만','160','210'],['18만 이상 ~ 20만 미만','140','190'],['20만 이상','120','170']
+	],
+	papular: 2,//인기도(n/7): 단일
+	rate: [//잔가율(단위: 만원): array 4개 [가격, %]
+		['9,00','100'], ['675','75'], ['405','45'], ['180','20']
+	]
+ }
+ </code>
+ </pre>
+								</div><!--//info3  -->									
+		
+			                </div>
+			                
+			            	<div style="padding:0 15px;">
+				                <button type="button" class="data1">Json 1</button>
+				                <button type="button" class="data2">Json 2</button>
+				                <button type="button" class="data3">Json 3</button>	            	
+			            	</div>
+			            	
+							<!-- 기본정보 -->
+							<section class="basic_sec ">
+								<h2>기본 정보</h2>
+								<span id="image"></span>
+								<div class="info">
+									<strong id="maker">제조사명</strong>
+									<strong id="name">차량명</strong>
+									<span id="trim">모델트림</span><br/>
+									<span><strong>출고가격</strong> <em id="price">0</em>만원</span><br/>
+									<span><strong>최초 등록일</strong> <em id="date">0000.00.00</em></span>
+								</div>
+							</section>
+							<!--// 기본정보 -->
+									
+							<!-- 가격정보 -->
+							<section class="price_sec">
+								<div class="price_box">
+									<h2>내 차 시세 </h2>
+									<div class="price">
+										<strong><em id="min_price">0</em>만원 ~ <em id="max_price">0</em>만원</strong>
+									</div>	
+								</div>		
+								<div class="distance_box">
+									<h2>주행거리</h2>	
+									<span class="disance"><strong id="disance">0km</strong></span>					
+									<div class="ui_graph">					
+										<div class="ui_track" id="ui_track"></div>		
+										<span class="lf">2만</span>
+										<span class="rt">20만</span>			
+									</div>			
+								</div>
+							</section>		
+							<!--// 가격정보 -->	
+							
+							<!-- 추가정보 -->
+							<section class="etc_sec">
+							
+								<div class="popular">
+									<h2>인기도</h2>
+									<div class="popular_graph">					
+										<div id="star_graph"><!-- 별점 --></div>
+										<span id="step_tit"><!-- 단계명 --></span>
+										<span id="step_dcs"><!-- 단계 설명 --></span>
+									</div>				
+								</div>
+								
+								<div class="rate">
+									<h2>잔존가치</h2>
+									<div class="rate_graph">
+										<ul id="bar_graph">
+											<!--<li>
+												<span class="term">시점</span>
+												<span class="price">가격</span>
+												<em class="bnr">00%</em>
+												<span class="price">차액</span>						
+											</li>-->
+										</ul>
+									</div>				
+								</div>
+								
+							</section>		
+							<!--// 추가정보 -->			            				                
+	                    
+	                    </article>
+	                    <!--// sample_box -->					
+					
+					</div>
+					<!--// run_sample -->	                	 	            
+	            
+
+	            	
+	               <!-- code -->               		
+			
+<script type="text/javascript">
+ var mycarInfo = {//차량정보 테스트값1
+	//1. 개발 data
+	name: '뉴 SM5', //모델명: 단일
+	trim: ['가솔린 A/T'], //상세옵션명: 단일
+	imgUrl: 'img/data/321_3238.svg', //이미지 경로(http://directauto.samsungcard.com/imageqc/LK_506x0/date/20181228/danawa/modelimg/321_3238.png)
+	price: '2,110', //출고가(단위: 만원): 단일
+	date: '2005.03.25', //최초등록일: 단일
+	//2. UX data
+	distancePrice: [//주행거리, 최소가격, 최대가격 (단위: 만원): array 10개
+  		['2만 미만','850','880'],
+  		['2만 이상 ~ 2만 미만','830','860'],
+  		['4만 이상 ~ 6만 미만','810','840'],
+  		['6만 이상 ~ 8만 미만','750','780'],
+  		['8만 이상 ~ 10만 미만','690','720'],
+  		['10만 이상 ~ 12만 미만','630','660'],
+  		['12만 이상 ~ 14만 미만','570','630'],
+  		['14만 이상 ~ 16만 미만','510','530'],
+  		['16만 이상 ~ 18만 미만','450','490'],
+  		['18만 이상 ~ 20만 미만','340','380'],
+  		['20만 이상','230','270'],
+	],
+	papular: 5,//인기도(n/7): 단일
+	rate: [//잔가율(단위: 만원): array 4개 [가격, %]
+		['4,000','100'], //현재가
+		['3,100','80'], //1년 후
+		['2,650','65'], //2년 후
+		['900','45'] //3년 후
+	],
+ 	maker: '르노삼성' //제조사명: 단일 20190403 추가
+ }
+ var etcInfo = [//인기도: 단계제목, 설명, 컬러
+	['아주 낮음','현재 시장에서 아주 낮은 선호도의 모델입니다.'],                
+	['낮음','현재 시장에서 낮은 선호도의 모델입니다.'],
+	['대체로 낮음','현재 시장에서 약간 낮음 선호도의 모델입니다.'],
+	['보통','현재 시장에서 보통 선호도의 모델입니다.'],
+	['대체로 높음','현재 시장에서 약간 높은 선호도의 모델입니다.'],               
+	['높음','현재 시장에서 높은 선호도의 모델입니다.'],
+    ['아주 높음','현재 시장에서 아주 높은 선호도의 모델입니다.']
+ ]
+ var rateText = [['현재'],['1년 후'],['2년 후'],['3년 후']]; //잔가율 x축 name
+ 
+ 
+ var mycarInfo2 = {//차량정보 테스트값2 임시 : html전용
+	name: 'C-class', trim: ['쿠페 디젤 2.1'],
+	imgUrl: 'img/data/349_3140.svg',
+	price: '5,930', date: '2008.05.13',
+	distancePrice: [
+		['2만 미만','5,160','5,180'],['2만 이상 ~ 4만 미만','5,120','5,140'],['4만 이상 ~ 6만 미만','5,080','5,100'],['6만 이상 ~ 8만 미만','5,000','5,020'],['8만 이상 ~ 10만 미만','4,860','4,960'],
+		['10만 이상 ~ 12만 미만','4,740','4,840'],['12만 이상 ~ 14만 미만','4,520','4,620'],['14만 이상 ~ 16만 미만','4,310','4,410'],['16만 이상 ~ 18만 미만','4,090','4,290'],['18만 이상 ~ 20만 미만','3,890','4,090'],['20만 이상','2,980','3,080']
+	],
+	papular: 4,
+	rate: [['2,000','100'],['1,500','75'],['1,100','55'],['600','30']],
+	maker: '벤츠' //제조사명: 단일 20190403 추가
+ }
+ var mycarInfo3 = {//차량정보 테스트값3 임시 : html전용
+	name: '스파크', trim: ['베이직 M/T'],
+	imgUrl: 'img/data/312_3594.svg',
+	price: '972', date: '2012.07.04',
+	distancePrice: [
+  		['2만 미만','280','330'],['2만 이상 ~ 4만 미만','270','320'],['4만 이상 ~ 6만 미만','280','330'],['6만 이상 ~ 8만 미만','260','310'],['8만 이상 ~ 10만 미만','240','290'],['10만 이상 ~ 12만 미만','220','270'],['12만 이상 ~ 14만 미만','200','250'],
+  		['14만 이상 ~ 16만 미만','180','230'],['16만 이상 ~ 18만 미만','160','210'],['18만 이상 ~ 20만 미만','140','190'],['20만 이상','120','170']
+	],
+	papular: 2,
+	rate: [['9,00','100'], ['675','75'], ['405','45'], ['180','20']],
+ 	maker: '쉐보레' //제조사명: 단일 20190403 추가
+ }
+</script>
+
+                    <script type="text/javascript">
+
+                    $(document).ready(function(){
+                    	
+                    	var mycarCell = {
+                    			basic : function(array){//********** ********** ********** 1. 기본 정보
+                    				$('#maker').text(array.maker); //제조사명 20190403
+                    				$('#name').text(array.name); //차량명
+                    				$('#number').text(array.num); //차량번호
+                    				$('#trim').text(array.trim); //모델명
+                    				$('#image').html('<img src="'+array.imgUrl+'" alt="'+array.name+'"/>'); //차량 이미지 경로
+                    				$('#price').text(array.price); //출고가
+                    				$('#date').text(array.date); //출시일자				
+                    			},
+                    			priceInfo : function(array, num){//********** ********** ********** 2. 가격 정보
+                    				var disanceDefault = num;
+                    				var maxUnit = array.distancePrice.length;
+                    				
+                    				var txtDistance = array.distancePrice[disanceDefault][0];
+                    					 txtDistance = txtDistance.replace("이상","<em>이상</em>"),
+                    					 txtDistance = txtDistance.replace("미만","<em>미만</em>");
+                    				$('#disance').html(txtDistance); //주행거리 20190128 html태그처리					 
+                    				//$('#disance').text(array.distancePrice[disanceDefault][0]); ////기존 text 처리 삭제
+                    								
+                    				$('#min_price').text(array.distancePrice[disanceDefault][1]); //주행별 최소가
+                    				$('#max_price').text(array.distancePrice[disanceDefault][2]); //주행별 최대가
+                    				
+                    				$('#ui_track').slider({//슬라이더 작동
+                    				    min: 1,
+                    				    range: "min",
+                    				    step: 0.01,
+                    				    max: maxUnit,
+                    				    value: disanceDefault,
+                    				  	animate:50,
+                    				  	orientation: "horizontal",		
+                    				    slide: function( event, ui ) {
+                    				    	var mathNum = Math.round(ui.value);
+                    				    	var gridNum  = mathNum -1;
+                    				    	
+                    						var txtDistance = array.distancePrice[gridNum][0];
+                    					 		txtDistance = txtDistance.replace("이상","<em>이상</em>"),				    	
+                    					 		txtDistance = txtDistance.replace("미만","<em>미만</em>");
+                    				    	$('#disance').html(txtDistance); //주행거리 20190128 html태그처리
+                    				    	//$('#disance').text(array.distancePrice[gridNum][0]); //기존 text 처리 삭제
+                    				    	
+                    				    	$('#min_price').text(array.distancePrice[gridNum][1]);
+                    				    	$('#max_price').text(array.distancePrice[gridNum][2]);	    	
+                    				    },
+                    				    change:function( event, ui ){
+
+                    				    },
+                    				    stop: function( event, ui ) {
+                    				    	$(this).slider('value',Math.round(ui.value));
+                    				    }
+                    				});	
+                    			},
+                    			papular: function(array, info, num){//********** ********** ********** 3. 인기도  
+                    				var papular = num;
+                    				if(papular == 'undefined' || papular == null ){
+                    					papular = array.papular  -1;
+                    				}
+                    				$('#step_tit').html('<em>'+info[papular][0]+'</em>');
+                    				$('#step_dcs').text(info[papular][1]);
+                    				$('#star_graph').empty();
+                    				var gridLeng = etcInfo.length;
+                    				for(i=0; i < gridLeng; i++){				
+                    					if(i <= papular){
+                    						$('#star_graph').append('<em class="cl'+papular+' on"></em>');
+                    					}else{
+                    						$('#star_graph').append('<em class="cl'+papular+'"></em>');
+                    					}
+                    				}				
+                    			},
+                    			rate: function(array, label){//********** ********** ********** 4. 잔가율
+                    				var rateLeng = array.rate.length;
+                    				$('#bar_graph').empty();
+                    				for(i=0; i < rateLeng; i++){
+                    					var barHeight = 100 - array.rate[i][1];
+                    					//console.log("잔존가치: "+barHeight + "%");
+                    										
+                    					//20190403 마지막 3년후 기준으로 높이가 100%일때 상대값으로 높이처리 -start
+                    					var lastBarValue = 100 - array.rate[rateLeng-1][1]; 
+                    					barHeight =  Math.round(100*barHeight / lastBarValue);
+                    					//20190403 마지막 3년후 기준으로 높이가 100%일때 상대값으로 높이처리 -end
+                    					
+                    					var defaultPrice = comRemove(array.rate[0][0]);
+                    					var minusPrice = comRemove(array.rate[i][0]);
+                    					var ratePrice = comma(defaultPrice - minusPrice);					
+                    					$('#bar_graph').append('<li><span class="term">'+label[i]+'</span><span class="price">'+array.rate[i][0]+'만원</span><em class="bnr" style="height:'+barHeight+'%;">'+array.rate[i][1]+'%</em><span class="price minus num'+i+'" style="top:'+barHeight+'%;">-'+ratePrice+'만원</span></li>');
+                    					if(i==0){$('.price.num0').remove();}//현재가일때 가격제거
+                    				}
+                    				function comRemove(n){//콤마 제거
+                    					if(typeof n == 'undefined' || n == null || n == ''){return "";}
+                    					var txtNumber = ' ' + n;
+                    					return txtNumber.replace(/(,)/g,"");
+                    				}
+                    				function comma(n) {//콤마 찍기
+                    					return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    				}				
+                    			}
+                    	}
+                    	
+                    	mycarCell.basic(mycarInfo); //1.기본정보(차량정보)
+                    	mycarCell.priceInfo(mycarInfo , 4); //2. 가격정보(차량정보, 주행거리디폴트 단위 1부터)
+                    	mycarCell.papular(mycarInfo, etcInfo); //3. 인기도(차량정보, UX정보, 따로 쓰는경우 Num)	
+                    	mycarCell.rate(mycarInfo, rateText); //4. 잔가율(차량정보, x라벨)
+                    	
+                    	var loading = {//********** ********** ********** 5. 로딩추가 
+                    		showOverlay:  function(){//show
+                    			var $loadingDim = $('<div class="loading_dim"></div>'),
+                    				$loadingEl = $('<div class="loading_el"></div>'),	
+                    				width       = 0,
+                    				total		= 0,
+                    				left        = 0;
+                    				speed = 100;
+                    			
+                    			if ($.contains($("body")[0], $("div.loading_dim")[0])) {// 딤처리 있으면 return
+                    				return;
+                    			}
+                    			$loadingDim.append($loadingEl).appendTo('body');
+                    			
+                              	width = $('.loading_el').width();
+                              	total = width * -10;
+                              	function timer() {
+                              		left -= width;
+                              		(left <= total) ? left = 0 : '';
+                              		$('.loading_el').css('background-position', left );
+                              		setTimeout(timer, speed);
+                              	}
+                              	if($.contains($("body")[0], $("div.loading_dim")[0])){
+                              		setTimeout(timer, speed);
+                              	}
+                    		},
+                    		hideOverlay :  function(){//hide
+                    			$('.loading_dim').fadeOut(200,function(){
+                    				$('.loading_dim').remove();	
+                    			});
+                    		}
+                    	}
+                    	loading.showOverlay();//실행
+                    	setTimeout(function(){
+                    		loading.hideOverlay();//중지
+                    	},200);
+                    	
+                    	//********************************************** 데이터 테스트 처리: html전용 **********************************************//
+                    	
+                    		//$('.basic_sec').append(' <i class="ts car1">1</i> <i class="ts car2">2</i> <i class="ts car3">3</i>');	
+                    		$('.etc_sec .popular h2').append(' <button class="ts test0">1</button> <button class="ts test1">2</button> <button class="ts test2">3</button>\
+                    				<button class="ts test3">4</button> <button class="ts test4">5</button> <button class="ts test5">6</button> <button class="ts test6">7</button>');
+                    		$('.etc_sec .rate h2').append(' <button class="ts rate1">1</button> <button class="ts rate2">2</button> <button class="ts rate3">3</button>');
+                    		$('.data1').click(function(){
+                    			mycarCell.basic(mycarInfo); mycarCell.priceInfo(mycarInfo , 4); mycarCell.papular(mycarInfo, etcInfo); mycarCell.rate(mycarInfo, rateText);
+                    			$('.data_info.info3, .data_info.info2').css("display","none");
+                    			$('.data_info.info1').css("display","block");                    			
+                    		});
+                    		$('.data2').click(function(){
+                    			mycarCell.basic(mycarInfo2); mycarCell.priceInfo(mycarInfo2 , 4); mycarCell.papular(mycarInfo2, etcInfo); mycarCell.rate(mycarInfo2, rateText);
+                    			$('.data_info.info1,.data_info.info3').css("display","none");
+                    			$('.data_info.info2').css("display","block");                    			
+                    		});
+                    		$('.data3').click(function(){
+                    			mycarCell.basic(mycarInfo3); mycarCell.priceInfo(mycarInfo3 , 4); mycarCell.papular(mycarInfo3, etcInfo); mycarCell.rate(mycarInfo3, rateText);
+                    			$('.data_info.info1,.data_info.info2').css("display","none");
+                    			$('.data_info.info3').css("display","block");                    			
+                    		});
+                    		$('.test0').click(function(){mycarCell.papular(mycarInfo, etcInfo, 0)});
+                    		$('.test1').click(function(){mycarCell.papular(mycarInfo, etcInfo, 1)});
+                    		$('.test2').click(function(){mycarCell.papular(mycarInfo, etcInfo, 2)});
+                    		$('.test3').click(function(){mycarCell.papular(mycarInfo, etcInfo, 3)});
+                    		$('.test4').click(function(){mycarCell.papular(mycarInfo, etcInfo, 4)});
+                    		$('.test5').click(function(){mycarCell.papular(mycarInfo, etcInfo, 5)});
+                    		$('.test6').click(function(){mycarCell.papular(mycarInfo, etcInfo, 6)});
+                    		
+                    		$('.rate1').click(function(){mycarCell.rate(mycarInfo, rateText)});
+                    		$('.rate2').click(function(){mycarCell.rate(mycarInfo2, rateText)});
+                    		$('.rate3').click(function(){mycarCell.rate(mycarInfo3, rateText)});
+                    		
+                    	//**********************************************// 테스트 처리: html전용 **********************************************//
+
+                    });                    
+                      
+                    </script>					
+	                <!--// code -->
+	            </div>
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-javascript">
+var mycarCell = {
+		basic : function(array){//********** ********** ********** 1. 기본 정보
+			$('#maker').text(array.maker); //제조사명 20190403
+			$('#name').text(array.name); //차량명
+			$('#number').text(array.num); //차량번호
+			$('#trim').text(array.trim); //모델명
+			$('#image').html('img src="'+array.imgUrl+'" alt="'+array.name+'"/'); //차량 이미지 경로
+			$('#price').text(array.price); //출고가
+			$('#date').text(array.date); //출시일자				
+		},
+		priceInfo : function(array, num){//********** ********** ********** 2. 가격 정보
+			var disanceDefault = num;
+			var maxUnit = array.distancePrice.length;
+			
+			var txtDistance = array.distancePrice[disanceDefault][0];
+				 txtDistance = txtDistance.replace("이상","<em>이상</em>"),
+				 txtDistance = txtDistance.replace("미만","<em>미만</em>");
+			$('#disance').html(txtDistance); //주행거리 20190128 html태그처리					 
+			//$('#disance').text(array.distancePrice[disanceDefault][0]); ////기존 text 처리 삭제
+							
+			$('#min_price').text(array.distancePrice[disanceDefault][1]); //주행별 최소가
+			$('#max_price').text(array.distancePrice[disanceDefault][2]); //주행별 최대가
+			
+			$('#ui_track').slider({//슬라이더 작동
+			    min: 1,
+			    range: "min",
+			    step: 0.01,
+			    max: maxUnit,
+			    value: disanceDefault,
+			  	animate:50,
+			  	orientation: "horizontal",		
+			    slide: function( event, ui ) {
+			    	var mathNum = Math.round(ui.value);
+			    	var gridNum  = mathNum -1;
+			    	
+					var txtDistance = array.distancePrice[gridNum][0];
+				 		txtDistance = txtDistance.replace("이상","<em>이상</em>"),				    	
+				 		txtDistance = txtDistance.replace("미만","<em>미만</em>");
+			    	$('#disance').html(txtDistance); //주행거리 20190128 html태그처리
+			    	//$('#disance').text(array.distancePrice[gridNum][0]); //기존 text 처리 삭제
+			    	
+			    	$('#min_price').text(array.distancePrice[gridNum][1]);
+			    	$('#max_price').text(array.distancePrice[gridNum][2]);	    	
+			    },
+			    change:function( event, ui ){
+
+			    },
+			    stop: function( event, ui ) {
+			    	$(this).slider('value',Math.round(ui.value));
+			    }
+			});	
+		},
+		papular: function(array, info, num){//********** ********** ********** 3. 인기도  
+			var papular = num;
+			if(papular == 'undefined' || papular == null ){
+				papular = array.papular  -1;
+			}
+			$('#step_tit').html('<em>'+info[papular][0]+'</em>');
+			$('#step_dcs').text(info[papular][1]);
+			$('#star_graph').empty();
+			var gridLeng = etcInfo.length;
+			for(i=0; i < gridLeng; i++){				
+				if(i <= papular){
+					$('#star_graph').append('<em class="cl'+papular+' on"></em>');
+				}else{
+					$('#star_graph').append('<em class="cl'+papular+'"></em>');
+				}
+			}				
+		},
+		rate: function(array, label){//********** ********** ********** 4. 잔가율
+			var rateLeng = array.rate.length;
+			$('#bar_graph').empty();
+			for(i=0; i < rateLeng; i++){
+				var barHeight = 100 - array.rate[i][1];
+				//console.log("잔존가치: "+barHeight + "%");
+									
+				//20190403 마지막 3년후 기준으로 높이가 100%일때 상대값으로 높이처리 -start
+				var lastBarValue = 100 - array.rate[rateLeng-1][1]; 
+				barHeight =  Math.round(100*barHeight / lastBarValue);
+				//20190403 마지막 3년후 기준으로 높이가 100%일때 상대값으로 높이처리 -end
+				
+				var defaultPrice = comRemove(array.rate[0][0]);
+				var minusPrice = comRemove(array.rate[i][0]);
+				var ratePrice = comma(defaultPrice - minusPrice);					
+				$('#bar_graph').append('<li><span class="term">'+label[i]+'</span><span class="price">'+array.rate[i][0]+'만원</span><em class="bnr" style="height:'+barHeight+'%;">'+array.rate[i][1]+'%</em><span class="price minus num'+i+'" style="top:'+barHeight+'%;">-'+ratePrice+'만원</span></li>');
+				if(i==0){$('.price.num0').remove();}//현재가일때 가격제거
+			}
+			function comRemove(n){//콤마 제거
+				if(typeof n == 'undefined' || n == null || n == ''){return "";}
+				var txtNumber = ' ' + n;
+				return txtNumber.replace(/(,)/g,"");
+			}
+			function comma(n) {//콤마 찍기
+				return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			}				
+		}
+}
+
+mycarCell.basic(mycarInfo); //1.기본정보(차량정보)
+mycarCell.priceInfo(mycarInfo , 4); //2. 가격정보(차량정보, 주행거리디폴트 단위 1부터)
+mycarCell.papular(mycarInfo, etcInfo); //3. 인기도(차량정보, UX정보, 따로 쓰는경우 Num)	
+mycarCell.rate(mycarInfo, rateText); //4. 잔가율(차량정보, x라벨)
+
+var loading = {//********** ********** ********** 5. 로딩추가 
+	showOverlay:  function(){//show
+		var $loadingDim = $('<div class="loading_dim"></div>'),
+			$loadingEl = $('<div class="loading_el"></div>'),	
+			width       = 0,
+			total		= 0,
+			left        = 0;
+			speed = 100;
+		
+		if ($.contains($("body")[0], $("div.loading_dim")[0])) {// 딤처리 있으면 return
+			return;
+		}
+		$loadingDim.append($loadingEl).appendTo('body');
+		
+        	width = $('.loading_el').width();
+        	total = width * -10;
+        	function timer() {
+        		left -= width;
+        		(left <= total) ? left = 0 : '';
+        		$('.loading_el').css('background-position', left );
+        		setTimeout(timer, speed);
+        	}
+        	if($.contains($("body")[0], $("div.loading_dim")[0])){
+        		setTimeout(timer, speed);
+        	}
+	},
+	hideOverlay :  function(){//hide
+		$('.loading_dim').fadeOut(200,function(){
+			$('.loading_dim').remove();	
+		});
+	}
+}
+loading.showOverlay();//실행
+setTimeout(function(){
+	loading.hideOverlay();//중지
+},200);
+</code>
+</pre>
+<!--// codebox -->      
+	        </div>
+		</section>
+        <!--##################### 시세 조회 #####################-->
+		    
+    </div><!--// contents -->
+    
+	<script src="js/jquery-ui.min.js"></script><!-- jquery ui-->
+	<script src="js/jquery.ui.touch-punch.js"></script><!-- jquery ui using mobile -->
+    <script src="js/frontUxer.js"></script><!-- plugin -->
+    
+</body>
+</html>

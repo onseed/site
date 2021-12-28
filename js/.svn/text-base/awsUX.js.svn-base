@@ -1,0 +1,704 @@
+/*
+;(function($) {
+	$.fn.extend({
+		uniqueId : function(opt){
+	
+		}
+	});
+});
+ */
+
+'use strict';
+var uniqueId = (function() {// unique 아이디
+		var id = 0;
+		return function() {
+			return id++;
+		}
+	})(), 
+	isTouch = ('ontouchstart' in window),//터치 여부
+	isMobile = ('orientation' in window) || isTouch  === true;//모바일여부
+
+$._cookie = {//쿠키 ???????????????????
+	set: function(name, value, term, path, domain) {
+		var cookieset = name + '=' + value + ';',
+			expdate;
+		if ( term ) {
+			expdate = new Date();
+			expdate.setTime( expdate.getTime()+term*1000*60*60*24 ); // term 1 is a day
+			cookieset += 'expires=' + expdate.toGMTString() + ';';
+		}
+		if (path){
+			cookieset += 'path=' + path + ';';
+		}
+		if (domain){
+			cookieset += 'domain=' + domain + ';';
+		}
+		document.cookie = cookieset;
+	},
+	get: function(name) {
+		var match = ( document.cookie || ' ' ).match( new RegExp(name+' *= *([^;]+)') );
+		return ( match )? match[1] : null;
+	}
+};//쿠키 END
+
+var awsUi = {
+	browserCheck : function(opt){//브라우저 체크
+		var
+			ua = navigator.userAgent,
+			div = document.createElement('div'),
+			
+			// ie 버전 체크. 결과값은 MSIE 7,7 ~10. ie11 : rv:11.0) like Gecko,,11.0
+			ie = ua.match(/(?:msie ([0-9]+)|rv:([0-9\.]+)\) like gecko)/i),
+			
+			// 접두사 설정
+			prefix = ['Webkit', 'Moz', 'O'],			
+			transition = 'transition',
+			transform = 'transform',
+			
+			// requestanimationframe : 스크립트 기반 애니메이션용 타이밍 컨트롤. https://msdn.microsoft.com/ko-kr/library/windows/apps/hh920765.aspx
+			requestanimationframe = 'requestAnimationFrame',
+			cancelanimationframe = 'CancelAnimationFrame',
+			
+			transforms = {
+				translate3d: 'translate3d(0px, 0px, 0px)',
+				translate: 'translate(0px, 0px)',
+				scale3d: 'scale3d(1, 1, 1)',
+				scale: 'scale(1, 1)'
+			},
+			browser = $.browser, // 1.8.x 버전까지 사용. 이후 버전은 jquery-migrate.min.js 추가해야지 사용가능.
+			support = $.support,
+			version, i;
+		
+		// $.browser 지원이 안되면 객체로 생성?
+		if ( !browser ) {
+			$.browser = browser = {};
+		}
+		
+		// test 값 true,false 값 적용
+		browser.local = !(/^http:\/\//).test(location.href);
+		browser.firefox = (/firefox/i).test(ua);
+		browser.webkit = (/applewebkit/i).test(ua);
+		browser.chrome = (/chrome/i).test(ua);
+		browser.opera = (/opera/i).test(ua);
+		browser.ios = (/ip(ad|hone|od)/i).test(ua);
+		browser.android = (/android/i).test(ua);
+		browser.safari = browser.webkit && !browser.chrome;
+		
+		// 터치가능여부 체크
+		support.touch = browser.ios || browser.android || (document.ontouchstart !== undefined && document.ontouchstart !== null);
+		browser.mobile = support.touch && ( browser.ios || browser.android );
+		
+		// browser flase 값 삭제
+		for ( i in browser ) {
+			if( !browser[i] ) {
+				delete browser[i];
+			}
+		}
+		// os check
+		browser.os = (navigator.appVersion).match(/(mac|win|linux)/i);
+		browser.os = ( browser.os )? browser.os[1].toLowerCase() : '';
+		
+		// ios, android version check
+		if ( browser.ios || browser.android ) {
+			version = ua.match(/applewebkit\/([0-9.]+)/i);
+			if ( version && version.length > 1 ) {
+				browser.webkitversion = version[1];
+			}
+			if ( browser.ios ) {
+				version = ua.match(/version\/([0-9.]+)/i);
+				if ( version && version.length > 1 ) {
+					browser.ios = version[1];
+				}
+			}else if( browser.android ) {
+				version = ua.match(/android ([0-9.]+)/i);
+				if ( version && version.length > 1 ) {
+					browser.android = parseInt(version[1].replace(/\./g, ''));
+				}
+			}
+		}
+		
+		// ie 추가
+		support.svgimage = true;
+		support.pointerevents = true;
+		
+		// ie version check 및 svgimage, poiterevents 재설정
+		if ( ie ){
+			browser.ie = ie = parseInt( ie[1] || ie[2] );
+			if ( 9 > ie ){
+				browser.oldie = true;
+			} else if ( 9 == ie ){
+				prefix.push('ms');
+			}
+			if ( 11 > ie ){
+				support.pointerevents = false;
+			}
+			if ( 9 > ie ){
+				support.svgimage = false;
+			}
+		}
+		
+		// window.history.pushState(data, title [, url ] ) https://www.w3.org/TR/2011/WD-html5-20110113/history.html#dom-history-pushstate
+		support.pushstate = !!history.pushState;
+		support.mediaquery = typeof(window.matchMedia) == 'function' || !browser.oldie;
+		
+		// placeholder 지원여부
+		var ip_test2 = document.createElement('input'),
+			ie_ph = ('placeholder' in ip_test2);
+		
+		// media.canPlayType(type) 재생여부 판단하여 불가능:'', 가능:maybe or probably 반환. ie8은 undefinded
+		support.video = document.createElement('video').canPlayType !== undefined;
+		
+		$.fn.decideClass = function(classname, condition) {
+			return this[condition ? 'addClass' : 'removeClass'](classname);
+		}
+		
+		$(document.documentElement)
+			.addClass(browser.os)
+			.addClass(browser.chrome ? 'chrome' : browser.firefox ? 'firefox' : browser.opera ? 'opera' : browser.safari ? 'safari' : browser.ie ? 'ie ie'+browser.ie : '')
+			.addClass(browser.webkit ? 'webkit' : '')
+			.addClass(browser.ie && 8 > browser.ie ? 'ie8' : '')
+			.addClass(browser.mobile ? 'mobile' : 'desktop')
+			.addClass(browser.ios ? 'ios' : browser.android ? 'android' : '');
+		
+		if(opt=="full"){
+			
+			// css3 check
+			support.backgroundsize = 'backgroundSize' in div.style;
+			if ( support.backgroundsize ) {
+				div.style.backgroundSize = 'cover';
+				support.backgroundsize = div.style.backgroundSize == 'cover';
+			}
+		    try {
+		        div.style.background = 'rgba(0, 0, 0, 0)';
+		        support.rgba = div.style.background == 'rgba(0, 0, 0, 0)';
+		    } catch(e) {
+		        support.rgba = false;
+		    }
+		    
+		    support.canvas = document.createElement('canvas');
+		    support.canvas = support.canvas.getContext && support.canvas.getContext('2d');
+		    
+		    // transform check : 지원여부에 따라 접두사 추가
+		    if ( div.style[transform] != undefined ) {
+		    	support.transform = transform;
+		    } else {
+		    	transform = 'Transform';
+		    	for ( i = 0; i < 4; i++ ) {
+		    		if ( div.style[prefix[i]+transform] !== undefined ) {
+		    			support.transform = prefix[i]+transform;
+		    			break;
+		    		}
+		    	}
+		    }
+
+		    if ( support.transform ) {
+		    	transform = support.transform;
+		    	for ( i in transforms ) {
+		    		div.style[transform] = '';
+		    		div.style[transform] = transforms[i];
+		    		support[i] = div.style[transform];
+		    	}
+		        /* if ( browser.ie && 10 > browser.ie ) { }
+		        if ( browser.android && 430 > browser.android ) { }*/
+		    }
+
+		    // transition check : 지원여부에 따라 접두사 추가
+		    if ( div.style[transition] != undefined ) {
+		    	support.transition = transition;
+		    } else {
+		    	transition = 'Transition';
+		    	for ( i = 0; i < 4; i++ ) {
+		    		if ( div.style[prefix[i]+transition] !== undefined ) {
+		    			support.transition = prefix[i]+transition;
+		    			break;
+		    		}
+		    	}
+		    }
+		    
+		    // requestanimationframe check : 지원여부에 따라 접두사 추가
+		    if ( window[requestanimationframe] ) {
+		    	support.requestanimationframe = true;
+		    } else {
+		    	requestanimationframe = 'RequestAnimationFrame';
+		    	for ( i = 0; i < 4; i++ ) {
+		    		if ( window[prefix[i]+requestanimationframe] !== undefined ) {
+		    			window.requestAnimationFrame = window[prefix[i]+requestanimationframe];
+		    			window.cancelAnimationFrame = window[prefix[i]+cancelanimationframe];
+		    			support.requestanimationframe = true;
+		    			break;
+		    		}
+		        }
+		    }
+		    
+		    // requestanimationframe 지원안하는 브라우저를 위한 function 생성
+		    if ( !support.requestanimationframe ) {
+		    	window.requestAnimationFrame = (function() {
+		    		var lasttime = 0;
+		    		return function(callback) {
+		    			var currenttime = gettime(); // gettime() : 시간 값을 밀리초 단위
+		    			var timetocall = Math.max(0, 16-(currenttime-lasttime));
+		    			lasttime = currenttime+timetocall;
+		    			return setTimeout(function() { callback(currenttime+timetocall); }, timetocall);
+		    		}
+		    	})();
+		    	window.cancelAnimationFrame = function(id) {
+		    		clearTimeout(id);
+		    	}
+		    }
+		    
+		    div = null;
+		    
+		    $(document.documentElement)
+		    .addClass(support.transition ? 'transition' : 'notransition')
+		    .addClass(support.transform ? 'transform' : 'notransform')
+		    .addClass(support.backgroundsize ? 'backgroundsize' : 'nobackgroundsize')
+		    .addClass(support.rgba ? 'rgba' : 'norgba')
+		    .addClass(support.svgimage ? 'svg' : 'nosvg')
+		    .addClass(support.pointerevents ? 'pointerevents' : 'nopointerevents')
+		    .addClass(support.opacity ? 'opacity' : 'noopacity');
+		}
+		
+		if (!window.console) {
+			window.console = {};
+			window.scard.log.debug = window.console.table = window.console.error = window.console.clear = function() {};
+		}
+		if(opt=="full"){
+			console.log("브라우저 Full 체크: awsUi.browserCheck('full');");
+		}else{
+			console.log("브라우저 Min 체크: awsUi.browserCheck();");
+		}
+		
+	},//브라우저 체크 END
+	
+	makeId : function(obj, name) {//ID 생성
+		for (i = 0; i < $(obj).length; i++) {
+			var inputId = name + uniqueId();
+			$(obj).eq(i).attr('id', inputId);
+		}
+		console.log("유니크 ID 생성: awsUi.makeId('selecter', 'Id Name');");
+	},//ID 생성 END
+	
+	layerPop : function(){//레이어 팝업
+		$.fn.extend({//플러그인형태
+			layerPopUp : function(opt) {
+				var defaults = {
+					maxW : 500,
+					maxH : 0,
+					auto : false,
+					mg : 15,
+					popClose : false,
+					qspop : false,//모달 중복
+					callback:'', //콜백 추가
+					ps : '', // 'top', 'bottom'
+					hFix : false, // height 고정
+					scrlLock : false // 스크롤 막기 옵션
+				},
+				opt = $.extend(defaults, opt);
+				
+				return this.each(function(){
+					var $this		= $(this),
+						$win			= $(window),
+						$doc			= $(document),
+						$body		= $('body'),
+						$wrapper	= $('.wrap'),
+						auto			= opt.auto,
+						maxW			= opt.maxW,
+						maxH			= opt.maxH,
+						mg				= opt.mg,
+						popClose		= opt.popClose,
+						qspop			= opt.qspop,
+						ps				= opt.ps,
+						target		= $this.attr('id'),
+						$btn			= $('[data-target="' + target + '"]'),
+						$modal		= $('#' + target),
+						$modal_h	= $modal.children('header'),
+						$modal_c	= $modal.children('.cont'),
+						$modal_f		= $modal.children('.modal_footer'),
+						$modalBtn	= $modal.find('button, a'),
+						modalBg		= '<div class="modal_bg"></div>',
+						$modalBg	= $('.modal_bg'),
+						modalBg2	= '<div class="modal_bg2"></div>',
+						$modalBg2	= $('.modal_bg2'),
+						mhH			= $modal_h.outerHeight(),
+						mcH			= $modal_c.outerHeight(),
+						mfH			= $modal_f.outerHeight(),
+						winW			= $win.width(),
+						layW			= Number(winW - 20),
+						layH,
+						nPs			= $(document).scrollTop(),
+						callback		= opt.callback, //콜백
+						scrlLock		= opt.scrlLock, //스크롤 막기 옵션
+						hFix			= opt.hFix, //height 고정
+						wH;
+						
+						$this.data('ps', ps);
+						
+					//ux15 오버플로우 속성 안쓰고, 마우스 스크롤 막기
+					// left: 37, up: 38, right: 39, down: 40,
+					// spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
+					var keys = {37: 1, 38: 1, 39: 1, 40: 1};
+			
+					function preventDefault(e) {
+						e = e || window.event;
+						if (e.preventDefault)
+							e.preventDefault();
+						e.returnValue = false
+					}
+					
+					function preventDefaultForScrollKeys(e) {
+						if (keys[e.keyCode]) {
+							preventDefault(e);
+							return false;
+						}
+					}
+					
+					function disableScroll() {
+						if (window.addEventListener){ // older FF
+							window.addEventListener('DOMMouseScroll', preventDefault, false);
+						}
+						window.onwheel = preventDefault; // modern standard
+						window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
+						window.ontouchmove  = preventDefault; // mobile
+						document.onkeydown  = preventDefaultForScrollKeys;
+					}
+					
+					function enableScroll() {
+						if (window.removeEventListener){
+							window.removeEventListener('DOMMouseScroll', preventDefault, false);
+						}
+						window.onmousewheel = document.onmousewheel = null;
+						window.onwheel = null;
+						window.ontouchmove = null;
+						document.onkeydown = null;
+					}
+					
+					var app = {
+							
+						show : function(target) {
+							$modal = $('#' + target);
+							$modal.css({
+								display : 'block',
+								opacity : 0
+							});
+							
+							wH = $win.height();
+							winW = $win.width(),
+							layW = Number(winW - (mg*2));
+							layH = $modal.outerHeight();
+							
+							var _t	= (wH < layH) ? mg : '50%',
+								_w		= 'auto',   //($this.data('ps') === 'top') ? winW : layW,
+								_mw	= maxW,
+								_l		= mg, //'50%'
+								_r		= mg, //'50%'
+								_ml	= 0, //($this.data('ps') === 'top') ? 0 : (layW / 2) * -1,
+								_mt	= (layH / 1.5) * -1,
+								_mt2	= (wH < layH) ? 0 : (layH / 2) * -1 ;
+							
+							// 모바일 메인 상태진행 배너
+							if ($this.data('ps') === 'top') {
+								_t = 0,
+								_mw = '',
+								_l = 0,
+								_r = 0,
+								_mt = layH * -1,
+								_mt2 = 0;
+							}
+							
+							//maxH 있을때
+							if(maxH !== 0){
+								$modal_c.css({'height':maxH,'overflowY': 'auto'});
+								//layH	= $('#' + target).outerHeight();
+								layH	= maxH + $('#' + target).children('header').outerHeight() + $('#' + target).children('.modal_footer').outerHeight();
+								_t 		= (wH < layH) ? mg : '50%';
+								_mt2	= (wH < layH) ? 0 : (layH / 2) * -1 ;
+								//console.log(target +', _mt2: '+_mt2 + ' , layH: '+layH + ', modal_footer: ' +$('#' + target).children('.modal_footer').outerHeight());
+								
+								$modal
+									.css({
+										width : _w,
+										top : _t,
+										left : _l,
+										right : _r,
+										marginLeft : _ml,
+										marginTop : _mt,//marginTop : '-500px',
+										maxWidth : _mw
+									})
+									.stop().animate({
+										opacity : 1,
+										marginTop : _mt2,
+									}, 200, function(){
+										marginTop : _mt2
+									}); //console.log(_mt +', _mt2: '+ _mt2 +' : '+ wH + ' : '+layH);
+							} else{
+								if ($this.data('ps') === 'bottom') {
+									$modal
+										.css({
+											width : _w,
+											bottom : 0,
+											opacity : 1,
+											left : 0,
+											right : 0,
+											marginLeft : _ml,
+											marginTop : 0,
+											marginBottom : _mt,
+											maxWidth : '100%'
+										})
+										.stop().animate({
+											opacity : 1,
+											marginBottom : 0,
+											left : 0,
+										}, 200, function(){
+											
+										});//console.log('_l: '+_l+', _r: '+_r + ', _t:'+_t);
+								}else{
+									$modal
+										.css({
+											width : _w,
+											top : _t,
+											left : _l,
+											right : _r,
+											marginLeft : _ml,
+											marginTop : _mt,
+											maxWidth : _mw
+										})
+										.stop().animate({
+											opacity : 1,
+											marginTop : _mt2,
+										}, 200, function(){
+											
+										});//console.log('_l: '+_l+', _r: '+_r + ', _t:'+_t);
+								}
+							}
+							
+							/*
+							if(isMobile !== true){disableScroll();}// 모바일에선 안씀
+							if(isMobile == true){// 모바일 스크롤 막기
+								$('html').css('overflow','hidden');
+								if(scrlLock === true ){//스크롤 막기 옵션 true일때
+									disableScroll();//console.log('scrlLock');
+								}
+							}*/
+							
+							$('html').css('overflow','hidden');
+							if(scrlLock === true ){//페이지내 휠스크롤 안쓸때
+								disableScroll();//console.log('scrlLock');
+							}
+							
+							if ($this.data('ps') !== 'top') {
+								$(window).resize(function(){
+									var layH2   = $modal.outerHeight();
+									if (wH < layH || wH < (layH2 + mg*2)) {
+										app.overLayer(target);
+									}
+									if ($modal.outerWidth() >= maxW) {
+										var maxW_l = ($win.width() - maxW) / 2;
+										$modal.css('left', maxW_l);
+									} else {
+										$modal.css('left', mg );
+									}
+			                      }).resize();                
+							}
+							
+							$modal.attr('tabindex', 0).focus();
+							
+							setTimeout(function(){//ux15 quick start용 모달위에 뜰경우
+								if(qspop === true){
+									// return false;
+									$body.append(modalBg2);
+									$modalBg2 = $('.modal_bg2');
+									$modal.css('z-index', 10003);
+									$modalBg2.css('z-index', 10002).css('opacity', 0.5).on('click', function(){
+										app.hide();
+									});
+			                      } else {
+			                          $body.append(modalBg);
+			                          $modalBg = $('.modal_bg');
+			                          $modalBg.css('opacity', 0.7).on('click', function(){
+			                              app.hide();
+			                          });
+			                      }
+							},30);
+							$modalBtn.off('click.layerPopUp_close').on('click.layerPopUp_close', function() {
+								($(this).data('dismiss') === 'modal') ? app.hide() : '';
+							});
+						},
+						
+						overLayer : function(){
+							$modal = $('#' + target);
+							$modal_h = $modal.children('header');
+							$modal_c = $modal.children('.cont');
+							$modal_f  = $modal.children('.modal_footer');
+							
+							wH  = $win.height();
+							mhH = $modal_h.outerHeight();
+							mfH = $modal_f.outerHeight();
+							
+							$modal.stop().animate({
+								opacity:1,
+								top : mg,
+								marginTop : 0
+							},300);
+							
+							//maxH
+							if(maxH !== 0){
+								$modal_c.removeAttr('style').css({
+									height: maxH, overflowY: 'scroll',
+									boxSizing : 'border-box'
+								});
+							}else{
+								$modal_c.removeAttr('style').css({
+									height: wH - (mfH + mhH + (mg*2)), overflowY: 'scroll',
+									boxSizing : 'border-box'
+								});
+							}
+							
+							//$modal_f.css('border-top', '1px solid #d4d4d4');
+							console.log("overLayer");
+						},
+						hide : function() {
+							$wrapper.css({
+								height : '',
+								overflow: ''
+							});
+							$modal.stop().animate({
+								opacity : 0,
+								marginTop : (layH / 1.5) * -1
+							}, 300, function(){
+								$modal.css('display', 'none' ).removeAttr('tabindex').removeAttr('style');
+								
+								//height fix 옵션
+								if(hFix){
+									
+								} else{
+									$modal_c.removeAttr('style');
+								}
+							});
+							
+							$modalBg = $('.modal_bg');
+							$modalBg2 = $('.modal_bg2');
+							//$modalBg.css('opacity', 0).remove();
+							//$modalBtn.removeClass('on hover');
+							
+							//ux15 스크롤 막았던거 품
+							enableScroll();
+							$('html').removeAttr('style');
+							
+							if ($btn.length < 1) {
+								$('#wrap').attr('tabindex',0).focus();
+							} else {
+								$btn.focus();
+							}
+							
+							//ux15 quick start용 모달위에 뜰경우
+							if(qspop === true){
+								$modalBg2.css('opacity', 0).remove();
+								$modalBtn.removeClass('on hover');
+							} else {
+								$modalBg.css('opacity', 0).remove();
+								$modalBtn.removeClass('on hover');
+							}
+							if ($btn.length < 1) {
+								$('#wrap').attr('tabindex',0).focus();
+							} else {
+								$btn.focus();
+							}
+						},
+						
+						imprison : function(){ //웹접근성 탭처리
+							var $modalFocus = $modal.find('a, input, button, label');
+							
+							$modalFocus.eq(0).addClass('fst');
+							$modalFocus.eq(-1).addClass('end');
+							$modal.on('keydown.modal',function(e){
+								if(e.shiftKey && e.keyCode == 9) {
+									e.preventDefault();
+									$modal.find('.end').focus();
+								}
+							});
+							
+							$modal.find('.fst').off('keydown.layerpop').on('keydown.layerpop',function(e){
+								$modal.off('keydown.modal');
+								if(e.shiftKey && e.keyCode == 9) {
+									e.preventDefault();
+									$modal.find('.end').focus();
+								}
+							});
+							$modal.find('.end').off('keydown.layerpop').on('keydown.layerpop',function(e){
+								$modal.off('keydown.modal');
+								if(!e.shiftKey && e.keyCode == 9) {
+									e.preventDefault();
+									$modal.find('.fst').focus();
+								}
+							});
+						},
+						
+						eventHandler : function() {
+							if (auto) {
+								// if (!$._cookie.get(target)) {쿠키적용여부 확인
+									app.show(target);
+									app.imprison();
+								// }
+							}
+							
+							if (popClose) {
+								app.hide();
+								setTimeout(function(){
+									$modalBg.css('opacity', 0).remove();
+									$modalBg2.css('opacity', 0).remove();
+								},100);
+							}
+							
+							$btn.off('click.layerPopUp_open').on('click.layerPopUp_open', function(e) {
+								e.preventDefault();
+								target = $(this).data('target');
+								
+								if (!$(this).data('clicked')) {
+									app.show(target);
+									app.imprison();
+									$(this).data('clicked', true);
+								} else {
+									app.show(target);
+								}
+							});
+							
+							//콜백이 함수면 콜백 호출
+							if($.isFunction(callback)){
+								callback.call(this);
+							}
+						}
+					}
+					app.eventHandler();
+				});
+			}
+		});//플러그인형태
+		console.log("레이어 팝업: awsUi.layerPop();");
+	},//레이어 팝업 END	
+	
+	'init' : function() {
+		awsUi.browserCheck(); //브라우저체크
+		awsUi.layerPop(); //레이어팝업
+	}
+}
+awsUi.init();
+
+//$(document).ready(function(){
+$(function() {
+
+});
+
+/*******************************************************************************
+ * 파일명	: plugins.js
+ * 설명		: 공통 plugin
+ * 작성자	: netive
+ * 최종수정일	: 2016.07.10.15:52
+*******************************************************************************/
+
+/*
+* expand jquery to support
+* by @psyonline(http://www.psyonline.kr/,majorartist@gmail.com)
+*/
+
+
+    
+

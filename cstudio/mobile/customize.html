@@ -1,0 +1,287 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<title> C STUDIO </title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=2.0" /><!--20150914 maximum-scale 수정-->
+<!--[if IE]>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<![endif]-->
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script><!--jquery flatform.js-->
+<!--[if lt IE 9]>
+<script src="js/html5shiv.js" type="text/javascript"></script>
+<![endif]-->
+<script type="text/javascript" src="js/common.js"></script><!-- common.js -->
+<script type="text/javascript" src="js/jquery.flexslider.js"></script><!-- jquery.flexslider.js -->
+<link rel="stylesheet" type="text/css" href="css/basic.css" /><!--basic.css-->
+<link rel="stylesheet" type="text/css" href="css/custom_ui.css" /><!--custom_ui.css 20151214 추가-->
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.customize_prodTp .slides_wrap').flexslider({//이미지 슬라이더 20151013 수정
+		animation: "slide",
+		slideshow: false,
+		/*controlNav: false,*/
+		controlNav: "thumbnails",
+		animationLoop: false,
+		start: function(){
+			var detaul_view_length = $('.customize_prodTp .flex-control-thumbs li').length; //슬라이드 length chk
+			$('.customize_prodTp .flex-control-thumbs li').addClass("wd"+detaul_view_length);
+		
+		},
+		after: function(){ //썸네일 클릭시 이동 20151214 추가
+			$('html, body').stop().animate({ scrollTop: 318 }, 300); //타이틀로 이동
+		}
+	});
+});
+</script>
+</head>
+
+<body>
+
+<!--wrap-->
+<div class="wrap">
+
+<!--###### headerArea ######-->
+<div class="headerArea">
+	<h1 class="logo"><a href="/"><span>C STUDIO</span></a></h1><!--로그인 전-->
+	<!--<h1 class="logo on"><a href="/"><span>C STUDIO</span></a></h1> 로그인 후-->
+
+	<div class="gnb">
+		<a href="#" class="go_couronne"><span>COURONNE</span></a>
+		<ul>
+			<!--로그인 전-->
+			<li><a href="#">MY PAGE</a></li>
+			<li><a href="#">CART</a></li>
+			<!--//로그인 전-->
+			<!--로그인 후
+			<li><a href="#">LOGOUT</a></li>
+			<li><a href="#">MY PAGE</a></li>-->
+			<!--//로그인 후-->
+		</ul>
+	</div>
+
+	<div class="head_menu">
+		<ul>
+			<li><a href="#">YOUR STUDIO</a></li>
+			<li><a href="#">CUSTOMIZE</a></li>
+			<li><a href="#">MY STUDIO</a></li>
+		</ul>
+	</div>
+</div>
+<!--###### //headerArea ######-->
+
+<!--###### contentArea ######-->
+<div class="contentArea">
+<!--내용 영역-->
+	
+	<!--commtp_tit 20151214 수정-->
+	<div class="mov_tit">
+		<h3 class="commtp_tit customize">
+			<span class="inner">
+				<span class="b_icn"></span>
+				<b>CUSTOMIZE</b>
+				<span class="s_txt">C STUDIO, DESIGN YOUR COURONNE!</span>
+			</span>
+		</h3>
+		<div class="movbox">
+			<a href="customize_view_pop7.html" target="_blank"><img src="img/pic_mov.png" alt="가이드 동영상 보기"/></a>			
+		</div>
+		<a href="#" class="mov_more" onclick=" guide_popup_open(); return false;">가이드 보기</a>
+	</div>
+	<!--//commtp_tit-->
+
+	<!--customize_prodTp-->
+	<div class="customize_prodTp">
+		<!--타이틀 20151214 수정-->
+		<h4><span></span> CHOOSE YOUR BAG <span></span></h4>
+		<!--//타이틀 20151214 수정-->
+
+		<!--slides_wrap-->
+		<div class="slides_wrap">
+			<ul class="slides">
+				<!--리스트-->
+				<li data-thumb="img/temp/tmp_product_thumb1.png">
+					<div class="thumb">
+						<a href="#"><img src="img/temp/tmp_product_type1.jpg" alt="" /></a><!--20151201 제품링크-->
+						<span class="bt">
+							<a href="#" class="bt_rotate bt_rotate_tp1">제품 360도 회전</a>
+						</span>
+						<!--20150909 BEST/NEW아이콘 추가-->
+						<span class="ic_wrap">
+							<span class="ic_bt ic_best"><span class="ic"></span>BEST</span>
+							<span class="ic_bt ic_new"><span class="ic"></span>NEW</span>
+						</span>
+						<!--//BEST/NEW아이콘 추가-->
+					</div>
+					<div class="thumb_etc">
+						<span class="prod_nm">New Stephanie</span>
+						<span class="prod_bt">
+							<img src="img/btn_soldout.png" alt="SOLD OUT" height="30px" /><!--20150909 SOLD OUT 추가-->
+						</span>
+					</div>
+				</li>
+				<!--//리스트-->
+				<!--리스트-->
+				<li data-thumb="img/temp/tmp_product_thumb2.png">
+					<div class="thumb">
+						<a href="#"><img src="img/temp/tmp_product_type2.jpg" alt="" /></a><!--20151201 제품링크-->
+						<span class="bt">
+							<a href="#" class="bt_rotate bt_rotate_tp2">제품 360도 회전</a>
+						</span>
+					</div>
+					<div class="thumb_etc">
+						<span class="prod_nm">Jackie Cross</span>
+						<span class="prod_bt">
+							<a href="#"><img src="img/btn_customize.png" alt="CUSTOMIZE IT" height="30px" /></a>
+						</span>
+					</div>
+				</li>
+				<!--//리스트-->
+				<!--리스트-->
+				<li data-thumb="img/temp/tmp_product_thumb3.png">
+					<div class="thumb">
+						<a href="#"><img src="img/temp/tmp_product_type3.jpg" alt="" /></a><!--20151201 제품링크-->
+						<span class="bt">
+							<a href="#" class="bt_rotate bt_rotate_tp3">제품 360도 회전</a>
+						</span>
+					</div>
+					<div class="thumb_etc">
+						<span class="prod_nm">Amy</span>
+						<span class="prod_bt">
+							<a href="#"><img src="img/btn_customize.png" alt="CUSTOMIZE IT" height="30px" /></a>
+						</span>
+					</div>
+				</li>
+				<!--//리스트-->
+				<!--리스트-->
+				<li data-thumb="img/temp/tmp_product_thumb4.png">
+					<div class="thumb">
+						<a href="#"><img src="img/temp/tmp_product_type4.jpg" alt="" /></a><!--20151201 제품링크-->
+						<span class="bt">
+							<a href="#" class="bt_rotate bt_rotate_tp4">제품 360도 회전</a>
+						</span>
+					</div>
+					<div class="thumb_etc">
+						<span class="prod_nm">Stephanie Wallet</span>
+						<span class="prod_bt">
+							<a href="#"><img src="img/btn_customize.png" alt="CUSTOMIZE IT" height="30px" /></a>
+						</span>
+					</div>
+				</li>
+				<!--//리스트-->
+				<!--리스트-->
+				<li data-thumb="img/temp/tmp_product_thumb5.png">
+					<div class="thumb">
+						<a href="#"><img src="img/temp/tmp_product_type5.jpg" alt="" /></a><!--20151201 제품링크-->
+						<span class="bt">
+							<a href="#" class="bt_rotate bt_rotate_tp4">제품 360도 회전</a>
+						</span>
+					</div>
+					<div class="thumb_etc">
+						<span class="prod_nm">제품5</span>
+						<span class="prod_bt">
+							<a href="#"><img src="img/btn_customize.png" alt="CUSTOMIZE IT" height="30px" /></a>
+						</span>
+					</div>
+				</li>
+				<!--//리스트-->
+			</ul>
+		</div>
+		<!--//slides_wrap-->
+	</div>
+	<!--//customize_prodTp-->
+
+<!--//내용 영역-->
+</div>
+<!--###### //contentArea ######-->
+
+<!--###### footerArea ######-->
+<div class="footerArea">
+	<div class="f_menu">
+		<ul class="f_menu_top">
+			<li><a href="javascript:login('reload');">로그인</a></li>
+			<li><a href="javascript:memberJoin();">회원가입</a></li>
+			<li><a href="https://member.kolon.com/mobile/policy/policy.jsp" target="_blank">이용안내</a></li>
+			<li><a href="javascript:callCenter('main');">고객센터</a></li>
+		</ul>
+		<ul class="f_menu_btm">
+			<li><a href="/about/shopInfo.jsp">store</a></li>
+			<li><a href="http://m.thecouronne.com/">english</a></li>
+		</ul>
+	</div>
+
+	<ul class="f_sns">
+		<li><a href="http://www.facebook.com/thecouronne" class="facebook"><span>facebook</span></a></li>
+		<li><a href="http://instagram.com/thecouronne" class="instagram"><span>instagram</span></a></li>
+	</ul>
+	
+	<div class="f_info_wrap">
+		<div class="f_info">
+			<h2><img src="img/logo_footer.png" alt="KOLON INDUSTRIES" /></h2>
+			<div class="info">
+				코오롱인더스트리 FnC부문<br />
+				대표이사:박동문 | 개인정보관리 책임자:경영지원본부 손정현상무<br />
+				개인정보관리 담당자 : 빅데이터팀 김정혁 과장<br />
+				서울시 서초구 서초동 1317-23 GT타워 | TEL : 1588-7667<br />
+				EMAIL : <a href="mailto:COURONNEmall@kolon.com">COURONNEmall@kolon.com</a><br />
+				통신판매업신고 제2012-서울서초 0593호<br />
+				사업자등록번호 : 138-85-19612 <a href="http://www.ftc.go.kr/info/bizinfo/communicationList.jsp" class="business">사업자등록확인</a>
+				<span class="escro"><img src="img/escro02.gif" alt="LG U+" />  에스크로 고객님은 안전거래를 위해 
+				결제시 저희 사이트<br/>
+				에서 가입한 LG U+의 구매안전서비스를 이용하실 수 있습니다.<br/> 
+				<a href="https://pgweb.uplus.co.kr/pg/wmp/mertadmin/jsp/mertservice/s_escrowYn.jsp?mertid=joykolon" class="joining">가입사실 확인</a></span>
+			</div>
+			<div class="copyright">Copyright ⓒ 2013 by COURONNE All rights reserved</div>
+		</div>
+	</div>
+</div>
+<!--###### //footerArea ######-->
+
+</div>
+<!--//wrap-->
+
+<!-- 20151214 가이드 레이어팝업 -->
+<script type="text/javascript">
+function pop_vertical(){//팝업 센터 정렬
+	var pop_height = $('.layer_popup .popup').outerHeight();
+	var pop_height_device = -1 * (pop_height / 2);
+
+	if (pop_height > $(window).height())
+	{
+		$('.layer_popup .popup').css("paddingTop", $(window).scrollTop());
+	} else {		
+		$('.layer_popup .popup').css("paddingTop", ($(window).height()/2) + pop_height_device + $(window).scrollTop());
+	}
+}
+function pop_close(){//팝업 닫기
+	$('.layer_popup, .layer_bg').fadeOut('fast');
+	$('.wrap').css({ height: 'auto', overflow: 'visible' });
+	$('html, body').stop().animate({ scrollTop: 318 }, 300); //타이틀로 이동
+}
+function guide_popup_open(){
+	$('#guide_layer, .layer_bg').fadeIn("fast",function(){
+		pop_vertical();
+	});	
+}
+
+</script>
+<div class="layer_bg"></div>
+<div class="layer_popup" id="guide_layer"> 	
+	<div class="popup">
+		<div class="pop_basic">
+			<h2 class="pop_tit">CUSTMIZE GUIDE</h2>
+			<!--pop_roundBtn-->
+			<div class="popup_roundBtn mb30 alignC">
+				<img src="img/pic_guide_pop.jpg" alt="" width="216"/>
+			</div>
+			<!--//pop_roundBtn-->
+
+			<a href="#" class="pop_cls" onclick="pop_close();return false;"><img src="img/btn_close.png" alt="창닫기" /></a>
+		</div>
+	</div>
+</div>
+
+<!-- 20151214 가이드 레이어팝업 -->
+
+</body>
+</html>

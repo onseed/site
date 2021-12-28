@@ -1,0 +1,28 @@
+https://app.infinityfree.net/
+
+iocust.epizy.com
+
+
+Account Details
+Username: epiz_30429383
+Password: fy62HzhzC4
+
+
+MySQL Details
+MySQL Username: epiz_30429383
+MySQL Password: fy62HzhzC4
+
+MySQL Hostname:	sqlXXX.epizy.com (check the control panel)
+MySQL Port (optional):	3306
+Database Name:	epiz_30429383_XXX (create this in the control panel)
+
+
+FTP Details
+FTP Username:	epiz_30429383
+FTP Password:	fy62HzhzC4
+FTP Hostname:	ftpupload.net
+FTP Port (optional)	21
+
+
+
+

@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>frontUxer</title>
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/frontUxer.css">
+<script src="js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript">         
+    var menuArry = ['2','4'];//1depth, 2depth
+    $(function() {
+        $('nav a:eq('+menuArry[0]+')').addClass('current');
+        $('.subnav a:eq('+menuArry[1]+')').addClass('current');             
+    });
+</script>
+</head>
+<body>
+<script src="js/guide.js"></script><!-- site guide -->
+	
+	<div class="start_dim"><span></span></div>
+	
+	<h1 class="hide"> Operation</h1>
+
+    <div class="contents"><!-- contents -->
+    
+        <!--##################### 이벤트 목록 썸네일화 #####################-->        
+		<section class="aws_box">
+	        <h1 class="aws_tl"> 이벤트 목록 썸네일화 </h1>
+			<ul class="dcs">
+				<li>관리자 개발이 어려운 텍스트기반 목록에 썸네일 및 버튼링크 수동 추가 후 리빌드.</li>
+			</ul>	
+				        
+	        <div class="code_area">
+	        
+	            <div class="play_box">
+	               <!-- code -->
+
+					<!--               
+	               <div class="option_txt">
+
+	                </div>-->
+	                
+					<!-- run_sample -->
+					<div class="run_sample">
+					
+						<style>					
+					.link_arrow_list li{display:block; padding:10px; border-top:1px solid #d9d9d9;}
+					.link_arrow_list li:first-child{border-top:none;}
+					.link_arrow_list li .date{display:inline-block; margin-left:10px; color:#999 !important;}
+					
+.srev_contents .t_group{/*background:#e9ebef;  회색배경 처리*/ transition:none;}
+.srev_contents .link_arrow_list{border-top:none;}
+
+.srev_contents .box_700{max-width:100%; overflow:hidden;}
+.srev_contents .box_700 ul {display:block; width:990px; margin-left:-24px;}
+.srev_contents .box_700 ul:after {display:block; content:''; clear:both;}
+.srev_contents .box_700 li{display:block; width:300px; margin:0;  float:left; padding:0; border:1px solid #d3d5da; padding:2px;  background:#fff; position:relative; overflow:hidden;}
+.srev_contents .box_700 li a{display:block;  margin:0; padding:0; border:none; width:300px; height:243px; box-sizing: border-box;}
+.srev_contents .box_700 li a:after{display:none;}
+.srev_contents .box_700 li a .pic{display:block;}
+.srev_contents .box_700 li a .tl{padding:10px 24px 0px 24px; font-size:16px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;}
+.srev_contents .box_700 li a .date{display:block; position:absolute; left:24px; font-size:14px; color:#303030; letter-spacing:-0.075em;}
+.srev_contents .box_700 li a .overbox{display:block; position:absolute;  width:100%; height:100%; background-color:rgba(255, 255, 255, 0.9); display:none;}
+.srev_contents .box_700 li a .overbox .tl{padding:15px 24px 0px 24px;}
+.srev_contents .box_700 li a .overbox .date{position:relative; padding-top:10px;  left:24px;}
+.srev_contents .box_700 li a .overbox button{display:block; position:absolute; bottom:20px; left:25px; width:250px; height:40px; padding-top:8px; font-weight:bold;}
+.srev_contents .box_700 .sceneMore .scene_more {display: block; width: 980px; margin: 0 auto; margin-top:25px; padding: 37px 0 0 0; border-top: 1px solid #e0e0e0; border-bottom: 1px solid #686868; text-align: center;}
+.srev_contents .box_700 .sceneMore .scene_more span { display: inline-block; font-size: 16px; color: #101010; padding: 0 24px; border-bottom: 2px solid #ececec;}
+.srev_contents .box_700 .sceneMore .scene_more:after { content: ""; display: block; width: 30px; height: 56px; margin: 8px auto 0 auto; background: url(/images/oap/desktop/bg_button_set.png) -300px -200px no-repeat;}
+
+.desktop .srev_contents{width:100%; max-width:100%; /*background:#e9ebef; 회색배경 처리*/}
+.desktop .srev_contents .t_group .tit{font-size:30px;}
+.desktop .srev_contents .box_700{width:966px; margin:0 auto;}
+.desktop .srev_contents .box_700 .link_arrow_list li:first-child{border-top:1px solid #d3d5da;}
+.desktop .srev_contents .box_700 .link_arrow_list li{margin:0; margin:23px 0 0 24px; border-top:1px solid #d3d5da; border-bottom:1px solid #d3d5da; }
+.desktop .srev_contents .box_700 .link_arrow_list p, .desktop .link_arrow_list .date{font-size:14px;  color:#303030;}
+.desktop .srev_contents .box_700 li a .pic img{display:block; width:300px; height:117px;}
+.desktop .srev_contents .box_700 li a .date{bottom:8px;}
+.desktop .srev_contents .back_btn{display:none;}
+.desktop .srev_contents .box_700 li a .overbox .date{top:0;}
+.desktop .srev_contents .box_700 li a .overbox .btn_cont_p{bottom:65px; }
+
+.mobile .srev_contents .box_700{width:auto;}
+.mobile .srev_contents ul {display:block; width:auto; margin:15px 15px 25px 15px; }
+.mobile .srev_contents li{border:1px solid #e9ebef; padding:0px; width:auto; float:none; border-radius:4px; margin-top:15px;}
+.mobile .srev_contents li:after{display:block; content:''; clear:both;}
+.mobile .srev_contents li a{display:block;  margin:0; padding:0; border:none; width:auto; height:125px;} 
+.mobile .srev_contents li a .pic img{display:block; width:120px; height:125px; float:left;}
+.mobile .srev_contents li a .tl{font-size:18px; padding:10px 18px 0px 18px;}
+.mobile .srev_contents li a .date{bottom:10px; left:140px;}
+.mobile .srev_contents li a .overbox{display:block; background-color:rgba(255, 255, 255, 0); top:0; left:0; width:120px; height:125px;}
+.mobile .srev_contents li a .overbox .tl, .mobile .srev_contents li a .overbox .date{display:none;}
+.mobile .srev_contents li a .overbox .btn_cont{display:none;}
+.mobile .srev_contents li a .overbox .btn_cont_p{width:60px; min-width:60px; border:none; height:60px; top:50%; left:50%; margin:-30px 0 0 -30px; background-color:rgba(0, 0, 0, 0.7); font-size:14px; font-weight:normal; border-radius:50%; color:#fff;}
+.mobile .srev_contents .sceneMore .scene_more{width: auto;}					
+					
+						</style>	 					
+					
+						<!-- sample_box -->	                    
+	                    <article class="sample_box bg_psd">
+	                    
+			                <div>
+			                	<button type="button" class="btn_cont ev_rebuild">이벤트 목록 리빌드</button>
+			                </div>
+		
+		                    <div class="ev_contents ">
+		                    	<div class="box_700">
+		                    	
+									<ul class="link_arrow_list">
+										<li>
+											<a href="/oap/center/UOAPCC0902M0.jsp?ntccnid=86">
+												<strong>이벤트 링크 아이디 86</strong>
+												<span class="date">2016.03.15 ~ 2016.7.18</span>
+											</a>
+										</li>
+										<li>
+											<a href="/oap/center/UOAPCC0902M0.jsp?ntccnid=87">
+												<strong>이벤트 링크 아이디 87</strong>
+												<span class="date">2016.03.16 ~ 2016.7.19</span>
+											</a>
+										</li>
+										<li>
+											<a href="/oap/center/UOAPCC0902M0.jsp?ntccnid=97">
+												<strong>이벤트 링크 아이디 97</strong>
+												<span class="date">2016.03.17 ~ 2016.7.20</span>
+											</a>
+										</li>
+									</ul>
+								</div>
+		                    </div>	                    
+	                    
+	                    </article>
+	                    <!--// sample_box -->
+	                    
+	                </div>
+					<!-- run_sample -->	                    
+	                 
+	                    						                
+	                
+
+
+                    <script type="text/javascript">
+                    var urlTxt = 'operation_evlist'; //P92000_new : UOAPCC0901M0
+                    var urlDir = 'img/data/'; //http://40.1.16.31:8921/wcms/oap/images/desktop/
+                    var pcThumbUrl = "<div class='pic'><img src=' "+urlDir+"Nodata_pcimg_300x117.svg' alt=''/></div>", //디폴트 썸네일 PC 
+                    	  moThumbUrl = "<div class='pic'><img src=' "+urlDir+"Nodata_moimg_212x222.svg' alt=''/></div>"; //디폴트 썸네일 MO
+
+                    var reEventList = {		
+                    	'addObj' : function(){//(3/3). 썸네일 및 신청버튼 추가 
+                    		
+                    		//console.log('(3/3). 썸네일 및 신청버튼 추가');
+                    		
+                    		//--------------- 3-1. 썸네일 삽입     ["PC 이미지주소","MO 이미지주소"], appendImg(이미지 주소 변수 , 개발계 이벤트 아이디, 운영계 이벤트 아이디); ------------------//
+                    		var imgUrl97 =  [urlDir+"evt97_benefit_pcimg.svg" , urlDir+"evt97_benefit_moimg.svg.svg"]; //PC, MO
+                    		appendImg(imgUrl97 , 97, 97);//다이렉트오토 혜택알림 서비스		
+
+                    		
+                    		var imgUrl86 =  [urlDir+"evt86_benefit_pcimg.svg" , urlDir+"evt86_benefit_moimg.svg.svg"]; //PC, MO
+                    		appendImg(imgUrl86 , 86, 86);//2018년 6월 다이렉트 오토할부 캐시백+할부금리 혜택
+                    		
+                    		
+                    		//--------------- 3-2. 바로가기 버튼 삽입:  ["텍스트","주소값"], appendLink(이미지 주소 변수, 개발계 이벤트 아이디, 운영계 이벤트 아이디);	 ------------------//		
+                    		var btnUrl86 =  ["바로 신청하기" , "http://www.naver.com"];
+                    		appendLink(btnUrl86, 86, 86);		
+                    		var btnUrl97 =  ["바로 신청하기(새창)" , "javascript:window.open('http://www.naver.com/pram.jsp?4568asd','winPop','width=800, height=500')"];
+                    		appendLink(btnUrl97, 97, 97);
+                    		
+                    		
+                    		var applyUrlIndex = (location.href.indexOf("directauto") > -1) ? true : false;		
+                    		function appendImg(id, index1,  index2){
+                    			var urlIdtxt; 
+                    			if(!applyUrlIndex){//개발계
+                    				urlIdtxt = index1;
+                    			}else{//운영계
+                    				urlIdtxt = index2;
+                    			}
+                    			if(!isMobile){
+                    				$(".srev_contents .box_700 li a[data-id="+urlIdtxt+"] .pic img").attr("src",id[0]);
+                    			}else{				
+                    				$(".srev_contents .box_700 li a[data-id="+urlIdtxt+"] .pic img").attr("src",id[1]);
+                    			}
+                    		}
+                    		function appendLink(id, index1, index2){
+                    			var urlIdtxt; 
+                    			if(!applyUrlIndex){//개발계
+                    				urlIdtxt = index1;
+                    			}else{//운영계
+                    				urlIdtxt = index2;
+                    			}			
+                    			$(".srev_contents .box_700 li a[data-id="+urlIdtxt+"] .overbox").append("<button class='btn_cont_p'>"+id[0]+"</button>");			
+                    			if(id[1].indexOf("window.open") != -1){//새창일경우 버튼 타이틀 추가
+                    				$(".srev_contents li a[data-id="+urlIdtxt+"] .btn_cont_p").attr("title","새창");	
+                    			}
+                    			$(".srev_contents .box_700 li a[data-id="+urlIdtxt+"] .btn_cont_p").click(function(e){
+                    				$(location).attr('href',id[1]);
+                    				e.preventDefault();
+                    			});			
+                    			if(isMobile){
+                    				$(".mobile .srev_contents .box_700 li a .overbox .btn_cont_p").html("바로<br/>신청");
+                    			}else{
+                    				$(".srev_contents .box_700 li a .overbox button:last-child").on('focusout', function(){
+                    					$(this).closest('.overbox').animate({'top': '117'},300,function(){
+                    						$(this).css({'display': 'none'});
+                    					});
+                    	            });				
+                    			}
+                    		}
+                    		alert('(3/3). 썸네일 및 신청버튼 추가');
+                    	},//END
+                    	'relayout' : function(){//(2/3). 리스트 재정의
+                    		//console.log('(2/3). 리스트 재정의');
+                    		$(".srev_contents .box_700 li a").each(function(){
+                    			var eveTitle = "<strong class='tl'>"+ $(this).find("strong").text() + "</strong>", //console.log(eveTitle);
+                    				  evedate = "<span class='date'>"+ $(this).find(".date").text() + "</span>",//	console.log(evedate);
+                    				  overBox = "<div class='overbox'>"+ eveTitle +  evedate + " <button class='btn_cont '>자세히 보기</button> </div>",
+                    				  thisIndex = $(".srev_contents .box_700 li a").index(this)+1; //console.log(thisIndex);
+                    			if(!isMobile){
+                    				ThumbUrl = pcThumbUrl;
+                    			}else{
+                    				ThumbUrl = moThumbUrl;
+                    			}
+                    			$(this).empty().html(ThumbUrl + eveTitle + evedate + overBox);		
+                    			$(this).find(".pic").addClass("eveImg"+ thisIndex);
+                    			
+                    			var thisId = $(this).attr("href");
+                    			thisId = thisId.replace('/oap/center/UOAPCC0902M0.jsp?ntccnid=', ''); //console.log(thisId); ID 추출			
+                    			$(this).attr("data-id",thisId);//ID 추가			
+                    		});
+                    		if(!isMobile){
+                    			$(".srev_contents .box_700 li a").on('mouseover focus', function(){
+                    				$(this).find('.overbox').css({'display': 'block'});
+                    				$(this).find('.overbox').stop().animate({'top': '0'},200);
+                                });
+                    			$(".srev_contents .box_700 li a").on('mouseleave', function(){
+                    				$(this).find('.overbox').animate({'top': '117'},300,function(){
+                    					$(this).css({'display': 'none'});
+                    				});
+                                });
+                    		}	
+                    		alert('(2/3). 리스트 재정의');
+                    	},//END
+                    	'init' : function(){//(1/3). 분기 및 초기화
+                    		//$(window).load(function(){ 페이지 로드시에만 처리
+                    			//console.log('(1/3). 분기 및 초기화');
+                    			var urlIndex = (location.href.indexOf(urlTxt) > -1) ? true : false;
+                    			if(urlIndex){
+                    				$(".ev_contents").addClass('srev_contents');
+                    				
+                    				var contentInit, //로드 컨텐츠
+                    				 contentAdd, //추가 컨텐츠
+                    				 TotalNum,
+                    				 currenNum;
+                    				
+                    				var evlayout = setInterval(function(){					
+                    					if($(".link_arrow_list li").length){						
+                    						//var htmlIndex = (location.href.indexOf("localhost") > -1) ? true : false;
+                    						contentInit = $(".link_arrow_list").html(); //console.log(contentInit); 로드 컨텐츠
+
+                    						$(".link_arrow_list").html(contentInit);
+                    						seanMore();//more 처리
+                    						
+                    						function seanMore(){
+                    							TotalNum = $(".link_arrow_list li").length;
+                    							$(".link_arrow_list li").css("display","none")						
+                    							for(var i=0; i<9; i++){
+                    								$(".link_arrow_list li:eq("+i+")").css("display","block")
+                    							}
+                    							currenNum = $(".link_arrow_list li:visible").length;
+                    							
+                    							reEventList.relayout();
+                    							reEventList.addObj();
+                    							
+                    							$(".srev_contents .box_700").append('<div class="sceneMore"> <a href="#" type="button" class="scene_more"> <span>더보기 ('+currenNum+'/'+TotalNum+')</span> </a></div>');
+                    							
+                    							if(!isMobile){
+                    								$(".srev_contents .box_700 li a .overbox button:last-child").on('focusout', function(){
+                    									$(this).closest('.overbox').animate({'top': '117'},300,function(){
+                    										$(this).css({'display': 'none'});
+                    									});
+                    					            });				
+                    							}							
+                    							
+                    							$(".scene_more").on({
+                    								'click': function(e){	
+                    									alert('더이상의 이벤트가 없습니다.');
+                    									$(this).css("display","none");	
+                    									$(".link_arrow_list li").css("display","block");
+                    									//$(".link_arrow_list li a").eq(9).focus();//자동화 처리 필요
+                    									e.preventDefault();
+                    								}
+                    				            });							
+                    							
+                    						}								
+                    							
+                    						clearInterval(evlayout);//인터벌 중지				
+                    					}	
+                    				},10);
+                    			}
+                    			alert('(1/3). 분기 및 초기화');
+                    		//});
+                    	}//END
+                    }
+                    	  
+                    //reEventList.init();
+                    	  
+                    var prehtml = $('.ev_contents').html();
+                    var cahgenum = 0;
+                      $(".ev_rebuild").click(function(){
+                    	 if(cahgenum == 0 ){//빌드
+                    		 cahgenum = 1;
+                    		 reEventList.init();
+                    		 $(this).text("이벤트 목록 원복");
+                    	 }else{//원복
+                    		 cahgenum = 0;
+                    		 $('.ev_contents').removeClass('srev_contents');
+                    		 $('.ev_contents').empty();
+                    		 $('.ev_contents').html(prehtml);
+                    		 $(this).text("이벤트 목록 리빌드");
+                    	 }
+                      	
+                      });
+                    </script>
+                    <!--************//  이벤트 재구성  **************-->                    		
+	                <!--// code -->
+	            </div>
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-javascript">
+
+var reEventList = {		
+	'addObj' : function(){//(3/3). 썸네일 및 신청버튼 추가 
+		
+		//console.log('(3/3). 썸네일 및 신청버튼 추가');
+		
+		//--------------- 3-1. 썸네일 삽입     ["PC 이미지주소","MO 이미지주소"], appendImg(이미지 주소 변수 , 개발계 이벤트 아이디, 운영계 이벤트 아이디); ------------------//
+		var imgUrl97 =  [urlDir+"evt97_benefit_pcimg_300x117.svg" , urlDir+"evt97_benefit_moimg_212x222.svg"]; //PC, MO
+		appendImg(imgUrl97 , 97, 97);//다이렉트오토 혜택알림 서비스		
+
+		
+		var imgUrl86 =  [urlDir+"evt86_cashback_pcimg_300x117.svg" , urlDir+"evt86_cashback_moimg_212x222.svg"]; //PC, MO
+		appendImg(imgUrl86 , 86, 86);//2018년 6월 다이렉트 오토할부 캐시백+할부금리 혜택
+		
+		
+		//--------------- 3-2. 바로가기 버튼 삽입:  ["텍스트","주소값"], appendLink(이미지 주소 변수, 개발계 이벤트 아이디, 운영계 이벤트 아이디);	 ------------------//		
+		var btnUrl86 =  ["바로 신청하기" , "http://www.naver.com"];
+		appendLink(btnUrl86, 86, 86);		
+		var btnUrl97 =  ["바로 신청하기(새창)" , "javascript:window.open('http://www.naver.com/pram.jsp?4568asd','winPop','width=800, height=500')"];
+		appendLink(btnUrl97, 97, 97);
+		
+		
+		var applyUrlIndex = (location.href.indexOf("directauto") > -1) ? true : false;		
+		function appendImg(id, index1,  index2){
+			var urlIdtxt; 
+			if(!applyUrlIndex){//개발계
+				urlIdtxt = index1;
+			}else{//운영계
+				urlIdtxt = index2;
+			}
+			if(!isMobile){
+				$(".srev_contents .box_700 li a[data-id="+urlIdtxt+"] .pic img").attr("src",id[0]);
+			}else{				
+				$(".srev_contents .box_700 li a[data-id="+urlIdtxt+"] .pic img").attr("src",id[1]);
+			}
+		}
+		function appendLink(id, index1, index2){
+			var urlIdtxt; 
+			if(!applyUrlIndex){//개발계
+				urlIdtxt = index1;
+			}else{//운영계
+				urlIdtxt = index2;
+			}			
+			$(".srev_contents .box_700 li a[data-id="+urlIdtxt+"] .overbox").append("<button class='btn_cont_p'>"+id[0]+"</button>");			
+			if(id[1].indexOf("window.open") != -1){//새창일경우 버튼 타이틀 추가
+				$(".srev_contents li a[data-id="+urlIdtxt+"] .btn_cont_p").attr("title","새창");	
+			}
+			$(".srev_contents .box_700 li a[data-id="+urlIdtxt+"] .btn_cont_p").click(function(e){
+				$(location).attr('href',id[1]);
+				e.preventDefault();
+			});			
+			if(isMobile){
+				$(".mobile .srev_contents .box_700 li a .overbox .btn_cont_p").html("바로<br/>신청");
+			}else{
+				$(".srev_contents .box_700 li a .overbox button:last-child").on('focusout', function(){
+					$(this).closest('.overbox').animate({'top': '117'},300,function(){
+						$(this).css({'display': 'none'});
+					});
+	            });				
+			}
+		}
+		alert('(3/3). 썸네일 및 신청버튼 추가');
+	},//END
+	'relayout' : function(){//(2/3). 리스트 재정의
+		//console.log('(2/3). 리스트 재정의');
+		$(".srev_contents .box_700 li a").each(function(){
+			var eveTitle = "<strong class='tl'>"+ $(this).find("strong").text() + "</strong>", //console.log(eveTitle);
+				  evedate = "<span class='date'>"+ $(this).find(".date").text() + "</span>",//	console.log(evedate);
+				  overBox = "<div class='overbox'>"+ eveTitle +  evedate + " <button class='btn_cont '>자세히 보기</button> </div>",
+				  thisIndex = $(".srev_contents .box_700 li a").index(this)+1; //console.log(thisIndex);
+			if(!isMobile){
+				ThumbUrl = pcThumbUrl;
+			}else{
+				ThumbUrl = moThumbUrl;
+			}
+			$(this).empty().html(ThumbUrl + eveTitle + evedate + overBox);		
+			$(this).find(".pic").addClass("eveImg"+ thisIndex);
+			
+			var thisId = $(this).attr("href");
+			thisId = thisId.replace('/oap/center/UOAPCC0902M0.jsp?ntccnid=', ''); //console.log(thisId); ID 추출			
+			$(this).attr("data-id",thisId);//ID 추가			
+		});
+		if(!isMobile){
+			$(".srev_contents .box_700 li a").on('mouseover focus', function(){
+				$(this).find('.overbox').css({'display': 'block'});
+				$(this).find('.overbox').stop().animate({'top': '0'},200);
+            });
+			$(".srev_contents .box_700 li a").on('mouseleave', function(){
+				$(this).find('.overbox').animate({'top': '117'},300,function(){
+					$(this).css({'display': 'none'});
+				});
+            });
+		}	
+		alert('(2/3). 리스트 재정의');
+	},//END
+	'init' : function(){//(1/3). 분기 및 초기화
+		//$(window).load(function(){ 페이지 로드시에만 처리
+			//console.log('(1/3). 분기 및 초기화');
+			var urlIndex = (location.href.indexOf(urlTxt) > -1) ? true : false;
+			if(urlIndex){
+				$(".ev_contents").addClass('srev_contents');
+				
+				var contentInit, //로드 컨텐츠
+				 contentAdd, //추가 컨텐츠
+				 TotalNum,
+				 currenNum;
+				
+				var evlayout = setInterval(function(){					
+					if($(".link_arrow_list li").length){						
+						//var htmlIndex = (location.href.indexOf("localhost") > -1) ? true : false;
+						contentInit = $(".link_arrow_list").html(); //console.log(contentInit); 로드 컨텐츠
+
+						$(".link_arrow_list").html(contentInit);
+						seanMore();//more 처리
+						
+						function seanMore(){
+							TotalNum = $(".link_arrow_list li").length;
+							$(".link_arrow_list li").css("display","none")						
+							for(var i=0; i<9; i++){
+								$(".link_arrow_list li:eq("+i+")").css("display","block")
+							}
+							currenNum = $(".link_arrow_list li:visible").length;
+							
+							reEventList.relayout();
+							reEventList.addObj();
+							
+							$(".srev_contents .box_700").append('<div class="sceneMore"> <a href="#" type="button" class="scene_more"> <span>더보기 ('+currenNum+'/'+TotalNum+')</span> </a></div>');
+							
+							if(!isMobile){
+								$(".srev_contents .box_700 li a .overbox button:last-child").on('focusout', function(){
+									$(this).closest('.overbox').animate({'top': '117'},300,function(){
+										$(this).css({'display': 'none'});
+									});
+					            });				
+							}							
+							
+							$(".scene_more").on({
+								'click': function(e){									
+									$(this).css("display","none");	
+									$(".link_arrow_list li").css("display","block");
+									//$(".link_arrow_list li a").eq(9).focus();//자동화 처리 필요
+									e.preventDefault();
+								}
+				            });							
+							
+						}								
+							
+						clearInterval(evlayout);//인터벌 중지				
+					}	
+				},10);
+			}
+			alert('(1/3). 분기 및 초기화');
+		//});
+	}//END
+}
+	  
+//reEventList.init();
+</code>
+</pre>
+<!--// codebox -->      
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-markup">
+    <div class="ev_contents">
+        	<div class="box_700">
+        	
+			<ul class="link_arrow_list">
+				<li>
+					<a href="/oap/center/UOAPCC0902M0.jsp?ntccnid=86">
+						<strong>이벤트 링크 아이디 86</strong>
+						<span class="date">2016.03.15 ~ 2016.7.18</span>
+					</a>
+				</li>
+				<li>
+					<a href="/oap/center/UOAPCC0902M0.jsp?ntccnid=87">
+						<strong>이벤트 링크 아이디 87</strong>
+						<span class="date">2016.03.16 ~ 2016.7.19</span>
+					</a>
+				</li>
+				<li>
+					<a href="/oap/center/UOAPCC0902M0.jsp?ntccnid=97">
+						<strong>이벤트 링크 아이디 97</strong>
+						<span class="date">2016.03.17 ~ 2016.7.20</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>  
+</code>
+</pre>
+<!--// codebox -->
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-css">
+.link_arrow_list li{display:block; padding:10px; border-top:1px solid #d9d9d9;}
+.link_arrow_list li:first-child{border-top:none;}
+					
+.srev_contents .t_group{/*background:#e9ebef;  회색배경 처리*/ transition:none;}
+.srev_contents .link_arrow_list{border-top:none;}
+
+.srev_contents .box_700{max-width:100%; overflow:hidden;}
+.srev_contents .box_700 ul {display:block; width:990px; margin-left:-24px;}
+.srev_contents .box_700 ul:after {display:block; content:''; clear:both;}
+.srev_contents .box_700 li{display:block; width:300px; margin:0;  float:left; padding:0; border:1px solid #d3d5da; padding:2px;  background:#fff; position:relative; overflow:hidden;}
+.srev_contents .box_700 li a{display:block;  margin:0; padding:0; border:none; width:300px; height:243px; box-sizing: border-box;}
+.srev_contents .box_700 li a:after{display:none;}
+.srev_contents .box_700 li a .pic{display:block;}
+.srev_contents .box_700 li a .tl{padding:10px 24px 0px 24px; font-size:16px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;}
+.srev_contents .box_700 li a .date{display:block; position:absolute; left:24px; font-size:14px; color:#303030; letter-spacing:-0.075em;}
+.srev_contents .box_700 li a .overbox{display:block; position:absolute;  width:100%; height:100%; background-color:rgba(255, 255, 255, 0.9); display:none;}
+.srev_contents .box_700 li a .overbox .tl{padding:15px 24px 0px 24px;}
+.srev_contents .box_700 li a .overbox .date{position:relative; padding-top:10px;  left:24px;}
+.srev_contents .box_700 li a .overbox button{display:block; position:absolute; bottom:20px; left:25px; width:250px; height:40px; padding-top:8px; font-weight:bold;}
+.srev_contents .box_700 .sceneMore .scene_more {display: block; width: 980px; margin: 0 auto; margin-top:25px; padding: 37px 0 0 0; border-top: 1px solid #e0e0e0; border-bottom: 1px solid #686868; text-align: center;}
+.srev_contents .box_700 .sceneMore .scene_more span { display: inline-block; font-size: 16px; color: #101010; padding: 0 24px; border-bottom: 2px solid #ececec;}
+.srev_contents .box_700 .sceneMore .scene_more:after { content: ""; display: block; width: 30px; height: 56px; margin: 8px auto 0 auto; background: url(/images/oap/desktop/bg_button_set.png) -300px -200px no-repeat;}
+
+.desktop .srev_contents{width:100%; max-width:100%; /*background:#e9ebef; 회색배경 처리*/}
+.desktop .srev_contents .t_group .tit{font-size:30px;}
+.desktop .srev_contents .box_700{width:966px; margin:0 auto;}
+.desktop .srev_contents .box_700 .link_arrow_list li:first-child{border-top:1px solid #d3d5da;}
+.desktop .srev_contents .box_700 .link_arrow_list li{margin:0; margin:23px 0 0 24px; border-top:1px solid #d3d5da; border-bottom:1px solid #d3d5da; }
+.desktop .srev_contents .box_700 .link_arrow_list p, .desktop .link_arrow_list .date{font-size:14px;  color:#303030;}
+.desktop .srev_contents .box_700 li a .pic img{display:block; width:300px; height:117px;}
+.desktop .srev_contents .box_700 li a .date{bottom:8px;}
+.desktop .srev_contents .back_btn{display:none;}
+.desktop .srev_contents .box_700 li a .overbox .date{top:0;}
+.desktop .srev_contents .box_700 li a .overbox .btn_cont_p{bottom:65px; }
+
+.mobile .srev_contents .box_700{width:auto;}
+.mobile .srev_contents ul {display:block; width:auto; margin:15px 15px 25px 15px; }
+.mobile .srev_contents li{border:1px solid #e9ebef; padding:0px; width:auto; float:none; border-radius:4px; margin-top:15px;}
+.mobile .srev_contents li:after{display:block; content:''; clear:both;}
+.mobile .srev_contents li a{display:block;  margin:0; padding:0; border:none; width:auto; height:125px;} 
+.mobile .srev_contents li a .pic img{display:block; width:120px; height:125px; float:left;}
+.mobile .srev_contents li a .tl{font-size:18px; padding:10px 18px 0px 18px;}
+.mobile .srev_contents li a .date{bottom:10px; left:140px;}
+.mobile .srev_contents li a .overbox{display:block; background-color:rgba(255, 255, 255, 0); top:0; left:0; width:120px; height:125px;}
+.mobile .srev_contents li a .overbox .tl, .mobile .srev_contents li a .overbox .date{display:none;}
+.mobile .srev_contents li a .overbox .btn_cont{display:none;}
+.mobile .srev_contents li a .overbox .btn_cont_p{width:60px; min-width:60px; border:none; height:60px; top:50%; left:50%; margin:-30px 0 0 -30px; background-color:rgba(0, 0, 0, 0.7); font-size:14px; font-weight:normal; border-radius:50%; color:#fff;}
+.mobile .srev_contents .sceneMore .scene_more{width: auto;}
+</code>
+</pre>
+<!--// codebox -->             
+	        </div>
+		</section>
+		<!--#####################// 이벤트 목록 썸네일화 #####################-->
+		    
+    </div><!-- contents -->
+
+	<script src="js/jquery-ui.min.js"></script><!-- jquery ui-->
+	<script src="js/jquery.ui.touch-punch.js"></script><!-- jquery ui using mobile -->
+    <script src="js/frontUxer.js"></script><!-- plugin -->
+
+</body>
+</html>

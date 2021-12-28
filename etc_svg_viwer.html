@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>frontUxer</title>
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/frontUxer.css">
+<script src="js/jquery-1.11.2.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script type="text/javascript">        
+	var menuArry = ['3','3'];//1depth, 2depth
+</script>
+</head>
+<body>
+<script src="js/guide.js"></script><!-- site guide -->
+	
+	<div class="start_dim"><span></span></div>
+	
+	<h1 class="hide">module</h1>
+	
+	<div class="contents"><!-- contents -->
+	
+	
+	
+    		
+        <!--##################### 이미지 뷰어 #####################-->
+		<section class="aws_box">
+			<h2 class="aws_tl">Image Viewer</h2>
+			<ul class="dcs">
+				<li>비트맵  Image(png, jpg, svg 등)를 SVG Viewer내로 load 후 드래그 및 확대 할수 있는 viewer</li>
+				<li>svg소스내 엘리먼트 이벤트 연결 테스트</li>
+			</ul> 			
+			<div class="code_area">
+			
+				<!--###### SVG Image Viewer ######-->    	
+	        	<div class="play_box">	        	
+	        		<!-- code -->
+	        		<h3 class="hide"><strong>SVG Control</strong></h3>
+      		
+	        		<article class="code_box">
+						<!-- run_sample -->
+						<div class="sample_box">
+						
+							<style>
+								/***** palyer *****/		
+								#SVGviewer{position:relative;}
+								#SVGviewer button{margin:0; cursor:pointer;}
+								#SVGviewer .SVGviewer_zoom_tool{position:absolute; top:5px; right:50px; padding:5px 6px; border-radius:20px; text-align:right; background:rgba(0,0,0, 0.2);  z-index:2;}							
+								#SVGviewer .SVGviewer_full{position:absolute; top:10px; right:5px; z-index:2;}
+								#SVGviewer .SVGviewer_full button{padding: 8px 8px !important;}
+								#SVGviewer .SVGviewer_full button i{width:17px; height:17px; background-position:-461px -92px; background-size:auto 450px;}
+								
+								#SVGviewer .SVGviewer_canvas_area{width:400px; height:300px; background-image: url(img/bg_trance_psd.svg); border: 1px solid #d9d9d9; width:100%; height:350px; overflow:hidden; position:relative;}							
+								#SVGviewer .SVGviewer_canvas_area .SVGviewer_dim{position:absolute; width:50px; height:50px; margin:-25px 0 0 -25px; top:50%; left:50%; background:rgba(0, 0, 0, 0.3); border-radius: 100%;}							
+								#SVGviewer .SVGviewer_canvas_area .SVGviewer_dim:after{display:block; content:''; height: 60%; width: 60%; margin:15% 0 0 15% ;
+									border: 2px solid #fff0; border-right-color: #fff; border-top-color: #fff; border-left-color: #fff;  border-radius: 100%; -webkit-animation: spin 800ms infinite linear; animation: spin 800ms infinite linear; transition:0.6s;
+								}
+								@-webkit-keyframes "spin" {
+									from {	-webkit-transform: rotate(0deg);} to {-webkit-transform: rotate(359deg);}
+								}							
+								@keyframes "spin"{
+									from {transform: rotate(0deg);} to {transform: rotate(359deg);}
+								}
+								/***** svg *****/
+								#SVGviewer .SVGviewer_canvas_area .SVGviewer_canvas{cursor:move; cursor:grab; width:0px; height:0px; position:absolute; left:50%; top:50%;}
+								#SVGviewer .SVGviewer_canvas_area .SVGviewer_canvas:active{cursor:grabbing;}							
+								#SVGviewer .SVGviewer_canvas_area #SVGviewer_svg{width:100%; height:100%: display:block;}
+								#SVGviewer .SVGviewer_canvas_area #SVGviewer_svg:active{cursor:grabbing;}
+								/***** url *****/
+								#SVGviewer .SVGviewer_url_input {padding:0 0 10px 0; position:relative;}
+								#SVGviewer .SVGviewer_url_input .SVGviewer_url_box {display:block; padding:5px 70px 0 0; position:relative;}
+								#SVGviewer .SVGviewer_url_input .SVGviewer_url_box input[type="text"]{width:100%; height:40px; margin:0; padding:0 10px 0 10px; line-height:21px; border:1px solid #b8b8b8; border-radius:2px; background-color:#f7f7f7;
+									color:#303030; box-shadow:1px 2px 2px rgba(0,0,0,.06) inset; letter-spacing:-0.5px; vertical-align:middle; font-size:14px; box-sizing:border-box; border-radius:15px;}
+								#SVGviewer .SVGviewer_url_input .SVGviewer_url_box .btn_confirm{display:block; position:absolute; right:0; top:9px;}
+								#SVGviewer .SVGviewer_url_input .SVGviewer_url_selecter{}
+								
+								/***** fullscreen  *****/
+								/* body section.aws_box .sample_box {transition: all ease 0.3s;} */
+								body section.aws_box .sample_box.fullscreen {
+								    border:none;
+								    border-radius: 0px;
+								    margin-top: 0px;
+								    padding: 15px;
+								    background: #fff;
+								    position:fixed;
+								    width:100%;
+								    height:100%;
+								    top:0;
+								    left:0;
+								    padding:0;
+								    z-index:100;
+								   	/* transition: all ease 0.3s; */
+								}
+								body section.aws_box .sample_box.fullscreen #SVGviewer{height:100%;}
+								body section.aws_box .sample_box.fullscreen #SVGviewer .SVGviewer_canvas_area{height:100%;}
+								 
+							</style>
+							
+							<div id="SVGviewer">
+								<!-- zoom tool -->
+								<div class="SVGviewer_zoom_tool">
+									<button data-btn-zoom="half">50%</button>
+									<button data-btn-zoom="real">100%</button>
+									<button data-btn-zoom="double">200%</button>
+									<button data-btn-zoom="minus"><strong>-</strong> </button>				
+									<button data-btn-zoom="plus"><strong>+</strong> </button>													
+								</div>
+								<!--// zoom tool -->
+								
+								<!-- fullscreen -->								
+								<div class="SVGviewer_full">
+									<button class="btn_full"><i class="icn"></i> </button>
+								</div>
+								<!--// fullscreen -->
+								
+								
+								<!-- svg area -->
+								<div class="SVGviewer_canvas_area">
+									<div class="SVGviewer_canvas">
+										<!-- svg -->
+										<svg width="100%" height="100%" viewBox="0 0 0 0" id="SVGviewer_svg">
+											<image  xlink:href="#" x="0px" y="0px" width="0px" height="0px" id="SVGviewer_img"/>
+										</svg>
+										<!--// svg -->						
+									</div>
+								</div>
+								<!--// svg area -->
+								
+								<!-- img url -->							
+								<div  class="SVGviewer_url_input">
+									<div class="SVGviewer_url_box">
+										<input type="text" placeholder="이미지 주소 입력" id="img_input" onkeyup="enterKey();" >
+										<button class="btn_confirm" id="btnViewConfirm">적용</button>
+									</div>
+								</div>
+								<!-- img url -->
+								
+								<!-- img url sample-->
+								<div class="SVGviewer_url_selecter">
+									<strong>샘플 이미지 주소 선택</strong>
+									<select id="SVGviewerurl" title="셀렉트바">
+										<option>이미지 주소를 선택하세요</option>
+										<option>img/data/ul_pic_land_car01.svg</option>
+										<option>img/data/ul_pic_land_car02.svg</option>										
+										<option>img/data/ul_pic_land_car03.svg</option>
+										<option>img/data/ul_pic_land_car04.svg</option>										
+										<option>img/data/ul_pic_land_car05.svg</option>																												
+										<option>img/dao_bot_70x88_w.svg</option>
+										<option>img/data/evt97_benefit_pcimg.svg</option>
+									</select>
+									<script>
+									$('#SVGviewerurl').change(function(){
+										//alert($(this).val());
+										$("#img_input").val($(this).val());
+										SVGviewLoad($(this).val());
+									});
+									</script>
+								</div>							
+								<!--// img url sample-->
+							
+							</div>
+							
+<script>
+	var $SVGviewer = $('#SVGviewer');
+	
+	$('.SVGviewer_canvas').draggable(); //"js/jquery-ui.min.js" 활용		
+	
+	
+	//var imgSrc = '/pub_final/test/aws/img/data/312_3594.svg';
+	var imgSrc = 'img/data/ul_pic_land_car03.svg';
+	 $('#img_input').val(imgSrc);
+	 
+	 $('body').append("<img src='"+imgSrc+"' id='appendViewImgClone'' style='width:auto; position:absolute; top:-100%; left:0; display:block;'>");
+	 
+	 window.addEventListener("load",function(){
+		 SVGviewLoad(imgSrc);	 
+	 });
+	
+	$("#btnViewConfirm").on("click",function(){
+		var imgSrc = $('#img_input').val();
+		
+		if(imgSrc==""){
+			alert("이미지 주소를 입력하세요");
+		}else{	
+			SVGviewLoad(imgSrc);
+		}
+			
+	});
+	
+	function enterKey(){//인풋 엔터키
+		if(window.event.keyCode === 13){
+			$("#btnViewConfirm").click();
+		}
+	}
+	
+	var loadImgWidth = 0; //load할l 이미지 real width 사이즈
+	var loadImgHeight = 0; //load할l 이미지 real height 사이즈
+	
+	function SVGviewLoad(imgSrc){//이미지 로드 이벤트
+		$('.SVGviewer_canvas_area').append('<div class="SVGviewer_dim"></div>');//dim 처리(로딩바)	
+		$("#btnViewConfirm").attr("disabled",true);
+		
+		/*** ajax는 cross관련 보안문제로 엄격함. 아래 로컬용으로 다시 짜봄
+	    $.ajax({//이미지 SVG로드
+	        type: "POST",
+	        url: imgSrc,
+	        dataType: "html",
+	        success: function (data) {							        	
+	        	$('body').append("<img src='"+imgSrc+"' id='appendViewImgClone'' style='width:auto; position:absolute; top:0; left:0; display:block;'>");
+	
+	        	var imgWidth = $('#appendViewImgClone').width();
+	        	var imgHeight = $('#appendViewImgClone').height();	        	
+	        		        	
+	        	var imgInterval = setInterval(function(){//불러온 이미지 width로 렌더링 체크
+	        		imgWidth = $('#appendViewImgClone').width();//img real width체크
+	        		if(!imgWidth==0){//이미지가 렌더링 되었으면 svg 처리
+	        			imgHeight = $('#appendViewImgClone').height();//img real height 확인
+	        			clearInterval(imgInterval);
+	        			
+	    	        	setTimeout(function(){
+	    		        	$('#SVGviewer_img').attr({"xlink:href":imgSrc, width: imgWidth+"px", height: imgHeight+"px"}); //이미지 적용
+	    		        	
+	    		        	$('#appendViewImgClone').remove();//img clone 삭제
+	    		        	$('.SVGviewer_dim').remove();//dim 삭제
+	    		        	$("#btnViewConfirm").attr("disabled",false); //버튼 활성화
+	    		        	
+	    		        	var svgImgId = document.getElementById('SVGviewer_svg');//svg Biewbox처리
+	    		        	svgImgId.setAttribute("viewBox","0 0 "+imgWidth+" "+imgHeight);	    		
+	    		        	
+	    		        	var mgl = -(imgWidth/2); //svg box용 absolute div에 대한 좌표 처리
+	    					var mgt = -(imgHeight/2);
+	    					
+	    					$('.SVGviewer_canvas').stop().animate({
+	    						width: imgWidth,
+	    						height: imgHeight,
+	    						left: "50%",
+	    						top: "50%",	    						
+	    						"margin-left": mgl+"px",
+	    						"margin-top": mgt+"px",
+	    					});
+	    					
+	    					loadImgWidth = imgWidth; //로드된 이미지 실제 width 확인
+	    					loadImgHeight = imgHeight; //로드된 이미지 실제 height 확인
+	    					
+	    	        	},100);	        			
+	        			
+	        		}//console.log(imgWidth + ", imgWidth: "+imgWidth+", imgHeight: "+imgHeight);
+	        	},200);//불러온 이미지 width로 렌더링 체크.end
+	
+	        },
+	        error:function (jqXHR){
+	        	alert("확인가능한 이미지 url을 입력하세요");
+	        	$("#btnViewConfirm").attr("disabled",false); //버튼 활성화
+	        	$('.SVGviewer_dim').remove();//dim 삭제
+	        }
+	    });//이미지 SVG로드.end
+	    ajax는 cross관련 보안문제로 엄격함. 아래 로컬용으로 다시 짜봄.end ***/
+	    
+	    $('#appendViewImgClone').remove();//img clone 삭제 
+	    $('body').append("<img src='"+imgSrc+"' id='appendViewImgClone'' style='width:auto; position:absolute; top:-100%; left:0; display:none;'>");
+	    
+	    document.getElementById('appendViewImgClone').onerror = function (){
+        	alert("확인가능한 이미지 url을 입력하세요");
+        	$("#btnViewConfirm").attr("disabled",false); //버튼 활성화
+        	$('.SVGviewer_dim').remove();//dim 삭제
+	    	return false
+	    }
+	            	
+       	var imgInterval = setInterval(function(){//불러온 이미지 width로 렌더링 체크
+
+		    if(appendViewImgClone.complete){//appendViewImgClone.complete
+		    	var imgWidth = $('#appendViewImgClone').width();
+	        	var imgHeight = $('#appendViewImgClone').height();
+        		
+        		if(!imgWidth==0){//이미지가 렌더링 되었으면 svg 처리
+        			imgHeight = $('#appendViewImgClone').height();//img real height 확인
+        			
+        			clearInterval(imgInterval);
+    	        	setTimeout(function(){
+    		        	$('#SVGviewer_img').attr({"xlink:href":imgSrc, width: imgWidth+"px", height: imgHeight+"px"}); //이미지 적용
+    		        	
+    		        	//$('#appendViewImgClone').remove();//img clone 삭제
+    		        	$('.SVGviewer_dim').remove();//dim 삭제
+    		        	$("#btnViewConfirm").attr("disabled",false); //버튼 활성화
+    		        	
+    		        	var svgImgId = document.getElementById('SVGviewer_svg');//svg Biewbox처리
+    		        	svgImgId.setAttribute("viewBox","0 0 "+imgWidth+" "+imgHeight);	    		
+    		        	
+    		        	var mgl = -(imgWidth/2); //svg box용 absolute div에 대한 좌표 처리
+    					var mgt = -(imgHeight/2);
+    					
+    					$('.SVGviewer_canvas').stop().animate({
+    						width: imgWidth,
+    						height: imgHeight,
+    						left: "50%",
+    						top: "50%",	    						
+    						"margin-left": mgl+"px",
+    						"margin-top": mgt+"px",
+    					});
+    					
+    					loadImgWidth = imgWidth; //로드된 이미지 실제 width 확인
+    					loadImgHeight = imgHeight; //로드된 이미지 실제 height 확인
+    					    					
+    	        	},100); //console.log(imgWidth); console.log(imgHeight);
+        		}
+		    }
+		},100);	    
+	    return false	    
+	}//이미지 로드 이벤트.end
+	
+	var $svg_mov_num = 200; //zoom시 증가율
+	
+	$('.SVGviewer_zoom_tool button').on("click, mousedown",function(){
+		var imgWidth = $('.SVGviewer_canvas').width();
+		var imgHeight = $('.SVGviewer_canvas').height();
+		
+		var $svg_ratio = imgHeight/imgWidth; //가로대비 높이 증가율	
+		var ratio_increa =  $svg_ratio * $svg_mov_num; //증가율에 따른 높이
+		
+		var btnString= ""//클릭한 btn string명
+			btnString = $(this).data("btn-zoom");
+		
+		if(btnString=="half"){ //50%
+			imgWidth = loadImgWidth/2;
+			imgHeight = loadImgHeight/2;
+		}else if(btnString=="real"){ //100%
+			imgWidth = loadImgWidth;
+			imgHeight = loadImgHeight;
+		}else if(btnString=="double"){ //200%
+			imgWidth = loadImgWidth*2;
+			imgHeight = loadImgHeight*2;								
+		}else if(btnString=="minus"){ // -- 축소
+			imgWidth = imgWidth - $svg_mov_num;
+			imgHeight = imgHeight - ratio_increa;
+		}else if(btnString =="plus"){
+			imgWidth = imgWidth + $svg_mov_num; // ++ 확대
+			imgHeight = imgHeight + ratio_increa;
+		}
+		
+		if(imgWidth<0){//alert('최소 사이즈 입니다');
+			return false//중지
+		}
+		
+		var svgImgId = document.getElementById('SVGviewer_svg');//svg Biewbox처리(jaquery attr로 접근 안됨)
+		svgImgId.setAttribute("viewBox","0 0 "+imgWidth+" "+imgHeight);//svg Biewbox처리
+		
+		var mgl = -(imgWidth/2); //svg box용 absolute div에 대한 좌표 처리
+		var mgt = -(imgHeight/2);
+		
+		if(btnString=="half" || btnString=="real" || btnString=="double"){		
+			$('.SVGviewer_canvas').stop().animate({
+				width: imgWidth,
+				height: imgHeight,
+				"margin-left": mgl+"px",
+				"margin-top": mgt+"px",
+				left: "50%", top: "50%"
+			});	
+		}else{
+			var optString = 'width: '+imgWidth+', height: '+imgHeight+', "margin-left": '+mgl+'+"px", "margin-top": '+mgt+'+"px"';		
+			$('.SVGviewer_canvas').stop().animate({
+				width: imgWidth,
+				height: imgHeight,
+				"margin-left": mgl+"px",
+				"margin-top": mgt+"px"
+			});
+		}	
+		
+		$('#SVGviewer_img').attr({width: imgWidth+"px", height: imgHeight+"px"}); //svg내 이미지 적용	
+	});
+	
+	$(".btn_full").click(function(){
+		$(".sample_box").toggleClass("fullscreen");
+		if($(".sample_box").hasClass('fullscreen')){//커짐
+		}else{//작아졌을때 스크롤을 해당위치로 돌린다.
+			$('html, body').stop().animate({scrollTop : $(".sample_box").offset().top},0);//
+		}
+	});
+							</script>
+							
+						</div>
+						<!--.. run_sample -->					
+
+					</article>
+					<!--// code -->
+				</div>
+				<!--######// SVG Image Viewer ######-->
+				
+				
+				<!--######테스터 ######--
+				<div class="tester">
+				
+				</div>
+				<script>
+					$("body").prepend("<div class='tester'></div>");
+					var requestURL = "http://40.1.16.31:8821/oap/limit/UOAPLI0201M1.jsp?thgMnftCoC=303&carModlC=3737";
+				    $.ajax({//이미지 SVG로드
+				        type: "post",
+				        url: requestURL,
+				        dataType: "html",
+				        success: function (data) {				        	
+				        	console.log("sucess");
+				        	$(".tester").html(data);
+				        },
+				        error:function (jqXHR){
+				        	console.log("url을 확인하세요");
+				        }
+				    });//이미지 SVG로드.end
+				</script>
+				!--######//테스터 ######-->
+												
+			</div>
+		</section>
+		<!--#####################// 이미지 뷰어 #####################-->		
+
+		
+	</div><!--// contents -->
+
+	<script src="js/jquery-ui.min.js"></script><!-- jquery ui-->
+	<script type="text/javascript" src="js/jquery.ui.touch-punch.js"></script><!-- jquery ui using mobile -->
+    <script src="js/frontUxer.js"></script><!-- plugin -->
+
+	<script type="text/javascript">
+	
+    </script>
+    
+</body>
+</html>

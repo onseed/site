@@ -1,0 +1,411 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<title> C STUDIO </title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=2.0" /><!--20150914 maximum-scale 수정-->
+<!--[if IE]>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<![endif]-->
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script><!--jquery flatform.js-->
+<!--[if lt IE 9]>
+<script src="js/html5shiv.js" type="text/javascript"></script>
+<![endif]-->
+<script type="text/javascript" src="js/common.js"></script><!-- common.js -->
+<link rel="stylesheet" type="text/css" href="css/basic.css" /><!--basic.css-->
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.bob_various_bar .mid_select select').styledSelect( {innerClass:'select_add'} ); //셀렉트바
+
+	$('#btnGoTop a').click(function(){//TOP버튼 클릭
+		$('html, body').stop().animate({ scrollTop: 0 }, 400);
+		return false;
+	});
+
+	$('.board_like').click(function(){//20151027 클릭추가
+		$(this).addClass("active");	
+		return false;
+	});
+
+});
+</script>
+</head>
+
+<body>
+
+<!--wrap-->
+<div class="wrap">
+
+<!--###### headerArea ######-->
+<div class="headerArea">
+	<h1 class="logo"><a href="/"><span>C STUDIO</span></a></h1><!--로그인 전-->
+	<!--<h1 class="logo on"><a href="/"><span>C STUDIO</span></a></h1> 로그인 후-->
+
+	<div class="gnb">
+		<a href="#" class="go_couronne"><span>COURONNE</span></a>
+		<ul>
+			<!--로그인 전-->
+			<li><a href="#">MY PAGE</a></li>
+			<li><a href="#">CART</a></li>
+			<!--//로그인 전-->
+			<!--로그인 후
+			<li><a href="#">LOGOUT</a></li>
+			<li><a href="#">MY PAGE</a></li>-->
+			<!--//로그인 후-->
+		</ul>
+	</div>
+
+	<div class="head_menu">
+		<ul>
+			<li><a href="#">YOUR STUDIO</a></li>
+			<li><a href="#">CUSTOMIZE</a></li>
+			<li><a href="#">MY STUDIO</a></li>
+		</ul>
+	</div>
+</div>
+<!--###### //headerArea ######-->
+
+<!--###### contentArea ######-->
+<div class="contentArea">
+<!--내용 영역-->
+	<h3 class="commtp_tit yourstudio"><!--20150909 수정-->
+		<span class="b_icn"></span>
+		<b>YOUR STUDIO</b>
+		<span class="s_txt">SEE THE BEST OF BEST</span>
+	</h3>
+
+	<!--tab_studio-->
+	<ul class="tab_studio mb15">
+		<li class="your1"><a href="#"><span class="icn"></span>CELEB</a></li>
+		<li class="your2"><a href="#" class="on"><span class="icn"></span>BEST</a></li><!--해당 탭에 on 클래스 붙임-->
+	</ul>
+	<!--//tab_studio-->
+
+	<!--bob_top_txt-->
+	<div class="bob_top_txt">
+		마음에 드는 커스터마이징 디자인에 <span>♥ 좋아요</span>를 클릭해주세요.
+	</div>
+	<!--//bob_top_txt-->
+
+	<h4 class="commtp_stit">BEST OF BEST</h4>
+	<!--bob_best_top-->
+	<div class="bob_best_top">
+		<!--big_best 1위-->
+		<div class="best_area big_best">
+			<div class="thumb">
+				<a href="#">
+					<img src="img/temp/20151118.png" alt="" />
+				</a>
+				<span class="like_zone">
+					<a href="#" class="board_like"><em>♥</em></a>
+				</span>
+			</div>
+			<div class="thumb_etc">
+				<span class="prod_num"><a href="#">1</a></span>
+				<span class="num_etc">
+					<a href="#">
+						<span class="prod_nm">Smile Claire Tote S</span>
+						<span class="prod_by">Designed by Chelo222</span>
+					</a>
+				</span>
+				<span class="prod_bt">
+					<a href="#"><img src="img/btn_customize.png" alt="CUSTOMIZE IT" height="30px" /></a>
+				</span>
+			</div>
+		</div>
+		<!--//big_best-->
+
+		<!--small_best 2위-->
+		<div class="best_area small_best">
+			<div class="thumb">
+				<a href="#">
+					<img src="img/temp/tmp_product.png" alt="" />
+				</a>
+				<span class="like_zone">
+					<a href="#" class="board_like"><em>♥</em></a>
+				</span>
+			</div>
+			<div class="thumb_etc">
+				<span class="prod_num"><a href="#">2</a></span>
+				<span class="num_etc">
+					<a href="#">
+						<span class="prod_nm">Smile Claire Tote S</span>
+						<span class="prod_by">Designed by Chelo222</span>
+					</a>
+				</span>
+				<span class="prod_bt">
+					<a href="#"><img src="img/btn_customize.png" alt="CUSTOMIZE IT" height="30px" /></a>
+				</span>
+			</div>
+		</div>
+		<!--//small_best-->
+
+		<!--small_best 3위-->
+		<div class="best_area small_best">
+			<div class="thumb">
+				<a href="#">
+					<img src="img/temp/tmp_product.png" alt="" />
+				</a>
+				<span class="like_zone">
+					<a href="#" class="board_like"><em>♥</em></a>
+				</span>
+			</div>
+			<div class="thumb_etc">
+				<span class="prod_num"><a href="#">3</a></span>
+				<span class="num_etc">
+					<a href="#">
+						<span class="prod_nm">Smile Claire Tote S Smile Claire Tote S Smile Claire Tote S Smile Claire Tote S Smile Claire Tote S</span>
+						<span class="prod_by">Designed by Chelo222</span>
+					</a>
+				</span>
+				<span class="prod_bt">
+					<a href="#"><img src="img/btn_customize.png" alt="CUSTOMIZE IT" height="30px" /></a>
+				</span>
+			</div>
+		</div>
+		<!--//small_best-->
+	</div>
+	<!--//bob_best_top-->
+
+	<!--bob_various_bar-->
+	<div class="bob_various_bar">
+		<div class="top_tab">
+			<a href="#" class="on">BEST</a>
+			<a href="#">NEW</a>
+		</div>
+		<div class="mid_select">
+			<span class="select_addWr">
+				<select name="" id="" class="">
+					<option value="">PRODUCT</option>
+					<option value="">NEW STEPHANIE</option>
+					<option value="">AMY</option>
+					<option value="">JACKIE CROSS</option>
+					<option value="">WALLET</option>
+				</select>
+			</span>
+			<span class="select_addWr">
+				<select name="" id="">
+					<option value="">COLOR</option>
+					<option value="">GRAY</option>
+					<option value="">BLUE</option>
+					<option value="">GOLD</option>
+					<option value="">ETC</option>
+				</select>
+			</span>
+			<span class="select_addWr">
+				<select name="" id="">
+					<option value="">PATCH</option>
+					<option value="">SILICON</option>
+					<option value="">FABRIC</option>
+					<option value="">METAL</option>
+				</select>
+			</span>
+		</div>
+		<div class="btm_total">
+			총 <span>150</span> 건이 검색되었습니다
+		</div>
+	</div>
+	<!--//bob_various_bar-->
+
+	<!--bob_best_list-->
+	<div class="bob_best_list mt20">
+		<ul>
+			<!--리스트-->
+			<li>
+				<div class="thumb">
+					<a href="#">
+						<img src="img/temp/tmp_product.png" alt="" />
+					</a>
+					<span class="like_zone">
+						<a href="#" class="board_like"><em>♥</em></a>
+					</span>
+				</div>
+				<div class="thumb_etc">
+					<a href="#">
+						<span class="prod_nm">Smile Claire Tote S Smile Claire Tote S Smile Claire Tote S Smile Claire Tote S Smile Claire Tote S</span>
+						<span class="prod_by">Designed by Chelo222</span>
+					</a>
+					<span class="prod_bt">
+						<a href="#"><img src="img/btn_customize.png" alt="CUSTOMIZE IT" height="30px" /></a>
+					</span>
+				</div>
+			</li>
+			<!--//리스트-->
+			<!--리스트-->
+			<li>
+				<div class="thumb">
+					<a href="#">
+						<img src="img/temp/tmp_product.png" alt="" />
+					</a>
+					<span class="like_zone">
+						<a href="#" class="board_like"><em>♥</em></a>
+					</span>
+				</div>
+				<div class="thumb_etc">
+					<a href="#">
+						<span class="prod_by">Designed by Chelo222</span>
+					</a>
+					<span class="prod_bt">
+						<a href="#"><img src="img/btn_customize.png" alt="CUSTOMIZE IT" height="30px" /></a>
+					</span>
+				</div>
+			</li>
+			<!--//리스트-->
+			<!--리스트-->
+			<li>
+				<div class="thumb">
+					<a href="#">
+						<img src="img/temp/tmp_product.png" alt="" />
+					</a>
+					<span class="like_zone">
+						<a href="#" class="board_like"><em>♥</em></a>
+					</span>
+				</div>
+				<div class="thumb_etc">
+					<a href="#">
+						<span class="prod_nm">재입고 예정</span>
+					</a>
+					<span class="prod_bt">
+						<img src="img/btn_soldout.png" alt="SOLD OUT" height="30px" />
+					</span>
+				</div>
+			</li>
+			<!--//리스트-->
+			<!--리스트-->
+			<li>
+				<div class="thumb">
+					<a href="#">
+						<img src="img/temp/tmp_product.png" alt="" />
+					</a>
+					<span class="like_zone">
+						<a href="#" class="board_like"><em>♥</em></a>
+					</span>
+				</div>
+				<div class="thumb_etc">
+					<span class="prod_bt">
+						<img src="img/btn_soldout.png" alt="SOLD OUT" height="30px" />
+					</span>
+				</div>
+			</li>
+			<!--//리스트-->
+			<!--리스트-->
+			<li>
+				<div class="thumb">
+					<a href="#">
+						<img src="img/temp/tmp_product.png" alt="" />
+					</a>
+					<span class="like_zone">
+						<a href="#" class="board_like"><em>♥</em></a>
+					</span>
+				</div>
+				<div class="thumb_etc">
+					<a href="#">
+						<span class="prod_nm">Smile Claire Tote S Smile Claire Tote S Smile Claire Tote S Smile Claire Tote S Smile Claire Tote S</span>
+						<span class="prod_by">Designed by Chelo222</span>
+					</a>
+					<span class="prod_bt">
+						<a href="#"><img src="img/btn_customize.png" alt="CUSTOMIZE IT" height="30px" /></a>
+					</span>
+				</div>
+			</li>
+			<!--//리스트-->
+			<!--리스트-->
+			<li>
+				<div class="thumb">
+					<a href="#">
+						<img src="img/temp/tmp_product.png" alt="" />
+					</a>
+					<span class="like_zone">
+						<a href="#" class="board_like"><em>♥</em></a>
+					</span>
+				</div>
+				<div class="thumb_etc">
+					<a href="#">
+						<span class="prod_nm">Smile Claire Tote S Smile Claire Tote S Smile Claire Tote S Smile Claire Tote S Smile Claire Tote S</span>
+						<span class="prod_by">Designed by Chelo222</span>
+					</a>
+					<span class="prod_bt">
+						<a href="#"><img src="img/btn_customize.png" alt="CUSTOMIZE IT" height="30px" /></a>
+					</span>
+				</div>
+			</li>
+			<!--//리스트-->
+		</ul>
+	</div>
+	<!--//bob_best_list-->
+
+	<!--page_num-->
+	<div class="page_num mt40">
+		<span class="dir_left">
+			<a href="#" class="btn_page first"><span>이전 6개</span></a>
+			<a href="#" class="btn_page pre"><span>이전</span></a>
+		</span>
+		<span class="num">
+			<a href="#">1</a>
+			<a href="#">2</a>
+			<a href="#" class="cur">3</a>
+			<a href="#">4</a>
+			<a href="#">5</a>
+		</span>
+		<span class="dir_right">
+			<a href="#" class="btn_page nxt"><span>다음</span></a>
+			<a href="#" class="btn_page end"><span>다음 6개</span></a>
+		</span>
+	</div>
+	<!--//page_num-->
+<!--//내용 영역-->
+</div>
+<!--###### //contentArea ######-->
+
+<!--###### footerArea ######-->
+<div class="footerArea">
+	<div class="f_menu">
+		<ul class="f_menu_top">
+			<li><a href="javascript:login('reload');">로그인</a></li>
+			<li><a href="javascript:memberJoin();">회원가입</a></li>
+			<li><a href="https://member.kolon.com/mobile/policy/policy.jsp" target="_blank">이용안내</a></li>
+			<li><a href="javascript:callCenter('main');">고객센터</a></li>
+		</ul>
+		<ul class="f_menu_btm">
+			<li><a href="/about/shopInfo.jsp">store</a></li>
+			<li><a href="http://m.thecouronne.com/">english</a></li>
+		</ul>
+	</div>
+
+	<ul class="f_sns">
+		<li><a href="http://www.facebook.com/thecouronne" class="facebook"><span>facebook</span></a></li>
+		<li><a href="http://instagram.com/thecouronne" class="instagram"><span>instagram</span></a></li>
+	</ul>
+	
+	<div class="f_info_wrap">
+		<div class="f_info">
+			<h2><img src="img/logo_footer.png" alt="KOLON INDUSTRIES" /></h2>
+			<div class="info">
+				코오롱인더스트리 FnC부문<br />
+				대표이사:박동문 | 개인정보관리 책임자:경영지원본부 손정현상무<br />
+				개인정보관리 담당자 : 빅데이터팀 김정혁 과장<br />
+				서울시 서초구 서초동 1317-23 GT타워 | TEL : 1588-7667<br />
+				EMAIL : <a href="mailto:COURONNEmall@kolon.com">COURONNEmall@kolon.com</a><br />
+				통신판매업신고 제2012-서울서초 0593호<br />
+				사업자등록번호 : 138-85-19612 <a href="http://www.ftc.go.kr/info/bizinfo/communicationList.jsp" class="business">사업자등록확인</a>
+				<span class="escro"><img src="img/escro02.gif" alt="LG U+" />  에스크로 고객님은 안전거래를 위해 
+				결제시 저희 사이트<br/>
+				에서 가입한 LG U+의 구매안전서비스를 이용하실 수 있습니다.<br/> 
+				<a href="https://pgweb.uplus.co.kr/pg/wmp/mertadmin/jsp/mertservice/s_escrowYn.jsp?mertid=joykolon" class="joining">가입사실 확인</a></span>
+			</div>
+			<div class="copyright">Copyright ⓒ 2013 by COURONNE All rights reserved</div>
+		</div>
+	</div>
+</div>
+<!--###### //footerArea ######-->
+
+<!--top버튼-->
+<div id="btnGoTop">
+	<a href="#">TOP</a>
+</div>
+<!--//top버튼-->
+</div>
+<!--//wrap-->
+
+</body>
+</html>

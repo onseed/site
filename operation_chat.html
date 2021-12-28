@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>frontUxer</title>
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/frontUxer.css">
+<script src="js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript">         
+    var menuArry = ['2','1'];//1depth, 2depth
+    $(function() {
+        $('nav a:eq('+menuArry[0]+')').addClass('current');
+        $('.subnav a:eq('+menuArry[1]+')').addClass('current');             
+    });
+</script>
+</head>
+<body>
+<script src="js/guide.js"></script><!-- site guide -->
+	
+	<div class="start_dim"><span></span></div>
+	
+	<h1 class="hide"> Operation</h1>
+	
+    <div class="contents"><!-- contents -->
+    
+        <!--##################### 대화형 안내 #####################-->
+		<section class="aws_box">
+	        <h1 class="aws_tl"> 대화형 안내 </h1>
+			<ul class="dcs">
+               	<li>설문내용은 json형태로 예/아니오 설문진행 후 상품 추천.</li>
+            </ul>	  
+	            	        
+	        <div class="code_area">
+	        
+	            <div class="play_box">
+	               <!-- code -->
+
+					<!-- run_sample -->
+					<div class="run_sample">
+					
+						<style type="text/css">
+						.yesnobox.pdsearh,
+						.yesnobox.pdsearh2{border-radius:10px;}
+						
+						.yesnobox .icn {background-image: url('img/icn_car_pd.svg'); background-size: 650px 550px;}
+						.yesnobox .icn.car {display: block; width: 210px; height: 140px; background-position: 0 -270px;
+							border-radius: 30px; overflow: hidden; background-color: #fff; box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.5);}
+						.yesnobox .icn.car.n1{background-position:-210px -270px;}
+						.yesnobox .icn.car.n2{background-position:-420px -270px;}
+						.yesnobox .icn.car.n3{background-position:0 -410px;}
+						.yesnobox .icn.car.n4{background-position:-210px -410px;}
+						.yesnobox .icn.car.n5{background-position:-420px -410px;}
+						
+						.yesnobox.mobile .icn{background-image:url('img/icn_car_pd.svg'); background-size:325px 275px;}
+						.yesnobox.mobile .icn.car{display:block; width:105px; height:70px; background-position:0 -135px;  margin:0 auto;}
+						.yesnobox.mobile .icn.car.n1{background-position:-105px -135px;}
+						.yesnobox.mobile .icn.car.n2{background-position:-210px -135px;}
+						.yesnobox.mobile .icn.car.n3{background-position:0 -205px;}
+						.yesnobox.mobile .icn.car.n4{background-position:-105px -205px;}
+						.yesnobox.mobile .icn.car.n5{background-position:-210px -205px;}
+						
+						.yesnobox{position:relative; overflow:hidden;}
+						.yesnobox .contbox{width:100%; padding-top:30px;}
+						.yesnobox .contbox:after{display:block; content:''; clear:both;}
+						.yesnobox .pdcar{float:left; padding:2% 0 2% 25%;}
+						.yesnobox .pdtext{float:left; padding:2% 0 2% 5%;}
+						.yesnobox .pdtext p{display:none;}
+						.yesnobox .pdtext .faq_btn{margin-top:20px;}
+						.yesnobox .pdtext .result_btn{margin-top:20px; display:none;}
+						.yesnobox button.retry{display:block; position:absolute; top:35px; z-index:1; right:10px;}
+						.yesnobox button.back{display:block; position:absolute; top:35px; z-index:1; left:10px;}
+						
+						.yesnobox.mobile{width:auto;}
+						.yesnobox.mobile .pdcar{float:none; padding:5% 0 0 0;}
+						.yesnobox.mobile .pdtext{float:none; padding:5% 0 0 0; text-align:center;}
+						
+						.yesnobox .icn.car:after{position:absolute; font-weight:bold; font-size:11px; font-style: normal; background:#f9f9f9; padding:5px; border-radius:5px; top:0px; left:0;}	 
+						.yesnobox .icn.car.q0:after{display:block; content:'현재 : 0번, 새차: 1번 , 중고차: 2번, img: q0';}
+						.yesnobox .icn.car.q1:after{display:block; content:'현재 : 1번, 구매하기: 3번 , 빌려타기: 4번, img: q1';}
+						.yesnobox .icn.car.q2:after{display:block; content:'현재 : 2번, 현금구매: 26번(카드일시불 상품) , 할부구매: 5번, img: q2';}
+						.yesnobox .icn.car.q3:after{display:block; content:'현재 : 3번, 현금구매: 20번(카드일시불 상품) , 할부구매: 6번, img: q3';}
+						.yesnobox .icn.car.q4:after{display:block; content:'현재 : 4번, 예: 24번(장기렌터카 상품) , 아니오: 25번(오토리스 상품), img: q4';}
+						.yesnobox .icn.car.q5:after{display:block; content:'현재 : 5번, 카드결제: 27번(중고차 할부금융 상품), 카드없이 결제:28번"(중고차론 상품), img: q5';}
+						.yesnobox .icn.car.q6:after{display:block; content:'현재 : 6번, 국산차: 7번, 수입차: 23번(오토론 상품), img class: q6';}
+						.yesnobox .icn.car.q7:after{display:block; content:'현재 : 7번, 예: 21번(카드할부 상품), 아니오: 22번(오토 할부 상품), img class: q7';}
+						.yesnobox.mobile .icn.car:after{padding:1px; }
+						
+						.faq_slider {position:relative;}
+						.faq_slider .contbox{position:absolute; top:0; left:0;}
+						</style>
+						
+						<!-- sample_box -->	                    
+	                    <article class="sample_box">
+							<dl class="dcs">
+				               	<dd>슬라이드 옵션</dd>
+				            </dl>
+				            
+							<div class="yesnobox pdsearh mgt_s bg_psd">
+							
+								<div class="contbox">
+									<div class="pdcar">
+										<i class="icn car"></i>			
+									</div>
+									<div class="pdtext">			
+										<p class="pd"><strong>다이렉트 오토 </strong> 상품을 추천합니다.</p>
+										<span class="quest">질문</span>			
+										<div class="faq_btn">
+											<button type="button" class="btn_cont left"><strong>왼쪽버튼</strong></button>
+											<button type="button" class="btn_cont right"><strong>오른쪽 버튼</strong></button>
+										</div>
+										<div class="result_btn">
+											<button type="button" class="btn_cont btn_pd_link">자세히 보기</button>
+										</div>			
+									</div>		
+								</div>
+								<button type="button" class="btn_sean back">이전으로</button>
+								<button type="button" class="btn_sean retry">다시찾기</button>
+								
+							</div>				            
+	                    
+	                    </article>
+	                    <!--// sample_box --> 
+	                    
+						<!-- sample_box -->	                    
+	                    <article class="sample_box mgt_l">
+							<dl class="dcs">
+				               	<dd>페이드인/아웃(default)</dd>
+				            </dl>
+				            
+							<div class="yesnobox pdsearh2 mgt_s bg_psd">
+							
+								<div class="contbox">
+									<div class="pdcar">
+										<i class="icn car"></i>			
+									</div>
+									<div class="pdtext">			
+										<p class="pd"><strong>다이렉트 오토 </strong> 상품을 추천합니다.</p>
+										<span class="quest">질문</span>			
+										<div class="faq_btn">
+											<button type="button" class="btn_cont left"><strong>왼쪽버튼</strong></button>
+											<button type="button" class="btn_cont right"><strong>오른쪽 버튼</strong></button>
+										</div>
+										<div class="result_btn">
+											<button type="button" class="btn_cont btn_pd_link">자세히 보기</button>
+										</div>			
+									</div>		
+								</div>
+								<button type="button" class="btn_sean back">이전으로</button>
+								<button type="button" class="btn_sean retry">다시찾기</button>
+								
+							</div>				            
+				            
+	                    </article>
+	                    <!--// sample_box -->				            	                    
+						
+								
+						
+					</div>
+					<!--// run_sample -->
+
+	            </div>
+                   
+                    <script type="text/javascript">
+                    	//****product search****//
+                    	var qna_txt_arry = [ 
+                        	  //num,	'left No',	'right No',	'텍스트 html,																								'left명',		'right명',				'img',		'back num' 		
+                        		[0,		1,			2,				'어떤 차를  이용하실 생각인가요?', 																	'새차',			'중고차', 				'q0',		0],
+                        		[1,		3,			4,				'새 차를 현금 또는 할부로<br> 구매하시겠어요?<br> 렌터카·리스를 이용하시겠어요?', 		'구매하기', 	'빌려 타기', 			'q1',		0],
+                        		[2,		26,		5,				'보유하신 현금으로 구매하실 건가요?<br> 할부로 구매하실 건가요?',					 		'현금 구매', 	'할부 구매', 			'q2',		0],
+                        		[3,		20,		6,				'보유하신 현금으로 구매하실 건가요?<br> 할부로 구매하실 건가요요?',					 		'현금 구매', 	'할부 구매',		 	'q3',		1],
+                        		[4,		24,		25,			'하·허·호 번호판도<br> 괜찮으신가요?',														 		'예', 			'아니요', 				'q4',		1],
+                        		[5,		27,		28,			'할부 결제방법을 선택해 주세요.',														 				'카드 결제',	'카드 없이 결제', 	'q5',		2],
+                        		[6,		7,			23,			'할부로 구매하실 차가 국산차인가요? 수입차인가요?',												'국산차',	'	수입차', 				'q6',		3],
+                        		[7,		21,		22,			'할부기간 중에 할부금을 상환하실 계획인가요?',													'예', 			'아니요', 				'q7',		6]
+                            ],
+                    		qna_pd_arry = [
+                    	    	//'num',	'상품명',						'img'	,'디렉토리',						'자세히 보기 mo url'		'자세히 보기 pc url'					  							
+                    	        [20,	'카드일시불',						'n1',	'/oap/card-installment/',	'카드일시불_mo.jsp',		'카드일시불_pc.jsp',
+                    	           	 	'새 차를 현금으로 구매하실 계획이라면,<br>카드로 일시불 결제하고<br>1.2%까지 캐시백 혜택 받으세요.',		3], //'상품문구 html'		'back num'
+                    	           	 		
+                    	        [21,	'카드할부',						'n1',	'/oap/card-installment/',	'카드할부_mo.jsp',			'카드할부_pc.jsp',	
+                    	             	'인기 할부상품으로,<br>중도상환수수료 없이<br>연 1.0%~3.6%의 낮은 금리로<br>이용하실 수 있습니다.',			7],
+                    	             		
+                    	        [22,	'오토 할부',						'n3',	'/oap/limit/',						'오토할부_mo.jsp',			'오토할부_pc.jsp',	
+                    	             	'대표 할부상품으로,<br>연 1.0%~3.6%의 낮은 금리로<br>60개월까지 이용하실 수 있습니다.',							7],
+                    	             		
+                    	        [23,	'오토론',							'n2',	'/oap/product/',				'오토론_mo.jsp',			'오토론_pc.jsp',
+                    	            	'카드 없이 이용 가능한 대출상품으로,<br>연 3.9%~4.9%의 낮은 금리로<br>60개월까지 이용하실 수 있습니다.',		6],
+                    	            		 
+                    	        [24,	'장기렌터카',						'n5',	'/oap/product/',				'장기렌터카_mo.jsp',		'장기렌터카_pc.jsp',
+                    	             	'월 렌트료에 등록 비용, 자동차세가 포함되어<br>초기·추가 비용 부담이 적고,<br>LPG 차량도 이용하실 수 있습니다.',	4],
+                    	    	
+                    	        [25,	'오토리스',						'n4',	'/oap/product/',				'오토리스_mo.jsp',			'오토리스_pc.jsp',
+                    	             	'하·허·호가 아닌 일반 번호판을 이용하며,<br>월 리스료에 등록 비용, 자동차세가 포함되고<br>비용 처리가 가능해 세금도 절감할 수 있습니다.',		4],
+                    	             		
+                    	        [26,	'중고차 일시불',					'n4',	'/oap/product/',				'중고차일시불_mo.jsp',	'중고차일시불_pc.jsp',
+                    	             	'중고차를 현금으로 구매하실 계획이라면,<br>카드로 일시불 결제하고<br>0.5% 캐시백 혜택 받으세요.',		2],
+                    	             		
+                    	        [27,	'중고차 할부',					'n4',	'/oap/product/',				'중고차할부_mo.jsp',		'중고차할부_pc.jsp',
+                    	             	'카드로 결제하면<br>연 3.5%~5.5%의 낮은 금리로<br>이용하실 수 있습니다.(신용 3등급 기준)',		5],
+                    	             		
+                    	        [28,	'중고차론',						'n4',	'/oap/product/',					'중고차론_mo.jsp',			'중고차론_pc.jsp',
+                    	             	'카드 없이 이용 가능한 대출상품으로,<br>연 3.9%~5.9%의 낮은 금리로<br>이용하실 수 있습니다.(신용 3등급 기준)',		5]       	
+                    		];
+                    	
+                    	var  qna_set_slide = {//설정 1 (slide)			
+                      			aniSpeed : 200, //전환속도
+                      			sliderOpt : true, //슬라이더 사용 여부
+                      			sliderSpeed : 600, //슬라이더 속도
+                      			txtCall : '', leftCall : '', rightCall : '', backNum : 0, leftNum : 0, rightNum : 0, viewAdress : '', submitAdress : '', imgCall : 0, returnClick : true, seanNxt: 0, clonedata: ''//디폴트 수정불가
+                    		}	
+                    	
+                    	var  qna_set_normal = {//설정 2 (fadeInout)
+                    			aniSpeed : 200,
+                    			txtCall : '', leftCall : '', rightCall : '', backNum : 0, leftNum : 0, rightNum : 0, viewAdress : '', submitAdress : '', imgCall : 0, returnClick : true, seanNxt: 0, clonedata: ''//디폴트 수정불가
+                    		}
+                    	
+                    	var pdSearch = {
+                    		set : function(num, setSlecter , arrayTxt, arrayObj, arraySet){//카드 생성		contbox
+                    			arraySet.txtCall = arrayTxt[num][3];//문구
+                    			arraySet.leftCall = arrayTxt[num][4];//왼쪽 버튼
+                    			arraySet.leftNum = arrayTxt[num][1];//왼쪽 버튼 넘버링
+                    			arraySet.rightCall = arrayTxt[num][5];//오른쪽 버튼명			
+                    			arraySet.rightNum = arrayTxt[num][2];//오른쪽 버튼 넘버링
+                    			arraySet.backNum = arrayTxt[num][7];//백넘버 
+                    			arraySet.imgCall =  arrayTxt[num][6];//이미지 클래스명: q0~q(n)
+
+                    			$el = $(setSlecter);
+                    			$quest = $el.find('.quest');
+                    			$btn = $el.find('.faq_btn .btn_cont');
+                    			$leftBtn = $el.find('.faq_btn .btn_cont.left');
+                    			$rightBtn = $el.find('.faq_btn .btn_cont.right');						
+                    			$quest.html(arraySet.txtCall);			
+                    			$leftBtn.text(arraySet.leftCall);
+                    			$rightBtn.text(arraySet.rightCall);
+                    			$(setSlecter+' .pdcar .car').addClass(arraySet.imgCall);
+                    			pdSearch.click(num, setSlecter, arrayTxt, arrayObj, arraySet);
+                    			
+                    			console.log("set:"+setSlecter);
+                    		},
+                    		init: function(opt){//selector: class name
+                    			var selector = opt.name;
+                    			var arrayTxt = opt.arrayFaq; 
+                    			var arrayObj = opt.arrayPd;
+                    			var arraySet = opt.arraySet;
+                    			
+                    			if(isMobile){$(selector).addClass('mobile');}//모바일일때						
+                    			pdSearch.set(0, selector+' .contbox', arrayTxt, arrayObj, arraySet);//세팅
+                    			$(selector+' .btn_sean').attr('disabled',true);//다시,이전 버튼 막기
+                    			
+                    			if(arraySet.sliderOpt == true){//***** 슬라이더 처리 ******
+                    				var selHeight = $(selector).find('.contbox').outerHeight();//box 높이 
+                    				$(selector).addClass("faq_slider").css({'height':selHeight});//box 높이 처리				
+                    				
+                    				cloneHtml= '<div class="contbox clone">슬라이더선택</div>';
+                    				arraySet.clonedata = cloneHtml; 				
+                    				
+                    				$(selector).append(arraySet.clonedata);					
+                    				$(selector+' .contbox').eq(0).addClass('current');
+                    				$(selector+' .contbox.clone').css({"left" : $(selector).width(), "display":"none"});								
+                    			}//*****// 슬라이더 처리 ******
+                    			
+                    			$(selector+' .btn_sean').click(function(e){
+                    				$(selector+' .contbox .faq_btn').fadeIn(arraySet.aniSpeed);
+                    				$(selector+' .contbox .result_btn, .contbox .pdtext .pd ').css('display','none');
+                    				$(selector+' .contbox .pdcar .car').removeClass(arraySet.imgCall);
+                    				
+                    				if($(this).hasClass('retry')){ //'다시하기'일때
+                    					pdSearch.set(0, selector+' .contbox', arrayTxt, arrayObj, arraySet);	
+                    				}else{//'이전으로'일때
+                    					pdSearch.set(arraySet.backNum, selector+' .contbox', arrayTxt, arrayObj, arraySet);	
+                    				}
+                    				if(arraySet.imgCall=='q0'){
+                    					$(selector+' .btn_sean').attr('disabled',true);//다시,이전 버튼 막기
+                    				}
+                    				arraySet.returnClick = false;
+                    				
+                    				$(selector+' .contbox').css('display','none');
+                    				$(selector+' .contbox').stop().fadeIn(arraySet.aniSpeed,function(){
+                    					arraySet.returnClick = true;
+                    				});
+                    			});			
+                    			
+                    		},		
+                    		click : function(num, setSlecter, arrayTxt, arrayObj, arraySet){			
+                    			$btn.off().on('click',function(e){
+                    				var selWd = $(setSlecter).width();//셀렉터 넓이
+                    				if(arraySet.returnClick){//click useble					
+                    					$(setSlecter+ ' .pdcar .car').removeClass(arraySet.imgCall);//이전 이미지
+                    					if($(this).hasClass('left')){//left button
+                    						arraySet.seanNxt = arraySet.leftNum;
+                    					}else{//right button
+                    						arraySet.seanNxt = arraySet.rightNum;
+                    					}
+                    					arraySet.returnClick = false;
+                    					//console.log('backNum: '+arraySet.backNum+', seanNxt: '+arraySet.seanNxt);
+                    					
+                    					if(arraySet.seanNxt>10){//seanNxt이10이상은 결과
+                    						return pdSearch.result(arraySet.seanNxt, setSlecter , arrayTxt, arrayObj, arraySet);
+                    					}					
+                    					
+                    					if(arraySet.sliderOpt == true){//***** 슬라이더 처리 ******
+                    						
+                    						var cloneSelecter;
+                    						if(setSlecter.indexOf(".current") > -1){ //커런트 여부
+                    							setSlecter = setSlecter;
+                    						}else{
+                    							setSlecter = setSlecter+".current";
+                    						}
+                    						cloneSelecter =  setSlecter.replace(".current",".clone");
+                    						
+                    						arraySet.clonedata = $(setSlecter+'.current').html(); //console.log(arraySet.clonedata);				
+                    					
+                    						$(cloneSelecter).html('');
+                    						$(cloneSelecter).html(arraySet.clonedata);
+                    					}//*****// 슬라이더 처리 ******
+                    					
+                    					pdSearch.set(arraySet.seanNxt,setSlecter, arrayTxt, arrayObj, arraySet);
+                    										
+                    					if(arraySet.sliderOpt == true){//***** 슬라이더 처리 ******
+                    						var currentHeight = $(setSlecter).outerHeight();//box 높이
+                    						$(this).closest('.faq_slider').css({'height':currentHeight});////box 높이 처리
+                    						
+                    						if($(this).hasClass('left')){//왼쪽버튼인경우 왼쪽에서 들어온다 
+                    							$(setSlecter).css({"margin-left" : -selWd});
+                    							$(cloneSelecter).css({"margin-left" : -selWd, "display":"block"});
+                    							$(setSlecter+','+ cloneSelecter).animate({"margin-left" : 0},arraySet.sliderSpeed,function(){
+                    								$(cloneSelecter).css({"display":"none"});
+                    								arraySet.returnClick = true;
+                    							});
+                    						}else{//오른쪽버튼인경우 오른쪽에서 들어온다
+                    							$(setSlecter).css({"margin-left" : selWd});
+                    							$(cloneSelecter).css({"margin-left" : -selWd, "display":"block"});							
+                    							$(setSlecter).animate({"margin-left" : 0},arraySet.sliderSpeed,function(){								
+                    								arraySet.returnClick = true;
+                    							});
+                    							$(cloneSelecter).animate({"margin-left" : -selWd*2},arraySet.sliderSpeed,function(){
+                    								$(cloneSelecter).css({"margin-left" : 0, "display":"none"});
+                    							});
+                    						}
+                    					}//*****// 슬라이더 처리 ******					
+                    					else{
+                    						$(setSlecter).css('display','none');
+                    						$(setSlecter).fadeIn(arraySet.aniSpeed,function(){
+                    							arraySet.returnClick = true;
+                    						});						
+                    					}
+                    					
+                    					$('.btn_sean').attr('disabled',false);//다시,이전 버튼 풀기					
+                    				}//클릭가능할때만 END				
+                    			});
+                    		},
+                    		result: function(num, resultSlecter, arrayTxt, arrayObj, arraySet){
+                    			rNum = num - 20,
+                    			arraySet.txtCall = arrayObj[rNum][6],
+                    			arraySet.pdCall =  arrayObj[rNum][1],
+                    			arraySet.imgCall =  arrayObj[rNum][2];
+                    			arraySet.backNum = arrayObj[rNum][7];//백넘버
+                    			
+                    	        var viewfileName, submitfileName;	           
+                    			(isMobile)?viewfileName = arrayObj[rNum][4] : viewfileName = arrayObj[rNum][5]
+                    			
+                    		 	viewAdress  = arrayObj[rNum][3] + viewfileName; //자세히 보기 URL		 	
+                    			$(resultSlecter+" .btn_pd_link").off().click(function(){window.open(viewAdress);});
+                    			
+                    			$(resultSlecter+' .pdtext .quest').html(arraySet.txtCall);
+                    			$(resultSlecter+' .pdtext .pd strong').text(arraySet.pdCall);
+                    			
+                    			$(resultSlecter+' .pdcar .car').addClass(arraySet.imgCall);			
+                    			$(resultSlecter+' .faq_btn').css('display','none');
+                    			$(resultSlecter+' .result_btn,'+ resultSlecter+' .pdtext .pd').fadeIn(arraySet.aniSpeed);
+                    			$(resultSlecter+' .pdcar .car,'+ resultSlecter+' .pdtext .quest').animate({'opacity':'1.0'},arraySet.aniSpeed);
+                    			
+                    			if(arraySet.sliderOpt == true){//***** 슬라이더 처리 ******
+                    				var currentHeight = $(resultSlecter).outerHeight();//box 높이
+                    				$(resultSlecter).closest('.faq_slider').css({'height':currentHeight});//box 높이 처리
+                    			}//*****// 슬라이더 처리 ******
+                    		}
+                    	} 	
+                    	$(document).ready(function () {
+                        	pdSearch.init({
+                    			name: '.pdsearh', 
+                    			arrayFaq: qna_txt_arry, //질문 결과 array(data)
+                    			arrayPd: qna_pd_arry, //결과 상품 array(data)
+                    			arraySet: qna_set_slide//설정 변수 array(slide type)
+	                    	});
+	                    	pdSearch.init({
+	                    		name: '.pdsearh2', 
+	                    		arrayFaq: qna_txt_arry, //질문 결과 array(data)
+	                    		arrayPd: qna_pd_arry, //결과 상품 array(data)
+	                    		arraySet: qna_set_normal//설정 변수 array(fadeIn type)
+	                    	});                    		
+                    	});
+                    	//****//product search****//
+                    </script>					
+	                <!--// code -->
+	            </div>
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-javascript">
+//****product search****//
+var qna_txt_arry = [ 
+  	  //num,	'left No',	'right No',	'텍스트 html,																								'left명',		'right명',				'img',		'back num' 		
+  		[0,		1,			2,				'어떤 차를  이용하실 생각인가요?', 																	'새차',			'중고차', 				'q0',		0],
+  		[1,		3,			4,				'새 차를 현금 또는 할부로<br> 구매하시겠어요?<br> 렌터카·리스를 이용하시겠어요?', 		'구매하기', 	'빌려 타기', 			'q1',		0],
+  		[2,		26,		5,				'보유하신 현금으로 구매하실 건가요?<br> 할부로 구매하실 건가요?',					 		'현금 구매', 	'할부 구매', 			'q2',		0],
+  		[3,		20,		6,				'보유하신 현금으로 구매하실 건가요?<br> 할부로 구매하실 건가요요?',					 		'현금 구매', 	'할부 구매',		 	'q3',		1],
+  		[4,		24,		25,			'하·허·호 번호판도<br> 괜찮으신가요?',														 		'예', 			'아니요', 				'q4',		1],
+  		[5,		27,		28,			'할부 결제방법을 선택해 주세요.',														 				'카드 결제',	'카드 없이 결제', 	'q5',		2],
+  		[6,		7,			23,			'할부로 구매하실 차가 국산차인가요? 수입차인가요?',												'국산차',	'	수입차', 				'q6',		3],
+  		[7,		21,		22,			'할부기간 중에 할부금을 상환하실 계획인가요?',													'예', 			'아니요', 				'q7',		6]
+      ],
+	qna_pd_arry = [
+    	//'num',	'상품명',						'img'	,'디렉토리',						'자세히 보기 mo url'		'자세히 보기 pc url'					  							
+        [20,	'카드일시불',						'n1',	'/oap/card-installment/',	'카드일시불_mo.jsp',		'카드일시불_pc.jsp',
+           	 	'새 차를 현금으로 구매하실 계획이라면,<br>카드로 일시불 결제하고<br>1.2%까지 캐시백 혜택 받으세요.',		3], //'상품문구 html'		'back num'
+           	 		
+        [21,	'카드할부',						'n1',	'/oap/card-installment/',	'카드할부_mo.jsp',			'카드할부_pc.jsp',	
+             	'인기 할부상품으로,<br>중도상환수수료 없이<br>연 1.0%~3.6%의 낮은 금리로<br>이용하실 수 있습니다.',			7],
+             		
+        [22,	'오토 할부',						'n3',	'/oap/limit/',						'오토할부_mo.jsp',			'오토할부_pc.jsp',	
+             	'대표 할부상품으로,<br>연 1.0%~3.6%의 낮은 금리로<br>60개월까지 이용하실 수 있습니다.',							7],
+             		
+        [23,	'오토론',							'n2',	'/oap/product/',				'오토론_mo.jsp',			'오토론_pc.jsp',
+            	'카드 없이 이용 가능한 대출상품으로,<br>연 3.9%~4.9%의 낮은 금리로<br>60개월까지 이용하실 수 있습니다.',		6],
+            		 
+        [24,	'장기렌터카',						'n5',	'/oap/product/',				'장기렌터카_mo.jsp',		'장기렌터카_pc.jsp',
+             	'월 렌트료에 등록 비용, 자동차세가 포함되어<br>초기·추가 비용 부담이 적고,<br>LPG 차량도 이용하실 수 있습니다.',	4],
+    	
+        [25,	'오토리스',						'n4',	'/oap/product/',				'오토리스_mo.jsp',			'오토리스_pc.jsp',
+             	'하·허·호가 아닌 일반 번호판을 이용하며,<br>월 리스료에 등록 비용, 자동차세가 포함되고<br>비용 처리가 가능해 세금도 절감할 수 있습니다.',		4],
+             		
+        [26,	'중고차 일시불',					'n4',	'/oap/product/',				'중고차일시불_mo.jsp',	'중고차일시불_pc.jsp',
+             	'중고차를 현금으로 구매하실 계획이라면,<br>카드로 일시불 결제하고<br>0.5% 캐시백 혜택 받으세요.',		2],
+             		
+        [27,	'중고차 할부',					'n4',	'/oap/product/',				'중고차할부_mo.jsp',		'중고차할부_pc.jsp',
+             	'카드로 결제하면<br>연 3.5%~5.5%의 낮은 금리로<br>이용하실 수 있습니다.(신용 3등급 기준)',		5],
+             		
+        [28,	'중고차론',						'n4',	'/oap/product/',					'중고차론_mo.jsp',			'중고차론_pc.jsp',
+             	'카드 없이 이용 가능한 대출상품으로,<br>연 3.9%~5.9%의 낮은 금리로<br>이용하실 수 있습니다.(신용 3등급 기준)',		5]       	
+	];
+
+var  qna_set_slide = {//설정 1 (slide)			
+			aniSpeed : 200, //전환속도
+			sliderOpt : true, //슬라이더 사용 여부
+			sliderSpeed : 600, //슬라이더 속도
+			txtCall : '', leftCall : '', rightCall : '', backNum : 0, leftNum : 0, rightNum : 0, viewAdress : '', submitAdress : '', imgCall : 0, returnClick : true, seanNxt: 0, clonedata: ''//디폴트 수정불가
+	}	
+
+var  qna_set_normal = {//설정 2 (fadeInout)
+		aniSpeed : 200,
+		txtCall : '', leftCall : '', rightCall : '', backNum : 0, leftNum : 0, rightNum : 0, viewAdress : '', submitAdress : '', imgCall : 0, returnClick : true, seanNxt: 0, clonedata: ''//디폴트 수정불가
+	}
+
+var pdSearch = {
+	set : function(num, setSlecter , arrayTxt, arrayObj, arraySet){//카드 생성		contbox
+		arraySet.txtCall = arrayTxt[num][3];//문구
+		arraySet.leftCall = arrayTxt[num][4];//왼쪽 버튼
+		arraySet.leftNum = arrayTxt[num][1];//왼쪽 버튼 넘버링
+		arraySet.rightCall = arrayTxt[num][5];//오른쪽 버튼명			
+		arraySet.rightNum = arrayTxt[num][2];//오른쪽 버튼 넘버링
+		arraySet.backNum = arrayTxt[num][7];//백넘버 
+		arraySet.imgCall =  arrayTxt[num][6];//이미지 클래스명: q0~q(n)
+
+		$el = $(setSlecter);
+		$quest = $el.find('.quest');
+		$btn = $el.find('.faq_btn .btn_cont');
+		$leftBtn = $el.find('.faq_btn .btn_cont.left');
+		$rightBtn = $el.find('.faq_btn .btn_cont.right');						
+		$quest.html(arraySet.txtCall);			
+		$leftBtn.text(arraySet.leftCall);
+		$rightBtn.text(arraySet.rightCall);
+		$(setSlecter+' .pdcar .car').addClass(arraySet.imgCall);
+		pdSearch.click(num, setSlecter, arrayTxt, arrayObj, arraySet);
+		
+		console.log("set:"+setSlecter);
+	},
+	init: function(opt){//selector: class name
+		var selector = opt.name;
+		var arrayTxt = opt.arrayFaq; 
+		var arrayObj = opt.arrayPd;
+		var arraySet = opt.arraySet;
+		
+		if(isMobile){$(selector).addClass('mobile');}//모바일일때						
+		pdSearch.set(0, selector+' .contbox', arrayTxt, arrayObj, arraySet);//세팅
+		$(selector+' .btn_sean').attr('disabled',true);//다시,이전 버튼 막기
+		
+		if(arraySet.sliderOpt == true){//***** 슬라이더 처리 ******
+			var selHeight = $(selector).find('.contbox').outerHeight();//box 높이 
+			$(selector).addClass("faq_slider").css({'height':selHeight});//box 높이 처리				
+			
+			cloneHtml= '<div class="contbox clone">슬라이더선택</div>';
+			arraySet.clonedata = cloneHtml; 				
+			
+			$(selector).append(arraySet.clonedata);					
+			$(selector+' .contbox').eq(0).addClass('current');
+			$(selector+' .contbox.clone').css({"left" : $(selector).width(), "display":"none"});								
+		}//*****// 슬라이더 처리 ******
+		
+		$(selector+' .btn_sean').click(function(e){
+			$(selector+' .contbox .faq_btn').fadeIn(arraySet.aniSpeed);
+			$(selector+' .contbox .result_btn, .contbox .pdtext .pd ').css('display','none');
+			$(selector+' .contbox .pdcar .car').removeClass(arraySet.imgCall);
+			
+			if($(this).hasClass('retry')){ //'다시하기'일때
+				pdSearch.set(0, selector+' .contbox', arrayTxt, arrayObj, arraySet);	
+			}else{//'이전으로'일때
+				pdSearch.set(arraySet.backNum, selector+' .contbox', arrayTxt, arrayObj, arraySet);	
+			}
+			if(arraySet.imgCall=='q0'){
+				$(selector+' .btn_sean').attr('disabled',true);//다시,이전 버튼 막기
+			}
+			arraySet.returnClick = false;
+			
+			$(selector+' .contbox').css('display','none');
+			$(selector+' .contbox').stop().fadeIn(arraySet.aniSpeed,function(){
+				arraySet.returnClick = true;
+			});
+		});			
+		
+	},		
+	click : function(num, setSlecter, arrayTxt, arrayObj, arraySet){			
+		$btn.off().on('click',function(e){
+			var selWd = $(setSlecter).width();//셀렉터 넓이
+			if(arraySet.returnClick){//click useble					
+				$(setSlecter+ ' .pdcar .car').removeClass(arraySet.imgCall);//이전 이미지
+				if($(this).hasClass('left')){//left button
+					arraySet.seanNxt = arraySet.leftNum;
+				}else{//right button
+					arraySet.seanNxt = arraySet.rightNum;
+				}
+				arraySet.returnClick = false;
+				//console.log('backNum: '+arraySet.backNum+', seanNxt: '+arraySet.seanNxt);
+				
+				if(arraySet.seanNxt>10){//seanNxt이10이상은 결과
+					return pdSearch.result(arraySet.seanNxt, setSlecter , arrayTxt, arrayObj, arraySet);
+				}					
+				
+				if(arraySet.sliderOpt == true){//***** 슬라이더 처리 ******
+					
+					var cloneSelecter;
+					if(setSlecter.indexOf(".current") > -1){ //커런트 여부
+						setSlecter = setSlecter;
+					}else{
+						setSlecter = setSlecter+".current";
+					}
+					cloneSelecter =  setSlecter.replace(".current",".clone");
+					
+					arraySet.clonedata = $(setSlecter+'.current').html(); //console.log(arraySet.clonedata);				
+				
+					$(cloneSelecter).html('');
+					$(cloneSelecter).html(arraySet.clonedata);
+				}//*****// 슬라이더 처리 ******
+				
+				pdSearch.set(arraySet.seanNxt,setSlecter, arrayTxt, arrayObj, arraySet);
+									
+				if(arraySet.sliderOpt == true){//***** 슬라이더 처리 ******
+					var currentHeight = $(setSlecter).outerHeight();//box 높이
+					$(this).closest('.faq_slider').css({'height':currentHeight});////box 높이 처리
+					
+					if($(this).hasClass('left')){//왼쪽버튼인경우 왼쪽에서 들어온다 
+						$(setSlecter).css({"margin-left" : -selWd});
+						$(cloneSelecter).css({"margin-left" : -selWd, "display":"block"});
+						$(setSlecter+','+ cloneSelecter).animate({"margin-left" : 0},arraySet.sliderSpeed,function(){
+							$(cloneSelecter).css({"display":"none"});
+							arraySet.returnClick = true;
+						});
+					}else{//오른쪽버튼인경우 오른쪽에서 들어온다
+						$(setSlecter).css({"margin-left" : selWd});
+						$(cloneSelecter).css({"margin-left" : -selWd, "display":"block"});							
+						$(setSlecter).animate({"margin-left" : 0},arraySet.sliderSpeed,function(){								
+							arraySet.returnClick = true;
+						});
+						$(cloneSelecter).animate({"margin-left" : -selWd*2},arraySet.sliderSpeed,function(){
+							$(cloneSelecter).css({"margin-left" : 0, "display":"none"});
+						});
+					}
+				}//*****// 슬라이더 처리 ******					
+				else{
+					$(setSlecter).css('display','none');
+					$(setSlecter).fadeIn(arraySet.aniSpeed,function(){
+						arraySet.returnClick = true;
+					});						
+				}
+				
+				$('.btn_sean').attr('disabled',false);//다시,이전 버튼 풀기					
+			}//클릭가능할때만 END				
+		});
+	},
+	result: function(num, resultSlecter, arrayTxt, arrayObj, arraySet){
+		rNum = num - 20,
+		arraySet.txtCall = arrayObj[rNum][6],
+		arraySet.pdCall =  arrayObj[rNum][1],
+		arraySet.imgCall =  arrayObj[rNum][2];
+		arraySet.backNum = arrayObj[rNum][7];//백넘버
+		
+        var viewfileName, submitfileName;	           
+		(isMobile)?viewfileName = arrayObj[rNum][4] : viewfileName = arrayObj[rNum][5]
+		
+	 	viewAdress  = arrayObj[rNum][3] + viewfileName; //자세히 보기 URL		 	
+		$(resultSlecter+" .btn_pd_link").off().click(function(){window.open(viewAdress);});
+		
+		$(resultSlecter+' .pdtext .quest').html(arraySet.txtCall);
+		$(resultSlecter+' .pdtext .pd strong').text(arraySet.pdCall);
+		
+		$(resultSlecter+' .pdcar .car').addClass(arraySet.imgCall);			
+		$(resultSlecter+' .faq_btn').css('display','none');
+		$(resultSlecter+' .result_btn,'+ resultSlecter+' .pdtext .pd').fadeIn(arraySet.aniSpeed);
+		$(resultSlecter+' .pdcar .car,'+ resultSlecter+' .pdtext .quest').animate({'opacity':'1.0'},arraySet.aniSpeed);
+		
+		if(arraySet.sliderOpt == true){//***** 슬라이더 처리 ******
+			var currentHeight = $(resultSlecter).outerHeight();//box 높이
+			$(resultSlecter).closest('.faq_slider').css({'height':currentHeight});//box 높이 처리
+		}//*****// 슬라이더 처리 ******
+	}
+} 	
+$(document).ready(function () {
+  	pdSearch.init({
+		name: '.pdsearh', 
+		arrayFaq: qna_txt_arry, //질문 결과 array(data)
+		arrayPd: qna_pd_arry, //결과 상품 array(data)
+		arraySet: qna_set_slide//설정 변수 array(slide type)
+	});
+	pdSearch.init({
+		name: '.pdsearh2', 
+		arrayFaq: qna_txt_arry, //질문 결과 array(data)
+		arrayPd: qna_pd_arry, //결과 상품 array(data)
+		arraySet: qna_set_normal//설정 변수 array(fadeIn type)
+	});                    		
+});
+//****//product search****//
+</code>
+</pre>
+<!--// codebox -->      
+	        
+	        </div>
+		</section>
+		<!--#####################// 대화형 안내 #####################-->
+		    
+    </div><!--// contents -->
+    
+	<script src="js/jquery-ui.min.js"></script><!-- jquery ui-->
+	<script src="js/jquery.ui.touch-punch.js"></script><!-- jquery ui using mobile -->
+    <script src="js/frontUxer.js"></script><!-- plugin -->
+    
+</body>
+</html>

@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>frontUxer</title>
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/frontUxer.css">
+<script src="js/jquery-1.11.2.min.js"></script><!-- jquery flattform -->
+<script>        
+	var menuArry = ['1','5'];//1depth, 2depth
+</script>
+</head>
+<body>
+<script src="js/guide.js"></script><!-- site guide -->
+	
+	<div class="start_dim"><span></span></div>
+
+	<h1 class="hide">module</h1>
+	
+	<div class="contents"><!-- contents  -->
+	
+		<!--##################### Input Type #####################-->
+		<section class="aws_box">
+			<h1 class="aws_tl"> Input Type </h1>
+			<ul class="dcs">
+				<li>Checkbox / Radio / InputBox등 Input관련 플러그인 (selectBox는 별도로 기술함)</li>
+			</ul>	        
+	        <div class="code_area">
+	        	<div class="play_box">
+	        		<!-- code -->
+	        		<div class="option_txt">
+						<p>id, for 는 필수 및 유니크</p>
+						<p>각 css 및 html 예제는 아래 항목에서 별도 기술</p>
+						<p>기본 실행 : <span class="incodebox"><code class="language-javascript">$('셀렉터').uxInput();</code></span></p>
+					</div>
+					<!--// code -->
+				</div>
+				
+					<style>
+						body.new_mopism .code_area .form  *,
+						body.new_mopism .code_area .form.check  *{transition: all ease 0.3s;}
+					</style>
+				
+					<!-- run_sample -->
+					<div class="run_sample">						
+	               		
+	                    <!-- sample_box -->
+	                    <article class="sample_box mgt_l">
+	                    	이미지 샘플
+	                    	<div class="bg_psd mgt_s"><img src="img/bg_form_set.svg" style="width:auto;"></div>
+	                    </article>
+	                   <!--// sample_box -->
+					</div>
+					<!-- run_sample -->					
+				
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-javascript"> 
+$.fn.extend({//#################### 5.uxInput ####################
+	uxInput : function(opt){
+		var defaults = {
+			limit : 0,
+			allCheck : false,
+			addName : ''
+		},
+		opt = $.extend(defaults,opt);
+		
+		return this.each(function(){
+			var $this		= $(this),
+				type			= $this.attr('type'),
+				inputId		= $this.attr('id'),
+				inputName	= $this.attr('name'),
+				$label			= $('label[for="'+ inputId +'"]'),
+				$inputName	= $('.' + inputName),
+				allCheck		= opt.allCheck,
+				addName	= opt.addName,
+				limit			= opt.limit,
+				allevent		= false,
+				allName		= null;
+			
+			var app = {
+				init : function(){
+					(!!inputName) ? $label.addClass('label_' + type + ' ' + inputName) : $label.addClass('label_' + type);
+					
+					//$this.attr('aria-hidden', true).css('display','none');
+					
+					($this.prop('checked') === true) ? $label.addClass('on') : '';
+					($this.prop('disabled') === true) ? $label.addClass('off') : '';
+					
+					if (type === 'checkbox') {
+						if (allCheck) { //부모 allchkeck의 name과 동일한 name을 갖은 자식들을 컨트롤
+							
+							$label.addClass('label_all');
+							$this.addClass('input_all');
+							
+							if (!!addName) {//addName 속성 있을때만
+								allName = inputName + '_' + addName;
+							
+								$('input[name="' + addName + '"]').attr('data-all-check', allName);
+								$('label.' + addName).attr('data-all-check', allName);
+							} else {
+								allName = inputName;
+							}
+							
+							$('input[name="' + inputName + '"]').attr('data-all-check', allName);
+							$('label.' + inputName).attr('data-all-check', allName);
+						}
+					}
+					
+					//$this.data('limit', limit);
+					//app.checkLimit();
+					app.eventHandle();
+					app.objChecked();
+				},//init.end
+				objChecked : function(allevent){
+					if (type === 'radio') {
+						$label			= $('label[for="'+ inputId +'"]');
+						$inputName	= $('.' + inputName);						
+						$label;
+						
+						if ($this.prop('checked') === true) {
+							$inputName.removeClass('on');
+							$label.addClass('on');
+						}
+					}
+					
+					if (type === 'checkbox') {
+						if (!allCheck) { //전체 체크 on,off 설정 
+							
+							//data-inform-chk속성 개체 이벤트
+							if( $this.attr('data-inform-chk') == 'true' ){
+								var thisChk = $this.attr('data-inform-check'),
+									thisVal = $this.attr('data-eqChk'),
+									thisData = $this.attr('data-all-check');
+								
+								if ($this.prop('checked') !== true) {
+									$label.removeClass('on');
+									$this.attr('data-eqChk', 'off');
+								} else {
+									$label.addClass('on');
+									$this.attr('data-eqChk', 'on');
+								}
+								
+								//속성이 둘다 off일때 상위 체크박스 끔
+								if ( $('input[data-eqChk]').eq(0).attr('data-eqChk') == 'off' && $('input[data-eqChk]').eq(1).attr('data-eqChk') == 'off') {
+									$this.parent().parent().find('.label_all_sub, .input_all_sub').prop('checked', false).removeClass('on');
+									//맨 상위 체크까지 끔
+									$('input[data-all-check="' + thisData + '"].input_all').prop('checked', false);
+									$('label[data-all-check="' + thisData + '"].label_all').removeClass('on');
+								} else{
+									$this.parent().parent().find('.label_all_sub, .input_all_sub').prop('checked', true).removeClass('off').addClass('on');
+									//맨 상위 체크까지 켬
+									$('input[data-all-check="' + thisData + '"].input_all').prop('checked', false);
+									$('label[data-all-check="' + thisData + '"].label_all').addClass('on');
+								}
+								
+								return false;
+							}
+						
+							var thisData = $this.attr('data-all-check'),
+							thisAct  = $this.attr('data-enabled-check');
+							
+							if ($this.prop('checked') !== true) {
+								$label.removeClass('on');
+								
+								if (!!thisAct) {
+									$('input[name="' + thisAct + '"]').prop('disabled', true).prop('checked', false);
+									$('label.' + thisAct).removeClass('on').addClass('off');
+								}
+									
+								if (!!thisData) {
+									$('input[data-all-check="' + thisData + '"].input_all').prop('checked', false);
+									$('label[data-all-check="' + thisData + '"].label_all').removeClass('on');
+								}
+							} else {
+								$label.addClass('on');
+								
+								if (!!thisAct) {									
+									$('input[name="' + thisAct + '"]').prop('disabled', false).prop('checked', true);
+									$('label.' + thisAct).removeClass('off').addClass('on');
+								}
+								
+								if (!!thisData) {
+									var allSum  = Number($('input[data-all-check="' + thisData + '"]').length) - 1,
+										allCheckSum = Number($('input[data-all-check="' + thisData + '"]:checked').length),
+										disabledSum = Number($('input[data-all-check="' + thisData + '"]:disabled').length);
+									
+									if ((allSum - disabledSum) === allCheckSum) {
+										$('input[data-all-check="' + thisData + '"].input_all').prop('checked', true);
+										$('label[data-all-check="' + thisData + '"].label_all').addClass('on');
+									}
+								}
+							}
+						} else {
+							var $inputDisabled = $('input[data-all-check="'+ allName + '"]'),
+								$inputAttrName = $('label[data-all-check="'+ allName + '"]');
+							
+								if (allCheck) {
+									var allSum = Number($inputDisabled.length),
+									i;
+									
+									if ($this.prop('checked')) {
+										$('#' + inputId).addClass(inputName + '_all');
+										$label.addClass(inputName + '_all');
+										i = allSum;
+										
+										for (i; i--;) {
+											var thisAct = $inputDisabled.eq(i).attr('data-enabled-check');
+											
+											if (!$inputDisabled.eq(i).prop('disabled')) {// disabled 인 경우 전체 체크 제외
+												$inputDisabled.eq(i).prop('checked', true);
+												$inputAttrName.eq(i).addClass('on').data('allcheck', true);
+											}
+											
+											if (!!thisAct) {
+												$('input[name="' + thisAct + '"]').prop('disabled', false).prop('checked', true);
+												$('label.' + thisAct).removeClass('off').addClass('on');
+											}
+										}
+									} else {
+										$('#' + inputId).removeClass(inputName + '_all');
+										$label.removeClass(inputName + '_all');
+										
+										i = allSum;
+										for (i; i--;) {
+											var thisAct = $inputDisabled.eq(i).attr('data-enabled-check');
+											
+											if (!!thisAct) {
+												$('input[name="' + thisAct + '"]').prop('disabled', true).prop('checked', false);
+												$('label.' + thisAct).removeClass('on').addClass('off');;
+											}
+										}
+										
+										if (allevent) {
+											$inputDisabled.prop('checked', false);
+											$inputAttrName.removeClass('on').data('allcheck', false);;
+										}
+										
+										$inputAttrName.data('allcheck', false);
+									}
+								}
+							}
+						}
+					}, //objChecked.end 		
+					checkLimit : function(current){// 안드로이드 오류 확인 필요.
+						var limitSum = Number($this.data('limit'));
+					
+						if (limitSum > 0) {
+							if (limitSum === $('input[name="' + inputName + '"]:checked').length) {
+								$('input[name="' + inputName + '"]:not(:checked)').prop('disabled', true);
+								$inputName.addClass('off');
+								$('.' + inputName + '.on').removeClass('off');
+							} else {
+								if (!$(current).prop('disabled')) {
+									$('input[name="' + inputName + '"]').removeProp('disabled');
+									$inputName.removeClass('off');
+								}
+							}
+						}
+					}, //checkLimit.end
+					eventHandle : function(){
+						$this.off('click.uxInput').on('click.uxInput', function(){
+							var current = this;
+							allevent = ($(this).hasClass('input_all'));
+							
+							$this.addClass('focus');
+							app.objChecked(allevent);
+							//app.checkLimit(current);
+						});
+						$this.off('focus.uxInput').on('focus.uxInput', function(){
+							$label.addClass('focus');
+							$this.addClass('focus');
+						});
+						$this.off('blur.uxInput').on('blur.uxInput', function(){
+							$this.removeClass('focus');
+							$('.label_radio, .label_checkbox').removeClass('focus');
+						});
+					} //eventHandle.end
+				}
+			app.init();
+			console.log("인풋타입: uxInput();");
+		});
+	}
+});//####################// 5.uxInput ####################
+</code>
+</pre>
+<!--// codebox -->      				
+				
+	        </div>
+	    </section>
+		<!--#####################// Input Type #####################-->	    
+	
+		<!--##################### Checkbox #####################-->
+		<section class="aws_box">
+	        <h1 class="aws_tl"> Checkbox </h1>
+			<ul class="dcs">
+				<li>체크박스</li>
+			</ul>
+	        
+	        <div class="code_area">
+	        
+	        	<div class="play_box">
+	        		<!-- code -->
+	        		<div class="option_txt">
+						<p>기본 실행 : <span class="incodebox"><code class="language-javascript">$('input[type="checkbox"]').uxInput();</code></span></p>
+						<p>전체 선택 : <span class="incodebox"><code class="language-javascript">$('셀렉터').uxInput({ allCheck : true , addName : "addnaming"});</code></span></p>
+					</div>
+	               
+					<!-- run_sample -->
+					<div class="run_sample">
+						<button class="check_form_apply">스타일 적용</button>
+						
+	                    <!-- sample_box -->
+	                    <article class="sample_box mgt_l">
+	                    
+	                    	<div class="form chk_type1">
+	                    		<p class="normal"><strong>기본 활용:</strong> 일반 체크박스 생성 후<code class="language-javascript"> $('셀렉터').uxInput();</code></span> 적용.</p>
+	                    		
+	                    		<div class="cont mgt_s">
+									<input type="checkbox" id="agree_chk1">
+									<label for="agree_chk1">선택</label> 
+									
+									<input type="checkbox" id="agree_chk2" checked="checked">
+									<label for="agree_chk2">선택됨 </label>
+									
+									<input type="checkbox" id="agree_chk3" disabled="disabled">
+									<label for="agree_chk3">비활성</label> 
+									
+									<input type="checkbox" id="agree_chk4" disabled="disabled" checked="checked">
+									<label for="agree_chk4">선택비활성</label>
+								</div>
+							</div>	
+	                    
+	                    </article>
+	                    <!-- sample_box -->
+	                    
+						<!-- sample_box -->	                    
+	                    <article class="sample_box mgt_l">
+	                    	<div class="form chk_type2">
+	                    					
+				               	<p class="normal">
+				               		<strong>전체 선택:</strong> <br/>
+				               		<code class="language-javascript"> $('셀렉터').uxInput();</code></span> 적용 후 다시 <code class="language-javascript"> $('셀렉터').uxInput({ allCheck : true , addName : "add" });</code></span>를 적용.<br/>
+				               		<code class="language-javascript"> addName</code></span>옵션 추가시 "_추가네임"형태로 name이 적용. 
+				               	</p>
+			               														
+								<div class="cont mgt_s">
+									<input type="checkbox" name="agree2" id="agree2_chk1" value="" class="agree2_allcheck"/>
+									<label for="agree2_chk1">전체 선택</label>
+									
+									<input type="checkbox" name="agree2" id="agree2_chk2" value="" />
+									<label for="agree2_chk2">옵션1</label>
+									
+									<input type="checkbox" name="agree2" id="agree2_chk3" value="" />
+									<label for="agree2_chk3">옵션2</label>
+								</div>	    
+			               </div>                   
+	                    </article>
+	                    <!--// sample_box -->		
+	                    
+						<!-- sample_box -->	                    
+	                    <article class="sample_box mgt_l">
+	                    	<div class="form chk_type3">
+	                    		<p class="normal"><strong>활용(전체 활성):</strong> 체크박스 attribute 제어 후 <code class="language-javascript"> $('셀렉터').uxInput();</code></span>를 적용.</p>	 
+							
+								<div class="cont mgt_s">
+									<input type="checkbox" name="agree3" id="agree3_chk1" value="G" class="agree3_active" />
+									<label for="agree3_chk1">전체 활성</label>
+									<input type="checkbox" name="agree3" id="agree3_chk2" value="G" disabled="disabled"/>
+									<label for="agree3_chk2">옵션1</label>
+									<input type="checkbox" name="agree3" id="agree3_chk3" value="G" disabled="disabled"/>
+									<label for="agree3_chk3">옵션2</label>
+								</div>
+								
+								<div class="option_txt mgt_s">
+									<div class="incodebox">
+				               			<code class="language-javascript">
+$('.agree3_active').click(function(){
+	if($(this).prop("checked")){
+		$('input[name="'+$(this).attr("name")+'"]').attr("disabled",false);
+		$('input[name="'+$(this).attr("name")+'"]').next('label').removeClass("off");
+	}else{
+		$('input[name="'+$(this).attr("name")+'"]').attr("disabled",true);						
+		$(this).attr("disabled", false);
+	}
+	$('input[name="'+$(this).attr("name")+'"]').inputJo();
+});
+										</code>
+									</div>
+								</div>
+			               </div>
+	                    </article>
+	                    <!--// sample_box -->	                    	                    			
+						
+					</div>
+					<!--// run_sample -->
+	               
+               
+	               	<script>
+					$(window).load(function(){						
+						
+						$('input[type="checkbox"]').uxInput();
+						$('input[type="radio"]').uxInput();
+						
+						$('.agree2_allcheck').uxInput({ allCheck : true , addName : "addnaming" });						
+						
+						$('.check_form_apply').click(function(){	
+							var classSel = $(this).attr("class"); 
+							if(!$('.form').hasClass('check')){
+								$('.form').addClass('check');
+								$('.'+classSel).text('스타일 해제');
+							}else{
+								$('.form').removeClass('check');
+								$('.'+classSel).text('스타일 적용');
+							}						
+							
+						});
+												
+						$('.agree3_active').click(function(){
+							if($(this).prop("checked")){
+								$('input[name="'+$(this).attr("name")+'"]').prop("disabled",false);
+								$('input[name="'+$(this).attr("name")+'"]').next('label').removeClass("off");
+							}else{
+								$('input[name="'+$(this).attr("name")+'"]').prop("disabled",true);						
+								$(this).attr("disabled", false);
+							}
+							$('input[name="'+$(this).attr("name")+'"]').uxInput();
+						});
+						
+					});
+					</script>
+	                <!--// code -->
+	                
+	            </div>
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-css">
+/* common00_1.checkbox,radio */
+.form.check input[type="checkbox"],
+.form.check input[type="radio"] {position: absolute; opacity: 0; z-index: -1;}
+.form.check label { display:inline-block; cursor:pointer; }
+.form.check label.label_radio,
+.form.check label.label_checkbox { position:relative; height:auto;  box-sizing:border-box;  cursor: pointer;}
+.form.check label.label_radio{}
+												
+.form.check label.label_checkbox.label_all { min-height:28px; padding:0 8px 0 34px; font-size:14px; line-height:28px; font-weight:bold;}
+.form.check .ios label.label_checkbox.label_all {line-height:30px}
+.form.check label.label_radio:after { display:block; position:absolute; top:0; left:0; width:25px; height:24px;
+	background:url(img/bg_form_set.svg) no-repeat 0 0; background-size:auto 150px; content:''; font-size:0;}
+.form.check label.label_radio.on:after { background-position:-30px 0; content:'';}
+.form.check label.label_radio.off:after { background-position:-60px 0; content:'';}
+.form.check label.label_radio.on.off:after { background-position:-90px 0; content:'';}
+.form.check label.label_radio.notrans.on:after { background-position:-120px 0; content:'';}
+.form.check label.label_radio.notrans.on.off:after { background-position:-90px 0; content:'';}
+
+.form.check label.label_radio.vt,
+.form.check label.label_checkbox.vt { padding:23px 5px 0; text-align:center; text-indent:0; color:#606060;}
+.form.check label.label_radio.vt.on,
+.form.check label.label_checkbox.vt.on {color:#303030;}
+.form.check label.label_radio.vt:after,
+.form.check label.label_checkbox.vt:after { left:50%; margin-left:-11px; }
+
+.desktop .form.check label.label_radio{padding:0 8px 0 29px; font-size:16px; line-height:21px}
+.desktop .form.check label.label_checkbox {padding:0 8px 0 29px; font-size:16px; line-height:20px}
+.desktop .form.check label.label_radio.vt, .desktop label.label_checkbox.vt {padding:0 8px 0 29px; text-indent:0; text-align:left;}
+.desktop .form.check label.label_radio.vt:after, .desktop label.label_checkbox.vt:after {left:0; margin:0;}
+.desktop .form.check label.label_checkbox.label_all {font-size:16px; font-weight:bold; padding:0 0 0 34px; min-height:28px; line-height:25px}
+
+.form.check label.label_checkbox:after { display:block; position:absolute; top:0; left:0; width:23px; height:23px;
+background:url(img/bg_form_set.svg) no-repeat 0 -30px; background-size:auto 150px; content:''; font-size:0; }
+.form.check label.label_checkbox.on:after { background-position:-30px -30px; content:'';}
+.form.check label.label_checkbox.off:after { background-position:-60px -30px; content:'';}
+.form.check label.label_checkbox.on.off:after { background-position:-90px -30px; content:'';}
+.form.check label.label_checkbox.label_all:after { background-position:0 -60px; width:28px; height:28px; content:'';}
+.form.check label.label_checkbox.label_all.on:after{ background-position:-30px -60px; content:'';}
+.form.check label.label_radio.first,
+.form.check label.label_checkbox.first { margin-left:0; }
+.form.check label.label_checkbox.focus,
+.form.check label.label_radio.focus { text-decoration:underline; }
+.desktop .form.check  .cont_chk_wrap label.label_checkbox.focus:before,
+.desktop .form.check .state_chk_wrap label.label_checkbox.focus:before{ content:''; display:block; border-bottom:1px solid #676767; width:23px; position:absolute; left:0; bottom:-3px; z-index:1 }
+.desktop .form.check .cont_chk_wrap label.label_checkbox.label_all.focus:before,
+.desktop .form.check .state_chk_wrap label.label_checkbox.label_all.focus:before{width:28px}
+
+.choice_auth .form.check label.label_checkbox.focus:before,
+.choice_auth .form.check label.label_radio.focus:before{display:none}
+.mobile .form.check label.label_checkbox.focus span ,
+.mobile .form.check label.label_radio.focus span,
+.mobile .form.check label.label_checkbox.focus,
+.mobile .form.check label.label_radio.focus { text-decoration:none; }
+</code>
+</pre>
+<!--// codebox -->  
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-markup">
+<!-- 기본 활용 -->
+<input type="checkbox" id="agree_chk1">
+<label for="agree_chk1">선택</label> 
+
+<input type="checkbox" id="agree_chk2" checked="checked">
+<label for="agree_chk2">선택됨 </label>
+
+<input type="checkbox" id="agree_chk3" disabled="disabled">
+<label for="agree_chk3">비활성</label> 
+
+<input type="checkbox" id="agree_chk4" disabled="disabled" checked="checked">
+<label for="agree_chk4">선택비활성</label>
+
+<!-- 전체 선택 -->
+<input type="checkbox" name="agree3" id="agree3_chk1" value="G" class="agree3_active" />
+<label for="agree3_chk1">전체 활성</label>
+
+<input type="checkbox" name="agree3" id="agree3_chk2" value="G" disabled="disabled"/>
+<label for="agree3_chk2">옵션1</label>
+
+<input type="checkbox" name="agree3" id="agree3_chk3" value="G" disabled="disabled"/>
+<label for="agree3_chk3">옵션2</label>
+</code>
+</pre>
+<!--// codebox -->     
+	        
+	        </div>
+		</section>
+		<!--#####################// Checkbox #####################-->		
+		
+		<!--##################### Radio button #####################-->
+		<section class="aws_box">
+	        <h1 class="aws_tl"> Radio</h1>
+			<ul class="dcs">
+				<li>라디오 버튼</li>
+			</ul> 	
+				        
+	        <div class="code_area">
+	        
+	            <div class="play_box">
+	               <!-- code -->
+	               <div class="option_txt">
+						<p>기본 실행 : <span class="incodebox"><code class="language-javascript">$('input[type="radio"]').uxInput();</code></span></p>	               		
+	               </div>
+	               
+					<!-- run_sample -->
+					<div class="run_sample">
+					
+						<button class="check_form_apply">스타일 적용</button>
+						
+	                    <!-- sample_box -->	                    
+	                    <article class="sample_box mgt_l">
+	                    
+			               <div class="form">
+								<input type="radio" id="agree_radio6" name="radio11">
+								<label for="agree_radio6" class="vt">기본</label> 
+								<input type="radio" id="agree_radio7" name="radio11" checked="checked">
+								<label for="agree_radio7" class="vt">선택됨</label>
+								<input type="radio" id="agree_radio8" name="radio21" disabled="disabled">
+								<label for="agree_radio8" class="vt">비활성화</label>
+								<input type="radio" id="agree_radio9" name="radio21" disabled="disabled" checked="checked">
+								<label for="agree_radio9" class="vt">비활성화 선택됨</label>	               
+			               </div>	  	                    
+	                    
+	                    </article>
+	                    <!--//ample_box -->
+	                    
+	                </div>
+					<!-- run_sample -->
+
+	               
+	               	<script>
+					$(window).load(function(){						
+						
+					});
+					</script>
+	                <!--// code -->
+	                
+	            </div>
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-markup">
+<input type="radio" id="agree_radio6" name="radio11">
+<label for="agree_radio6" class="vt">기본</label> 
+
+<input type="radio" id="agree_radio7" name="radio11" checked="checked">
+<label for="agree_radio7" class="vt">선택됨</label>
+
+<input type="radio" id="agree_radio8" name="radio21" disabled="disabled">
+<label for="agree_radio8" class="vt">비활성화</label>
+
+<input type="radio" id="agree_radio9" name="radio21" disabled="disabled" checked="checked">
+<label for="agree_radio9" class="vt">비활성화 선택됨</label>
+</code>
+</pre>
+<!--// codebox -->
+      
+	        </div>
+		</section>
+		<!--#####################// Radio button #####################-->
+		
+		<!--##################### checkbox/radio button type #####################-->
+		<section class="aws_box">
+	        <h1 class="aws_tl">  Checkbox/Radio button type </h1>
+			<ul class="dcs">
+				<li>탭형태의 체크박스 라디오 버튼 스킨</li>
+			</ul> 		        
+	        <div class="code_area">
+	        
+	            <div class="play_box">
+	               <!-- code -->
+	               <div class="option_txt">
+						<p>wrap 요소 : <span class="incodebox"><code class="language-javascript">class="dg_label_wrap"</code></span></p>	               		
+	               </div>
+               		
+					<!-- run_sample -->
+					<div class="run_sample">
+					
+	        			<dl class="dcs">
+	               			<dt>패치 노트:</dt>
+	               			<dd>20191030: valueDelete 전체 적용시 checkbox/radio type은 예외처리</dd>
+	               		</dl>
+	               		
+	               		<div class="bd_top">
+	               			<button class="check_form_apply">스타일 적용</button>
+	               		</div>
+						
+	                    <!-- sample_box -->
+	                    <article class="sample_box mgt_l">
+	                    
+			               <div class="form">
+								<h4>checkbox - button style</h4>
+								<div class="dg_label_wrap mgt_s mgb_l">
+									<ul>
+										<li><input type="checkbox" id="dgr011" ><label for="dgr011">12개월</label></li>
+										<li><input type="checkbox" id="dgr021" ><label for="dgr021">24개월</label></li>
+										<li><input type="checkbox" id="dgr031" ><label for="dgr031">36개월</label></li>
+										<li><input type="checkbox" id="dgr041" ><label for="dgr041">48개월</label></li>
+									</ul>
+								</div>  
+								     
+								<h4>radio - button style</h4>
+								<div class="dg_label_wrap mgt_s">
+									<ul>
+										<li><input type="radio" id="dgr01" name="dg"><label for="dgr01">12개월</label></li>
+										<li><input type="radio" id="dgr02" name="dg"><label for="dgr02">24개월</label></li>
+										<li><input type="radio" id="dgr03" name="dg"><label for="dgr03">36개월</label></li>
+										<li><input type="radio" id="dgr04" name="dg"><label for="dgr04">48개월</label></li>
+									</ul>
+								</div>              
+			               </div>	  	                    
+	                    
+	                    </article>
+	                    <!--//ample_box -->
+	                    
+	                </div>
+					<!-- run_sample -->
+					
+	                <!--// code -->
+	                
+	            </div>
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-css">
+.form.check .dg_label_wrap {border:1px solid #a2a2a2; border-radius:4px;}
+.form.check .dg_label_wrap ul {display:table; width:100%; }
+.form.check .dg_label_wrap li {display:table-cell; width:25%;  border-left:1px solid #a2a2a2; padding:0; box-sizing:border-box;}
+.form.check .dg_label_wrap li:first-child {border-left:0;}
+.form.check .dg_label_wrap li label {display:block; text-align:center; background:none; padding:5px 0;}
+.form.check .dg_label_wrap li label:after { display:none; }
+.form.check .dg_label_wrap li label.label_checkbox.on,
+.form.check .dg_label_wrap li label.label_radio.on {background:#686868; color:#fff;}
+.form.check .dg_label_wrap.col3 li {width:33.3%}
+.form.check .dg_label_wrap.col3 li:first-child {width:33.4%;}
+.form.check .dg_label_wrap.col5 li {width:20%}       
+</code>
+</pre>
+<!--// codebox -->  
+	        
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-markup">
+<!-- checkbox - button style -->
+<div class="dg_label_wrap">
+	<ul>
+		<li><input type="checkbox" id="dgr011" ><label for="dgr011">12개월</label></li>
+		<li><input type="checkbox" id="dgr021" ><label for="dgr021">24개월</label></li>
+		<li><input type="checkbox" id="dgr031" ><label for="dgr031">36개월</label></li>
+		<li><input type="checkbox" id="dgr041" ><label for="dgr041">48개월</label></li>
+	</ul>
+</div>  
+     
+<!-- radio - button style -->
+<div class="dg_label_wrap">
+	<ul>
+		<li><input type="radio" id="dgr01" name="dg"><label for="dgr01">12개월</label></li>
+		<li><input type="radio" id="dgr02" name="dg"><label for="dgr02">24개월</label></li>
+		<li><input type="radio" id="dgr03" name="dg"><label for="dgr03">36개월</label></li>
+		<li><input type="radio" id="dgr04" name="dg"><label for="dgr04">48개월</label></li>
+	</ul>
+</div>      
+</code>
+</pre>
+<!--// codebox -->    	        
+	        
+	        </div>
+		</section>
+		<!--#####################// checkbox/radio button type #####################-->
+		
+		<!--##################### Input #####################--> 
+		<section class="aws_box">
+	        <h1 class="aws_tl"> Input Box</h1>
+			<ul class="dcs">
+				<li>text/text/search/number/url/email/password/file등 인풋 박스 스킨</li>
+				<li>입력값(value)시 삭제 버튼 </li>
+			</ul> 	
+				        
+	        <div class="code_area">
+	        
+	            <div class="play_box">
+	               <!-- code -->
+	               <div class="option_txt">
+						<p>추가 실행 : <span class="incodebox"><code class="language-javascript">$('input').uxValueDel({delStr : "입력내용 삭제"}); //인풋 value 삭제, delStr: 접근성 텍스트</code></span></p>
+	               </div>               		
+					<!-- run_sample -->
+					<div class="run_sample">
+					
+	        			<dl class="dcs">
+	               			<dt><strong>패치 노트:</strong></dt>
+	               			<dd>20191030: uxValueDel() 적용시 input간 이동시 생기는 focus 오류로 대상 element 수정</dd>
+	               		</dl>					
+					
+	               		<style>
+	               			.form li{display:block; padding:3px 0;}
+	               		</style>
+	               		
+	               		<div class="bd_top">
+							<button class="check_form_apply">스타일 적용</button>
+						</div>
+						
+	                    <!-- sample_box -->
+	                    <article class="sample_box">
+			               <div class="form">
+		              
+								<ul>
+									<li>type="text"
+										<input type="text" placeholder="텍스트를 입력해주세요">
+									</li>
+									<li>type="tel"
+										<input type="tel" placeholder="전화번호를 입력해주세요">
+									</li>
+									<li>type="search"
+										<input type="search" placeholder="검색어를 입력해주세요">
+									</li>
+									<li>type="number"
+										<input type="number" placeholder="숫자를 입력해주세요">
+									</li>
+									<li>type="url"
+										<input type="url" placeholder="웹주소를 입력해주세요">
+									</li>
+									<li>type="email"
+										<input type="email" placeholder="이메일를 입력해주세요">
+									</li>
+									<li>type="password"
+										<input type="password" placeholder="비밀번호를 입력해주세요">
+									</li>
+									<li>type="file"
+										<span class="ui_file_select btn_file">
+										    <button type="button" class="btn_cont_e ui_file_button" id="doc_up"><span>파일선택</span></button>
+										    <input class="ui_filebox" name="" type="file" title="첨부파일">
+										</span>
+									</li>
+									<li>type="tell" for 금액입력
+										<br/>
+										<span class="in_money">
+											<input type="tel" value="26,430,000">
+											<span>원</span>
+										</span><br/>
+										<span class="in_money">
+											<input type="tel" value="23,120,000">
+											<span>원</span>
+										</span>								
+									</li>				
+								</ul>              
+		              
+			               </div>	  
+			               
+			               	<script>
+							$(window).load(function(){
+								$('input').uxValueDel();
+							});
+							</script>               
+	                    
+	                    </article>
+	                    <!--// sample_box -->
+	                    
+	                </div>
+					<!--// run_sample -->
+
+	                <!--// code -->
+	            </div>
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-css">
+/* common00.input */
+.form.check input { -webkit-appearance:none;-moz-appearance:none; font-family:inherit; margin:0}
+.form.check input { vertical-align:middle; }
+.form.check input[type=text]:-ms-clear,
+.form.check input[type=tel]:-ms-clear,
+.form.check input[type=number]:-ms-clear,
+.form.check input[type=email]:-ms-clear{display:none}
+.form.check input[type=text]::-ms-clear,
+.form.check input[type=tel]::-ms-clear,
+.form.check input[type=number]::-ms-clear,
+.form.check input[type=email]::-ms-clear{display:none}
+.form.check input[type=password]::-ms-reveal {display:none}
+.form.check input.not {border:1px solid #ff6600; }
+
+.form.check .inp_type,
+.form.check input[type="tel"],
+.form.check input[type="url"],
+.form.check input[type="text"],
+.form.check input[type="email"],
+.form.check input[type="number"],
+.form.check input[type="search"],
+.form.check input[type="password"]{width:100%; height:40px; margin:0; padding:0 10px 0 10px; line-height:21px; border:1px solid #b8b8b8; border-radius:2px; background-color:#f7f7f7; 
+	color:#303030; box-shadow:1px 2px 2px rgba(0,0,0,.06) inset; letter-spacing:-0.5px; vertical-align:middle; font-size:14px; box-sizing:border-box;}
+.form.check input[type="tel"]:focus,
+.form.check input[type="url"]:focus,
+.form.check input[type="text"]:focus,
+.form.check input[type="email"]:focus,
+.form.check input[type="number"]:focus,
+.form.check input[type="search"]:focus,
+.form.check input[type="password"]:focus {border:1px solid #282828; background-color:#fff; text-decoration:none}
+
+/* 파일업로드 */
+.form.check .ui_file_select.btn_file {position:relative; display:inline-block;}
+.form.check .btn_file .ui_filebox {position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; cursor: pointer;
+	opacity: 0; filter: alpha(opacity=0); -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(opacity=0)';}
+.form.check .ui_file_select.btn_file button:not(.clone){margin:0 !important; display:block !important;}
+.ui_file_select.btn_file button:not(.clone){margin:0 !important; display:none !important;}
+
+/* 금액입력 input */
+.form.check .in_money {display:block; position:relative; height:40px; box-sizing:border-box; padding-right:30px;}
+.form.check .in_money input {text-align:right; font-size:16px; color:#3d4248; padding-right:10px;}
+.form.check .in_money span {display:block; position:absolute; top:0; right:0px; width:30px; text-align:center; color:#303030; line-height:40px;}
+
+/* 공통 button : input delete */
+.form.check  button[del-button] { display:inline-block; overflow:hidden; opacity:1; position:relative; top:1px !important; right:1px; margin:0 0 0 -30px !important; background:none !important;
+	width:30px; height:38px; padding:0 !important; color:transparent; vertical-align:top; z-index:100; box-shadow:none  !important; border:none  !important; cursor:pointer;}
+.form.check  button[del-button]:before { display:block; position:absolute; top:50%; left:50%; width:10px; height:10px; margin:-5px 0 0 -10px;
+	border-radius:1px; background:url(/images/oap/mobile/ico_delbtn.png) no-repeat 0 0; background-size:10px; content:''; }
+	
+/* common00_2.placeholder */
+input[type="tel"]::-webkit-input-placeholder,
+input[type="tel"]:-moz-input-placeholder,
+input[type="tel"]::-moz-input-placeholder,
+input[type="tel"]:-ms-input-placeholder { color:#000; line-heihgt:1.2 }
+
+.placeholder,
+.placeholder.on { display:inline-block; position:absolute; height:100%; width:auto !important; z-index:1; color:#303030; left:10px; top:10px;
+font-size:14px; text-align:left !important; line-height:1.2 !important;}
+.placeholder.off { z-index:-1; }	
+</code>
+</pre>
+<!--// codebox -->  
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-markup">
+<ul>
+	<li>type="text"
+		<input type="text" placeholder="텍스트를 입력해주세요">
+	</li>
+	<li>type="tel"
+		<input type="tel" placeholder="전화번호를 입력해주세요">
+	</li>
+	<li>type="search"
+		<input type="search" placeholder="검색어를 입력해주세요">
+	</li>
+	<li>type="number"
+		<input type="number" placeholder="숫자를 입력해주세요">
+	</li>
+	<li>type="url"
+		<input type="url" placeholder="웹주소를 입력해주세요">
+	</li>
+	<li>type="email"
+		<input type="email" placeholder="이메일를 입력해주세요">
+	</li>
+	<li>type="password"
+		<input type="password" placeholder="비밀번호를 입력해주세요">
+	</li>
+	<li>type="file"
+		<span class="ui_file_select btn_file">
+		    <button type="button" class="btn_cont_e ui_file_button" id="doc_up"><span>파일선택</span></button>
+		    <input class="ui_filebox" name="" type="file" title="첨부파일">
+		</span>
+	</li>
+	<li>type="tell" for 금액입력
+		<br/>
+		<span class="in_money">
+			<input type="tel" value="26,430,000">
+			<span>원</span>
+		</span><br/>
+		<span class="in_money">
+			<input type="tel" value="23,120,000">
+			<span>원</span>
+		</span>								
+	</li>				
+</ul>  
+</code>
+</pre>
+<!--// codebox -->     
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-javascript">
+$.fn.extend({//#################### 5-1.uxValueDel ####################
+	uxValueDel : function(){
+		var defaults = {
+				delStr : "입력내용 삭제"
+			},
+			opt = $.extend(defaults, opt);
+		
+		return this.each(function(){
+			var $this	= $(this),
+				delId		= 'del_' + uniqueId(),
+				delStr	= opt.delStr,
+				target,
+				btn,
+				$delBtn,
+				btndel_time;
+			
+			var app = {
+				init : function(){
+					if($this.attr("type")=="checkbox" || $this.attr("type")=="radio"){//20191030 적용시 radio와 checkbox는 예외처리
+						return false
+					}
+					if (!$this.parent('.inp_wrap').length) {
+						if ($this.parent('span').length) {
+							$this.parent('span').addClass('inp_wrap');
+						}//$this.wrap('<div class="inp_wrap"></div>');
+					}
+					
+					$this.data('del-txt', delId);
+					app.eventHandle();
+				}, //init.end
+				delCheck : function(target){
+					var $target = $(target);
+					
+					btn = '<button type="button" tabindex="-1" aria-hidden="true" del-button="' + delId + '">'+delStr+'</button>';
+					(!!$target.val()) ? app.delShow(target) : app.delHide() ;
+					$delBtn = $('button[del-button="' + delId + '"]');
+				}, //delCheck.end
+				delShow : function(target){
+					var $target = $(target),
+						tW = $target.outerWidth();
+					
+					($('button[del-button="' + delId + '"]').length < 1) ? $(btn).css('display', 'none').insertAfter($target) : '';
+					$target.addClass('del_on').css({ width : tW, paddingRight : 30});
+					
+					$delBtn = $('button[del-button="' + delId + '"]');
+					$delBtn.stop().fadeIn(0);
+					$delBtn.on('click', function(){
+						$this.val('').focus();
+						$target.trigger('change');// 20160720 개발요청 트리거 추가
+						$(this).fadeOut(0, function(){
+							$(this).remove();
+						});
+					});
+				}, //delShow.end
+				delHide : function(){
+					(!!$delBtn) ? $delBtn.remove() : '';
+					$this.removeClass('del-on').removeAttr('style');
+				}, //delHide.end
+				delTime : function(target){
+					var $target = $(target),
+						data_id = $target.data('del-txt');
+					btndel_time = setTimeout(function() {
+						$('button[del-button="'+ data_id +'"]').remove();
+						$(target).data('val', false).removeClass('del_on').removeAttr('style');//20191030 타겟 수정, asis: $('input.del_on')
+					},150);
+				}, //delTime.end
+				eventHandle : function(){
+					$this.on('focus keyup', function() {
+						target = this;
+						app.delCheck(target)
+					}).on('focusout', function(){
+						target = this;
+						app.delTime(target);
+					});
+				}//eventHandle.end
+			}
+			if (!$this.data('overlap-valuedelete')) {
+				$this.data('overlap-valuedelete', true);
+				app.init();
+				console.log("인풋value삭제: uxValueDel();");
+			}
+		});
+	}					
+});//####################// 5-1.uxValueDel ####################
+</code>
+</pre>
+<!--// codebox -->      
+	        
+	        </div>
+		</section>
+		<!--#####################// Input #####################-->
+		
+		
+	</div><!--// contents  -->
+
+	<script src="js/jquery-ui.min.js"></script><!-- jquery ui-->
+	<script src="js/jquery.ui.touch-punch.js"></script><!-- jquery ui using mobile -->
+    <script src="js/frontUxer.js"></script><!-- plugin -->
+    
+	<script type="text/javascript">		
+		$(window).load(function(){
+		//$(function() {
+		//$(document).ready(function(){
+			$(".aws_tl").eq(0).click();//첫번째 항목을 닫아주자.
+   		});
+	</script>
+
+</body>
+</html>

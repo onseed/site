@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>frontUxer</title>
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/frontUxer.css">
+<script src="js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript">         
+    var menuArry = ['3','0'];//1depth, 2depth
+</script>
+</head>
+<body>
+<script src="js/guide.js"></script><!-- site guide -->
+	
+	<div class="start_dim"><span></span></div>
+	
+	<h1 class="hide"> Etc</h1>
+
+    <div class="contents"><!-- contents -->
+    
+        <!--##################### URL 분기 #####################-->        
+        <section class="aws_box">
+            <h1 class="aws_tl"> URL 분기 </h1>
+			<ul class="dcs">
+				<li>url주소내 분기 text를 파라미터역활로 구분</li>
+			</ul>	  	            
+            
+            <div class="code_area">
+            
+                <div class="play_box">
+                	<div class="option_txt">
+<!-- incodebox: markup, css, clike, javascript -->
+<pre class="incodebox">
+<code class="language-javascript">
+  $(function() {
+      $('.chk_url').click(function(){ 
+          if(window.location.href.indexOf("localhost") > -1){//로컬일때
+              $('.url_check').text('로컬 호스트');
+          }else{
+              $('.url_check').text('온라인 호스트');
+          }
+      });                         
+  });						
+</code>
+</pre>
+<!--// incodebox: markup, css, clike, javascript -->
+                    </div>
+                    
+					<!-- run_sample -->
+					<div class="run_sample">
+					
+						<!-- sample_box -->	                    
+	                    <article class="sample_box">
+	                    
+		                	<button class="chk_url">URL 분기 체크</button> <strong class="url_check play point"></strong>
+		                    
+		                    <script type="text/javascript">
+		                    $(function() {
+		                        $('.chk_url').click(function(){ 
+		                            if(window.location.href.indexOf("localhost") > -1){//로컬일때
+		                                $('.url_check').text('로컬 호스트');
+		                            }else{
+		                                $('.url_check').text('온라인 호스트');
+		                            }
+		                        });                         
+		                    });
+		                    </script>	                    
+	                    
+	                    </article>
+	                    <!-- sample_box -->
+	                    
+	                </div>
+					<!-- run_sample -->
+                    
+
+                    <!--// code -->
+                </div>
+            
+            </div>
+        </section>
+        <!--#####################// URL 분기 #####################-->
+        
+        <!--##################### index replace 처리  #####################-->
+        <section class="aws_box">
+            <h1 class="aws_tl"> index replace </h1>
+			<ul class="dcs">
+				<li>스크립트는 문자열  replace만 존재. string내 해당 index로 텍스트 Replace는 별도 처리. </li>
+			</ul>	             
+            
+            <div class="code_area">
+            
+                <div class="play_box">                	
+                   <!-- code -->         
+                   <div class="option_txt">
+<!-- incodebox: markup, css, clike, javascript -->
+<pre class="incodebox">
+<code class="language-javascript">
+			String.prototype.replaceAt = function(index, charater){
+				return this.substr(0, index) + charater + this.substr(index +charater.length); 
+			}			
+			pramCmpId = pramCmpId.replaceAt(8,"L");//9번째자리
+			pramCmpId = pramCmpId.replaceAt(9,"S");//10번째자리      
+</code>
+</pre>
+<!--// incodebox: markup, css, clike, javascript -->
+					</div>
+					
+					<!-- run_sample -->
+					<div class="run_sample">
+					
+						<!-- sample_box -->	                    
+	                    <article class="sample_box">
+	                    
+		                    <div>
+		                    	<p></p>
+		                    	<input type="text" value="ABCDEFG12345" id="strReplace" class="impo" readonly style="width:100%; border:none; border-bottom:1px solid #d9d9d9;"><br/>
+		                    	
+		                    	<input type="number" value="0" id="replNum" class="impo" style="width:40px;">번째 자리부터
+		                    	
+		                    	<input type="text" value="가" id="strRepl1" class="impo" style="width:40px;">
+		                        <button class="reple_check1">로 변경</button>	                        
+		                    </div>  
+		                    
+		                    <script type="text/javascript">
+		                    $(function() {
+		            			String.prototype.replaceAt = function(index, charater){
+		            				return this.substr(0, index) + charater + this.substr(index +charater.length); 
+		            			}
+		            			$(".reple_check1").click(function(){
+		            				var targStr =  $("#strReplace").val();	
+		            				var thisStr =  $("#strRepl1").val();
+		            				var replNum =  Number($("#replNum").val());
+		            				
+		            				targStr = targStr.replaceAt(replNum,thisStr);		            				
+			            			 $("#strReplace").val(targStr);
+		            			});      			
+   		                    	
+		                    });
+		                    </script>	                    
+	                    
+	                    </article>
+	                    <!-- sample_box -->
+	                    
+	                </div>
+					<!-- run_sample -->
+
+                    <!--// code -->
+                </div>
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-javascript">            
+String.prototype.replaceAt = function(index, charater){
+	return this.substr(0, index) + charater + this.substr(index +charater.length); 
+}
+$(".reple_check1").click(function(){
+	var targStr =  $("#strReplace").val();	
+	var thisStr =  $("#strRepl1").val();
+	var replNum =  Number($("#replNum").val());
+	
+	targStr = targStr.replaceAt(replNum,thisStr);		            				
+	 $("#strReplace").val(targStr);
+});    
+</code>
+</pre>
+<!--// codebox -->      
+            
+            </div>
+        </section>
+        <!--#####################// index replace 처리  #####################-->
+  
+        
+        <!--##################### 주소 파라미터 값으로 변수 처리  #####################-->
+        <section class="aws_box">
+            <h1 class="aws_tl"> 주소 파라미터 값으로 변수 처리 </h1>
+			<ul class="dcs">
+				<li>주소창내 파라미터를 찾아 파라미터 값 반환</li>
+			</ul>	             
+            
+            <div class="code_area">
+            
+                <div class="play_box">                	
+                   <!-- code -->         
+                   <div class="option_txt">
+<!-- incodebox: markup, css, clike, javascript -->
+<pre class="incodebox">
+<code class="language-javascript">
+function getParameterByName(name) {
+	name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+	results = regex.exec(location.search);
+	return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+} 
+
+var uid = getParameterByName('userid');
+var age = getParameterByName('age'); 
+</code>
+</pre>
+<!--// incodebox: markup, css, clike, javascript -->
+					</div>
+					
+					<!-- run_sample -->
+					<div class="run_sample">
+					
+						<!-- sample_box -->	                    
+	                    <article class="sample_box">
+	                    
+		                    <div >
+		                        <button class="param_check">주소창 파라미터 리프레쉬</button> <strong class="param_check_info point" style="word-break: break-word;"></strong>
+		                        <div class="bd_top">
+			                        <button class="param_var1">userid 변수값</button> <strong class="param_var1_info point"></strong> 
+			                        <button class="param_var2">age 변수값</button> <strong class="param_var2_info point"></strong>		                        
+		                        </div>
+		                    </div>  
+		                    
+		                    <script type="text/javascript">
+		                    $(function() {
+		                    	function getParameterByName(name) {
+		                    		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+		                    		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+		                    		results = regex.exec(location.search);
+		                    		return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+		                    	} 
+		
+		                    	var uid = getParameterByName('userid');
+		                    	var age = getParameterByName('age'); 
+		                    	
+		                    	var urlIndex5 = window.location.toString()+ "?userid=testparam&age=45",
+		                    		parameterUsed = false;
+		                    	                    	
+		                    	if(window.location.href.indexOf("?userid=testparam&age=45") > -1){//파라미터 값이 있으면
+		                    		$('.param_check_info').text(window.location.toString());
+		                    		parameterUsed = true;
+		                    		setTimeout(function(){
+		                    			$('.view_sort .list').click();
+		                    		},20);
+		                    		setTimeout(function(){
+		                    			$('.aws_box').eq(2).find('.aws_tl').click();
+		                    		},600);
+		                    	}else{//파라미터 값이 없으면
+		                    		parameterUsed = false;
+		                    	}
+		                    			
+		                        $('.param_check').click(function(){
+		                        	(window.location.href.indexOf("?userid=testparam&age=45") > -1)?"":window.location.href=urlIndex5;
+		                        });
+		                        $('.param_var1').click(function(){
+		                        	(!parameterUsed) ? $('.param_check').click():""
+		                        	$('.param_var1_info').text(uid);
+		                        });
+		                        $('.param_var2').click(function(){
+		                        	(!parameterUsed) ? $('.param_check').click():""
+		                        	$('.param_var2_info').text(age);
+		                        });
+		                        
+		                    });
+		                    </script>	                    
+	                    
+	                    </article>
+	                    <!-- sample_box -->
+	                    
+	                </div>
+					<!-- run_sample -->
+
+                    <!--// code -->
+                </div>
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-javascript">            
+function getParameterByName(name) {
+	name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+	results = regex.exec(location.search);
+	return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+} 
+
+var uid = getParameterByName('userid');
+var age = getParameterByName('age'); 
+
+var urlIndex5 = window.location.toString()+ "?userid=testparam&age=45",
+	parameterUsed = false;
+                    	
+if(window.location.href.indexOf("?userid=testparam&age=45") > -1){//파라미터 값이 있으면
+	$('.param_check_info').text(window.location.toString());
+	parameterUsed = true;
+	setTimeout(function(){
+		$('.view_sort .list').click();
+	},20);
+	setTimeout(function(){
+		$('.aws_box').eq(1).find('.aws_tl').click();
+	},600);
+}else{//파라미터 값이 없으면
+	parameterUsed = false;
+}
+		
+$('.param_check').click(function(){
+	(window.location.href.indexOf("?userid=testparam&age=45") > -1)?"":window.location.href=urlIndex5;
+});
+$('.param_var1').click(function(){
+	(!parameterUsed) ? $('.param_check').click():""
+	$('.param_var1_info').text(uid);
+});
+$('.param_var2').click(function(){
+	(!parameterUsed) ? $('.param_check').click():""
+	$('.param_var2_info').text(age);
+});
+</code>
+</pre>
+<!--// codebox -->      
+            
+            </div>
+        </section>
+        <!--#####################// 주소 파라미터 값으로 변수 처리  #####################-->
+        
+        <!--##################### 윈도우 스크롤 #####################-->
+        <section class="aws_box">
+            <h1 class="aws_tl"> 윈도우 스크롤 </h1>
+			<ul class="dcs">
+				<li>윈도우 스크롤시 객체와 윈도우 top offset값을 반환</li>
+			</ul>	  	
+			            
+            <div class="code_area">
+            
+                <div class="play_box">
+                   <!-- code -->
+                   
+                   <!-- 
+                   <div class="option_txt">
+                   </div> -->
+                   
+					<!-- run_sample -->
+					<div class="run_sample">
+					
+						<!-- sample_box -->	                    
+	                    <article class="sample_box">
+	                    	<span id="scrolltest">스크롤 처리</span>
+	                    </article>
+	                    <!-- sample_box -->
+	                    
+	                </div>
+					<!-- run_sample -->	                                    
+                    
+                    <script type="text/javascript">
+        		    $(window).on('scroll', function(){
+        		    	var page = $(this),
+        		    		st = page.scrollTop(),
+        		    		detailoffTop = $('#scrolltest').offset().top;
+        		    	 $('#scrolltest').html('<strong>스크롤 Top: <em class="point">'+ st + 'px</em> /  객체 Top: <em class="point">' +detailoffTop+'px</em></strong>');
+        		    });
+                    </script>                    
+                    
+                    <!--// code -->
+                </div>
+                
+
+<!-- codebox: markup, css, clike, javascript -->   
+<pre class="codebox">
+<code class="language-javascript">                 
+$(window).on("scroll", function(){
+	var page = $(this);
+	st = page.scrollTop();
+	detailoffTop = $('#scrolltest').offset().top;
+	$('#scrolltest').html('스크롤 Top: <strong>'+ st + 'px</strong>, 객체 Top: <strong>' +detailoffTop+'px</strong>');
+});
+</code>
+</pre>
+<!--// codebox -->
+
+            </div>
+        </section>
+        <!--#####################// 윈도우 스크롤 #####################-->
+        
+        <!--##################### 금액 애니메이션 #####################-->
+        <section class="aws_box">
+            <h1 class="aws_tl"> 금액 애니메이션 </h1>
+			<ul class="dcs">
+				<li>이율/금액에 대한 애니메이션 처리</li>
+			</ul>	              
+            
+            <div class="code_area">
+            
+                <div class="play_box">
+                   <!-- code -->
+                   <div class="option_txt">
+                        <p class="incodebox"><strong>구분 클래스: </strong><code class="language-javascript">dot</code></p>
+                    </div>
+                    
+					<!-- run_sample -->
+					<div class="run_sample">
+					
+						<!-- sample_box -->	                    
+	                    <article class="sample_box">
+
+		                   	<strong><span id="priceAni1" class="point">15,250</span>원 </strong> / 
+		                   	<strong><span id="priceAni2" class="dot point">3.0</span>%</strong>
+		                   	
+		                    <div class="bd_top">
+		                        <button class="price_ani comma">금액</button>
+		                        <button class="price_ani dot">퍼센트</button>
+		                    </div>  		                   		                    
+	                    
+	                    </article>
+	                    <!-- sample_box -->
+	                    
+	                </div>
+					<!-- run_sample -->
+                    
+                    <script type="text/javascript">
+                    
+
+            		$.fn.countNum = function(num){//금액 애니메이션
+          				var $this = $(this),
+          					$this_value = $this.text().replace(/[^0-9]/g,'');
+          					$this.text('0');            	
+          					$this.stop().prop('Counter',0).animate({
+          						Counter: $this_value
+          					}, {duration: 900, easing: 'swing',
+          						step: function(now) {
+          							if( $this.hasClass('dot') ){ $this.text(dot(Math.ceil(now)));}else{$this.text(comma(Math.ceil(now)));}            							
+          						}
+          					});
+            		}            		
+            		function dot(n) {//퍼센트 점 찍기
+            			return n.toString().replace(/\B(?=(\d{1})+(?!\d))/g, ".");
+            		}
+            		function comma(n) {//금액 콤마
+            			return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            		}
+            		
+            		var priceValue1 = $('#priceAni1').text();            		
+            		$('.price_ani.comma').click(function(){
+            			$('#priceAni1').text(priceValue1);
+            			$('#priceAni1').countNum();//금액 애니메이션 실행
+            		});
+            		
+            		var priceValue2 = $('#priceAni2').text();
+            		$('.price_ani.dot').click(function(){
+            			$('#priceAni2').text(priceValue2);
+            			$('#priceAni2').countNum();//금액 애니메이션 실행	
+            		});   
+            		
+                    </script>
+                    <!--// code -->
+                </div>
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-javascript">            
+$.fn.countNum = function(num){//금액 애니메이션
+	var $this = $(this),
+		$this_value = $this.text().replace(/[^0-9]/g,'');
+		$this.text('0');            	
+		$this.stop().prop('Counter',0).animate({
+			Counter: $this_value
+		}, {duration: 900, easing: 'swing',
+			step: function(now) {
+				if( $this.hasClass('dot') ){ $this.text(dot(Math.ceil(now)));}else{$this.text(comma(Math.ceil(now)));}            							
+			}
+		});
+}            		
+function dot(n) {//퍼센트 점 찍기
+	return n.toString().replace(/\B(?=(\d{1})+(?!\d))/g, ".");
+}
+function comma(n) {//금액 콤마
+	return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+var priceValue1 = $('#priceAni1').text();            		
+$('.price_ani.comma').click(function(){
+	$('#priceAni1').text(priceValue1);
+	$('#priceAni1').countNum(priceValue1);//금액 애니메이션 실행
+});
+
+var priceValue2 = $('#priceAni2').text();
+$('.price_ani.dot').click(function(){
+	$('#priceAni2').text(priceValue2);
+	$('#priceAni2').countNum(priceValue2);//금액 애니메이션 실행	
+});   
+</code>
+</pre>
+<!--// codebox -->      
+            
+            </div>
+        </section>
+        <!--#####################// 금액 애니메이션 #####################-->
+                     
+        <!--##################### let 변수 활용 #####################-->
+        <section class="aws_box">
+            <h1 class="aws_tl"> let 변수 활용  </h1>
+			<ul class="dcs">
+				<li>변수 var선언은 재선언이 되면 값이 바뀔 수 있다. 초기화 값이 필요할땐 let변수를 적극 활용할것</li>
+			</ul>	              
+            
+            <div class="code_area">
+            
+                <div class="play_box">
+                   <!-- code -->
+	            	<article class="code_box">
+						<div class="option_txt">
+<!--## incodebox: markup, css, clike, javascript ##-->
+<pre class="incodebox">
+<code class="language-javascript">
+let x = 1;
+var y = 2;
+if(y === 2){
+	let x = 2;
+	console.log('x=' + x); // x =2;
+}
+console.log('x=' + x); // x =1;
+</code>
+</pre>
+<!--##// incodebox: markup, css, clike, javascript ##-->
+						</div>
+					</article>                   	
+                   <!--// code -->
+				</div>
+				
+			</div>
+			
+		</section>
+		<!--#####################//  let 변수 활용  #####################-->
+                    
+        <!--##################### setTimeout 타이머 #####################-->
+        <section class="aws_box">
+            <h1 class="aws_tl"> setTimeout 과 setIntrval 타이머  </h1>
+			<ul class="dcs">
+				<li>setTimeout과 setIntrval을 이용한 간단한 타이머와 시간차 비교</li>
+				<li>스크립트 타이머는 브라우저 성능과 환경에 따라 갱신하는 큐값이 달라 부정확함</li>
+				<li>타이머수를 줄이고 타이머내 이벤트를 합칠것</li>
+			</ul>	              
+            
+            <div class="code_area">
+            
+                <div class="play_box">
+                
+                   <div class="option_txt">
+                        <p class="incodebox"><strong>실행: </strong><code class="language-javascript">TimerTimeout(100); //100은 END숫자</code></p>
+                        <p class="incodebox"><strong>실행: </strong><code class="language-javascript">TimerInterval(100); //100은 END숫자</code></p>
+                    </div>
+                                    
+					<!-- run_sample -->
+					<div class="run_sample">
+					
+						<!-- sample_box -->	                    
+	                    <article class="sample_box">
+	                    	시작시간: <strong><span id="TimerNow">0</span> </strong> <br/>
+
+		                   	<span style="display:inline-block; width:80px;">setTimeout:</span> <strong><span id="TimerAni">0</span> </strong> > 끝난시간: <strong><span id="TimerLast1">0</span> </strong><br/>
+		                   	<span style="display:inline-block; width:80px;">setInterval:</span> <strong><span id="TimerAni2">0</span> </strong> > 끝난시간: <strong><span id="TimerLast2">0</span> </strong>
+		                   	
+		                    <div class="bd_top">
+		                    	정수를 입력하세요<br/>
+		                        <input type="number" value="600" id="makerCode" class="impo"> <button class="timer_ev" style="margin:0;">시작</button>
+		                    </div>  		                   		                    
+	                    
+	                    </article>
+	                    <!-- sample_box -->
+	                    
+	                    <script>
+
+
+function timeTxt(target){	
+	var  nowDate = new Date(),//time get
+	nowMin = nowDate.getMinutes()//time get
+	nowSec = nowDate.getSeconds();//time get
+	//nowSec = nowDate.getMilliseconds();//time get
+	
+	$(target).text(nowMin +'분' +nowSec+"초");	
+}
+
+var date0 = 0,
+date1 = 0,
+date2 = 0;
+
+function TimerTimeout(target,num){//TimerAni정의: 객체명, num은 END숫자
+	
+	var txtNum = 0;// 초기값
+	
+	function timer() {
+		txtNum += 1; //1씩 증가 
+		$(target).text(txtNum); //console.log(txtNum);
+		
+		if(txtNum == num){//END //console.log("END: "+txtNum);			
+			timeTxt("#TimerLast1");
+			date1 = new Date();
+			var mindate = date1 - date0; 
+			$("#TimerLast1").append(", 시간 차: " + mindate +"ms");
+			$("#TimerLast1").css("color","#000");
+			
+			if(date1 != 0 && date2 != 0){
+				$(".timer_ev").attr("disabled",false);
+			}			
+			
+			return false
+		}else{
+			setTimeout(timer, 0); //타이머 작동, 숫자로 시간조절 //console.log(txtNum);
+		}
+	}
+	timer();
+}
+
+function TimerInterval(target,num){//TimerAni정의: 객체명, num은 END숫자	
+	var txtNum = 0;// 초기값
+	var intInterval = setInterval(function(){
+		txtNum += 1; //1씩 증가 
+		$(target).text(txtNum); //console.log(txtNum);
+		
+		if(txtNum == num){//END //console.log("END: "+txtNum);
+			timeTxt("#TimerLast2");
+			
+			date2 = new Date();
+			var mindate =  date2 - date0; 
+			$("#TimerLast2").append(", 시간 차: " + mindate +"ms");
+			$("#TimerLast2").css("color","#000");
+			
+			if(date1 != 0 && date2 != 0){
+				$(".timer_ev").attr("disabled",false);			
+				
+			}
+			
+			clearInterval(intInterval);
+			return false
+		}		
+	},0);
+}
+
+$(".timer_ev").click(function(){
+	date0 = new Date();
+	timeTxt("#TimerNow");
+	$(this).attr("disabled",true);
+	$("#TimerLast1, #TimerLast2").css("color","#999");
+	
+	$("#makerCode").val(Math.floor($("#makerCode").val()));
+	var number = $("#makerCode").val(); 
+	if(number < 1){
+		alert("1보다 큰 정수로 입력하세요!");
+	}else{
+		TimerTimeout("#TimerAni",number); //실행: dial은 객체명, 359는 END숫자
+		TimerInterval("#TimerAni2",number); //실행: dial은 객체명, 359는 END숫자
+	}	
+});
+
+
+
+	                    </script>
+	                    
+	                </div>
+					<!-- run_sample --> 
+					                
+                   <!-- code -->
+	            	<article class="code_box">
+						<div class="option_txt">
+<!--## incodebox: markup, css, clike, javascript ##-->
+<pre class="incodebox">
+<code class="language-javascript">
+/******** setTimeout 타이머 ********/
+function TimerTimeout(num){//num은 END숫자	
+	var txtNum = 0;// 초기값
+	function timer() {
+		txtNum += 1; //1씩 증가
+		console.log(txtNum); //이벤트 실행
+		
+		if(txtNum == num){//타이머 END 
+			console.log("END: "+txtNum);
+			return false
+		}else{
+			setTimeout(timer, 0); //타이머 작동, 숫자로 시간조절
+		}
+	}
+	timer();
+}
+TimerTimeout(100); //100은 END숫자
+
+/******** setInterval 타이머 ********/
+function TimerInterval(num){//TimerAni정의: 객체명, num은 END숫자	
+	var txtNum = 0;// 초기값
+	var intInterval = setInterval(function(){
+		txtNum += 1; //1씩 증가 
+		console.log(txtNum); //이벤트 실행
+		
+		if(txtNum == num){//END 
+			console.log("END: "+txtNum);
+			clearInterval(intInterval);
+			return false
+		}		
+	},0);
+}
+TimerInterval(100); //100은 END숫자
+</code>
+</pre>
+<!--##// incodebox: markup, css, clike, javascript ##-->
+						</div>
+					</article>                   	
+                   <!--// code -->
+				</div>
+				
+			</div>
+			
+		</section>
+		<!--##################### 금액 애니메이션 #####################-->                                         
+        		    
+    </div><!-- contents -->
+    
+	<script src="js/jquery-ui.min.js"></script><!-- jquery ui-->
+	<script src="js/jquery.ui.touch-punch.js"></script><!-- jquery ui using mobile -->
+    <script src="js/frontUxer.js"></script><!-- plugin -->
+  
+<script>
+$(document).ready(function () {
+    
+    
+	var bottomFixedBtn = function(){
+		//console.log('sss');
+	}
+	bottomFixedBtn();    
+	
+});	
+</script>    
+
+      
+</body>
+</html>

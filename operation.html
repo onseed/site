@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>frontUxer</title>
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/frontUxer.css">
+<script src="js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript">         
+    var menuArry = ['2','0'];//1depth, 2depth
+    $(function() {
+        $('nav a:eq('+menuArry[0]+')').addClass('current');
+        $('.subnav a:eq('+menuArry[1]+')').addClass('current');             
+    });
+</script>
+</head>
+<body>
+<script src="js/guide.js"></script><!-- site guide -->
+	
+	<div class="start_dim"><span></span></div>
+	
+	<h1 class="hide"> Operation</h1>
+	
+    <div class="contents">
+    
+        <!--# Unique ID 생성 -->
+		<section class="aws_box">
+	        <h1 class="aws_tl"> 이벤트 예약 설정 </h1>
+			<ul class="dcs">
+				<li>이벤트 진행시 서버측 시간을 기준으로 이벤트 실행시간을 설정할수 있음.</li>
+			</ul>	  		        
+	        
+	        <div class="code_area">
+	        
+	            <div class="play_box">
+	            	<!-- code -->
+	            	<div class="option_txt">
+	            		<p><strong>html :</strong> <span class="incodebox"><code class="language-markup"><em id="dataRoll[n]"> 원래 내용 </em></code></span></p>
+	            		<p><strong>script :</strong> <span class="incodebox"><code class="language-javascript">cahngeTag[n] = ['이벤트 기간내 내용' , '이벤트 종료후 내용']; //text 또는 html 태그</code></span></p>
+	                </div>
+	                
+					<!-- run_sample -->
+					<div class="run_sample">
+					
+						<!-- sample_box -->	                    
+	                    <article class="sample_box">
+	                    
+		                    <div>
+		                    	이벤트 종료일
+			                    <select id="sdate_sel">
+			                    	<option value="2018/01/01 00:01">2018/01/01 00:01</option>
+			                    	<option value="2099/01/01 00:01">2099/01/01 00:01</option>
+			                    </select>          
+			                    <button id="test">기간 적용</button>
+		                    </div>
+		
+		                    <div class="bd_top">
+		                    	<p id="deteSel" class="mgb_s">이벤트 종료일을 선택하세요.</p>
+			                    <strong id="dataRoll1">이벤트를 진행 예정입니다.</strong>
+			                    <strong id="dataRoll2" class="point">예정중</strong>
+		                    </div>	                    
+	                    
+	                    </article>
+	                    <!--// sample_box -->	           			
+	
+	                    <script type="text/javascript">
+	                    window.addEventListener("load",function(){
+	                    	//var edate = document.getElementById("edate_sel").value;;
+	                    	
+	                       	$('#sdate_sel').change(function(){
+	                        		sdate = new Date(document.getElementById("sdate_sel").value);
+	                        		console.log(sdate);
+	                        	});                    	
+	                    	
+	                    	$('#test').click(function(){
+	                    		awsUi2.init();
+	                    		$('#deteSel').text(sdate);
+	                    	});
+	                    	
+	                    });
+	                    </script>
+	                   
+	                    <script type="text/javascript">
+	                    //#######01.설정 기간내 컨텐츠 지정 
+	                    
+	                    var evDataTerm = true;//설정기간 사용여부
+	                    
+	                    //## 변경내용
+	                    //  var sdate= new Date("2018/04/01 00:01");//기준일
+	                    var edate= new Date("2018/01/15 15:30");//종료일
+	                    var sdate = new Date(document.getElementById("sdate_sel").value);
+	                        changeUnitNum = 2;//변경할 유닛수 //변경할 유닛수 <em id="dataRoll*"></em>
+	                                                
+	                      var cahngeTag1 = ['<strong>이벤트가 진행중입니다.</strong>' , '<strong>종료된 이벤트입니다.</strong>'];//cahngeTag[n] = ['이벤트 기간내 내용' , '이벤트 종료후 내용'];
+	                      var cahngeTag2 = ['<strong class="point">진행중</strong>' , '<strong class="point">종료</strong>'];//이벤트 혜택~ 2018년**
+	                                            
+	                      var awsUi2 = {
+	                        'contentTimer' : function(){//#01.설정 기간내 컨텐츠 지정
+	                          if(evDataTerm){     
+	                            var xmlHttp;
+	                            function srvTime(){
+	                              if (window.XMLHttpRequest) {//분기하지 않으면 IE에서만 작동된다.  
+	                                xmlHttp = new XMLHttpRequest(); // IE 7.0 이상, 크롬, 파이어폭스 등   
+	                                xmlHttp.open('HEAD',window.location.href.toString(),false);   
+	                                xmlHttp.setRequestHeader("Content-Type", "text/html");    
+	                                xmlHttp.send('');   
+	                                return xmlHttp.getResponseHeader("Date");   
+	                              }else if (window.ActiveXObject) {         
+	                                xmlHttp = new ActiveXObject('Msxml2.XMLHTTP');    
+	                                xmlHttp.open('HEAD',window.location.href.toString(),false);   
+	                                xmlHttp.setRequestHeader("Content-Type", "text/html");    
+	                                xmlHttp.send('');               
+	                                return xmlHttp.getResponseHeader("Date"); 
+	                              }
+	                            }
+	                            var sevTime = srvTime();
+	                            sevrTime = new Date(sevTime); //서버 시간
+	                            loclTime = new Date(); //Date.now(); //로컬 시간
+	                            var urlLocal = (location.href.indexOf("localhost:") > -1) ? true : false;//로컬일때 서버시간을 로컬시간으로
+	                            if(urlLocal){ sevrTime = new Date();}
+	                            console.log(" 서버시간: " + sevrTime  + " \n  로컬시간: " + loclTime + " \n  지정시간: " + sdate);
+	                                  
+	                            //if(sevrTime >= sdate && sevrTime <= edate){//이벤트 기간
+	                            if(sevrTime >= sdate){//이벤트 종료
+	                              for(var i = 1; i < changeUnitNum + 1; i++){
+	                                changeContent(i , 1);
+	                              }     
+	                            }else{//이벤트 진행
+	                              for(var i = 1; i < changeUnitNum + 1; i++){
+	                            	  changeContent(i , 0);
+	                              }
+	                            }         
+	                          }
+	                          function changeContent(i , n){//이벤트 처리
+	                              eval("var element"+i+" = document.getElementById('dataRoll"+i+"')");
+	                              eval("element"+i+".innerHTML = cahngeTag"+i+"["+n+"]");
+	                              console.log("var element"+i+" = document.getElementById('dataRoll"+i+"')");
+	                              console.log("element"+i+".innerHTML = cahngeTag"+i+"["+n+"]");
+	                          }
+	                        },    
+	                        'init' : function(){
+	                        	awsUi2.contentTimer();
+	                        }
+	                      }
+							//awsUi2.init();                       
+	                      
+	                    </script>								
+					
+					</div>
+					<!--// run_sample -->
+		
+	                <!--// code -->
+	            </div>
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-markup">
+<em id="dataRoll1">이벤트를 진행 예정입니다.</em>
+<em id="dataRoll2">(대기)</em>      
+</code>
+</pre>
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-javascript">            
+//#######01.설정 기간내 컨텐츠 지정 
+
+var evDataTerm = true;//설정기간 사용여부
+
+//## 변경내용
+ var sdate= new Date("2018/04/01 00:01");//기준일
+var edate= new Date("2018/01/15 15:30");//종료일
+    changeUnitNum = 2;//변경할 유닛수 //변경할 유닛수 <em id="dataRoll*"></em>
+                            
+var cahngeTag1 = ['<em style="color:blue;">이벤트가 진행중입니다.</em>' , '<em style="color:blue;">종료된 이벤트입니다.</em>'];//cahngeTag[n] = ['이벤트 기간내 내용' , '이벤트 종료후 내용'];
+var cahngeTag2 = ['<em style="color:red;">진행중</em>' , '<em style="color:red;">종료</em>'];//이벤트 혜택~ 2018년**
+                                
+var awsUi2 = {
+  'contentTimer' : function(){//#01.설정 기간내 컨텐츠 지정
+    if(evDataTerm){     
+      var xmlHttp;
+      function srvTime(){
+        if (window.XMLHttpRequest) {//분기하지 않으면 IE에서만 작동된다.  
+          xmlHttp = new XMLHttpRequest(); // IE 7.0 이상, 크롬, 파이어폭스 등   
+          xmlHttp.open('HEAD',window.location.href.toString(),false);   
+          xmlHttp.setRequestHeader("Content-Type", "text/html");    
+          xmlHttp.send('');   
+          return xmlHttp.getResponseHeader("Date");   
+        }else if (window.ActiveXObject) {         
+          xmlHttp = new ActiveXObject('Msxml2.XMLHTTP');    
+          xmlHttp.open('HEAD',window.location.href.toString(),false);   
+          xmlHttp.setRequestHeader("Content-Type", "text/html");    
+          xmlHttp.send('');               
+          return xmlHttp.getResponseHeader("Date"); 
+        }
+      }
+      var sevTime = srvTime();
+      sevrTime = new Date(sevTime); //서버 시간
+      loclTime = new Date(); //Date.now(); //로컬 시간
+      var urlLocal = (location.href.indexOf("localhost:") > -1) ? true : false;//로컬일때 서버시간을 로컬시간으로
+      if(urlLocal){ sevrTime = new Date();}
+      console.log(" 서버시간: " + sevrTime  + " \n  로컬시간: " + loclTime + " \n  지정시간: " + sdate);
+            
+      //if(sevrTime >= sdate && sevrTime <= edate){//이벤트 기간
+      if(sevrTime >= sdate){//이벤트 종료
+        for(var i = 1; i < changeUnitNum + 1; i++){
+          changeContent(i , 1);
+        }     
+      }else{//이벤트 진행
+        for(var i = 1; i < changeUnitNum + 1; i++){
+      	  changeContent(i , 0);
+        }
+      }         
+    }
+    function changeContent(i , n){//이벤트 처리
+        eval("var element"+i+" = document.getElementById('dataRoll"+i+"')");
+        eval("element"+i+".innerHTML = cahngeTag"+i+"["+n+"]");
+        console.log("var element"+i+" = document.getElementById('dataRoll"+i+"')");
+        console.log("element"+i+".innerHTML = cahngeTag"+i+"["+n+"]");
+    }
+  },    
+  'init' : function(){
+  	awsUi2.contentTimer();
+  }
+}
+//awsUi2.init();                       
+</code>
+</pre>
+<!--// codebox -->      
+	        
+	        </div>
+		</section>
+		<!--//# Unique ID 생성 -->
+		    
+    </div>
+    
+	<script src="js/jquery-ui.min.js"></script><!-- jquery ui-->
+	<script src="js/jquery.ui.touch-punch.js"></script><!-- jquery ui using mobile -->
+    <script src="js/frontUxer.js"></script><!-- plugin -->
+    
+</body>
+</html>

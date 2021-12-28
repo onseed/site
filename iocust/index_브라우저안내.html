@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<title>IOCUST</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		//mobile_check();//pt용 모바일체크
+	});
+	function mobile_check(){//pt용 모바일체크
+		var Browser = {
+				chk : navigator.userAgent.toLowerCase()
+		}
+		Browser = {
+				ie : Browser.chk.indexOf('msie') != -1,
+				ie6 : Browser.chk.indexOf('msie 6') != -1,
+				ie7 : Browser.chk.indexOf('msie 7') != -1,
+				ie8 : Browser.chk.indexOf('msie 8') != -1,
+				ie9 : Browser.chk.indexOf('msie 9') != -1,
+				ie10 : Browser.chk.indexOf('msie 10') != -1,
+				opera : !!window.opera,
+				safari : Browser.chk.indexOf('safari') != -1,
+				safari3 : Browser.chk.indexOf('applewebkir/5') != -1,
+				mac : Browser.chk.indexOf('mac') != -1,
+				chrome : Browser.chk.indexOf('chrome') != -1,
+				firefox : Browser.chk.indexOf('firefox') != -1
+		}
+		if((Browser.chrome) || (Browser.safari) || (Browser.safari3)) {
+//			alert("chrome? safari? 페이지 이동");
+			setTimeout(function(){
+				var url = "main.html";
+				$(location).attr('href',url);
+			}, 0);
+		}else {
+			if((Browser.ie6 ) || (Browser.ie7) || (Browser.ie8) || (Browser.ie9) || (Browser.ie10) ){$(".chk_brwsr").html("IE");}
+			else if(Browser.firefox){$(".chk_brwsr").html("Firefox");}
+			else{$(".chk_brwsr").html("해당");	}
+			$("body").css("background","#ff7777");
+			$("#not_support").css("display","block");
+//			alert(navigator.userAgent);
+		}
+	}
+</script>
+
+</head>
+<body style="background:#fff;">
+
+	<!--not_support-->
+	<div id="not_support" style="display:block;">
+		<div><img src="img/logo.png" alt="thinkbud" style="width:150px; border:0; display:block; margin:0 auto; margin-top:100px;"/></div>
+		<!--<p style="color:#fff; font-size:75%; text-align:center; font-style:italic; ">Think of User Always.We Designing All About Screen</p>-->
+		<p id="not_support_cont" style="font-size:100%; line-height:180%; margin-top:50px; background:#e3e3e3;">
+			<span style="color:#333; display:block; padding:30px 40px 20px 40px; border:1px solid #d8d8d8;">
+				<strong style="font-size:200%; line-height:180%;">WARING</strong><br/>
+				<strong><span class="chk_brwsr">해당</span> 브라우저는 지원하지 않는 웹 페이지</strong>입니다.<br/>
+				<strong>html5를 지원하는 최신 브라우저</strong>로 업그레이드를 권장합니다.
+			</span>
+			<span class="ico" style="border:1px solid #d8d8d8; display:block; padding:20px 40px 40px 40px; border-top:0; font-size:120%;">
+				<a href="http://www.google.com/chrome?hl=ko" target="_blank" style="display:inline-block; zoom:1; *display:inline; text-decoration:none; color:#333; vertical-align:middle; margin-right:30px;"><img src="http://www.thinkbud.co.kr/common/img/out/icn_chrome.png" alt="chrome" style="border:0; vertical-align:middle;  width:40px;"/> Chrome</a>
+				<a href="http://www.apple.com/kr/safari/" target="_blank" style="display:inline-block; zoom:1; *display:inline; text-decoration:none; color:#333; vertical-align:middle; margin-right:10px;"><img src="http://www.thinkbud.co.kr/common/img/out/icn_safari.png" style="border:0; vertical-align:middle; width:40px;" alt=""/> Safari</a>
+			</span>
+		</p>
+	</div>
+	<!--//not_support-->
+
+</body>
+</html>

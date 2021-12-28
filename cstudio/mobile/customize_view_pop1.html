@@ -1,0 +1,315 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<title> C STUDIO </title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=2.0" /><!--20150914 maximum-scale 수정-->
+<!--[if IE]>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<![endif]-->
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script><!--jquery flatform.js-->
+<!--[if lt IE 9]>
+<script src="js/html5shiv.js" type="text/javascript"></script>
+<![endif]-->
+<script type="text/javascript" src="js/common.js"></script><!-- common.js -->
+<script type="text/javascript" src="js/jquery.flexslider.js"></script><!-- jquery.flexslider.js-->
+<link rel="stylesheet" type="text/css" href="css/basic.css" /><!--basic.css-->
+<link rel="stylesheet" type="text/css" href="css/custom_ui.css" /><!--custom_ui.css 20151113 추가-->
+<script type="text/javascript">
+var link_slide= 2; //슬라이드 넘버를 이전페이지에서 받음
+$(document).ready(function(){
+	$('#baseColorSlider').flexslider({//BASE COLOR 슬라이더
+		animation: "slide",
+		slideshow: false,
+		controlNav: false,
+		animationSpeed:200
+	});
+	$('#baseColorSlider').flexslider(link_slide);
+});
+</script>
+</head>
+
+<body class="bg_wt"><!--배경색이 흰 색일 경우 bg_wt 클래스 붙임-->
+
+<!--wrap-->
+<div class="wrap">
+
+<!--popup_top-->
+<div class="popup_top">
+	<h1 class="pop_tit">COLOR DETAIL</h1>
+	<a href="#" class="pop_cls" onclick="javascript:var win = window.open('','_self'); win.close();return false;"><span>닫기</span></a>
+</div>
+<!--//popup_top-->
+
+<!--base_colorArea-->
+<div class="base_colorArea tb_info" id="baseColorSlider"><!-- tb_info 20151113 추가 -->
+	<ul class="slides">
+		<li>
+			<a href="#">
+				<img src="img/custom/color/stephanie_color1.jpg" alt="" class="thumb_img" />
+				<div class="pop_info_table tb">
+					<!--color 20160318 수정-->
+					<h3 class="tb_tit2">
+						<span class="tl">마비아니(Camel) / CBN-100</span>
+						<span class="txt">소프트한 터치감의 가죽</span>
+					</h3>
+					<table class="sol_tb">
+						<tr class="sol_th">
+							<th class="th_f" rowspan="2">IMAGE</th>
+							<th class="th_w">Base</th>
+							<th class="th_w">Side</th>
+							<th class="th_w">Handle</th>
+						</tr>
+						<tr>
+							<td><span>￦ 3,000</span></td>
+							<td><span>￦ 2,000</span></td>
+							<td><span>￦ 2,000</span></td>
+						</tr>
+					</table>
+					<!--//color-->
+				</div>
+			</a>
+		</li>
+		<li>
+			<a href="#">
+				<img src="img/custom/color/stephanie_color2.jpg" alt="" class="thumb_img" />
+				<div class="pop_info_table tb">
+					<!--color-->
+					<h3 class="tb_tit2">
+						<span class="tl">마비아니(Camel) / CBN-100</span>
+						<span class="txt">소프트한 터치감의 가죽</span>
+					</h3>
+					<table class="sol_tb">
+						<tr class="sol_th">
+							<th class="th_f" rowspan="2">IMAGE</th>
+							<th class="th_w">Base</th>
+							<th class="th_w">Side</th>
+							<th class="th_w">Handle</th>
+						</tr>
+						<tr>
+							<td><span>￦ 3,000</span></td>
+							<td><span>￦ 2,000</span></td>
+							<td><span>￦ 2,000</span></td>
+						</tr>
+					</table>
+					<!--//color-->
+				</div>
+			</a>
+		</li>
+		<li>
+			<a href="#">
+				<img src="img/custom/color/stephanie_color3.jpg" alt="" class="thumb_img" />
+				<div class="pop_info_table tb">
+					<!--color-->
+					<h3 class="tb_tit2">
+						<span class="tl">마비아니(Camel) / CBN-100</span>
+						<span class="txt">소프트한 터치감의 가죽</span>
+					</h3>
+					<table class="sol_tb">
+						<tr class="sol_th">
+							<th class="th_f" rowspan="2">IMAGE</th>
+							<th class="th_w">Base</th>
+							<th class="th_w">Side</th>
+							<th class="th_w">Handle</th>
+						</tr>
+						<tr>
+							<td><span>￦ 3,000</span></td>
+							<td><span>￦ 2,000</span></td>
+							<td><span>￦ 2,000</span></td>
+						</tr>
+					</table>
+					<!--//color-->
+				</div>
+			</a>
+		</li>
+		<li>
+			<a href="#">
+				<img src="img/custom/color/stephanie_color4.jpg" alt="" class="thumb_img" />
+				<div class="pop_info_table tb">
+					<!--color-->
+					<h3 class="tb_tit2">
+						<span class="tl">마비아니(Camel) / CBN-100</span>
+						<span class="txt">소프트한 터치감의 가죽</span>
+					</h3>
+					<table class="sol_tb">
+						<tr class="sol_th">
+							<th class="th_f" rowspan="2">IMAGE</th>
+							<th class="th_w">Base</th>
+							<th class="th_w">Side</th>
+							<th class="th_w">Handle</th>
+						</tr>
+						<tr>
+							<td><span>￦ 3,000</span></td>
+							<td><span>￦ 2,000</span></td>
+							<td><span>￦ 2,000</span></td>
+						</tr>
+					</table>
+					<!--//color-->
+				</div>
+			</a>
+		</li>
+		<li>
+			<a href="#">
+				<img src="img/custom/color/stephanie_color5.jpg" alt="" class="thumb_img" />
+				<div class="pop_info_table tb">
+					<!--color-->
+					<h3 class="tb_tit2">
+						<span class="tl">마비아니(Camel) / CBN-100</span>
+						<span class="txt">소프트한 터치감의 가죽</span>
+					</h3>
+					<table class="sol_tb">
+						<tr class="sol_th">
+							<th class="th_f" rowspan="2">IMAGE</th>
+							<th class="th_w">Base</th>
+							<th class="th_w">Side</th>
+							<th class="th_w">Handle</th>
+						</tr>
+						<tr>
+							<td><span>￦ 3,000</span></td>
+							<td><span>￦ 2,000</span></td>
+							<td><span>￦ 2,000</span></td>
+						</tr>
+					</table>
+					<!--//color-->
+				</div>
+			</a>
+		</li>
+		<li>
+			<a href="#">
+				<img src="img/custom/color/stephanie_color6.jpg" alt="" class="thumb_img" />
+				<div class="pop_info_table tb">
+					<!--color-->
+					<h3 class="tb_tit2">
+						<span class="tl">마비아니(Camel) / CBN-100</span>
+						<span class="txt">소프트한 터치감의 가죽</span>
+					</h3>
+					<table class="sol_tb">
+						<tr class="sol_th">
+							<th class="th_f" rowspan="2">IMAGE</th>
+							<th class="th_w">Base</th>
+							<th class="th_w">Side</th>
+							<th class="th_w">Handle</th>
+						</tr>
+						<tr>
+							<td><span>￦ 3,000</span></td>
+							<td><span>￦ 2,000</span></td>
+							<td><span>￦ 2,000</span></td>
+						</tr>
+					</table>
+					<!--//color-->
+				</div>
+			</a>
+		</li>
+		<li>
+			<a href="#">
+				<img src="img/custom/color/stephanie_color7.jpg" alt="" class="thumb_img" />
+				<div class="pop_info_table tb">
+					<!--color-->
+					<h3 class="tb_tit2">
+						<span class="tl">마비아니(Camel) / CBN-100</span>
+						<span class="txt">소프트한 터치감의 가죽</span>
+					</h3>
+					<table class="sol_tb">
+						<tr class="sol_th">
+							<th class="th_f" rowspan="2">IMAGE</th>
+							<th class="th_w">Base</th>
+							<th class="th_w">Side</th>
+							<th class="th_w">Handle</th>
+						</tr>
+						<tr>
+							<td><span>￦ 3,000</span></td>
+							<td><span>￦ 2,000</span></td>
+							<td><span>￦ 2,000</span></td>
+						</tr>
+					</table>
+					<!--//color-->
+				</div>
+			</a>
+		</li>
+		<li>
+			<a href="#">
+				<img src="img/custom/color/stephanie_color8.jpg" alt="" class="thumb_img" />
+				<div class="pop_info_table tb">
+					<!--color-->
+					<h3 class="tb_tit2">
+						<span class="tl">마비아니(Camel) / CBN-100</span>
+						<span class="txt">소프트한 터치감의 가죽</span>
+					</h3>
+					<table class="sol_tb">
+						<tr class="sol_th">
+							<th class="th_f" rowspan="2">IMAGE</th>
+							<th class="th_w">Base</th>
+							<th class="th_w">Side</th>
+							<th class="th_w">Handle</th>
+						</tr>
+						<tr>
+							<td><span>￦ 3,000</span></td>
+							<td><span>￦ 2,000</span></td>
+							<td><span>￦ 2,000</span></td>
+						</tr>
+					</table>
+					<!--//color-->
+				</div>
+			</a>
+		</li>
+		<li>
+			<a href="#">
+				<img src="img/custom/color/stephanie_color9.jpg" alt="" class="thumb_img" />
+				<div class="pop_info_table tb">
+					<!--color-->
+					<h3 class="tb_tit2">
+						<span class="tl">마비아니(Camel) / CBN-100</span>
+						<span class="txt">소프트한 터치감의 가죽</span>
+					</h3>
+					<table class="sol_tb">
+						<tr class="sol_th">
+							<th class="th_f" rowspan="2">IMAGE</th>
+							<th class="th_w">Base</th>
+							<th class="th_w">Side</th>
+							<th class="th_w">Handle</th>
+						</tr>
+						<tr>
+							<td><span>￦ 3,000</span></td>
+							<td><span>￦ 2,000</span></td>
+							<td><span>￦ 2,000</span></td>
+						</tr>
+					</table>
+					<!--//color-->
+				</div>
+			</a>
+		</li>
+		<li>
+			<a href="#">
+				<img src="img/custom/color/stephanie_color10.jpg" alt="" class="thumb_img" />
+				<div class="pop_info_table tb">
+					<!--color-->
+					<h3 class="tb_tit2">
+						<span class="tl">마비아니(Camel) / CBN-100</span>
+						<span class="txt">소프트한 터치감의 가죽</span>
+					</h3>
+					<table class="sol_tb">
+						<tr class="sol_th">
+							<th class="th_f" rowspan="2">IMAGE</th>
+							<th class="th_w">Base</th>
+							<th class="th_w">Side</th>
+							<th class="th_w">Handle</th>
+						</tr>
+						<tr>
+							<td><span>￦ 3,000</span></td>
+							<td><span>￦ 2,000</span></td>
+							<td><span>￦ 2,000</span></td>
+						</tr>
+					</table>
+					<!--//color-->
+				</div>
+			</a>
+		</li>
+	</ul>
+</div>
+<!--//base_colorArea-->
+
+</div>
+<!--//wrap-->
+
+</body>
+</html>

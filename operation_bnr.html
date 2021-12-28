@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>frontUxer</title>
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/frontUxer.css">
+<script src="js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript">         
+    var menuArry = ['2','2'];//1depth, 2depth
+    $(function() {
+        $('nav a:eq('+menuArry[0]+')').addClass('current');
+        $('.subnav a:eq('+menuArry[1]+')').addClass('current');             
+    });
+</script>
+</head>
+<body>
+<script src="js/guide.js"></script><!-- site guide -->
+	
+	<div class="start_dim"><span></span></div>
+	
+	<h1 class="hide"> Operation</h1>
+
+    <div class="contents"><!-- contents -->
+    
+        <!--##################### 콜센터 노출배너 #####################-->
+		<section class="aws_box">
+	        <h1 class="aws_tl"> 콜센터 노출배너 </h1>
+			<ul class="dcs">
+				<li>주말 및 공휴일 제외한 업무일내 업무시간(9시~18시)에만 이벤트 처리</li>
+				<li>PC는 페이지 링크로 MO은 전화걸기 링크로 분기 처리</li>
+			</ul>	
+				        
+	        <div class="code_area">
+	        
+	            <div class="play_box">
+	               <!-- code -->
+ 
+					<!--               
+	               <div class="option_txt">
+
+	                </div>-->
+	                
+					<!-- run_sample -->
+					<div class="run_sample">
+
+						<style>
+							.banner-counseling{display:block}
+							.banner-counseling .inner{color:#575a63;}
+							.banner-counseling.mar-b{margin-top:-20px;padding-bottom:13px;margin-bottom:0}							
+							.banner-counseling .inner{width:820px;margin:0 auto;position:relative;height:120px;box-sizing:border-box;padding:30px 0 0 30px;}
+							.banner-counseling .inner .tell,
+							.banner-counseling .inner .link{display:none;}			
+							.banner-counseling .inner p{font-size:21px;letter-spacing: -0.09em;padding-bottom:8px}
+							.banner-counseling .inner p strong{color:#0b0d0f}
+							.banner-counseling .inner span{border:2px solid #2479f3;border-radius:30px;color:#166ae2;font-weight:bold;letter-spacing: -0.09em;padding:0 12px 4px 12px;font-size:14px}	
+							.banner-counseling .inner .tell span{display:block; position:absolute; border:none; top:50%; right:0; margin-top:-30px; font-size:40px; padding:0; letter-spacing:-0.05em; border-radius:0;}
+							.mobile .banner-counseling .inner{width:auto;height:112px;padding:23px 0 0 30px;}
+							.mobile .banner-counseling .inner p{font-size:14px;}
+							.mobile .banner-counseling .inner .tell p{padding-bottom:2px;}
+							.mobile .banner-counseling .inner .tell span{position:relative; margin-top:3px; font-size:17px; padding:0;}
+							.mobile .banner-counseling .inner .tell span:before{background-size:auto 205px; width:22px;height:21px; margin:3px 3px 0 0; background-position:right 0;}
+							@media screen and (max-width:320px) {
+							    .mobile .banner-counseling .inner{width:320px;padding:15px 0 0 130px}
+							}
+						</style>
+					
+						<!-- sample_box -->	                    
+	                    <article class="sample_box">
+	                    
+		                    <div>
+								<a href="javascript:void(0)" class="banner-counseling bg_psd" id="bnrCounselingDiv">
+									<div class="inner">
+										<div class="tell">
+											<p><strong><em class="bnrCounselingTxt"></em>에 대해 궁금하신 점</strong>이<br class="mbr"> 있으시면 지금 전화주세요</p>
+											<span>전화걸기</span>
+										</div>
+										<div class="link">
+											<p><strong><em class="bnrCounselingTxt"></em>에 대해 궁금하신 점</strong>이<br class="mbr"> 있으시면 무료상담을 신청해보세요</p>
+											<span>무료상담신청</span>
+										</div>				
+									</div>
+								</a>
+		                    </div>
+	                    
+	                    
+	                    </article>
+	                    <!--// sample_box -->
+	                    
+	                </div>
+					<!-- run_sample -->	                    
+	                   	                
+
+
+                    <script type="text/javascript">
+                  //#######02. 컨텐츠 설정
+                	var worktime = {
+                			title:"서비스",
+                			link : "javascript:alert('상담페이지로 이동합니다.');", //상담페이지 링크로 이동
+                			tel : "1688-3001"//전화번호
+                	},attrSrc = '';//링크 속성
+                	
+                	window.addEventListener("load",function(){
+                		if (isMobile) {//mobile
+                			if(workCheckPoint){//업무시간일때
+                				attrSrc = "tel:"+worktime.tel;//전화번호 노출
+                				$('.banner-counseling .inner .tell').css('display','block');
+                			}else{//업무시간이 아닐때
+                				attrSrc = worktime.link;//전화번호 링크
+                				$('.banner-counseling .inner .link').css('display','block');
+                			}
+                		}else{//desktop
+                			if(workCheckPoint){//업무시간일때
+                				$('.banner-counseling .inner .tell').css('display','block');
+                			}else{//업무시간이 아닐때
+                				$('.banner-counseling .inner .link').css('display','block');
+                			}
+                			$(".banner-counseling .inner .tell span").text(worktime.tel);
+                			attrSrc = worktime.link;//상담페이지로 이동
+                		}
+                		$("#bnrCounselingDiv").attr("href", attrSrc);
+                		$(".banner-counseling .bnrCounselingTxt").text(worktime.title);
+                	});
+                	//#######//02. 컨텐츠 설정
+                	
+                    //#######01.설정 기간 지정
+					var holidays= [
+						'20190815','20190912','20190913','20190914','20191003','20191009', '20191225',
+						'20200101','20200124','20200125','20200126','20200301','20200430','20200505','20200606','20200815','20200930','20201001','20201002','20201003','20201009','20201225'//정규 공휴일
+						//'20190705','20190706' //임시 공휴일
+					],//holidays
+					holiCheck = false,
+					workCheckPoint,//work time true, false	
+					nowDate = new Date(),//time get
+					nowYear = nowDate.getFullYear(),
+					nowMon = nowDate.getMonth()+1,
+					nowDay = nowDate.getDate(),
+					nowDays = nowDate.getDay(),
+					nowHour = nowDate.getHours();
+					if(nowDay<10){nowDay="0"+nowDay;}
+					if(nowMon<10){nowMon="0"+nowMon;}
+					var todays = nowYear +''+ nowMon +''+ nowDay;//20190705 string
+				    for(i=0; i<holidays.length; i++){//holidays check
+				        if(todays == holidays[i]){//today is holiday!!
+				        	holiCheck = true;
+				        }
+				    }
+					if(!holiCheck){//not holiday
+						workdayCheck();
+					}
+				    function workdayCheck(){
+				    	if(nowDays==6||nowDays==0){//weekend(sat||sun)
+				    		workCheckPoint = false;
+				    	}else{//not weekend
+				    		if(nowHour >= 9 && nowHour < 18){//work time(day)
+				    			workCheckPoint = true;
+				    		}else{//not work time(night)
+				    			workCheckPoint = false;
+				    		}
+				    	}	    	
+				    }
+				  //#######//01.설정 기간 지정  
+                      
+                    </script>					
+	                <!--// code -->
+	            </div>
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-javascript">
+//#######01.설정 기간 지정
+var holidays= [
+	'20190815','20190912','20190913','20190914','20191003','20191009', '20191225',
+	'20200101','20200124','20200125','20200126','20200301','20200430','20200505','20200606','20200815','20200930','20201001','20201002','20201003','20201009','20201225'//정규 공휴일
+	//'20190705','20190706' //임시 공휴일
+],//holidays
+holiCheck = false,
+workCheckPoint,//work time true, false	
+nowDate = new Date(),//time get
+nowYear = nowDate.getFullYear(),
+nowMon = nowDate.getMonth()+1,
+nowDay = nowDate.getDate(),
+nowDays = nowDate.getDay(),
+nowHour = nowDate.getHours();
+if(nowDay<10){nowDay="0"+nowDay;}
+if(nowMon<10){nowMon="0"+nowMon;}
+var todays = nowYear +''+ nowMon +''+ nowDay;//20190705 string
+  for(i=0; i<holidays.length; i++){//holidays check
+      if(todays == holidays[i]){//today is holiday!!
+      	holiCheck = true;
+      }
+  }
+if(!holiCheck){//not holiday
+	workdayCheck();
+}
+  function workdayCheck(){
+  	if(nowDays==6||nowDays==0){//weekend(sat||sun)
+  		workCheckPoint = false;
+  	}else{//not weekend
+  		if(nowHour >= 9 && nowHour < 18){//work time(day)
+  			workCheckPoint = true;
+  		}else{//not work time(night)
+  			workCheckPoint = false;
+  		}
+  	}	    	
+  }
+//#######//01.설정 기간 지정  
+   
+//#######02. 컨텐츠 설정
+var worktime = {
+		title:"서비스",
+		link : "javascript:alert('상담페이지로 이동합니다.');", //상담페이지 링크로 이동
+		tel : "1688-3001"//전화번호
+},attrSrc = '';//링크 속성
+
+window.addEventListener("load",function(){
+	if (isMobile) {//mobile
+		if(workCheckPoint){//업무시간일때
+			attrSrc = "tel:"+worktime.tel;//전화번호 노출
+			$('.banner-counseling .inner .tell').css('display','block');
+		}else{//업무시간이 아닐때
+			attrSrc = worktime.link;//전화번호 링크
+			$('.banner-counseling .inner .link').css('display','block');
+		}
+	}else{//desktop
+		if(workCheckPoint){//업무시간일때
+			$('.banner-counseling .inner .tell').css('display','block');
+		}else{//업무시간이 아닐때
+			$('.banner-counseling .inner .link').css('display','block');
+		}
+		$(".banner-counseling .inner .tell span").text(worktime.tel);
+		attrSrc = worktime.link;//상담페이지로 이동
+	}
+	$("#bnrCounselingDiv").attr("href", attrSrc);
+	$(".banner-counseling .bnrCounselingTxt").text(worktime.title);
+});
+//#######//02. 컨텐츠 설정
+
+</code>
+</pre>
+<!--// codebox -->      
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-markup">
+<a href="javascript:void(0)" class="banner-counseling" id="bnrCounselingDiv">
+	<div class="inner">
+		<div class="tell">
+			<p><strong><em class="bnrCounselingTxt"></em>에 대해 궁금하신 점</strong>이<br class="mbr"> 있으시면 지금 전화주세요</p>
+			<span>전화걸기</span>
+		</div>
+		<div class="link">
+			<p><strong><em class="bnrCounselingTxt"></em>에 대해 궁금하신 점</strong>이<br class="mbr"> 있으시면 무료상담을 신청해보세요</p>
+			<span>무료상담신청</span>
+		</div>				
+	</div>
+</a>      
+</code>
+</pre>
+<!--// codebox -->
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-css">
+.banner-counseling{display:block}
+.banner-counseling .inner{color:#575a63;}
+.banner-counseling.mar-b{margin-top:-20px;padding-bottom:13px;margin-bottom:0}
+.banner-counseling {background:#e8f3fa;}
+.banner-counseling .inner{width:820px;margin:0 auto;position:relative;height:120px;box-sizing:border-box;padding:30px 0 0 30px;}
+.banner-counseling .inner .tell,
+.banner-counseling .inner .link{display:none;}			
+.banner-counseling .inner p{font-size:21px;letter-spacing: -0.09em;padding-bottom:8px}
+.banner-counseling .inner p strong{color:#0b0d0f}
+.banner-counseling .inner span{border:2px solid #2479f3;border-radius:30px;color:#166ae2;font-weight:bold;letter-spacing: -0.09em;padding:0 12px 4px 12px;font-size:14px}	
+.banner-counseling .inner .tell span{display:block; position:absolute; border:none; top:50%; right:0; margin-top:-30px; font-size:40px; padding:0; letter-spacing:-0.05em; border-radius:0;}
+.mobile .banner-counseling .inner{width:340px;height:112px;padding:23px 0 0 30px;}
+.mobile .banner-counseling .inner p{font-size:14px;}
+.mobile .banner-counseling .inner .tell p{padding-bottom:2px;}
+.mobile .banner-counseling .inner .tell span{position:relative; margin-top:3px; font-size:17px; padding:0;}
+.mobile .banner-counseling .inner .tell span:before{background-size:auto 205px; width:22px;height:21px; margin:3px 3px 0 0; background-position:right 0;}
+@media screen and (max-width:320px) {
+    .mobile .banner-counseling .inner{width:320px;padding:15px 0 0 130px}
+}
+</code>
+</pre>
+<!--// codebox -->             
+	        </div>
+		</section>
+		<!--#####################// 콜센터 노출배너 #####################-->
+		    
+    </div><!--// contents -->
+    
+	<script src="js/jquery-ui.min.js"></script><!-- jquery ui-->
+	<script src="js/jquery.ui.touch-punch.js"></script><!-- jquery ui using mobile -->
+    <script src="js/frontUxer.js"></script><!-- plugin -->
+    
+</body>
+</html>

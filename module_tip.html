@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>frontUxer</title>
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/frontUxer.css">
+<script src="js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript">        
+	var menuArry = ['1','1'];//1depth, 2depth
+</script>
+</head>
+<body>
+<script src="js/guide.js"></script><!-- site guide -->
+	
+	<div class="start_dim"><span></span></div>
+	
+	<h1 class="hide">module</h1>
+
+	<div class="contents">
+		<!--##################### 툴팁 #####################-->
+		<section class="aws_box">
+	        <h2 class="aws_tl"> 툴팁 </h2>
+			<ul class="dcs">
+				<li>반응형  레이어 툴팁</li>
+			</ul> 		        
+	        
+	        <div class="code_area">
+	        
+	            <div class="play_box">
+	            	<!-- code -->
+					
+					<div class="option_txt">
+						<p><strong>버튼:</strong> <span class="incodebox"><code class="language-javascript">class="tooltip_q" title="툴팁 타이틀" data-target-tooltip="레이어 타겟"</code></span></p>
+						<p><strong>레이어:</strong> <span class="incodebox"><code class="language-javascript"> class="셀렉터" data-tooltip="레이어 타겟"</code></span></p>
+						<p><strong>실행:</strong> <span class="incodebox"><code class="language-javascript"> $('셀렉터').uxTooltip();</code></span></p>			
+					</div>
+					
+					<!-- run_sample -->
+					<div class="run_sample">
+	        			<dl class="dcs">
+	               			<dt><strong>패치 노트:</strong></dt>
+	               			<dd>20191012: PC일때 버튼위치 및 윈도우 사이즈에 맞게 자연스러운 팝업 width 사이즈 패치</dd>
+							<dd>20201105: 툴팁 오픈시 컨텐츠 영역과 팝업영역에 대한 aria-hidden 상태처리 <br>
+								ariaTarget : '.contents, header.ui' //디폴트 셀렉터
+							</dd>	               			
+							<dd>20201105: ios일때 포커싱을 팝업내 첫번째 버튼으로 분기처리(모바일웹 접근성)</dd>
+	               		</dl>		
+	               		<!-- 			
+	        			<dl class="dcs">
+	               			<dt><strong>개선 예정:</strong></dt>
+	               		</dl>-->
+	               		
+						<script type="text/javascript">
+						//툴팁 주소 파라미터 설정
+						var urlIndex,
+							paramSlice = "?";
+						if(window.location.href.indexOf("nav") > -1){
+							urlIndex = "module_tip.html?nav";
+							paramSlice = "&"
+						}else{
+							urlIndex = "module_tip.html";
+							paramSlice = "?"
+						}
+						
+						var tipSet;//툴팁셋팅
+						$(window).load(function(){
+						    $('#default').click(function(){
+						    	(window.location.href.indexOf("default") > -1)?"":window.location.href=urlIndex+paramSlice+"default";
+						    });
+							if(window.location.href.indexOf("default") > -1){ //기본일때
+								tipSet = {}//툴팁셋팅
+							}
+							
+						    $('#arrow').click(function(){
+						    	(window.location.href.indexOf("arrow") > -1)?"":window.location.href=urlIndex+paramSlice+"arrow";
+						    });
+							if(window.location.href.indexOf("arrow") > -1){ //기본일때
+								tipSet = {arrow : false}//툴팁셋팅
+							}	
+							
+						    $('#speed').click(function(){
+						    	(window.location.href.indexOf("speed") > -1)?"":window.location.href=urlIndex+paramSlice+"speed";
+						    });
+							if(window.location.href.indexOf("speed") > -1){ //기본일때
+								tipSet = {speed : 100}//툴팁셋팅
+							}
+							
+						    $('#maxWidth').click(function(){
+						    	(window.location.href.indexOf("maxWidth") > -1)?"":window.location.href=urlIndex+paramSlice+"maxWidth";
+						    });
+							if(window.location.href.indexOf("maxWidth") > -1){ //기본일때
+								tipSet = {maxWidth : 700}//툴팁셋팅
+							}
+						});
+						//툴팁 주소 파라미터 설정.end
+						</script>
+						
+	                    <!-- sample_box -->	                    
+	                    <article class="sample_box">
+		                    <style>
+		                    #add{float:right; display:block; margin-bottom:5px;}
+		                    .bg_psd{clear:both;}
+		                    #addpop{padding:5px 0px;}
+		                    #addpop button{margin:5px 7px; display:inline-block;}
+		                    </style>	                    
+		                    <strong>Tooltip</strong>
+		                    <button type="button" class="btn_sub_p" id="add">툴팁 생성</button>
+		                    <div class="bg_psd">
+			                    <div id="addpop"></div>						
+							</div>		                                        
+	                    </article>
+	                    <!--// sample_box -->
+	                    
+	                    <article class="mgt_l">
+		               		<P>1. default: <span class="normal"><code class="language-javascript">$('.클래스명').uxTooltip();</code></span></P>		               		
+		               		<button data-target="modal_deafault" id="default">기본 툴팁</button> arrow: true, speed : 0, maxWidth : 500
+	                    </article>
+	                    
+	                    <article class="bd_top">
+		               		<P>2. arrow: <span class="normal"><code class="language-javascript">$('.클래스명').uxTooltip({arrow: false});</code></span></P>		               		
+		               		<button data-target="modal_deafault" id="arrow">arrow: false</button>
+	                    </article>
+	                    
+	                    <article class="bd_top">
+	                    	<P>3. speed: <span class="normal"><code class="language-javascript">$('.클래스명').uxTooltip({speed: 100});</code></span></P>
+	                    	<button data-target="modal_deafault" id="speed">speed: 100</button>
+	                    </article>
+	                    
+	                    <article class="bd_top">
+	                    	<P>4. maxWidth: <span class="normal"><code class="language-javascript">$('.클래스명').uxTooltip({maxWidth: 700});</code></span></P>
+	                    	<button data-target="modal_deafault" id="maxWidth">maxWidth: 700</button>
+	                    </article>   	                    
+
+	               		
+					</div>
+					<!--// run_sample -->
+		
+	                <!--// code -->
+	            </div>
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-css">
+.ui_tool_tip { display:none; position:absolute; z-index:200; margin:0; padding:10px 15px 15px; box-sizing:border-box; width:100%; font-size:12px; font-weight:200; line-height:1.3; border:1px solid #000; background:#fff; }
+.ui_tool_tip > h1{padding:0 0 10px 0; font-weight:bold;}
+.ui_tooltip_arrow{display:block; position:absolute;  width:12px; height:12px; background:#fff; border:1px solid #000; border-bottom:none; border-right:none; transform: rotate(45deg); margin-top:6px;  z-index:201;}
+.desktop .ui_tool_tip{width:auto; line-height:1.6; min-width:300px;}
+</code>
+</pre>
+<!--// codebox -->  
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-markup">
+<button class="tooltip_q" title="툴팁" data-target-tooltip="tooltip_pop">?</button>				
+<section class="ui_tool_tip" data-tooltip="tooltip_pop">
+	<h1>툴팁타이틀 <button type="button" class="btn_close" title="간략설명 닫기" style="float:right;">X</button></h1>
+	<p>툴팁내용</p>
+</section>
+</code>
+</pre>
+<!--// codebox -->     
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-javascript">            
+$.fn.extend({//#################### 4.uxTooltip ####################
+	uxTooltip : function(opt) {
+	        var defaults = {
+	                arrow: true, 
+	                speed : 0,
+	                maxWidth : 500,
+	                ariaTarget : '.contents, header.ui'
+	            },
+	            opt = $.extend(defaults, opt);
+	
+	        return this.each(function(){
+	            var $this = $(this),
+	            	$body = $('body'),
+	                $close = $this.find('.btn_close, .ui_close'),
+	                thisId = $this.attr('id'),
+	                $lay = $('#' + thisId),
+	                $btn,
+	                pst, psl,
+	                maxWidth = opt.maxWidth,
+	                arrow = opt.arrow,
+	                speed = opt.speed,
+	                ariaTarget	= opt.ariaTarget, //20201105 aria target
+	                tip_arrow = 'ui_tooltip_arrow',
+	                targetId;
+	
+	            var app = {
+	                i : function() {
+	                	
+	                    if (!thisId) {
+	                        thisId = $this.data('tooltip');
+	                        $lay = $('.ui_tool_tip[data-tooltip="' + thisId + '"]');
+	                        $close = $this.find('.btn_close');
+	                    }
+	                    
+	                    var lay_w = $this.outerWidth();
+	                    
+	                    app.e();
+	
+	                },
+	                s : function(targetId) {//layer.open
+	                    var $target;
+	                                    	
+	                      $target = $('.ui_tool_tip[data-tooltip="' + targetId + '"]');
+	                      $('[data-target-tooltip]').data('toggle-sta', false).removeClass('on');
+	                      //$('[data-target-tooltip="' + targetId + '"]').data('toggle-sta', true).addClass('on');
+	                      $target.css('max-width',maxWidth);
+	                    
+	                    	if(arrow){//화살표 옵션일때
+	                    		if($('.'+tip_arrow).length<=0){
+	                    			$('<span class="'+tip_arrow+'"></span>').appendTo($('body'));	
+	                    		}
+	                    		$('.'+tip_arrow).css({
+	 	                            	'left': $btn.offset().left + Math.floor($btn.outerWidth()/2) - Math.floor($('.'+tip_arrow).outerWidth()/2),
+	 	                             	'top' : $btn.offset().top + $btn.outerHeight() -4,
+	 	                             	'display' : 'block'
+	 	                        });
+	                    	}    
+	                    	
+	                      var topOffset;
+	                      if(arrow){
+	                      	topOffset = pst + $btn.outerHeight() + $('.'+tip_arrow).outerHeight() - 5;
+	                      }else{
+	                      	topOffset = pst + $btn.outerHeight();
+	                      }
+	                      $target.css({ display : 'block', top : pst}).stop().animate({
+	                      	top : topOffset 
+	                      },speed,function(){
+	                    		//$('.'+tip_arrow).addClass('on');                            	
+	                      });          
+	                    	
+	                    	if (!!$('html.desktop').length) {//데스크탑일때만 툴팁 width 처리
+	                        	var tw = $target.outerWidth();                                	  
+	                        	if(psl + tw > $(window).width()){//툴팁레이어의 left 위치 처리(툴팁레이어 width가 버튼보다 넘치는 경우)                                		
+	                        		var targetLeft =  $(window).width() - tw;
+	                        		$target.css('left',targetLeft);//$btn.parent().css("background","red");
+	                        		//console.log($target.find('h1').text().trim()+" : " + tw + ", "+"psl:" +psl+ ", "+"$btn.parent().width(): " + $btn.parent().width()+", "+"$target.left: "+ targetLeft+", "+"$(window).width(): " + $(window).width() );
+	                        	}else{
+	                        		$target.css('left', psl);//$btn.parent().css("background","green");
+	                        	}
+	                       }
+	
+    					$(ariaTarget).attr("aria-hidden",true); //arai 접근성 추가 20201105
+    					$target.attr("aria-hidden",false); //arai 접근성 추가				
+	
+	                    if ($close.length) {
+	    					if($('html').hasClass('ios')){ //ios접근성 추가 20201105
+	    						$target.find('a, button').eq(0).focus();
+	    					}else{
+	    						$target.attr('tabindex',0).focus();
+	    					} //ios접근성 추가.end
+	    					
+	                    	app.imprison($target);
+	                    };
+	                },
+	                h : function(targetId){//layer.close
+	                    var $target;
+	                    	
+	                        $target = $('.ui_tool_tip[data-tooltip="' + targetId + '"]');
+	                        $target.hide();	                            
+	                        $('.'+tip_arrow).hide();//팁 화살표 숨김
+	                       // pst = $btn.offset().top;
+	                       // psl = $btn.offset().left;
+	                        $btn.focus();
+	                        
+	    					$(ariaTarget).attr("aria-hidden",false); //arai 접근성 추가 20201105
+	    					$target.attr("aria-hidden",true); //arai 접근성 추가	                        
+	                        
+	                },
+	                imprison : function($target){
+	                    var $targetFocus = $target.find('a, button, input, [role="button"], label');
+	                    if ($targetFocus.length > 0) {
+	
+	                    	$targetFocus.eq(0).addClass('fst');
+	                      $targetFocus.eq(-1).addClass('end');
+	
+	
+	                      $target.off('keydown.target').on('keydown.target',function(e){
+	                          if(e.shiftKey && e.keyCode == 9) {
+	                              e.preventDefault();
+	                              $target.find('.end').focus();
+	                          }
+	                      });
+	                      $target.find('.fst').off('keydown.layertoggle').on('keydown.layertoggle',function(e){
+	                      	$target.off('keydown.target');
+	                      	if(e.shiftKey && e.keyCode == 9) {
+	                              e.preventDefault();
+	                              $target.find('.end').focus();
+	                          }
+	                      });
+	                      $target.find('.end').off('keydown.layertoggle').on('keydown.layertoggle',function(e){
+	                      	$target.off('keydown.target');
+	                          if(!e.shiftKey && e.keyCode == 9) {
+	                              e.preventDefault();
+	                              $target.find('.fst').focus();
+	                          }
+	                      });
+	                    }
+	                },
+	                e : function(){
+	                    $('button[data-target-layer="' + thisId + '"], button[data-target-tooltip="' + thisId + '"]')
+	                    	.off('click.layertoggle')
+	                    	.on('click.layertoggle', function(e){
+	                    		e.preventDefault();
+	                    		$btn = $(this);
+	                    		targetId = $btn.data('target-tooltip');
+	                    		pst = $btn.offset().top;
+	                    		psl = $btn.offset().left;
+	                              
+	                          if (!$btn.data('toggle-sta')){
+	                              $('[data-tooltip]').hide();
+	                              $('[data-target-tooltip]').data('toggle-sta', false).removeClass('on');
+	                              app.s(targetId);
+	                              $body.data('tgon', true);
+	                              $btn.data('toggle-sta', true).addClass('on');
+	                          } else {
+	                              app.h(targetId);
+	                              $btn.data('toggle-sta', false).removeClass('on');
+	                              $body.removeData('tgon');
+	                              
+	                              $('.'+tip_arrow).removeClass('on');
+	                          }
+	
+	                          $close.on('click.layertoggle', function(e){
+	                              e.preventDefault();
+	                              setTimeout(function(){
+	                                  app.h(targetId);
+	                                  $btn.data('toggle-sta', false).removeClass('on');
+	                                  
+	                                  $('.'+tip_arrow).removeClass('on');
+	                              },100);
+	                          });
+	
+	                          // 바닥 클릭 시 닫기
+	                          $('.ui_toggle_layer, button[data-target-layer], .ui_tool_tip, button[data-target-tooltip]')
+	                          	.off('mouseover.layerclose')
+	                          	.on('mouseover.layerclose', function(){
+	                          		$body.data('tgon', true);
+	                          	})
+	                          	.off('mouseleave.layerclose')
+	                          	.on('mouseleave.layerclose', function(){
+	                            	$body.data('tgon', false);
+	                            	$(document).off('click.layerclose').on('click.layerclose', function(){
+	                        			if ($body.data('tgon') === false){
+	                        				//$('.ui_toggle_layer').hide();
+	                                        $('[data-target-layer]').data('toggle-sta', false).removeClass('on');
+	                                        $('.ui_tool_tip').hide();
+	                                        $('[data-target-tooltip]').data('toggle-sta', false).removeClass('on');			                                       
+				                            $('.'+tip_arrow).hide(); //팁 화살표 숨김						                            
+	                        			}
+	                            	});
+	                          	});
+	                    	});
+	                }
+	            }
+	            app.i();
+	        });
+	        console.log("툴팁: uxTooltip();");        
+	    }	
+			
+});//####################// 4.uxTooltip ####################
+</code>
+</pre>
+<!--// codebox -->      
+	        
+	        </div>
+		</section>
+		<!--#####################// 툴팁 #####################-->
+		
+</div>
+
+	<script src="js/jquery-ui.min.js"></script><!-- jquery ui-->
+	<script src="js/jquery.ui.touch-punch.js"></script><!-- jquery ui using mobile -->
+    <script src="js/frontUxer.js"></script><!-- plugin -->
+    
+	<script type="text/javascript">
+	
+      //$(function() {			
+		$(window).load(function(){			
+			var ttNum = 0;//추가 툴팁 넘버
+			//$('#add').one('click',function(){//한번만 클릭
+			$('#add').on('click',function(){
+				ttNum ++;				
+				addToolTip(ttNum);
+				$('.ui_tool_tip').uxTooltip(tipSet);
+			});
+			var tooltipTxt2 = "툴팁 컨텐츠 ",
+				tooltipTxt ='';
+			function addToolTip(index){
+				tooltipTxt = tooltipTxt + tooltipTxt2;
+				$('#addpop').append('<button class="tooltip_q" title="선지급금 안내" data-target-tooltip="add_tooltip_'+ttNum+'">Tip '+ttNum+'</button>');				
+				$('body').append('<section class="ui_tool_tip" data-tooltip="add_tooltip_'+ttNum+'">\
+						<h1>Tip '+index+'\
+						<button type="button" class="btn_close" title="간략설명 닫기" style="float:right; margin:-5px -10px 0 0;"><i class="icn icn100 sss" style="background-position:-153px -432px;"></i></button></h1>\
+						<p id="tipTxt"'+ttNum+'">'+tooltipTxt+'</p>\
+					</section>');
+			}
+			for(var i=0; i< 47;i++){//툴팁생성
+				ttNum = i;				
+				addToolTip(i);
+			}
+			$('.ui_tool_tip').uxTooltip(tipSet);
+   		});
+	</script>
+
+</body>
+</html>

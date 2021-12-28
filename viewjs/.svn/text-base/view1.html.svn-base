@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>뷰js.01</title>
+<script src="vue.js"></script>
+<script src="/js/oap/libs/jquery-1.11.2.min.js"></script>
+</head>
+<body>
+
+<!--################ babylon ################## -->
+<script src="//40.1.16.31:8931/js/oap/libs/babylon.custom.js"></script>
+<canvas id="render_canvas" style="width:500px; height:300px; background:red;"></canvas>
+
+<script>
+var canvas = document.getElementById("render_canvas");
+
+var engine = new BABYLON.Engine(canvas);
+
+//장면 생성
+var scene = new BABYLON.Scene(engine);
+scene.clearColor = new BABYLON.Color3(0.8, 0.8, 0.8);
+
+//렌더링
+var renderLoop = function(){
+	scene.render();	
+};
+engine.runRenderLoop(renderLoop);
+
+//카메라
+var camera = new BABYLON.FreeCamera(
+  "freecamera1",
+  new BABYLON.Vector3(120, 80, 130),
+  scene
+);
+
+//조명
+ var light = new BABYLON.PointLight(
+   "light",
+   new BABYLON.Vector3(19, 15, -20),
+   scene
+ );
+
+var box = BABYLON.Mesh.CreateBox("box", 2, scene);
+box.rotation.x = -0.2;
+box.rotation.y = -0.4;
+
+var boxMaterial = new BABYLON.StandardMeterial("material", scene);
+boxMaterial.emissiveColor = new BABYLON.Color3(0 , 0.58, 0.86);
+box.material = boxMaterial; 
+</script>
+<!--################ babylon ################## -->
+
+
+<!--################ 샘플1 ################## -->
+<div class="box test1">
+	<h2>샘플1</h2>
+	<p id="app" v-bind:title="message" v-if="seen">
+	  {{ message }}
+	</p>
+	<button id="text1">메세지</button>
+	<button id="text2">숨기기</button>
+</div>
+
+<script>
+var app = new Vue({
+	  el: '#app',
+	  data: {
+	    message: '하단 메세지 버튼을 클릭',
+	    seen: true
+	  }
+	});
+$("#text1").click(function(){	
+	 app.message =  '안녕하세요 VueJS (update: ' + new Date() + ")";	
+});
+$("#text2").click(function(){
+	if(app.seen == false){
+		app.seen = true;
+		$("#text2").text("숨기기");
+	}else{
+		app.seen = false;
+		$("#text2").text("보이기");
+	}
+	
+});
+</script>
+<!--################// 샘플1 ################## -->
+
+<!--################ 샘플2 ################## -->
+<div class="box test2">
+	<h2>샘플2</h2>
+	<div id="app2">
+	  <p>{{ message }}</p>
+	  <input v-model="message"/>
+	</div>
+</div>
+<script>
+var app2 = new Vue({
+	el: "#app2",
+	data: {
+		message: '인풋에 내용을 입력하세요'
+	}
+});	
+</script>
+<!--################// 샘플2 ################## -->
+
+</body>
+</html>

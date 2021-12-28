@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>frontUxer</title>
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/frontUxer.css">
+<script src="js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript">         
+    var menuArry = ['3','2'];//1depth, 2depth
+</script>
+</head>
+<body>
+<script src="js/guide.js"></script><!-- site guide -->
+	
+	<div class="start_dim"><span></span></div>
+	
+	<h1 class="hide"> Etc</h1>
+
+    <div class="contents">
+            
+        <!--# 이미지 로딩 -->
+        <section class="aws_box">
+            <h1 class="aws_tl"> 아이콘 Slice</h1>
+			<ul class="dcs" style="display:block; position:relative; padding-left:100px; min-height:85px;">
+				<li>모듈에 쓰이는 테스트용 샘플 아이콘</li>
+				<li>css 백그라운드 이미지 아이콘을 slide처리하기 위해 비트맵에서 아이콘을 격자 정렬,제작 <a href="img/icn_etc.svg" target="_blank"><img src="img/icn_etc.svg" alt="" style="display:block; position:absolute; left:0px; top:0px; width:90px;"/></a></li>
+				<li>이미지 경로만 불러온 후 position 좌표 자동화 처리</li>
+			</ul>            
+            
+            <div class="code_area">
+            
+                <div class="play_box">
+                	<script>
+                	$(document).ready(function () {
+                		
+                		var frameCol = 14; //1행 아이콘수
+                		var width= 77; //아이콘 width
+                		var height= 62; //아이콘 height
+                		var totalNum = 210;//아이콘 전체수
+                		var lineNum = 0,//변수 설정
+                			colNum = 0,
+                			bgx = 0,
+                			bgy = 0;
+                		
+                		for(var i=0; i<totalNum; i++){//총 210개 아이콘 추가                			
+                			bgx = - width * colNum + 1; //1. x좌표
+                			colNum ++;
+                			                			
+                			if(i%frameCol == 0){//col 처리 후 x좌표 리셋
+                				lineNum ++;
+                				(i<frameCol)?lineNum = 0:"";//1줄일때는 라인넘버는 0; 			
+                				colNum= 1;
+                				bgx = 1; //console.log('줄넘김');//$('.icnArea').append('<br>');//줄넘김
+                			}
+                			bgy = - lineNum * height +2; //2. y좌표
+                			
+                			//console.log('i:' + i + ' , bgx: ' + bgx + ', lineNum:'+ lineNum + ' , bgy: ' + bgy);
+                			$('.icnArea').append('<span class="icn_sample"><i class="icn icn'+i+'" style="background-position:'+bgx+'px '+bgy+'px;"></i></span>');//append 아이콘                			
+                		}
+                		
+                		var classIndex = 0;
+                		$('.icnArea .icn').click(function(){                			
+                			$('.icnArea span').removeClass("on");
+                			$(this).parent('span').addClass("on");
+                			classIndex ++;
+                			var sttrStyle =  $(this).attr('style');
+                			var clonly = '&lti class="' + $(this).attr('class') +'" style="'+ sttrStyle+ '"&gt&lt/i&gt  ';
+                			
+                			 $('html, body').animate({scrollTop : $('h3.label').offset().top}, 500);
+                			$('.icn_attr').append( '<span class="icnclonne htmlsc'+classIndex+'" >'+clonly+'</span>');
+                			$('.htmlsc'+classIndex).prepend($(this).clone());
+                		});
+                		
+                		$('#reset').click(function(){
+                			$('.icn_attr').stop().slideUp("fast",function(){
+                				$('.icn_attr').html('').css('display','block');
+                			});
+                		});
+                		
+                	});               		
+                	</script>
+                	<div class="option_txt"> 
+                		<div class="icnArea"></div>
+                	</div>
+                	
+					<!-- run_sample -->
+					<div class="run_sample">
+					
+	                	<style>
+	                		.icn_sample {display:block; opacity:0.3; border:3px solid transparent; float:left; margin:0 5px 8px 5px; padding:2px; font-size:0; line-height:0;}
+	                		.icn_sample.on{opacity:1;  border:3px solid #999;}
+	                		.icnclonne{display:inline-block; font-weight:normal; vertical-align:top; padding:10px 20px 0 0; box-sizing:border-box; width:50%; font-size:13px;}
+	                		.icnclonne i{vertical-align:middle; margin-right:5px;}
+	                		#reset{float:right;}
+	                		#reset .icn{background-position:-230px -215px; background-size: auto 450px; width: 17px; height: 17px; vertical-align:middle;}
+	                	</style>					
+					
+						<!-- sample_box -->	                    
+	                    <article class="sample_box">
+		                    <div style="clear:both;  padding:10px 0;">
+		                        <strong>아이콘</strong> (34x34) <button id="reset"><i class="icn"></i> reset</button><br/> 
+		                        <span class="icn_attr" style="display:block; clear:both;"></span>
+		                    </div>         	                    
+	                    </article>
+	                    <!-- sample_box -->
+	                    
+	                </div>
+					<!-- run_sample -->			                    
+         	
+
+                   <!-- code -->
+                    <!--// code -->
+                </div>                
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-javascript">
+var frameCol = 14; //1행 아이콘수
+var width= 77; //아이콘 width
+var height= 62; //아이콘 height
+var totalNum = 210;//아이콘 전체수
+var lineNum = 0,//변수 설정
+	colNum = 0,
+	bgx = 0,
+	bgy = 0;
+
+for(var i=0; i<totalNum; i++){//총 210개 아이콘 추가                			
+	bgx = - width * colNum + 1; //1. x좌표
+	colNum ++;
+	                			
+	if(i%frameCol == 0){//col 처리 후 x좌표 리셋
+		lineNum ++;
+		(i<frameCol)?lineNum = 0:"";//1줄일때는 라인넘버는 0; 			
+		colNum= 1;
+		bgx = 1; //console.log('줄넘김');//$('.icnArea').append('<br>');//줄넘김
+	}
+	bgy = - lineNum * height +2; //2. y좌표
+	
+	//console.log('i:' + i + ' , bgx: ' + bgx + ', lineNum:'+ lineNum + ' , bgy: ' + bgy);
+	$('.icnArea').append('<span class="icn_sample"><i class="icn icn'+i+'" style="background-position:'+bgx+'px '+bgy+'px;"></i></span>');//append 아이콘                			
+}
+
+var classIndex = 0;
+$('.icnArea .icn').click(function(){                			
+	$('.icnArea span').removeClass("on");
+	$(this).parent('span').addClass("on");
+	classIndex ++;
+	var sttrStyle =  $(this).attr('style');
+	var clonly = '&lti class="' + $(this).attr('class') +'" style="'+ sttrStyle+ '"&gt&lt/i&gt  ';
+	
+	 $('html, body').animate({scrollTop : $('h3.label').offset().top}, 500);
+	$('.icn_attr').append( '<span class="icnclonne htmlsc'+classIndex+'" >'+clonly+'</span>');
+	$('.htmlsc'+classIndex).prepend($(this).clone());
+}); 
+</code>
+</pre>
+
+<pre class="codebox">
+<code class="language-css">
+.icn{display:inline-block; width:34px; height:34px; background-image:url("http://pluspng.com/img-png/icon-set-png-free-icon-sets-png-1033.png"); background-repeat:no-repeat; cursor:pointer;}
+</code>
+</pre> 
+<!--// codebox -->      
+            
+            </div>
+        </section>
+        <!--//# 이미지 로딩 -->        
+		    
+        		    
+    </div>
+	<script src="js/jquery-ui.min.js"></script><!-- jquery ui-->
+	<script src="js/jquery.ui.touch-punch.js"></script><!-- jquery ui using mobile -->
+    <script src="js/frontUxer.js"></script><!-- plugin -->
+  
+<script>
+$(document).ready(function () {
+
+	
+});	
+</script>    
+
+      
+</body>
+</html>

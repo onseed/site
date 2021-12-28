@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>frontUxer</title>
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/frontUxer.css">
+<script src="js/jquery-1.11.2.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script type="text/javascript">        
+	var menuArry = ['2','7'];//1depth, 2depth
+</script>
+</head>
+<body>
+<script src="js/guide.js"></script><!-- site guide -->
+	
+	<div class="start_dim"><span></span></div>
+	
+	<h1 class="hide">module</h1>
+	
+	<div class="contents"><!-- contents -->
+	<style>
+	
+	body .code_area *,
+	body.new_mopism .code_area * { transition: all ease 0.3s;}
+		
+	.car_info_area .car_info_box .card_box.current strong,
+	.mobile .car_info_area .car_info_box .card_box strong{color:#fff;}	
+	.desktop .car_info_area{height:320px;}
+	
+	body section.aws_box .sample_box,
+	body.new_mopism section.aws_box .sample_box{padding:15px 0;}
+	
+	.mode_btn{padding:0 40px; text-align:right;}
+	.mobile .mode_btn{padding:0 15px;}
+	
+	
+	/*슬라이더 전용*/
+	.swiper-container{margin:0 auto;position:relative;overflow:hidden;list-style:none;padding:0;z-index:1}.swiper-container-no-flexbox .swiper-slide{float:left}.swiper-wrapper{position:relative;width:100%;height:100%;z-index:1;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-transition-property:-webkit-transform;transition-property:-webkit-transform;-o-transition-property:transform;transition-property:transform;transition-property:transform,-webkit-transform;-webkit-box-sizing:content-box;box-sizing:content-box}.swiper-container-android .swiper-slide,.swiper-wrapper{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}.swiper-container-multirow>.swiper-wrapper{-webkit-flex-wrap:wrap;-ms-flex-wrap:wrap;flex-wrap:wrap}.swiper-container-free-mode>.swiper-wrapper{-webkit-transition-timing-function:ease-out;-o-transition-timing-function:ease-out;transition-timing-function:ease-out;margin:0 auto}.swiper-slide{-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0;width:100%;height:100%;position:relative;-webkit-transition-property:-webkit-transform;transition-property:-webkit-transform;-o-transition-property:transform;transition-property:transform;transition-property:transform,-webkit-transform}.swiper-slide-invisible-blank{visibility:hidden}.swiper-container-autoheight,.swiper-container-autoheight .swiper-slide{height:auto}.swiper-container-autoheight .swiper-wrapper{-webkit-box-align:start;-webkit-align-items:flex-start;-ms-flex-align:start;align-items:flex-start;-webkit-transition-property:height,-webkit-transform;transition-property:height,-webkit-transform;-o-transition-property:transform,height;transition-property:transform,height;transition-property:transform,height,-webkit-transform}.swiper-container-3d{-webkit-perspective:1200px;perspective:1200px}.swiper-container-3d .swiper-cube-shadow,.swiper-container-3d .swiper-slide,.swiper-container-3d .swiper-slide-shadow-bottom,.swiper-container-3d .swiper-slide-shadow-left,.swiper-container-3d .swiper-slide-shadow-right,.swiper-container-3d .swiper-slide-shadow-top,.swiper-container-3d .swiper-wrapper{-webkit-transform-style:preserve-3d;transform-style:preserve-3d}.swiper-container-3d .swiper-slide-shadow-bottom,.swiper-container-3d .swiper-slide-shadow-left,.swiper-container-3d .swiper-slide-shadow-right,.swiper-container-3d .swiper-slide-shadow-top{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:10}.swiper-container-3d .swiper-slide-shadow-left{background-image:-webkit-gradient(linear,right top,left top,from(rgba(0,0,0,.5)),to(rgba(0,0,0,0)));background-image:-webkit-linear-gradient(right,rgba(0,0,0,.5),rgba(0,0,0,0));background-image:-o-linear-gradient(right,rgba(0,0,0,.5),rgba(0,0,0,0));background-image:linear-gradient(to left,rgba(0,0,0,.5),rgba(0,0,0,0))}.swiper-container-3d .swiper-slide-shadow-right{background-image:-webkit-gradient(linear,left top,right top,from(rgba(0,0,0,.5)),to(rgba(0,0,0,0)));background-image:-webkit-linear-gradient(left,rgba(0,0,0,.5),rgba(0,0,0,0));background-image:-o-linear-gradient(left,rgba(0,0,0,.5),rgba(0,0,0,0));background-image:linear-gradient(to right,rgba(0,0,0,.5),rgba(0,0,0,0))}.swiper-container-3d .swiper-slide-shadow-top{background-image:-webkit-gradient(linear,left bottom,left top,from(rgba(0,0,0,.5)),to(rgba(0,0,0,0)));background-image:-webkit-linear-gradient(bottom,rgba(0,0,0,.5),rgba(0,0,0,0));background-image:-o-linear-gradient(bottom,rgba(0,0,0,.5),rgba(0,0,0,0));background-image:linear-gradient(to top,rgba(0,0,0,.5),rgba(0,0,0,0))}.swiper-container-3d .swiper-slide-shadow-bottom{background-image:-webkit-gradient(linear,left top,left bottom,from(rgba(0,0,0,.5)),to(rgba(0,0,0,0)));background-image:-webkit-linear-gradient(top,rgba(0,0,0,.5),rgba(0,0,0,0));background-image:-o-linear-gradient(top,rgba(0,0,0,.5),rgba(0,0,0,0));background-image:linear-gradient(to bottom,rgba(0,0,0,.5),rgba(0,0,0,0))}.swiper-container-wp8-horizontal,.swiper-container-wp8-horizontal>.swiper-wrapper{-ms-touch-action:pan-y;touch-action:pan-y}.swiper-container-wp8-vertical,.swiper-container-wp8-vertical>.swiper-wrapper{-ms-touch-action:pan-x;touch-action:pan-x}.swiper-button-next,.swiper-button-prev{position:absolute;top:50%;width:27px;height:44px;margin-top:-22px;z-index:10;cursor:pointer;background-size:27px 44px;background-position:center;background-repeat:no-repeat}.swiper-button-next.swiper-button-disabled,.swiper-button-prev.swiper-button-disabled{opacity:.35;cursor:auto;pointer-events:none}.swiper-button-prev,.swiper-container-rtl .swiper-button-next{background:red;left:10px;right:auto}.swiper-button-next,.swiper-container-rtl .swiper-button-prev{background:red;right:10px;left:auto}.swiper-button-prev.swiper-button-white,.swiper-container-rtl .swiper-button-next.swiper-button-white{background:green}.swiper-button-next.swiper-button-white,.swiper-container-rtl .swiper-button-prev.swiper-button-white{background:green}.swiper-button-prev.swiper-button-black,.swiper-container-rtl .swiper-button-next.swiper-button-black{background:green}.swiper-button-next.swiper-button-black,.swiper-container-rtl .swiper-button-prev.swiper-button-black{background:green}.swiper-button-lock{display:none}.swiper-pagination{position:absolute;text-align:center;-webkit-transition:.3s opacity;-o-transition:.3s opacity;transition:.3s opacity;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);z-index:10}.swiper-pagination.swiper-pagination-hidden{opacity:0}.swiper-container-horizontal>.swiper-pagination-bullets,.swiper-pagination-custom,.swiper-pagination-fraction{bottom:10px;left:0;width:100%}.swiper-pagination-bullets-dynamic{overflow:hidden;font-size:0}.swiper-pagination-bullets-dynamic .swiper-pagination-bullet{-webkit-transform:scale(.33);-ms-transform:scale(.33);transform:scale(.33);position:relative}.swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active{-webkit-transform:scale(1);-ms-transform:scale(1);transform:scale(1)}.swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active-main{-webkit-transform:scale(1);-ms-transform:scale(1);transform:scale(1)}.swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active-prev{-webkit-transform:scale(.66);-ms-transform:scale(.66);transform:scale(.66)}.swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active-prev-prev{-webkit-transform:scale(.33);-ms-transform:scale(.33);transform:scale(.33)}.swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active-next{-webkit-transform:scale(.66);-ms-transform:scale(.66);transform:scale(.66)}.swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active-next-next{-webkit-transform:scale(.33);-ms-transform:scale(.33);transform:scale(.33)}.swiper-pagination-bullet{width:8px;height:8px;display:inline-block;border-radius:100%;background:#000;opacity:.2}button.swiper-pagination-bullet{border:none;margin:0;padding:0;-webkit-box-shadow:none;box-shadow:none;-webkit-appearance:none;-moz-appearance:none;appearance:none}.swiper-pagination-clickable .swiper-pagination-bullet{cursor:pointer}.swiper-pagination-bullet-active{opacity:1;background:#007aff}.swiper-container-vertical>.swiper-pagination-bullets{right:10px;top:50%;-webkit-transform:translate3d(0,-50%,0);transform:translate3d(0,-50%,0)}.swiper-container-vertical>.swiper-pagination-bullets .swiper-pagination-bullet{margin:6px 0;display:block}.swiper-container-vertical>.swiper-pagination-bullets.swiper-pagination-bullets-dynamic{top:50%;-webkit-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%);width:8px}.swiper-container-vertical>.swiper-pagination-bullets.swiper-pagination-bullets-dynamic .swiper-pagination-bullet{display:inline-block;-webkit-transition:.2s top,.2s -webkit-transform;transition:.2s top,.2s -webkit-transform;-o-transition:.2s transform,.2s top;transition:.2s transform,.2s top;transition:.2s transform,.2s top,.2s -webkit-transform}.swiper-container-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet{margin:0 4px}.swiper-container-horizontal>.swiper-pagination-bullets.swiper-pagination-bullets-dynamic{left:50%;-webkit-transform:translateX(-50%);-ms-transform:translateX(-50%);transform:translateX(-50%);white-space:nowrap}.swiper-container-horizontal>.swiper-pagination-bullets.swiper-pagination-bullets-dynamic .swiper-pagination-bullet{-webkit-transition:.2s left,.2s -webkit-transform;transition:.2s left,.2s -webkit-transform;-o-transition:.2s transform,.2s left;transition:.2s transform,.2s left;transition:.2s transform,.2s left,.2s -webkit-transform}.swiper-container-horizontal.swiper-container-rtl>.swiper-pagination-bullets-dynamic .swiper-pagination-bullet{-webkit-transition:.2s right,.2s -webkit-transform;transition:.2s right,.2s -webkit-transform;-o-transition:.2s transform,.2s right;transition:.2s transform,.2s right;transition:.2s transform,.2s right,.2s -webkit-transform}.swiper-pagination-progressbar{background:rgba(0,0,0,.25);position:absolute}.swiper-pagination-progressbar .swiper-pagination-progressbar-fill{background:#007aff;position:absolute;left:0;top:0;width:100%;height:100%;-webkit-transform:scale(0);-ms-transform:scale(0);transform:scale(0);-webkit-transform-origin:left top;-ms-transform-origin:left top;transform-origin:left top}.swiper-container-rtl .swiper-pagination-progressbar .swiper-pagination-progressbar-fill{-webkit-transform-origin:right top;-ms-transform-origin:right top;transform-origin:right top}.swiper-container-horizontal>.swiper-pagination-progressbar,.swiper-container-vertical>.swiper-pagination-progressbar.swiper-pagination-progressbar-opposite{width:100%;height:4px;left:0;top:0}.swiper-container-horizontal>.swiper-pagination-progressbar.swiper-pagination-progressbar-opposite,.swiper-container-vertical>.swiper-pagination-progressbar{width:4px;height:100%;left:0;top:0}.swiper-pagination-white .swiper-pagination-bullet-active{background:#fff}.swiper-pagination-progressbar.swiper-pagination-white{background:rgba(255,255,255,.25)}.swiper-pagination-progressbar.swiper-pagination-white .swiper-pagination-progressbar-fill{background:#fff}.swiper-pagination-black .swiper-pagination-bullet-active{background:#000}.swiper-pagination-progressbar.swiper-pagination-black{background:rgba(0,0,0,.25)}.swiper-pagination-progressbar.swiper-pagination-black .swiper-pagination-progressbar-fill{background:#000}.swiper-pagination-lock{display:none}.swiper-scrollbar{border-radius:10px;position:relative;-ms-touch-action:none;background:rgba(0,0,0,.1)}.swiper-container-horizontal>.swiper-scrollbar{position:absolute;left:1%;bottom:3px;z-index:50;height:5px;width:98%}.swiper-container-vertical>.swiper-scrollbar{position:absolute;right:3px;top:1%;z-index:50;width:5px;height:98%}.swiper-scrollbar-drag{height:100%;width:100%;position:relative;background:rgba(0,0,0,.5);border-radius:10px;left:0;top:0}.swiper-scrollbar-cursor-drag{cursor:move}.swiper-scrollbar-lock{display:none}.swiper-zoom-container{width:100%;height:100%;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;text-align:center}.swiper-zoom-container>canvas,.swiper-zoom-container>img,.swiper-zoom-container>svg{max-width:100%;max-height:100%;-o-object-fit:contain;object-fit:contain}.swiper-slide-zoomed{cursor:move}.swiper-lazy-preloader{width:42px;height:42px;position:absolute;left:50%;top:50%;margin-left:-21px;margin-top:-21px;z-index:10;-webkit-transform-origin:50%;-ms-transform-origin:50%;transform-origin:50%;-webkit-animation:swiper-preloader-spin 1s steps(12,end) infinite;animation:swiper-preloader-spin 1s steps(12,end) infinite}.swiper-lazy-preloader:after{display:block;content:'';width:100%;height:100%;background:yellow}@-webkit-keyframes swiper-preloader-spin{100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes swiper-preloader-spin{100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}.swiper-container .swiper-notification{position:absolute;left:0;top:0;pointer-events:none;opacity:0;z-index:-1000}.swiper-container-fade.swiper-container-free-mode .swiper-slide{-webkit-transition-timing-function:ease-out;-o-transition-timing-function:ease-out;transition-timing-function:ease-out}.swiper-container-fade .swiper-slide{pointer-events:none;-webkit-transition-property:opacity;-o-transition-property:opacity;transition-property:opacity}.swiper-container-fade .swiper-slide .swiper-slide{pointer-events:none}.swiper-container-fade .swiper-slide-active,.swiper-container-fade .swiper-slide-active .swiper-slide-active{pointer-events:auto}.swiper-container-cube{overflow:visible}.swiper-container-cube .swiper-slide{pointer-events:none;-webkit-backface-visibility:hidden;backface-visibility:hidden;z-index:1;visibility:hidden;-webkit-transform-origin:0 0;-ms-transform-origin:0 0;transform-origin:0 0;width:100%;height:100%}.swiper-container-cube .swiper-slide .swiper-slide{pointer-events:none}.swiper-container-cube.swiper-container-rtl .swiper-slide{-webkit-transform-origin:100% 0;-ms-transform-origin:100% 0;transform-origin:100% 0}.swiper-container-cube .swiper-slide-active,.swiper-container-cube .swiper-slide-active .swiper-slide-active{pointer-events:auto}.swiper-container-cube .swiper-slide-active,.swiper-container-cube .swiper-slide-next,.swiper-container-cube .swiper-slide-next+.swiper-slide,.swiper-container-cube .swiper-slide-prev{pointer-events:auto;visibility:visible}.swiper-container-cube .swiper-slide-shadow-bottom,.swiper-container-cube .swiper-slide-shadow-left,.swiper-container-cube .swiper-slide-shadow-right,.swiper-container-cube .swiper-slide-shadow-top{z-index:0;-webkit-backface-visibility:hidden;backface-visibility:hidden}.swiper-container-cube .swiper-cube-shadow{position:absolute;left:0;bottom:0;width:100%;height:100%;background:#000;opacity:.6;-webkit-filter:blur(50px);filter:blur(50px);z-index:0}.swiper-container-flip{overflow:visible}.swiper-container-flip .swiper-slide{pointer-events:none;-webkit-backface-visibility:hidden;backface-visibility:hidden;z-index:1}.swiper-container-flip .swiper-slide .swiper-slide{pointer-events:none}.swiper-container-flip .swiper-slide-active,.swiper-container-flip .swiper-slide-active .swiper-slide-active{pointer-events:auto}.swiper-container-flip .swiper-slide-shadow-bottom,.swiper-container-flip .swiper-slide-shadow-left,.swiper-container-flip .swiper-slide-shadow-right,.swiper-container-flip .swiper-slide-shadow-top{z-index:0;-webkit-backface-visibility:hidden;backface-visibility:hidden}.swiper-container-coverflow .swiper-wrapper{-ms-perspective:1200px}
+	</style>
+	
+	<script src="js/swiper_min.js"></script>
+	
+    		
+        <!--##################### 이미지 뷰어 #####################-->
+		<section class="aws_box">
+			<h2 class="aws_tl">프로모션 슬라이더</h2>
+			<ul class="dcs">
+				<li>html 원소스 반응형</li>
+				<li>desktop은 비쥬얼 슬라이더, mobile은 일반 슬라이더로 스위칭</li>
+				<li>20201105: pc/mo 탭키 및 aria 접근성  추가</li>
+			</ul> 			
+			<div class="code_area">
+			
+				<!--###### SVG Image Viewer ######-->    	
+	        	<div class="play_box">	        	
+	        		<!-- code -->
+	        		<h3 class="hide"><strong>SVG Control</strong></h3>
+      		
+	        		<article class="code_box">
+						<!-- run_sample -->
+						<div class="sample_box">
+						
+						<div class="mode_btn">
+							<button  id="moMode">모바일 모드 보기</button>
+						</div>	
+						
+	<!-- scene_3: 캐시백 프로모션 -->
+	<div class="scene_3">
+	
+		<!-- 프로모션 비쥬얼 -->
+		
+			<style>			
+			.car_info_area {width:1160px; height:283px; /*486*/ padding-top:140px; margin:0 auto; /*background: rgba(0,0,0, 0.3); 테스트 배경*/}
+			.momode .car_info_area {width:280px !important;}						
+			.car_info_area  .car_info_box{position:relative; height:185px;  margin:0 auto; /*background: rgba(0,0,0, 0.5); 테스트 배경*/}
+			.car_info_area  .car_info_box .card_box{/*background:rgba(255,255,0,0.5); 테스트 배경*/}
+			.car_info_area  .car_info_box .card_box a{display:block;}
+			.car_info_area  .car_info_box .card_box a:focus dt,
+			.car_info_area  .car_info_box .card_box a:hover dt{text-decoration:none;}
+			
+			.bridge_cash .car_info_area img{width:100%; display:inline-block;  vertical-align:top;}			
+			.bridge_cash .car_info_area .super_dim{display:block; background:#fff; position:absolute; width:100%; height:100%; top:0; left:0; z-index:100; opacity:0;}
+			.desktop .car_visual {height:483px; overflow:hidden;}									
+			
+			/*mobile 전용*/		
+			.mobile.loaded .car_info_area {width:280px !important;}	
+			.mobile .car_visual { width:100%; /*max-width:828px; margin:0 auto; overflow:hidden; 모바일에서 full이 아닌 3개까지 끊고 싶을때*/ height:283px; overflow:hidden; margin-top:50px;}
+			.mobile .car_info_area {width:280px !important;  height:auto; padding-top:5px; overflow:visible; margin:0 auto;}
+			.mobile .car_info_area .car_info_box{height:auto;  margin:0 auto;}
+			.mobile .car_info_area .car_info_box .card{}
+			.mobile .car_info_area  .car_info_box .card_box a{height:243px;} /*20201030 접근성*/
+			
+			.mobile .car_info_area .car_info_box .card_box{width:100%;  height:243px; margin:0 auto; position:relative; }
+			.mobile .car_info_area .car_info_box .card_box .car_thumb{display:block; width:205px; position:absolute; top:0; left:50%; margin-left:-102px;  z-index:1; opacity:0;}
+			.mobile .car_info_area .car_info_box .card_box .car_thumb img{width:205px;}
+			
+			.mobile .car_info_area .car_info_box .card_box .bg_box{display:block; position:absolute; top:67px; left:50%; margin-left:-140px; width:281px; height:176px; z-index:0; 
+				background:url("img/nl_bg_land_car_info_mo.svg") no-repeat 0 0; background-size: 281px auto;} /*bg 박스*/			
+						
+			.mobile .car_info_area .car_info_box .card_box .car_info{display:block; position:absolute; text-align:left; color:#fff; width:290px; top:116px; left:50%; margin-left:-120px; z-index:1;}/*차량정보*/
+			.mobile .car_info_area .car_info_box .card_box .car_info em{font-size:14px; display:block;}
+			.mobile .car_info_area .car_info_box .card_box .car_info strong{font-size:18px;}	
+			.mobile .car_info_area .car_info_box .card_box .car_info strong span.maker{display:block; position:absolute; top:-16px; left:0px; font-size:14px; font-weight: normal; color:#fff;} /*테슬라용 제조사표시*/
+			.mobile .car_info_area .car_info_box .card_box .car_info span.cashback{display:block; color:#fff455; font-size:11px;  position:absolute; top: 4px; left: 50%; margin-left: 43px;} /*테슬라용 캐시백 표시*/
+			.mobile .car_info_area .car_info_box .card_box .car_info span.cashback em{display:inline-block; font-weight:bold; font-size:16px;}			
+			.mobile .car_info_area .car_info_box .card_box .car_info strong em{font-size:14px; font-weight:normal; display:inline-block; margin-left:5px;}	
+			.mobile .car_info_area .car_info_box .card_box .car_info i{display:none;}			
+			.mobile .car_info_area .car_info_box .card_box .car_info dl{font-size:12px; margin-top:4px;}
+			.mobile .car_info_area .car_info_box .card_box .car_info dt{display:inline-block; color:#fff455; }
+			.mobile .car_info_area .car_info_box .card_box .car_info dd{display:inline-block; color:#fff;}
+						
+			.mobile .car_info_area .car_info_box .card_box .price{display:block; position:absolute; width:288px; text-align:right; top:137px; right:50%;  margin-right:-120px; font-size:13px; color:#fff455; z-index:1;}/*월 ????원*/
+			.mobile .car_info_area .car_info_box .card_box .price em{display:inline-block; color:#fff; font-size:16px; margin-left:5px;}
+			.mobile .car_info_area .car_info_box .card_box .price em strong{ font-size:19px; letter-spacing:0;}
+						
+			.mobile .car_info_area .car_info_box .card_box  .btn_price{} /*견적 확인하기 버튼*/ 	
+			.mobile .car_info_area .car_info_box .card_box  .btn_price span{display:block; position:absolute; width:226px; /*452*/ height:34px;/*69*/ bottom:33px; left:50%; margin:0 0 0 -113px; border:1px solid #f05000; background:#fff; text-align:center;
+			 color:#f05000; font-size:14px; line-height:34px; border-radius:18px; font-weight:bold;  z-index:1;} /*견적 확인하기 버튼*/
+			 .mobile .car_info_area .car_info_box .card_box  .btn_price span i{display:inline-block; content:''; width:21px; height:21px; vertical-align: top; margin: 7px 0 0 8px;
+			  background:url('img/nl_icn_land_set.svg') no-repeat -21px 0; background-size:auto 21px;}			
+
+			 .mobile .car_info_area .car_info_box .card_box.swiper-slide-active  .btn_price span i{animation: backforth 1s infinite; animation-delay:1.0s;}
+				
+			@media screen and (max-width: 320px){/*320 대응*/
+				.mobile .car_info_area {width:320px;}
+				.mobile .car_info_area .car_info_box .card_box{max-width:320px;}
+			}
+			
+			.mobile .car_info_area .swiper-pagination{bottom:unset; top:243px; left:0; text-align:center; width:100%; z-index:10;}
+			.mobile .car_info_area .swiper-pagination .swiper-pagination-bullet {width: 6px; height: 6px; border-radius: 3px; margin:0 4px; background:#d6d7d9; opacity:1;}
+			.mobile .car_info_area .swiper-pagination .swiper-pagination-bullet-active {width: 25px;  background:#fc552d;}
+						
+						
+			/*desktop 전용*/
+			.desktop .car_info_area  *{transition: all ease 0.6s; transform-origin: top;} 
+			.desktop .car_info_area .info_box_total,				
+			.desktop .car_info_area .info_box_total_bg{display:none;}
+			.desktop .car_info_area  .car_info_box .card_box{text-align:center; width:240px; position:absolute; top:0; left:50%; margin-left:-120px;}
+			.desktop .car_info_area .car_info_box .card_box .bg_box{display:block; width:458px; height:286px; position:absolute; z-index:-1; top:156px; left:50%; margin-left:-225px;
+				background:url("img/nl_bg_land_car_info.svg") no-repeat 0 top; background-size: 458px auto; /*그림자 뺀 사이즈는 434px 286px*/
+				opacity:0; transform:scale(0); transform-origin:50% 10%;} /*오렌지 박스 배경*/
+			
+			.desktop .car_info_area .car_info_box .card_box .card{display:block; position:relative; text-align:center;}			
+			.desktop .car_info_area .car_info_box .card_box .car_info{display:inline-block; text-align:left; color:#303030; position:relative;}
+			.desktop .car_info_area .car_info_box .card_box .car_info strong{font-size:21px; margin-left:-3px;  vertical-align:middle; transition: none;}
+			.desktop .car_info_area .car_info_box .card_box .car_info strong span.maker{display:none; color:#fff;} /*테슬라용 제조사표시*/
+			.desktop .car_info_area .car_info_box .card_box .car_info span.cashback{display:none; color:#fff455; font-size:16px;} /*테슬라용 캐시백 표시*/			
+			.desktop .car_info_area .car_info_box .card_box .car_info span.cashback em{font-weight:bold; font-size:24px;}
+			  @keyframes ratateforth{
+			  	0% {transform: rotate(0deg);}
+			  	20% {transform: rotate(-8deg);}
+			  	100% {transform: rotate(0deg);}
+			  }			  							
+			.desktop .car_info_area .car_info_box .card_box .car_info strong em{display:inline-block; font-size:18px; color:#fff; font-weight:normal; margin-left:10px; display:none;}
+			
+			.desktop .car_info_area .car_info_box .card_box .car_info i{display:inline-block; width:40px; height:40px; margin-left:3px;
+				background:url('img/nl_icn_land_set.svg') no-repeat 0 0; font-size:0; line-height:40px; color:transparent; vertical-align:middle; margin-top:2px;}		
+			.desktop .car_info_area .car_info_box .card_box .car_info dl{display:none; font-size:16px; margin-top:10px;}
+			.desktop .car_info_area .car_info_box .card_box .car_info dt{display:inline-block; color:#fff455; }
+			.desktop .car_info_area .car_info_box .card_box .car_info dd{display:inline-block; color:#fff;}
+			
+			.desktop .car_info_area .car_info_box .card_box .price{display:block; position:absolute; bottom:102px; right:28px; font-size:20px; color:#fff455;  opacity:0; transition-duration:0.1s; transition-delay:0s;}/*월 ????원*/
+			.desktop .car_info_area .car_info_box .card_box .price em{display:inline-block; color:#fff; font-size:27px; margin-left:5px;}
+			.desktop .car_info_area .car_info_box .card_box .price em strong{ font-size:30px;}
+			
+			.desktop .car_info_area .car_info_box .card_box .btn_price{} 	
+			.desktop .car_info_area .car_info_box .card_box .btn_price span{display:block; width:368px; height:48px; margin:29px auto 0 auto; border:1px solid #f05000; background:#fff;
+			 color:#f05000; font-size:22px; line-height:48px; border-radius:25px; font-weight:bold; opacity:0; transition-duration:0.1s; transition-delay:0s;} /*견적 확인하기 버튼*/
+			 .desktop .car_info_area .car_info_box .card_box .btn_price span i{display:inline-block; content:''; width:29px; height:29px; vertical-align: top; margin: 9px 0 0 20px;
+			  background:url('img/nl_icn_land_set.svg') no-repeat -29px 0; background-size:auto 29px;}			  
+			 .desktop .car_info_area .card_box.current a{padding-bottom:28px;}
+			  
+			 .car_info_area .car_info_box .card_box.current .btn_price span i{ animation: backforth 1s infinite; animation-delay:1.0s;}
+			  
+			  @keyframes backforth{
+			  	0% {transform: translateX(0%);}
+			  	20% {transform: translateX(20%);}
+			  	90% {transform: translateX(0%);}
+			  }			  
+						
+			.desktop .car_info_area .car_info_box .card_box.box1{left:0%; z-index:1; margin-left:0px;}
+			.desktop .car_info_area .car_info_box .card_box.box2{left:25%; z-index:2; margin-left:-60px;}
+			.desktop .car_info_area .car_info_box .card_box.box3{left:50%; z-index:3;}
+			.desktop .car_info_area .car_info_box .card_box.box4{left:75%; z-index:2; margin-left:-180px;}
+			.desktop .car_info_area .car_info_box .card_box.box5{left:100%; z-index:1; margin-left:-240px;}
+			
+			/*차량에 따라 특수하게*/
+			.desktop .car_info_area .car_info_box .card_box.box1 .car_info{padding-right:0px; /*background: rgba(255,0,0, 0.5);*/  margin-left:-20px;} /*처음 카드셀*/
+			.desktop .car_info_area .car_info_box .card_box.box5 .car_info{padding-left:0px; /*background: rgba(255,0,0, 0.5);*/ margin-right:-20px;}/*마지막 카드셀*/
+			
+			/*current일때*/
+			.desktop .car_info_area .car_info_box .card_box.current .car_thumb{display:block; padding:0 5px;}
+			.desktop .car_info_area .car_info_box .card_box.current{height:428px; }
+			.desktop .car_info_area .car_info_box .card_box.current  .bg_box{transform:scale(1); opacity:1;}/*오렌지 박스 배경*/
+			.desktop .car_info_area .car_info_box .card_box.current .car_info{display:block; color:#fff; padding:5px 0 0 30px; position:relative; }			
+			.desktop .car_info_area .car_info_box .card_box.current .car_info strong{font-size:28px;}
+			.desktop .car_info_area .car_info_box .card_box.current .car_info strong span.maker{display:block; position:absolute; top:-16px; left:30px; font-size:20px; font-weight: normal; }/*테슬라용 제조사표시*/
+			.desktop .car_info_area .car_info_box .card_box.current .car_info span.cashback{display:block;  position:absolute; top:8px; right:30px;} /*테슬라용 캐시백표시*/
+			.desktop .car_info_area .car_info_box .card_box.current .car_info strong em{display:inline-block;}
+			.desktop .car_info_area .car_info_box .card_box.current .car_info em.mark{top:-30px; left:50%; margin-left: 55px; width:106px; height:56px; background-size:106px auto;} /*테슬라용 이벤트 마크 표시*/
+			.desktop .car_info_area .car_info_box .card_box.current .car_info i {display: none;}						
+			.desktop .car_info_area .car_info_box .card_box.current .car_info dl{display:block;}
+			.desktop .car_info_area .car_info_box .card_box.current .price{opacity:1; transition-duration:0.3s;  transition-delay:0.4s; } /*월 ????원*/
+			.desktop .car_info_area .car_info_box .card_box.current .btn_price{}
+			.desktop .car_info_area .car_info_box .card_box.current .btn_price span{opacity:1; transition-duration:0.5s;  transition-delay:0.5s; } /*견적 확인하기 버튼*/
+			
+			.desktop .car_info_area .car_info_box .card_box.box1.current .car_info{margin-left:0px;} /*처음 카드셀*/
+			.desktop .car_info_area .car_info_box .card_box.box5.current .car_info{margin-right:0px;}/*마지막 카드셀*/
+						
+			</style>		
+		
+		<div class="car_visual">
+		
+			<!-- 차량 박스: -->
+			<div class="car_info_area swiper-container">			
+			
+				<!-- car_info_box -->
+				<div class="swiper-wrapper car_info_box">		
+						
+					<!-- car card1-->
+					<div class="swiper-slide card_box box1">
+						<div class="card">
+						
+							<a href="javascript:void(0);">
+								<span class="car_thumb"><img src="img/data/ul_pic_land_car01.svg"></span>
+								<span class="car_info">
+									<strong>4세대 카니발<em>디젤 2.2 9인승</em></strong><i>go</i>
+									<!-- 이벤트용 테슬라
+									<strong><span class="maker">Tesla</span>Model 3<em></em></strong><i>go</i>
+									<em class="mark">EVENT</em>
+									<span class="cashback">최대<em>1.5%</em></span> 이벤트 처리 -->
+									<dl>
+										<dt>차량금액</dt>
+										<dd>4,105만원</dd>
+									</dl>								
+								</span>
+								<span class="price">캐시백<em><strong class="price1">492,600</strong>원</em></span>
+								<div class="btn_price"><span>캐시백 신청하기<i></i></span></div>
+								<span class="bg_box"></span>
+							</a>
+														
+						</div>					
+					</div>
+					<!--// car card1-->
+					
+					<!-- car card2-->
+					<div class="swiper-slide card_box box2">
+						<div class="card">
+						
+							<a href="javascript:void(0);">
+								<span class="car_thumb"><img src="img/data/ul_pic_land_car02.svg"></span>
+								<span class="car_info" style="padding-right: 0px;">
+								<strong>더 뉴 그랜저<em>가솔린 3.3</em></strong><i>go</i>
+								<dl>
+								<dt>차량금액</dt>
+								<dd>4,349만원</dd>
+								</dl>
+								</span>
+								<span class="price">캐시백<em><strong class="price2">521,880</strong>원</em></span>
+								<div class="btn_price"><span>캐시백 신청하기<i></i></span></div>
+								<span class="bg_box"></span>
+							</a>
+														
+						</div>					
+					</div>
+					<!--// car card2-->
+					
+					<!-- car card3-->
+					<div class="swiper-slide card_box box3">
+						<div class="card">
+						
+							<a href="javascript:void(0);">
+								<span class="car_thumb"><img src="img/data/ul_pic_land_car03.svg"></span>
+								<span class="car_info">
+									<strong>신형 쏘렌토<em>디젤 2.2 2WD</em></strong><i>go</i>
+									<dl>
+										<dt>차량금액</dt>
+										<dd>3,887만원</dd>
+									</dl>								
+								</span>
+								<span class="price">캐시백<em><strong class="price3">466,440</strong>원</em></span>
+								<div class="btn_price"><span>캐시백 신청하기<i></i></span></div>
+								<span class="bg_box"></span>
+							</a>
+							
+						</div>				
+					</div>
+					<!--// car card3-->
+					
+					<!-- car card4-->
+					<div class="swiper-slide card_box box4">
+						<div class="card">
+						
+							<a href="javascript:void(0);">
+								<span class="car_thumb"><img src="img/data/ul_pic_land_car04.svg"></span>
+								<span class="car_info">
+									<strong>신형 K5<em>가솔린 2.0</em></strong><i>go</i>
+									<dl>
+										<dt>차량금액</dt>
+										<dd>3,063만원</dd>
+									</dl>
+								</span>
+								<span class="price">캐시백<em><strong class="price4">367,560</strong>원</em></span>
+								<div class="btn_price"><span>캐시백 신청하기<i></i></span></div>
+								<span class="bg_box"></span>
+							</a>
+
+						</div>	
+					</div>
+					<!--// car card4-->
+					
+					<!-- car card5-->
+					<div class="swiper-slide card_box box5">
+						<div class="card">
+						
+							<a href="javascript:void(0);">
+								<span class="car_thumb"><img src="img/data/ul_pic_land_car05.svg"></span>
+								<span class="car_info">
+									<strong>팰리세이드<em>디젤 2.2 2WD</em></strong><i>go</i>
+									<dl>
+										<dt>차량금액</dt>
+										<dd>5,332만원</dd>
+									</dl>								
+								</span>
+								<span class="price">캐시백<em><strong class="price5">639,840</strong>원</em></span>
+								<div class="btn_price"><span>캐시백 신청하기<i></i></span></div>
+								<span class="bg_box"></span>
+							</a>
+							
+						</div>
+					</div>
+					<!--// car card5-->	
+																				
+				</div>
+				<!--// car_info_box -->
+				<div class="info_box_total">
+					<span class="car_info"></span>
+					<span class="price"></span>
+					<div class="btn_price"></div>								
+				</div>						
+				<div class="swiper-pagination"></div>
+				<div class="super_dim"></div>
+			</div>
+			<!--// 차량 박스-->
+			
+		</div>
+		<!--// 프로모션 비쥬얼 -->		
+	</div>
+<script>
+var cashPriceArry =[];
+var clickNumber = 3;
+function carboxArray(index){//장면 5개를 모두 셋팅
+	$('.car_info_area .car_info_box .card_box.box1').css({"width":"240px", "margin-left":"0px",	 "top":"0px"}); //1번 이미지
+	$('.car_info_area .car_info_box .card_box.box2').css({"width":"240px", "margin-left":"-60px",	 "top":"0px"}); //2번 이미지
+	$('.car_info_area .car_info_box .card_box.box3').css({"width":"240px", "margin-left":"-120px",	 "top":"0px" }); //3번 이미지
+	$('.car_info_area .car_info_box .card_box.box4').css({"width":"240px", "margin-left":"-180px", "top":"0px" }); //4번 이미지:
+	$('.car_info_area .car_info_box .card_box.box5').css({"width":"240px", "margin-left":"-240px",	 "top":"0px" }); //5번 이미지
+	
+	$('.car_info_area .car_info_box .card_box .price strong').removeClass('counted');
+	$('.car_info_area .car_info_box .card_box').removeClass("current");
+	$('.car_info_area .car_info_box .card_box.box'+index).addClass("current");
+
+	if(index==1){
+		$('.car_info_area .car_info_box .card_box.box1').css({"width":"434px", "margin-left":"0px",	 "top":"-130px" }); //1번 이미지
+		$('.car_info_area .car_info_box .card_box.box2').css({"width":"220px", "margin-left":"148px",	 "top":"-10px"}); //2번 이미지
+		$('.car_info_area .car_info_box .card_box.box3').css({"width":"260px", "margin-left":"33px",	 "top":"-25px"}); //3번 이미지
+		$('.car_info_area .car_info_box .card_box.box4').css({"width":"220px", "margin-left":"-50px" ,	 "top":"-10px" }); //4번 이미지:
+		$('.car_info_area .car_info_box .card_box.box5').css({"width":"170px", "margin-left":"-170px",	 "top":"5px" }); //5번 이미지
+		
+		$('.desktop .car_info_area .car_info_box .card_box.box3 .car_info').css({"padding-right":"30px"});//xm3일때만 예외처리
+	}
+	if(index==2){
+		$('.car_info_area .car_info_box .card_box.box1').css({"width":"170px", "margin-left":"0px",	 "top":"5px"}); //1번 이미지
+		$('.car_info_area .car_info_box .card_box.box2').css({"width":"434px", "margin-left":"-115px",	 "top":"-130px" }); //2번 이미지					
+		$('.car_info_area .car_info_box .card_box.box3').css({"width":"260px", "margin-left":"33px",	 "top":"-25px"}); //3번 이미지
+		$('.car_info_area .car_info_box .card_box.box4').css({"width":"220px", "margin-left":"-50px" ,	 "top":"-10px" }); //4번 이미지:
+		$('.car_info_area .car_info_box .card_box.box5').css({"width":"170px", "margin-left":"-170px",	 "top":"5px" }); //5번 이미지
+		
+		$('.desktop .car_info_area .car_info_box .card_box.box3 .car_info').css({"padding-right":"30px"});//xm3일때만 예외처리
+	}					
+	if(index==3){
+		$('.car_info_area .car_info_box .card_box.box1').css({"width":"170px", "margin-left":"0px",	 "top":"5px"}); //1번 이미지
+		$('.car_info_area .car_info_box .card_box.box2').css({"width":"220px", "margin-left":"-150px",	 "top":"-10px"}); //2번 이미지
+		$('.car_info_area .car_info_box .card_box.box3').css({"width":"434px", "margin-left":"-217px",	 "top":"-130px" }); //3번 이미지
+		$('.car_info_area .car_info_box .card_box.box4').css({"width":"220px", "margin-left":"-70px" ,	 "top":"-10px" }); //4번 이미지:
+		$('.car_info_area .car_info_box .card_box.box5').css({"width":"170px", "margin-left":"-170px",	 "top":"5px" }); //5번 이미지
+		
+		$('.desktop .car_info_area .car_info_box .card_box.box3 .car_info').css({"padding-right":"0px"});//xm3일때만 예외처리
+	}
+	if(index==4){
+		$('.car_info_area .car_info_box .card_box.box1').css({"width":"170px", "margin-left":"0px",	 "top":"5px"}); //1번 이미지
+		$('.car_info_area .car_info_box .card_box.box2').css({"width":"220px", "margin-left":"-160px",	 "top":"-10px" }); //2번 이미지					
+		$('.car_info_area .car_info_box .card_box.box3').css({"width":"260px", "margin-left":"-270px",	 "top":"-25px"}); //3번 이미지
+		$('.car_info_area .car_info_box .card_box.box4').css({"width":"434px", "margin-left":"-315px" ,"top":"-130px" }); //4번 이미지:
+		$('.car_info_area .car_info_box .card_box.box5').css({"width":"170px", "margin-left":"-170px",	 "top":"5px" }); //5번 이미지
+		
+		$('.desktop .car_info_area .car_info_box .card_box.box3 .car_info').css({"padding-right":"0px"});//xm3일때만 예외처리
+	}
+	if(index==5){
+		$('.car_info_area .car_info_box .card_box.box1').css({"width":"170px", "margin-left":"0px",	 "top":"5px"}); //1번 이미지
+		$('.car_info_area .car_info_box .card_box.box2').css({"width":"220px", "margin-left":"-160px",	 "top":"-10px" }); //2번 이미지					
+		$('.car_info_area .car_info_box .card_box.box3').css({"width":"260px", "margin-left":"-275px",	 "top":"-25px"}); //3번 이미지
+		$('.car_info_area .car_info_box .card_box.box4').css({"width":"220px", "margin-left":"-365px" ,"top":"-10px" }); //4번 이미지
+		$('.car_info_area .car_info_box .card_box.box5').css({"width":"434px", "margin-left":"-434px",	 "top":"-130px" }); //5번 이미지
+		
+		$('.desktop .car_info_area .car_info_box .card_box.box3 .car_info').css({"padding-right":"30px"});//xm3일때만 예외처리
+	}
+	
+	/*금액 애니메이션*/
+    //var priceValue = $('.price'+index).text();
+	var arrayNum = index - 1;
+	var priceValue = cashPriceArry[arrayNum];
+	$('.price'+index).text(priceValue);		
+    $('.price'+index).countNum(priceValue);//금액 애니메이션 실행
+    /*//금액 애니메이션*/
+}
+
+$(window).load(function(){	
+	$('.card_box .price strong').each(function(){
+		var thisPrice = $(this).text();
+		cashPriceArry.push(thisPrice);
+	});
+	//console.log(cashPriceArry);	
+	
+	/*20201105 uxfront 파라미터 처리용.start*/
+	var paramSlice = "?";
+	if(window.location.href.indexOf("?") > -1){
+		paramSlice = "&"
+	}
+	var moModeCk = false;
+	var urlIndexAutoPop = window.location.toString()+paramSlice+ "momode";
+	
+	if(window.location.href.indexOf("momode") > -1){
+		moModeCk = true;
+		$('html').removeClass('desktop');
+		$('html').addClass('mobile');
+		$('html').addClass('momode');
+		$('#moMode').text("desktop 모드 보기");
+	}	
+	
+	var slperView =  1;
+	var slperMove =  4;
+	if(navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i) ){
+		//document.getElementsByTagName('html')[0].classList.add('mobile');//faste addClass "mobile"
+		$('#moMode').css("display","none");
+	}else{
+		//document.getElementsByTagName('html')[0].classList.add('desktop');//faste addClass "desktop"
+		slperView = 4; 
+		slperMove =  2;
+	}	
+	
+	$('#moMode').click(function(){
+		if(moModeCk==true){
+			var sliceUrl = window.location.toString();
+			sliceUrl2 = sliceUrl.replace("&momode","");			
+			window.location.href=sliceUrl2;			
+		}else{
+
+			window.location.href=urlIndexAutoPop;
+		}		
+	});	
+
+	/*20201105 uxfront 파라미터 처리용.end*/
+    
+	
+    $.fn.countNum = function(num){
+    	this.each(function() {
+    		var $this = $(this),
+    		$this_value = $this.text().replace(/[^0-9]/g,'');
+    		$this.text('0');    		
+    		setTimeout(function(){
+    			$this.stop().prop('Counter',0).animate({
+    				Counter: $this_value
+    			}, {
+    				duration: 900,
+    				easing: 'swing',
+    				step: function(now) {
+    					if( $this.hasClass('ui_chk_dot') ){
+    						$this.text(dot(Math.ceil(now)));
+    					}else{
+    						$this.text(comma(Math.ceil(now)));
+    					}
+    				}
+    			});
+    			$this.addClass('counted');
+    		},0);
+    	})
+    }   	
+    function comma(n) {//콤마 찍기
+        return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+    function dot(n) {//퍼센트 점 찍기
+    	return n.toString().replace(/\B(?=(\d{1})+(?!\d))/g, ".");
+    }
+		
+	if($('html').hasClass('mobile') || moModeCk == true){
+		var slNumber = 1;
+		
+		var mon_benefit_slider = new Swiper(".car_info_area", {//makeslider		
+			slidesPerView: slperView,
+			loopAdditionalSlides: 1, //loop시 보이는 슬라이드를 하나 더 만듬
+			pagination:{
+				el: '.swiper-pagination',
+				clickable:true
+			},
+			loop: true,
+			speed: 1000,	    			
+			//autoplay:{delay:3000},
+			on:{
+				init: function(){
+    				$('.mobile .car_info_area .car_info_box .card_box .car_thumb').css('opacity','1.0');
+    				$('.mobile .car_info_area .swiper-slide a').attr("aria-hidden",true); //20201030 웹접근성 처리
+    				
+    				/*
+    				$('.mobile .car_info_area .swiper-pagination .swiper-pagination-bullet').click(function(){
+    					var thisNum = $(this).index(); 
+    					console.log("thisNum:"+ thisNum);	    					
+    				});*/
+				},
+    			transitionStart: function(){//움직임 시작시
+    				var slIndex = $('.swiper-pagination-bullet.swiper-pagination-bullet-active').index() + 1;
+    				$('.mobile .car_info_area .swiper-slide a').attr("aria-hidden",true); //20201030 웹접근성 처리
+    				$('.mobile .car_info_area .swiper-slide-active a').attr("aria-hidden",false); //20201030 웹접근성 처리
+    			
+    				/*금액 애니메이션*/
+    				var arrayNum = slIndex - 1;
+    				var priceValue = cashPriceArry[arrayNum];
+    				$('.price'+slIndex).text(priceValue);
+    			    $('.price'+slIndex).countNum(priceValue);//금액 애니메이션 실행
+    			    /*//금액 애니메이션*/
+    			    
+    			}
+			}			
+		}); //makeslider.end
+
+		
+	}else{//desktop
+		$('.car_info_area .car_info_box .card_box').on('mouseover',function(){//마우스 오버시			
+			for(var i=1; i<6; i++){
+				if($(this).hasClass('box'+i)){					
+					if($(this).find('.price'+i).hasClass('counted')){//console.log('카운트 있음');
+					}else{//console.log('카운트 없음');
+						carboxArray(i);
+					}
+				}
+			}					
+		});//마우스 오버시.end
+	
+		$('.car_info_area .car_info_box .card_box a').on('focus',function(){//a링크 포커싱일때: 웹 접근성
+			for(var i=1; i<6; i++){
+				if($(this).closest('.card_box').hasClass('box'+i)){					
+					if($(this).find('.price'+i).hasClass('counted')){//console.log('카운트 있음');
+					}else{//console.log('카운트 없음');
+						carboxArray(i);
+					}
+				}
+			}					
+		});////a링크 포커싱일때: 웹 접근성.end
+	}
+
+	$('html').addClass('loaded');
+		
+	car_interac();
+	$('.super_dim').remove();
+    
+    function car_interac(){
+    	if($('html').hasClass('desktop')){//pc일때 장면 로드
+    		carboxArray(3);
+    	}else{
+    		mon_benefit_slider.slideTo(slperMove);//loopAdditionalSlides: 1, loop시 보이는 슬라이드가 하나 더 생성 no Loop보다 +2 //모바일일때 장면 로드 접근성때문에 미리 로드		
+    	}
+    }
+	    
+	    
+});
+</script>
+	<!--// scene_3: 캐시백 프로모션 -->  						
+
+							
+						</div>
+						<!--.. run_sample -->					
+
+					</article>
+					<!--// code -->
+				</div>
+				<!--######// SVG Image Viewer ######-->
+				
+				
+				<!--######테스터 ######--
+				<div class="tester">
+				
+				</div>
+				<script>
+					$("body").prepend("<div class='tester'></div>");
+					var requestURL = "http://40.1.16.31:8821/oap/limit/UOAPLI0201M1.jsp?thgMnftCoC=303&carModlC=3737";
+				    $.ajax({//이미지 SVG로드
+				        type: "post",
+				        url: requestURL,
+				        dataType: "html",
+				        success: function (data) {				        	
+				        	console.log("sucess");
+				        	$(".tester").html(data);
+				        },
+				        error:function (jqXHR){
+				        	console.log("url을 확인하세요");
+				        }
+				    });//이미지 SVG로드.end
+				</script>
+				!--######//테스터 ######-->
+												
+			</div>
+		</section>
+		<!--#####################// 이미지 뷰어 #####################-->		
+
+		
+	</div><!--// contents -->
+
+	<script src="js/jquery-ui.min.js"></script><!-- jquery ui-->
+	<script type="text/javascript" src="js/jquery.ui.touch-punch.js"></script><!-- jquery ui using mobile -->
+    <script src="js/frontUxer.js"></script><!-- plugin -->
+
+	<script type="text/javascript">
+	
+    </script>
+    
+</body>
+</html>

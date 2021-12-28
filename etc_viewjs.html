@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>frontUxer</title>
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/frontUxer.css">
+<script src="js/jquery-1.11.2.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script type="text/javascript">
+	var menuArry = ['3','10'];//1depth, 2depth
+</script>
+</head>
+<body>
+<script src="js/guide.js"></script><!-- site guide -->
+	
+	<div class="start_dim"><span></span></div>
+	
+	<h1 class="hide">module</h1>
+	
+	<div class="contents"><!-- contents -->
+	
+        <!--##################### Wai- Aria Navigation #####################-->
+		<section class="aws_box">
+			<h2 class="aws_tl">VueJS - Basic</h2>
+			<ul class="dcs">
+				<li>기본 문법</li>				
+			</ul> 			
+			<div class="code_area">
+	        	 <!-- 
+				<div class="option_txt">
+					<strong class="js-show-code c-code__pre">효과 버튼을 클릭하거나 슬라이더로 값을 조정하세요.</strong>
+				</div>-->
+					        	
+	        	<div class="sample_box">
+		        	
+		        	<div class="play_box">
+		        		<!-- code -->
+		        		<article class="code_box viewjs">
+							<!--######################################### run_sample ######################################################-->
+<style>
+section.aws_box .viewjs .code-toolbar{display:block; padding:0;}
+section.aws_box .viewjs .label{display:none;}
+section.aws_box .viewjs h3{font-weight:bold; margin-top:40px;}
+section.aws_box .viewjs .view_box{padding:10px 0;}
+section.aws_box .viewjs pre[class*="language-"] {padding: 5px; margin-bottom:5px;}
+
+section.aws_box .viewjs .normal code[class*="language-"]{font-size:12px; line-height:1.4; position:relative;} 
+section.aws_box .viewjs .normal code.language-markup:after {display:inline-block; content:"html"; position:absolute;  top:0; left:0;  background:#b7b7b7; padding:2px; border-radius:2px; color:#fff; font-size:10px;}
+section.aws_box .viewjs .normal code.language-javascript:after {display:inline-block; content:"script"; position:absolute;  top:0; left:0;  background:#b7b7b7; padding:2px; border-radius:2px; color:#fff; font-size:10px;}
+
+section.aws_box .viewjs .view_box button{margin-top:0;}
+
+/* common00.input */
+.form.check input { -webkit-appearance:none;-moz-appearance:none; font-family:inherit; margin:0}
+.form.check input { vertical-align:middle; }
+.form.check input[type=text]:-ms-clear,
+.form.check input[type=tel]:-ms-clear,
+.form.check input[type=number]:-ms-clear,
+.form.check input[type=email]:-ms-clear{display:none}
+.form.check input[type=text]::-ms-clear,
+.form.check input[type=tel]::-ms-clear,
+.form.check input[type=number]::-ms-clear,
+.form.check input[type=email]::-ms-clear{display:none}
+.form.check input[type=password]::-ms-reveal {display:none}
+.form.check input.not {border:1px solid #ff6600; }
+
+.form.check .inp_type,
+.form.check input[type="tel"],
+.form.check input[type="url"],
+.form.check input[type="text"],
+.form.check input[type="email"],
+.form.check input[type="number"],
+.form.check input[type="search"],
+.form.check input[type="password"]{width:100%; height:40px; margin:0; padding:0 10px 0 10px; line-height:21px; border:1px solid #b8b8b8; border-radius:2px; background-color:#f7f7f7; 
+	color:#303030; box-shadow:1px 2px 2px rgba(0,0,0,.06) inset; letter-spacing:-0.5px; vertical-align:middle; font-size:14px; box-sizing:border-box;}
+.form.check input[type="tel"]:focus,
+.form.check input[type="url"]:focus,
+.form.check input[type="text"]:focus,
+.form.check input[type="email"]:focus,
+.form.check input[type="number"]:focus,
+.form.check input[type="search"]:focus,
+.form.check input[type="password"]:focus {border:1px solid #282828; background-color:#fff; text-decoration:none}
+</style>							
+<!-- view js 선언 -->							
+<script src="viewjs/vue.js"></script>							
+							
+<h3>1. js 선언 및 dom에서 선언적 렌더링</h3>
+<div class="view_box">
+	<div class="app-1">{{message}}</div>
+</div>
+<script>
+var firstMessage = "dom 선언적 렌더링";
+var app = new Vue({
+	el: '.app-1',
+	data: {
+		message: firstMessage				
+	}
+});		
+</script>
+<!-- sample code-->
+<span class="normal"><pre class="codebox"><code class="language-markup">
+	<div class="app-1">{{message}}</div>
+</code></pre></span>
+<span class="normal"><pre class="codebox"><code class="language-javascript">
+	var firstMessage = "dom 선언적 렌더링";
+	var app = new Vue({
+		el: '.app-1',
+		data: {
+			message: firstMessage				
+		}
+	});	
+</code></pre></span>
+<!--// sample code-->
+						
+<h3>2. 엘리먼트 바인딩</h3>
+<div class="view_box">
+	<div class="app-2">
+		<span v-bind:title="message">마우스 오버시 {{message}}</span>
+		<button class="btn_app2">update</button>
+	</div>
+</div>
+<script>
+var app2 = new Vue({
+	el: '.app-2',
+	data: {
+		message: "시간: " + new Date() +" update"				
+	}
+});
+$(window).load(function(){
+	$(".btn_app2").click(function(){
+		twoMessage = "시간: " + new Date() +" update";
+		app2.message = twoMessage;
+	});
+});
+</script>
+<!-- sample code-->
+<span class="normal"><pre class="codebox"><code class="language-markup">
+	<div class="app-2">
+		<span v-bind:title="message">마우스 오버시 {{message}}</span>
+		<button class="btn_app2">update</button>
+	</div>	
+</code></pre></span>
+<span class="normal"><pre class="codebox"><code class="language-javascript">
+	var twoMessage = "시간: " + new Date() +" update";
+	var app2 = new Vue({
+		el: '.app-2',
+		data: {
+			message: twoMessage				
+		}
+	});
+	$(".btn_app2").click(function(){
+		twoMessage = "시간: " + new Date() +" update";
+		app2.message = twoMessage;
+	});		
+</code></pre></span>
+<!--// sample code-->						
+
+<h3>3. 조건문: v-if</h3>
+<div class="view_box">
+	<div class="app-3">
+		<button class="btn_app3">hide</button>
+		<span v-if="seen">seen</span>
+	</div>
+</div>
+<script>
+var app3 = new Vue({
+	el:'.app-3',
+	data:{
+		seen:true
+	}
+});
+$(window).load(function(){
+	$(".btn_app3").click(function(){
+		if(app3.seen == true){
+			app3.seen = false;
+			$(this).text("show");
+		}else{
+			app3.seen = true;
+			$(this).text("hide");
+		}
+		//console.log('app3.seen: '+app3.seen);
+	});
+});
+</script>
+<!-- sample code-->
+<span class="normal"><pre class="codebox"><code class="language-markup">
+	<div class="app-3">
+		<button class="btn_app3">hide</button>
+		<span v-if="seen">seen</span>
+	</div>
+</code></pre></span>
+<span class="normal"><pre class="codebox"><code class="language-javascript">
+var app3 = new Vue({
+	el:'.app-3',
+	data:{
+		seen:true
+	}
+});
+$(window).load(function(){
+	$(".btn_app3").click(function(){
+		if(app3.seen == true){
+			app3.seen = false;
+			$(this).text("show");
+		}else{
+			app3.seen = true;
+			$(this).text("hide");
+		}
+	});
+});	
+</code></pre></span>
+<!--// sample code-->			
+							
+<h3>4. 반복문: v-for</h3>
+<style>
+.app-4 li{display:inline-block; padding:0 10px 0 0;}
+</style>
+<div class="view_box">
+	<div class="app-4">
+		<button class="btn_app4">add todo list</button>
+		<ol>
+			<li v-for="todo in todos">
+				{{ todo.text }}
+			</li>
+		</ol>
+	</div>
+</div>
+<script>
+var txtArry4 = ["1. 텍스트목록","2. viewJs todo","3. for구문"];
+var app4 = new Vue({
+	el:'.app-4',
+	data:{
+		todos: [
+			{text: txtArry4[0]},
+			{text: txtArry4[1]},
+			{text: txtArry4[2]}
+		] 
+	}
+})
+$(window).load(function(){
+	var app4Num = $(".app-4 li").length;
+	$(".btn_app4").click(function(){
+		app4Num ++;
+		app4.todos.push({text: app4Num+ ". New item"+app4Num});
+	});
+});
+</script>
+<!-- sample code-->
+<span class="normal"><pre class="codebox"><code class="language-markup">
+	<div class="app-4">
+		<button class="btn_app4">add todo list</button>
+		<ol>
+			<li v-for="todo in todos">
+				{{ todo.text }}
+			</li>
+		</ol>
+	</div>
+</code></pre></span>
+<span class="normal"><pre class="codebox"><code class="language-javascript">
+var txtArry4 = ["1. 텍스트목록","2. viewJs todo","3. for구문"];
+var app4 = new Vue({
+	el:'.app-4',
+	data:{
+		todos: [
+			{text: txtArry4[0]},
+			{text: txtArry4[1]},
+			{text: txtArry4[2]}
+		] 
+	}
+})
+$(window).load(function(){
+	var app4Num = $(".app-4 li").length;
+	$(".btn_app4").click(function(){
+		app4Num ++;
+		app4.todos.push({text: app4Num+ ". New item"+app4Num});
+	});
+});	
+</code></pre></span>
+<!--// sample code-->										
+							
+							
+<h3>5. 사용자 입력 핸들링: v-on</h3>
+<style>
+</style>
+<div class="view_box">
+	<div class="app-5">
+		<p>{{message}}</p>
+		<button v-on:click="reverseMessage">메세지 뒤집기</button>
+	</div>
+</div>
+<script>
+var app5Txt = "안녕하세요! vueJs!";
+var app5 = new Vue({
+	el: '.app-5',
+	data: {
+		message: app5Txt
+	},
+	methods:{
+		reverseMessage: function(){
+			this.message = this.message.split('').reverse().join('');
+		}
+	}
+})
+</script>
+<!-- sample code-->
+<span class="normal"><pre class="codebox"><code class="language-markup">
+<div class="app-5">
+	<p>{{message}}</p>
+	<button v-on:click="reverseMessage">메세지 뒤집기</button>
+</div>
+</code></pre></span>
+<span class="normal"><pre class="codebox"><code class="language-javascript">
+var app5Txt = "안녕하세요! vueJs!";
+var app5 = new Vue({
+	el: '.app-5',
+	data: {
+		message: app5Txt
+	},
+	methods:{
+		reverseMessage: function(){
+			this.message = this.message.split('').reverse().join('');
+		}
+	}
+})
+</code></pre></span>
+<!--// sample code-->																	
+							
+							
+<h3>6. 양방향 바인딩: v-model</h3>
+<div class="view_box">
+	<div class="app-6  form check">
+		<p style="font-size:20px; padding:5px; border:1px solid #f9f8f8;">{{message}}</p>
+		<input type="text" v-model="message" placeholder="텍스트를 입력해주세요">
+	</div>
+</div>
+<script>
+	var app6 = new Vue({
+		el:'.app-6',
+		data:{
+			message: ""
+		}
+	})
+$(window).load(function(){
+	$('input').uxInput();
+});
+		
+</script>
+<!-- sample code-->
+<span class="normal"><pre class="codebox"><code class="language-markup">
+	<div class="app-6">
+		<p>{{message}}</p>
+		<input type="text" v-model="message">
+	</div>
+</code></pre></span>
+<span class="normal"><pre class="codebox"><code class="language-javascript">
+	var app6 = new Vue({
+		el:'.app-6',
+		data:{
+			message: "텍스트를 입력하세요"
+		}
+	})
+</code></pre></span>
+<!--// sample code-->	
+
+<h3>7. 정의된 인스턴스: component</h3>
+<div class="view_box">
+	<div class="app-7">
+		<ol>
+			<todo-item
+				v-for = "item in groceryList"
+				v-bind:todo= "item"
+				v-bind:key= "item.id"
+			></todo-item>
+		</ol>
+	</div>
+</div>
+<script>
+Vue.component('todo-item', {
+	props: ['todo'],
+	template: '<li>{{ todo.text }}</li>'
+});
+var app7array = ['텍스트하나', '두번째텍스트', '마지막텍스트셋'];
+var app7 = new Vue({
+	el: '.app-7',
+	data:{
+		groceryList: [
+			{id: 0, text: app7array[0]},
+			{id: 1, text: app7array[1]},
+			{id: 2, text: app7array[2]},
+		]
+	}
+});
+$(window).load(function(){
+	
+});	
+</script>
+<!-- sample code-->
+<span class="normal"><pre class="codebox"><code class="language-markup">
+	<div class="app-7">
+		<ol>
+			<todo-item
+				v-for = "item in groceryList"
+				v-bind:todo= "item"
+				v-bind:key= "item.id"
+			></todo-item>
+		</ol>
+	</div>
+</code></pre></span>
+<span class="normal"><pre class="codebox"><code class="language-javascript">
+Vue.component('todo-item', {
+	props: ['todo'],
+	template: '<li>{{ todo.text }}</li>'
+});
+var app7array = ['텍스트하나', '두번째텍스트', '마지막텍스트셋'];
+var app7 = new Vue({
+	el: '.app-7',
+	data:{
+		groceryList: [
+			{id: 0, text: app7array[0]},
+			{id: 1, text: app7array[1]},
+			{id: 2, text: app7array[2]},
+		]
+	}
+});
+</code></pre></span>
+<!--// sample code-->	
+
+
+
+<h3>8. 데이터와 메소스: </h3>
+<div class="view_box">
+	<div class="app-7">
+		<ol>
+			<todo-item
+				v-for = "item in groceryList"
+				v-bind:todo= "item"
+				v-bind:key= "item.id"
+			></todo-item>
+		</ol>
+	</div>
+</div>
+<script>
+var data = { a: 1 }; //데이터 객체
+
+var vm = new Vue({ //vue 인스턴스에 데이터 객체 추가
+	data: data
+});
+
+//인스턴스에 있는 속성은 원본 데이터에 있는 값을 반환합니다.
+vm.a === data.a; // => true
+
+vm.a = 2 //인스턴스에 있는 속성값을 변경하면 원본 데이터에도 영향을 미칩니다.
+console.log("data.a: " + data.a);
+
+data.a = 3; //반대로 해도 마찬가지
+console.log("vm.a: " + vm.a);
+
+$(window).load(function(){
+	
+});	
+</script>
+<!-- sample code-->
+<span class="normal"><pre class="codebox"><code class="language-markup">
+
+</code></pre></span>
+<span class="normal"><pre class="codebox"><code class="language-javascript">
+
+</code></pre></span>
+<!--// sample code-->	
+																							
+							<!--#########################################// run_sample ######################################################-->
+						</article>
+						<!--// code -->
+					</div>
+				</div>
+				
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-markup">
+html source
+</code>
+</pre>
+<!--// codebox: markup, css, clike, javascript -->				
+				
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-javascript">
+run script
+</code>
+</pre>
+<!--// codebox: markup, css, clike, javascript -->
+								
+			</div>
+		</section>
+		<!--#####################// Wai- Aria Navigation #####################-->
+
+		
+	</div><!--// contents -->
+
+	<script src="js/jquery-ui.min.js"></script><!-- jquery ui-->
+	<script src="js/jquery.ui.touch-punch.js"></script><!-- jquery ui using mobile -->
+    <script src="js/frontUxer.js"></script><!-- plugin -->
+
+	<script type="text/javascript">
+	
+    </script>
+    
+</body>
+</html>

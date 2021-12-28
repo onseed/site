@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>frontUxer</title>
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/frontUxer.css">
+<script src="js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript">        
+	var menuArry = ['1','2'];//1depth, 2depth
+</script>
+</head>
+<body>
+<script src="js/guide.js"></script><!-- site guide -->
+	
+	<div class="start_dim"><span></span></div>
+	
+	<h1 class="hide">module</h1>
+	
+	<div class="contents"><!-- contents -->
+	
+		<!--##################### 셀렉트박스 #####################-->
+		<section class="aws_box">
+	        <h1 class="aws_tl">셀렉트 박스 </h1>
+			<ul class="dcs">
+				<li>데스크탑용 셀렉트바 플러그인 (모바일은 디바이스별 기본 셀렉트바)</li>
+			</ul> 		        
+	        
+	        <div class="code_area">
+	        
+	            <div class="play_box">
+	               <!-- code -->
+	               
+					<div class="option_txt">						
+						<p><strong>실행: </strong> <span class="incodebox"><code class="language-javascript">$('셀렉터').uxSelect();</code></span></p>
+						<p><strong>추가: </strong> <span class="incodebox"><code class="language-javascript">$('셀렉터').uxScrollView(); //deafult</code></span></p>
+						<p><strong>옵션 1: </strong> <span class="incodebox"><code class="language-javascript">$('셀렉터').uxSelect({scrollView : false});//스크롤바 사용여부 default: true</code></span></p>
+						<p><strong>옵션 2: </strong> <span class="incodebox"><code class="language-javascript">$('셀렉터').uxSelect({disable : true});//기본적으로  select의 attr속성을 가져오나 별도로 Disabled 처리 default: false</code></span></p>
+						<p><strong>옵션 3: </strong> <span class="incodebox"><code class="language-javascript">$('셀렉터').uxSelect({optHeight : 33});//옵션 높이</code></span></p>
+						<p><strong>셀렉트바 attr: </strong> <span class="incodebox"><code class="language-javascript">id="필수" class="선택" data-clone-class="선택" disabled</code></span></p>
+					</div>
+	                  
+					<!-- run_sample -->
+					<div class="run_sample">
+					
+	        			<dl class="dcs">
+	               			<dt><strong>패치 노트:</strong></dt>
+	               			<dd>20191204: 셀렉트박스내 스크롤뷰 적용</dd>
+	               			<dd>20191205: ulH(option 높이값을 분리, 별도 옵션으로 처리)</dd>
+	               		</dl>					
+					
+	                    <!-- sample_box -->	                    
+	                    <article class="sample_box">
+	                    
+	                    	<span class="normal"><code class="language-javascript">$('#ui_select_2 option:selected').val();</code></span> 형태로 value change 확인.
+	                    	
+	                    	<div class="clear">
+	                    		<button type="button" id="param_opt" style="float:right;"></button>
+	                    	</div>
+	                    	
+							<div class="ex mgt_s">					
+								<P ><strong>default</strong></P>							
+								<select id="" title="셀렉트바">
+									<option>option 1. one</option>
+									<option selected>option 2. two</option>
+									<option>option 3. three</option>
+									<option>option 4. four</option>
+									<option>option 5. five</option>
+									<option>option 6. six</option>
+									<option>option 7. seven</option>
+									<option>option 8. eight</option>
+									<option>option 9. nine</option>
+									<option>option 10. ten</option>
+								</select>								
+								
+								<P class="mgb_ss mgt_s"><strong>disabled</strong></P>
+								<select id="disabledEx" title="셀렉트바" disabled>
+									<option>option 1. one</option>
+									<option>option 2. two</option>
+									<option>option 3. three</option>
+									<option>option 4. four</option>
+									<option>option 5. five</option>
+									<option>option 6. six</option>
+									<option>option 7. seven</option>
+									<option>option 8. eight</option>
+									<option>option 9. nine</option>
+									<option>option 10. ten</option>
+								</select>
+										
+		                    	
+		                    	<button type="button" id="add-test" class="point">셀렉트박스 생성</button><br/>
+								
+							</div>	                    
+	                    
+	                    </article>
+	                    <!--// sample_box -->					
+					
+					</div>
+					<!--// run_sample -->	
+
+	                <!--// code -->
+	            </div>
+	            
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-css">
+select { padding:0 29px 0 11px; width:100%; height:40px; line-height:38px; box-sizing:border-box; border:1px solid #b8b8b8; border-radius:2px; font-size:inherit;
+	white-space:nowrap; vertical-align:middle; -webkit-appearance:none; -moz-appearance:none; background:url(img/bg_select_down.svg) no-repeat right 50%; position:relative; background-size:20px auto}
+.ios select{line-height:40px;}	
+.mobile select {background-size:20px auto}
+
+.select_clone { display:block; *zoom:1; *display:inline; position:relative; margin:0; padding:0; width:auto; border:1px solid #b8b8b8; box-sizing:border-box; border-radius:2px; background:#fff; cursor:pointer;}
+.select_clone button{ overflow:visible; display:inline-block; display:-moz-inline-stack; *zoom:1; *display:inline; position:relative; top:0; left:0; line-height:1 !important;
+	text-align:left; text-decoration:none; word-break:break-word; white-space:nowrap; text-overflow:ellipsis; vertical-align:top; border:0; background-color:transparent; cursor:pointer; _cursor:hand;}
+.select_clone > button { overflow:hidden; position:relative; z-index:1; display:block; padding-right:27px; width:100%; height:38px; box-sizing:border-box;
+	background-color:#fff; white-space:nowrap; vertical-align:middle; text-align:left !important; text-indent:10px;}
+.select_clone > button:after { display:block; position:absolute; top:50%; right:10px; margin-top:-3px; width:10px; height:7px; 
+ 	background:url(img/bg_select_down.svg) no-repeat 0 0; background-size:20px auto; content:'열기'; overflow:hidden; text-indent:-9999em; /*transition:all ease 0.2s ;*/}
+.select_clone.focusOn > button:after {content:"닫기"; transform: rotate(180deg);}
+
+.select_clone .sel_div.ps_btm {bottom:38px;}
+.select_clone .sel_div.ps_top {top:38px;}
+.select_clone .sel_div {display:none; overflow-y:auto; overflow-x:hidden; position:absolute; left:-2000px; z-index:10; padding:5px 0; width:100%; border:1px solid #ccc; background:#fff; box-shadow: 0px 2px 5px rgba(180,180,180,0.5);}
+.select_clone .sel_div .opt{ float:left; width:100%; text-align:left; line-height:1.2; min-height:20px !important; padding:0 !important;}
+.select_clone .sel_div .opt button { width:100%; padding:10px 0 10px 10px; }
+.select_clone .sel_div .opt button.on{ color:#069; }
+.select_clone .sel_div .opt.on{ background-color:#f8f7f7; color:#000; }/*선택된 배경 컬러*/
+.select_clone .sel_div .opt.on button{color:#000; }
+.select_clone .sel_div:hover .opt.on { background-color:#fff; color:#000; }
+.select_clone .sel_div:hover .opt.on button { color:#000; }
+.select_clone .sel_div:hover .opt.on:hover button,
+.select_clone .sel_div:hover .opt.on:focus button { color:#000; }
+.select_clone .sel_div .opt button[disabled="disabled"]{ color:#ccc; cursor:default; background-color:#F5F5F5 !important; }
+.select_clone .sel_div .opt button:hover{background-color:#f8f7f7; color:#000; }/*마우스 오버시 배경 컬러*/
+.select_clone .sel_div .opt button:focus{}
+
+.select_clone.disabled{background:#f8f7f7;}
+.select_clone.focusOn { background-color:#F5F5F5; border:1px solid #cccccc; }
+.select_clone.focusOn > .sel_div{ display:block; left:-1px; }
+.select_clone.focusOver { background-color:#F5F5F5; border:1px dotted #cccccc; }
+.select_clone.focusOver > button{}
+.ie .select_clone > button{padding-bottom:3px;}
+.select_clone.disabled button{color:#999; background-color:#f8f7f7;}
+
+select.size_s,
+select[data-clone-class="size_s"] { height:30px; line-height:28px}
+.select_clone > button.size_s { height:30px; line-height:28px }
+.select_clone > button.size_s + .sel_div.ps_btm { bottom:28px; }
+.select_clone > button.size_s + .sel_div.ps_top { top:28px; }
+.select_clone > button.size_s + .sel_div .opt button { width:100%; padding:3px 0 3px 10px; }
+
+.select_clone .sel_div .ui_scrollview{height:auto; padding:0;} /*셀렉트박스내 스크롤바 사용시 설정*/
+</code>
+</pre>
+<!--// codebox: markup, css, clike, javascript -->
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-markup">
+<select id="" title="셀렉트바" class="wd160" data-clone-class="wd160" disabled>
+	<option>옵션 1</option>
+	<option selected>옵션 2</option>
+</select>
+</code>
+</pre>
+<!--// codebox -->    
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-javascript">
+var uxSelectLength = 0;
+$.fn.extend({//#################### 7.uxSelect ####################
+	uxSelect : function(opt){//셀렉트 박스 디자인 -start
+		
+		if (isMobile) {//데스크탑일때만  처리
+			return false;
+		}
+	
+		if(uxSelectLength < 1){ //콘솔 출력을 위한 window객체니 실사용시 삭제
+			console.log("uxSelect(): 셀렉트 박스");
+		}
+		uxSelectLength ++; //콘솔 출력을 위한 window객체니 실사용시 삭제.end
+		
+		var defaults = {
+			ieVer : ie,
+			mobile : browser.mobile,
+			fullsize : true,
+			disable : false,
+			scrollView : true ,//스크롤뷰 사용시 true
+			optHeight : 33//옵션 높이
+		},
+		opt = $.extend(defaults,opt);
+		
+		return this.each(function(){
+			var $this		= $(this),
+				selectId		= $this.attr('id'),
+				scrollView	= opt.scrollView;//스크롤뷰 사용시
+				
+				if (!selectId)  {//id 없으면 id 생성
+					selectId = 'ui_select_' + uniqueId();
+					$this.attr('id', selectId);
+				}
+				
+				var cloneClass		= $this.data('clone-class'),
+					classCopy		= $this.attr('class'),
+					selectT			= $this.attr('title'),
+					$option			= $this.children('option'),
+					optionSum		= $option.length,
+					optionTxt		= '',
+					optionVal		= '',
+					optionSel		= '',
+					optionDsb		= '',
+					btnDisabled		= '',
+					classOn			= '',
+					selectW			= $this.outerWidth(),
+					cloneId			= selectId + '_clone',
+					ieVer				= opt.ieVer,
+					disable			= opt.disable,
+					fullsize			= opt.fullsize,
+					
+					$thisClone		= $('#' + cloneId),
+					$selectUl		= $thisClone.children('.sel_div'), // selectbox
+					$button			= $thisClone.children('button'),
+					$selectLi			= $selectUl.children('.opt'),// option
+					$btnOption		= $selectLi.find('button'),
+					optH				= $btnOption.outerHeight(),
+					liSum				= $selectLi.length,
+					$optionEq,
+					ulH				= opt.optHeight,
+					optLen,
+					cloneW;
+				
+					var app = {
+						init : function(){
+							$this.data('disable', disable);
+							$thisClone.remove();
+							
+							(!selectT) ? selectT = '' : '';
+							(!!cloneClass) ? cloneW = '100%;' : cloneW = selectW + 'px' ;
+							(!cloneClass) ? cloneClass = '' : '';
+							(!classCopy) ? classCopy = '' : '';
+							
+							var scrollDiv='';							
+							if(scrollView){//스크롤뷰 사용시
+								scrollDiv = '<div class="ui_scrollview"><div class="ui_scrollarea"><div class="ui_content">'+
+            						//스크롤뷰 컨텐츠
+            						'</div></div></div>';
+                            }
+                        	$('<div class="select_clone hidden ' + cloneId + ' ' + cloneClass + ' " id="' + cloneId + '"><button type="button" class="clone" title="' + selectT + ' 선택하세요">선택 <span class="hide">선택됨</span></button>'+
+                        			'<div class="sel_div">'+scrollDiv+'</div>'+
+                        		'</div>').insertBefore($this); //scroll box 생성:                        
+                            
+                            ($this.hasClass('size_s')) ? $('#' + cloneId).addClass('size_s') : '';
+
+                            while (optionSum--) {
+                                $optionEq = $option.eq(optionSum)
+                                optionTxt = $optionEq.text();
+                                optionVal = $optionEq.prop('value');
+                                optionDsb = $optionEq.prop('disabled');
+                                optionSel = $optionEq.prop('selected');
+
+                                (optionSel === true) ? classOn = 'on' : classOn = '';
+                                (optionDsb === true) ? btnDisabled = 'disabled="disabled"' : btnDisabled = '';
+                                                               
+                                if(scrollView){ //option 생성: 스크롤뷰 사용시
+                                	$('#' + selectId + '_clone .sel_div .ui_content').prepend('<span class="opt ' + classOn + '"><button type="button"  class="clone"  ' + btnDisabled + ' value="' + optionVal + '"><span>' + optionTxt + '</span></button></span>'); //.sel_div.opt
+                                	
+                                }else{//option 생성: 일반스크롤 사용시
+                                	$('#' + selectId + '_clone .sel_div').prepend('<span class="opt ' + classOn + '"><button type="button"  class="clone"  ' + btnDisabled + ' value="' + optionVal + '"><span>' + optionTxt + '</span></button></span>'); //.sel_div.opt	
+                                }                                
+                            };
+
+                            // clone select local var
+                            $thisClone		= $('#' + cloneId),
+                            $selectUl		= $thisClone.children('.sel_div'); // selectbox
+                            $button			= $thisClone.children('button'); 
+                            //$selectLi			= $selectUl.children('.opt'); 
+                            $selectLi			= $selectUl.find('.opt'); //option
+                                                        
+                            $btnOption		= $selectLi.children('button');
+                            optH				= ulH;//사이즈를 옵션에서 조정
+                            optLen			= $selectLi.length;
+                            
+                          	//$thisClone.children('button').html('<span>' + $selectUl.children('.opt.on').text() + '</span>');
+                          	$thisClone.children('button').html('<span>' + $selectUl.find('.on').text() + '</span>');
+                            
+                            // disabled 값이 있거나 disabled 설정했을때 disabled 처리
+                            if($this.prop('disabled') || $this.data('disable') === true){
+                                $thisClone.addClass('disabled');
+                                $btnOption.prop('disabled', true);
+                            }
+
+                            (optH === 0) ? optH = ulH : ''; //1개일때 사이즈 조정
+                            if( (optLen < 2) ){        							
+                            	ulH = ulH;
+                            } else if( optLen > 1 && optLen < 5 ){
+    	                        ulH = (optH * optLen);// + 5
+                            } else{
+    	                        ulH = (optH * 5);// + 5 ;
+                            }
+
+                            $('#' + selectId + '_clone .sel_div').css('height',ulH  );
+                            $('#' + cloneId).removeClass('hidden');
+                            
+                            if(scrollView){//스크롤뷰 플러그인 처리
+    	                        $thisClone.find('.ui_scrollview').height(ulH);
+    	                        $('.ui_scrollview').uxScrollView();                            	
+                            }
+
+                            $this.hide();
+                            app.eventHandle();
+                        },
+                        position : function(){
+                            var ps = $thisClone.offset().top,
+                                st = $(document).scrollTop(),
+                                wH =$(window).height();
+
+                            if ((wH + st) - (ps + ulH + optH + 40) < 0) {
+                                $thisClone.find('.sel_div').removeClass('ps_top').addClass('ps_btm');
+                            } else {
+                                $thisClone.find('.sel_div').removeClass('ps_btm').addClass('ps_top');
+                            }
+                        },
+                        eventHandle : function(){
+                            $button.on({
+                                click : function(){
+                                    if ($this.data('disable') === true) {
+                                        return;
+                                    }
+                                    app.position();
+                                    $selectUl.css('display', 'block');
+                                    if ($thisClone.hasClass('focusOn')){
+                                        $thisClone.removeClass('focusOn focusOver');
+                                        $this.css('z-index', 0);
+                                    } else {
+                                        $thisClone.addClass('focusOn');
+                                        $this.css('z-index', 100);
+                                    }
+                                },
+                                mouseleave : function(){
+                                    ($thisClone.hasClass('focusOn')) ? $thisClone.addClass('focusOut') : '' ;
+                                }
+                            });
+
+                            ($this.prop('disabled')) ? $button.off() : ''; // disabled 처리
+                            /*
+                            if($this.attr('disabled')){//disabled 처리
+                            	$('#' + cloneId).children('button').attr('disabled', true);
+                            }*/                            
+
+                            $btnOption.on({
+                                click : function(){
+                                    var $btnOption  = $(this),
+                                        selectTxt   = $btnOption.text();
+
+                                    $btnOption.parent().addClass('on').siblings().removeClass('on');
+
+    	                            //ux15 ie버튼 눌림 제거 위해 span태그 추가
+                                    $thisClone.children('button').html('<span>' + selectTxt + '</span><span class="hide">선택됨</span>').focus();
+                                    $selectUl.css('display', 'none');
+                                    $('.select_clone').removeClass('focusOn focusOver');
+                                    var buttonIdx = $btnOption.parent().index();
+
+                                    $option.prop('selected', false);
+                                    $option.eq(buttonIdx).prop('selected', true);
+
+                                    // change event
+                                    $option.eq(buttonIdx).change();
+                                    /*
+                                    var selOnchange = null;
+                                    if ($this.attr('onchange')) {
+                                        selOnchange = $this.attr('onchange');
+                                    }
+                                    if (selOnchange) {
+                                        $option.eq(buttonIdx).change();
+                                    }
+                                    */
+                                },
+                                focus : function(){
+                                    $thisClone.addClass('focusOn focusOver');
+                                },
+                                blur : function(){
+                                    $thisClone.removeClass('focusOn focusOver');
+                                }
+                            });
+                            $(document).off('click.select').on('click.select', function(){
+                                $('.focusOut').removeClass('focusOn focusOut');
+                            });
+                           
+                        }
+                    }
+                    app.init(); //console.log(cloneId +' : '+ ieVer +' : '+disable +' : '+fullsize);
+                });
+            }//셀렉트 박스 디자인 - end
+	
+});//#################### 7.uxSelect.end ####################
+</code>
+</pre>
+<!--// codebox -->      
+	        
+	        </div>
+		</section>
+		<!--##################### 셀렉트박스 #####################-->
+			
+	</div><!--// contents -->
+	
+	<script src="js/jquery-ui.min.js"></script><!-- jquery ui-->
+	<script src="js/jquery.ui.touch-punch.js"></script><!-- jquery ui using mobile -->
+    <script src="js/frontUxer.js"></script><!-- plugin -->
+    
+	<script>
+		var paramSlice = "?";
+		if(window.location.href.indexOf("?") > -1){
+			paramSlice = "&"
+		}
+		
+		var htmlName= window.location.toString();
+		var urlIndexScroll;
+		
+		var scrollOpt;
+		
+		if(window.location.href.indexOf("scroll_not") > -1){
+			scrollOpt = false;
+			$('#param_opt').html("셀렉트바 선택시 <strong>스크롤뷰</strong> 적용");
+			$('#param_opt').click(function(){
+				var scroll_parm = paramSlice+"scroll_not";
+				urlIndexScroll = htmlName.replace(scroll_parm, '');											
+				window.location.href=urlIndexScroll;										
+			});			
+		}else{
+			scrollOpt = true;
+			$('#param_opt').html("셀렉트바 선택시 <strong>일반 스크롤</strong> 적용");
+			$('#param_opt').click(function(){
+				urlIndexScroll = htmlName+paramSlice+ "scroll_not";
+				window.location.href=urlIndexScroll;
+			});				
+		}
+			
+		$(window).load(function(){
+			var ttNum = 0;//추가 넘버
+			
+			$('#add-test').on('click',function(){
+				ttNum ++;				
+				addToolTip(ttNum);
+			});
+			
+			function addToolTip(index){				
+				var tooltipTxt = '<option>  option '+ttNum+'</option>';
+				tooltipTxt = tooltipTxt.repeat(index);
+				$('#add-test').parent().append('<br/><select title="셀렉트바">'+tooltipTxt+'</select>');
+				$('select').uxSelect({scrollView : scrollOpt});
+			}
+			$('select').uxSelect({scrollView : scrollOpt});			
+   		});
+	</script>
+
+</body>
+</html>

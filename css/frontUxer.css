@@ -1,0 +1,222 @@
+@charset "utf-8";
+
+/******************************************* uxerLayerPop *******************************************/
+.modal_cont {display:none; overflow:hidden; position:fixed; z-index:10001; margin:0; background:#fff;}
+.modal_cont > header {position:relative; width:100%; font-size:16px; padding:15px 0; text-align:center;}
+.modal_cont .cont .btn_wrap{padding:10px; text-align:center;}
+.modal_cont .modal_footer{ position:relative;height:62px; text-align:center; box-sizing:border-box; padding:15px 0 20px; margin-top:0;}
+.modal_bg, .modal_bg2 {position:fixed; top:0; left:0; z-index:10000; width:100%; height:100%; background:#25252f; opacity:0.7}
+
+/******************************************* uxScrollview *******************************************/
+.ui_scrollview {position: relative; height:80px; /* outline-color:transparent; */}
+.ui_scrollview .ui_scrollarea {overflow: hidden; height: 100%; border: 0}
+.ui_scrollview .ui_scrollbar {position:absolute;right: 8px;top:0;cursor:pointer;}
+.ui_scrollview .ui_scrollbar span {position: absolute; left: 0; width: 8px; padding: 0; margin: 0; font-size: 0; line-height: 0; border-radius: 3px;}
+.ui_scrollview .ui_scrollbar .bg_mid {top:0;background:#545559;}
+.ui_scrollview .ui_scrollbar.active .bg_mid{ background:#333;}
+.ui_scrollview .ui_scrollarea:-ms-scrollbar {display:none;}
+.ui_scrollview .ui_scrollarea::-webkit-scrollbar {display:none;}
+.mobile .ui_scrollview .ui_scrollarea {overflow: scroll;}
+
+/******************************************* uxTooltip *******************************************/
+.ui_tool_tip { display:none; position:absolute; z-index:200; margin:0; padding:10px 15px 15px; box-sizing:border-box; width:100%; 
+	font-size:12px; font-weight:200; line-height:1.3; border:1px solid #787878; background:#fff; }
+.ui_tool_tip > h1{padding:0 0 10px 0; font-weight:bold;}
+.ui_tooltip_arrow{display:block; position:absolute;  width:12px; height:12px; background:#fff; border:1px solid #000; border-bottom:none; border-right:none; 
+	transform: rotate(45deg); margin-top:6px;  z-index:201;}
+.desktop .ui_tool_tip{width:auto; line-height:1.6; min-width:300px;}
+
+/******************************************* uxSelect *******************************************/
+select { padding:0 29px 0 11px; width:100%; height:40px; line-height:38px; box-sizing:border-box; border:1px solid #b8b8b8; border-radius:2px; font-size:inherit;
+	white-space:nowrap; vertical-align:middle; -webkit-appearance:none; -moz-appearance:none; background:url(../img/bg_select_down.svg) no-repeat right 50%; position:relative; background-size:20px auto}
+.ios select{line-height:40px;}	
+.mobile select {background-size:20px auto}
+
+.select_clone { display:block; *zoom:1; *display:inline; position:relative; margin:0; padding:0; width:auto; border:1px solid #b8b8b8; box-sizing:border-box; border-radius:2px; background:#fff; cursor:pointer;}
+.select_clone button{ overflow:visible; display:inline-block; display:-moz-inline-stack; *zoom:1; *display:inline; position:relative; top:0; left:0; line-height:1 !important;
+	text-align:left; text-decoration:none; word-break:break-word; white-space:nowrap; text-overflow:ellipsis; vertical-align:top; border:0; background-color:transparent; cursor:pointer; _cursor:hand;}
+.select_clone > button { overflow:hidden; position:relative; z-index:1; display:block; padding-right:27px; width:100%; height:38px; box-sizing:border-box;
+	background-color:#fff; white-space:nowrap; vertical-align:middle; text-align:left !important; text-indent:10px;}
+.select_clone > button:after { display:block; position:absolute; top:50%; right:10px; margin-top:-3px; width:10px; height:7px; 
+ 	background:url(../img/bg_select_down.svg) no-repeat 0 0; background-size:20px auto; content:'열기'; overflow:hidden; text-indent:-9999em; /*transition:all ease 0.2s ;*/}
+.select_clone.focusOn > button:after {content:"닫기"; transform: rotate(180deg);}
+
+.select_clone .sel_div:after {display:block; content:''; clear:both;}
+.select_clone .sel_div.ps_btm {bottom:38px;}
+.select_clone .sel_div.ps_top {top:38px;}
+.select_clone .sel_div {display:none; overflow-y:auto; overflow-x:hidden; position:absolute; left:-2000px; z-index:10; padding:5px 0; width:100%; border:1px solid #ccc; background:#fff; box-shadow: 0px 2px 5px rgba(180,180,180,0.5);}
+.select_clone .sel_div .opt{ float:left; width:100%; text-align:left; line-height:1.2; min-height:20px !important; padding:0 !important;}
+.select_clone .sel_div .opt button { width:100%; padding:10px 0 10px 10px; }
+.select_clone .sel_div .opt button.on{ color:#069; }
+.select_clone .sel_div .opt.on{ background-color:#f8f7f7; color:#000; }/*선택된 배경 컬러*/
+.select_clone .sel_div .opt.on button{color:#000; }
+.select_clone .sel_div:hover .opt.on { background-color:#fff; color:#000; }
+.select_clone .sel_div:hover .opt.on button { color:#000; }
+.select_clone .sel_div:hover .opt.on:hover button,
+.select_clone .sel_div:hover .opt.on:focus button { color:#000; }
+.select_clone .sel_div .opt button[disabled="disabled"]{ color:#ccc; cursor:default; background-color:#F5F5F5 !important; }
+.select_clone .sel_div .opt button:hover{background-color:#f8f7f7; color:#000; }/*마우스 오버시 배경 컬러*/
+.select_clone .sel_div .opt button:focus{}
+
+.select_clone.disabled{background:#f8f7f7;}
+.select_clone.focusOn { background-color:#F5F5F5; border:1px solid #cccccc; }
+.select_clone.focusOn > .sel_div{ display:block; left:-1px; }
+.select_clone.focusOver { background-color:#F5F5F5; border:1px dotted #cccccc; }
+.select_clone.focusOver > button{}
+.ie .select_clone > button{padding-bottom:3px;}
+.select_clone.disabled button{color:#999; background-color:#f8f7f7;}
+
+select.size_s,
+select[data-clone-class="size_s"] { height:30px; line-height:28px}
+.select_clone > button.size_s { height:30px; line-height:28px }
+.select_clone > button.size_s + .sel_div.ps_btm { bottom:28px; }
+.select_clone > button.size_s + .sel_div.ps_top { top:28px; }
+.select_clone > button.size_s + .sel_div .opt button { width:100%; padding:3px 0 3px 10px; }
+
+.select_clone .sel_div .ui_scrollview{height:auto; padding:0;} /*셀렉트박스내 스크롤바 사용시 설정*/
+
+/******************************************* uxAccodian *******************************************/
+.acco_wrap > .acco_tit {border: 1px solid #d9d9d9; 	background: #fff; margin-top:-1px; border-radius:2px; position:relative;}
+.acco_wrap > .acco_tit button{display:block; width:100%; text-align:left; position:relative; padding:10px;}
+.acco_wrap > .acco_tit button span{display:block; position:absolute; top:50%; right:10px; height:20px; margin-top:-10px;}
+.acco_wrap > .acco_tit button span:after {display: inline-block; content:''; width: 10px; height: 7px; background:url(../img/bg_select_down.svg) no-repeat 0 0; 
+	background-size: 20px auto; vertical-align:middle; margin-left:5px;}
+.acco_wrap.on > .acco_tit{box-shadow: 0px 0px 5px rgba(180,180,180,0.2);}
+.acco_wrap.on > .acco_tit button span:after {transform: rotate(180deg);}
+.acco_wrap > .acco_cont {padding:10px;}
+							
+/*체크박스 인풋이 있는 아코디언일때*/
+.acco_wrap > .acco_tit.inputed {padding:10px;}	
+.acco_wrap > .acco_tit.inputed button{display:block; width:auto; height:100%; float:right; margin:-10px -10px -10px 0; font-size: 14px;}
+.acco_wrap > .acco_tit.inputed button span {display: inline-block; position: static; top:0; right: 0; height: auto; margin-top: 0; margin-left:20px;}
+.acco_wrap > .acco_tit.inputed:after{display:block; content:''; clear:both;}
+
+/******************************************* uxInput *******************************************/
+/* common00_1.checkbox,radio */
+.form.check input[type="checkbox"],
+.form.check input[type="radio"] {position: absolute; opacity: 0; z-index: -1;}
+.form.check label { display:inline-block; cursor:pointer; }
+.form.check label.label_radio,
+.form.check label.label_checkbox { position:relative; height:auto;  box-sizing:border-box;  cursor: pointer;}
+.form.check label.label_radio{}
+												
+.form.check label.label_checkbox.label_all { min-height:28px; padding:0 8px 0 34px; font-size:14px; line-height:28px; font-weight:bold;}
+.form.check .ios label.label_checkbox.label_all {line-height:30px}
+.form.check label.label_radio:after { display:block; position:absolute; top:0; left:0; width:25px; height:24px; 
+	background:url(../img/bg_form_set.svg) no-repeat 0 0; background-size:auto 150px; content:''; font-size:0;}
+.form.check label.label_radio.on:after { background-position:-30px 0; content:'';}
+.form.check label.label_radio.off:after { background-position:-60px 0; content:'';}
+.form.check label.label_radio.on.off:after { background-position:-90px 0; content:'';}
+.form.check label.label_radio.notrans.on:after { background-position:-120px 0; content:'';}
+.form.check label.label_radio.notrans.on.off:after { background-position:-90px 0; content:'';}
+
+.form.check label.label_radio.vt,
+.form.check label.label_checkbox.vt { padding:23px 5px 0; text-align:center; text-indent:0; color:#606060;}
+.form.check label.label_radio.vt.on,
+.form.check label.label_checkbox.vt.on {color:#303030;}
+.form.check label.label_radio.vt:after,
+.form.check label.label_checkbox.vt:after { left:50%; margin-left:-11px; }
+
+.desktop .form.check label.label_radio{padding:0 8px 0 29px; font-size:16px; line-height:21px}
+.desktop .form.check label.label_checkbox {padding:0 8px 0 29px; font-size:16px; line-height:20px}
+.desktop .form.check label.label_radio.vt, .desktop label.label_checkbox.vt {padding:0 8px 0 29px; text-indent:0; text-align:left;}
+.desktop .form.check label.label_radio.vt:after, .desktop label.label_checkbox.vt:after {left:0; margin:0;}
+.desktop .form.check label.label_checkbox.label_all {font-size:16px; font-weight:bold; padding:0 0 0 34px; min-height:28px; line-height:25px}
+
+.form.check label.label_checkbox:after { display:block; position:absolute; top:0; left:0; width:23px; height:23px;
+background:url(../img/bg_form_set.svg) no-repeat 0 -30px; background-size:auto 150px; content:''; font-size:0; }
+.form.check label.label_checkbox.on:after { background-position:-30px -30px; content:'';}
+.form.check label.label_checkbox.off:after { background-position:-60px -30px; content:'';}
+.form.check label.label_checkbox.on.off:after { background-position:-90px -30px; content:'';}
+.form.check label.label_checkbox.label_all:after { background-position:0 -60px; width:28px; height:28px; content:'';}
+.form.check label.label_checkbox.label_all.on:after{ background-position:-30px -60px; content:'';}
+.form.check label.label_radio.first,
+.form.check label.label_checkbox.first { margin-left:0; }
+.form.check label.label_checkbox.focus,
+.form.check label.label_radio.focus { text-decoration:underline; }
+.desktop .form.check  .cont_chk_wrap label.label_checkbox.focus:before,
+.desktop .form.check .state_chk_wrap label.label_checkbox.focus:before{ content:''; display:block; border-bottom:1px solid #676767; width:23px; position:absolute; left:0; bottom:-3px; z-index:1 }
+.desktop .form.check .cont_chk_wrap label.label_checkbox.label_all.focus:before,
+.desktop .form.check .state_chk_wrap label.label_checkbox.label_all.focus:before{width:28px}
+
+.choice_auth .form.check label.label_checkbox.focus:before,
+.choice_auth .form.check label.label_radio.focus:before{display:none}
+.mobile .form.check label.label_checkbox.focus span ,
+.mobile .form.check label.label_radio.focus span,
+.mobile .form.check label.label_checkbox.focus,
+.mobile .form.check label.label_radio.focus { text-decoration:none; }
+
+/* tab design style radio */
+.form.check .dg_label_wrap {border:1px solid #a2a2a2;}
+.form.check .dg_label_wrap ul {display:table; width:100%; }
+.form.check .dg_label_wrap li {display:table-cell; width:25%;  border-left:1px solid #a2a2a2; padding:0; box-sizing:border-box;}
+.form.check .dg_label_wrap li:first-child {border-left:0;}
+.form.check .dg_label_wrap li label {display:block; text-align:center; background:none; padding:5px 0;}
+.form.check .dg_label_wrap li label:after { display:none; }
+.form.check .dg_label_wrap li label.label_checkbox.on,
+.form.check .dg_label_wrap li label.label_radio.on {background:#686868; color:#fff;}
+.form.check .dg_label_wrap.col3 li {width:33.3%}
+.form.check .dg_label_wrap.col3 li:first-child {width:33.4%;}
+.form.check .dg_label_wrap.col5 li {width:20%}
+
+/* common00.input */
+.form.check input { -webkit-appearance:none;-moz-appearance:none; font-family:inherit; margin:0}
+.form.check input { vertical-align:middle; }
+.form.check input[type=text]:-ms-clear,
+.form.check input[type=tel]:-ms-clear,
+.form.check input[type=number]:-ms-clear,
+.form.check input[type=email]:-ms-clear{display:none}
+.form.check input[type=text]::-ms-clear,
+.form.check input[type=tel]::-ms-clear,
+.form.check input[type=number]::-ms-clear,
+.form.check input[type=email]::-ms-clear{display:none}
+.form.check input[type=password]::-ms-reveal {display:none}
+.form.check input.not {border:1px solid #ff6600; }
+
+.form.check .inp_type,
+.form.check input[type="tel"],
+.form.check input[type="url"],
+.form.check input[type="text"],
+.form.check input[type="email"],
+.form.check input[type="number"],
+.form.check input[type="search"],
+.form.check input[type="password"]{width:100%; height:40px; margin:0; padding:0 10px 0 10px; line-height:21px; border:1px solid #b8b8b8; border-radius:2px; background-color:#f7f7f7; 
+	color:#303030; box-shadow:1px 2px 2px rgba(0,0,0,.06) inset; letter-spacing:-0.5px; vertical-align:middle; font-size:14px; box-sizing:border-box;}
+.form.check input[type="tel"]:focus,
+.form.check input[type="url"]:focus,
+.form.check input[type="text"]:focus,
+.form.check input[type="email"]:focus,
+.form.check input[type="number"]:focus,
+.form.check input[type="search"]:focus,
+.form.check input[type="password"]:focus {border:1px solid #282828; background-color:#fff; text-decoration:none}
+
+/* 파일업로드 */
+.form.check .ui_file_select.btn_file {position:relative; display:inline-block;}
+.form.check .btn_file .ui_filebox {position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; cursor: pointer;
+	opacity: 0; filter: alpha(opacity=0); -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(opacity=0)';}
+.form.check .ui_file_select.btn_file button:not(.clone){margin:0 !important; display:block !important;}
+.ui_file_select.btn_file button:not(.clone){margin:0 !important; display:none !important;}
+
+/* 금액입력 input */
+.form.check .in_money {display:block; position:relative; height:40px; box-sizing:border-box; padding-right:30px;}
+.form.check .in_money input {text-align:right; font-size:16px; color:#3d4248; padding-right:10px;}
+.form.check .in_money span {display:block; position:absolute; top:0; right:0px; width:30px; text-align:center; color:#303030; line-height:40px;}
+
+/* 공통 button : input delete */
+.form.check  button[del-button] {display:inline-block; overflow:hidden; opacity:1; position:relative; top:1px !important; right:1px; margin:0 0 0 -30px !important; 
+	background:none !important;	width:30px; height:38px; padding:0 !important; color:transparent; vertical-align:top; z-index:100; box-shadow:none  !important; border:none  !important; cursor:pointer;}
+.form.check  button[del-button]:before { display:block; position:absolute; top:50%; left:50%; width:10px; height:10px; margin:-5px 0 0 -10px;
+	border-radius:1px; background:url(/img/ico_delbtn.png) no-repeat 0 0; background-size:10px; content:''; }
+	
+/* common00_2.placeholder */
+input[type="tel"]::-webkit-input-placeholder,
+input[type="tel"]:-moz-input-placeholder,
+input[type="tel"]::-moz-input-placeholder,
+input[type="tel"]:-ms-input-placeholder { color:#000; line-heihgt:1.2 }
+
+.placeholder,
+.placeholder.on { display:inline-block; position:absolute; height:100%; width:auto !important; z-index:1; color:#303030; left:10px; top:10px;
+font-size:14px; text-align:left !important; line-height:1.2 !important;}
+.placeholder.off { z-index:-1; }	
+
+

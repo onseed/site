@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>frontUxer</title>
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/frontUxer.css">
+<script src="js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript">        
+	var menuArry = ['1','4'];//1depth, 2depth
+</script>
+</head>
+<body>
+<script src="js/guide.js"></script><!-- site guide -->
+	
+	<div class="start_dim"><span></span></div>
+	
+	<h1 class="hide">아코디언</h1>
+
+	<div class="contents"><!-- contents -->
+	
+		<!--##################### uxAccodian #####################-->
+		<section class="aws_box">
+			<h1 class="aws_tl"> 아코디언 </h1>
+			<ul class="dcs">
+				<li>Toggle기능의  Accodian관련 플러그인</li>
+			</ul>	        
+	        <div class="code_area">
+	        	<div class="play_box">
+	        		<!-- code -->
+	        		<div class="option_txt">
+						<p><strong>실행 :</strong> <span class="incodebox"><code class="language-javascript">$('셀렉트').uxAccodian(); //toggleCont : false,  className : 'acco', baseView : false, btnText : ["열림","닫힘"] </code></span></p>
+						<p><strong>옵션 1:</strong> <span class="incodebox"><code class="language-javascript">$('셀렉트').uxAccodian({baseView : 2 }); //default : false, [1,2,3.....] , "all" 전체 열림, false 전체닫힘</code></span></p>
+						<p><strong>옵션 2:</strong> <span class="incodebox"><code class="language-javascript">$('셀렉트').uxAccodian({toggleCont : true}); //default : false, 토글형태</code></span></p>						
+						<p><strong>옵션 3:</strong> <span class="incodebox"><code class="language-javascript">$('셀렉트').uxAccodian({className : '하위클래스' }); //default : "acco", 하위클래스_wrap, 하위클래스_tit, 하위클래스_cont 구조로 변경</code></span></p>
+						<p><strong>옵션 4:</strong> <span class="incodebox"><code class="language-javascript">$('셀렉트').uxAccodian({btnText : ["열림","닫힘"] }); //토글상태에 따른 버튼 텍스트 </code></span></p>
+						<p><strong>옵션 5:</strong> <span class="incodebox"><code class="language-javascript">$('셀렉트').uxAccodian({contFocus : true }); //타이틀 버튼 클릭시 컨텐츠로 포커스 이동 </code></span></p>
+						<p><strong>옵션 6:</strong> <span class="incodebox"><code class="language-javascript">$('셀렉트').uxAccodian({slideSpeed : 300 }); //슬라이드 속도</code></span></p>
+						<p><strong>옵션 6:</strong> <span class="incodebox"><code class="language-javascript">$('셀렉트').uxAccodian({inputCheck : true  }); //체크박스형 약관에 대한 접근성 처리</code></span></p> 
+					</div>
+					<!--// code -->
+										
+				</div>
+				
+					<!-- run_sample -->
+					<div class="run_sample">	
+					
+	        			<dl class="dcs">
+	               			<dt><strong>패치 노트:</strong></dt>
+	               			<dd>20191110: 접근성에 따른 토글상태 버튼 텍스트 정리 및 옵션 추가</dd>
+	               			<dd>20191110: "baseView: all"과 "slideSpeed : 0"이 있어 "기본 모두 열림"" 옵션 삭제</dd>
+	               			<dd>20191212: "contFocus : true" 옵션시 페이지 스크롤을 클릭한 버튼기준으로 수정</dd>
+	               			<dd>20191212: 약관타입의 토글에 대한 접근성 패치</dd>
+	               			<dd>20201105: ios일때 포커싱을 팝업내 첫번째 버튼으로 분기처리(모바일웹 접근성)</dd>
+	               		</dl>		               		
+	               		
+	                    <!-- sample_box -->
+	                    <article class="sample_box mgt_l">
+	                    
+	                    	<!-- html -->
+	                    	
+	                    	<p class="mgb_m">
+		                    	<strong>기본형:</strong>	                    	
+		                    	<span class="normal"><code class="language-javascript"> toggleCont : false,  className : 'acco', baseView : false, btnText : ["열림","닫힘"]</code></span>
+	                    	</p>
+	                    	
+							<ul class="acco_box type1">
+								<li class="acco_wrap">
+									<div class="acco_tit">
+										<button type="button">아코디언 기본형 1 <span>열기</span></button>
+									</div>
+									<div class="acco_cont">
+									
+										아코디언 기본형 1 컨텐츠
+
+									</div>
+								</li>
+								<li class="acco_wrap">
+									<div class="acco_tit">
+										<button type="button">아코디언 기본형 2 <span>열기</span></button>
+									</div>
+									<div class="acco_cont">
+										아코디언 기본형 2 컨텐츠
+									</div>
+								</li>	
+								<li class="acco_wrap">
+									<div class="acco_tit">
+										<button type="button">아코디언 기본형 3 <span>열기</span></button>
+									</div>
+									<div class="acco_cont">
+										아코디언 기본형 2 컨텐츠
+									</div>
+								</li>									
+							</ul>
+			               	<script>
+							$(window).load(function(){
+								$('.acco_box.type1').uxAccodian();
+							});
+							</script>							
+							
+	                    	<p class="mgt_l mgb_m">
+		                    	<strong>옵션설정 1:</strong>	                    	
+		                    	<span class="normal"><code class="language-javascript"> baseView : [1,3] , toggleCont : true, btnText : ["내부 열림","내부 닫힘"], contFocus : true,  중첩 토글</code></span>
+	                    	</p>							 
+	                    	
+							<ul class="acco_box type2">
+								<li class="acco_wrap">
+									<div class="acco_tit">
+										<button type="button">아코디언 타이틀 1<span>열기</span></button>
+									</div>
+									<div class="acco_cont">
+																			
+				                    	<style>
+											.accoin_wrap > .accoin_tit {border: 1px solid #d9d9d9; 	background: #fff; margin-top:-1px; border-radius:2px;}
+											.accoin_wrap > .accoin_tit button{display:block; width:100%; text-align:left; position:relative; padding:10px;}
+											.accoin_wrap > .accoin_tit button span{display:block; position:absolute; top:50%; right:10px; height:20px; margin-top:-10px;}
+											.accoin_wrap > .accoin_tit button span:after {display: inline-block; content:''; width: 10px; height: 7px; background:url(img/bg_select_down.svg) no-repeat 0 0; background-size: 20px auto;
+												vertical-align:middle; margin-left:5px;}
+											.accoin_wrap.on > .accoin_tit button span:after {transform: rotate(180deg);}									
+											.accoin_wrap > .accoin_cont {padding:10px;}
+											
+											body.new_mopism .acco_wrap > .acco_tit button,
+											body.new_mopism .accoin_wrap > .accoin_tit button {border:none !important; box-shadow:none !important;}
+											
+				                    	</style>
+										<ul class="acco_box type3">
+											<li class="accoin_wrap">
+												<div class="accoin_tit">
+													<button type="button">아코디언 타이틀 1 <span>열기</span></button>
+												</div>
+												<div class="accoin_cont">
+													아코디언 컨텐츠 11
+												</div>
+											</li>
+											<li class="accoin_wrap">
+												<div class="accoin_tit">
+													<button type="button">아코디언 타이틀 1 <span>열기</span></button>
+												</div>
+												<div class="accoin_cont">
+													아코디언 컨텐츠 1
+												</div>
+											</li>										
+										</ul>
+										
+									</div>
+								</li>
+								<li class="acco_wrap">
+									<div class="acco_tit">
+										<button type="button">아코디언 타이틀 1<span>열기</span></button>
+									</div>
+									<div class="acco_cont">
+										아코디언 컨텐츠 1
+									</div>
+								</li>
+								<li class="acco_wrap">
+									<div class="acco_tit">
+										<button type="button">아코디언 타이틀 1<span>열기</span></button>
+									</div>
+									<div class="acco_cont">
+										아코디언 컨텐츠 1
+									</div>
+								</li>																
+							</ul>		
+			               	<script>
+							$(window).load(function(){
+								$('.acco_box.type2').uxAccodian({
+									baseView : [1,3],
+									//baseView : 3,
+									//baseView : 'all',
+									toggleCont : true,
+									contFocus : true 
+								});
+								$('.acco_box.type3').uxAccodian({
+									toggleCont : true,
+									className: "accoin",
+									btnText : ["내부 열림","내부 닫힘"]
+								});							
+							});
+							</script>
+							
+	                    	<p class="mgt_l ">
+		                    	<strong>옵션설정 2:</strong>	                    	
+		                    	<span class="normal"><code class="language-javascript"> className : 'accodian', slideSpeed : 0,  별도 디자인</code></span>
+		                    	<br/>
+								별도 클래스 지정으로 디자인 type 추가시  css로만 처리.		                    	
+	                    	</p>
+	                    	<button type="button" class="btn_play point" id="add_test" style="display:block; float:right; margin-bottom:10px;">아코디언 생성</button>
+							
+	                    	<style>
+								.accodian_wrap > .accodian_tit button{padding:15px; border-radius:10px; border:1px solid #d9d9d9; display:block; width:100%; background:#f9f9f9; box-shadow: 0px 1px 5px rgba(180,180,180,0.2); margin-top:10px; border:none;}
+								.accodian_wrap > .accodian_cont{padding:25px 15px 15px 15px; margin:0px 0 10px 0; border-radius:0 0 10px 10px; border:1px solid #d9d9d9; border-top:none;}
+								.accodian_wrap.on > .accodian_tit button{padding:15px; border-radius:10px 10px 0 0; border:1px solid #d9d9d9;}								
+	                    	</style>
+	                    	<br/>
+	                    	
+	                    	<!-- 
+							<ul class="acco_box type4">
+								<li class="accodian_wrap">
+									<div class="accodian_tit">
+										<button type="button">아코디언 design type1 <span>열기</span></button>
+									</div>
+									<div class="accodian_cont bg_psd">
+										아코디언 design type1 컨텐츠 
+									</div>
+								</li>
+							</ul>-->
+							
+							<!--// html -->							
+			               	<script>
+							$(window).load(function(){
+								var inx = 1,
+								addInx = 5;
+								$('#add_test').click(function(){
+									inx ++;
+									addAcco(inx);
+									$('.acco_box.type4').uxAccodian({
+										className : 'accodian',
+										slideSpeed : 0
+									});									
+								});
+								function addAcco(index){
+									var accoCont = ''+
+									'<ul class="acco_box type4">'+
+										'<li class="accodian_wrap">'+
+											'<div class="accodian_tit"><button type="button">아코디언 design type'+index+' <span>열기</span></button></div>'+
+											'<div class="accodian_cont bg_psd"> 아코디언 design type'+index+' 컨텐츠</div>'+
+										'</li>'+
+									'</ul>';
+									$("#add_area").append(accoCont);
+								}
+								for (var i = 1; i< addInx+1;  i++){
+									inx= i;
+									addAcco(i);
+									$('.acco_box.type4').uxAccodian({
+										className : 'accodian',
+										slideSpeed : 0
+									});	
+								}
+								
+								
+							});
+							</script>							
+							
+							<div id="add_area" style="clear:both;">
+															
+							</div>
+							
+							<div class="mgt_l">
+		                    	<p class="mgb_s ">
+			                    	<strong>약관 처리:</strong> <span class="normal"><code class="language-javascript"> inputCheck : true //default</code></span> <br/>
+			                    	 아코디언 버튼내에 약관이 있을때는 접근성이슈가 있어 버튼안에 약관타이틀 텍스트가 들어가는 형태로 패치로 추가. <br/> 토글형 약관이 아니거나 별도 기능으로 빠진다면 false로 끌수 있다. 
+			                    	<!-- <span class="normal"><code class="language-javascript"> className : 'accodian', slideSpeed : 0,  별도 디자인</code></span> -->         	
+		                    	</p>							
+							
+								<ul class="acco_box type5">
+									<li class="ac_wrap acco_wrap">
+										<div class="acco_tit">
+											<input type="checkbox" name="agree" id="agree_chk1" value=""/>
+											<label for="agree_chk1">사이트약관 약관 전체 동의</label>										
+											<button type="button">
+												<span>열기</span>
+											</button>
+										</div>
+										<div class="ac_cont acco_cont">											
+											<input type="checkbox" name="agree" id="agree_chk2" value=""/>
+											<label for="agree_chk2">개인 이용정보 약관 동의</label> <br/>
+											<input type="checkbox" name="agree" id="agree_chk3" value=""/>
+											<label for="agree_chk3">사이트 이용정보 약관 동의</label>											
+										</div>
+									</li>
+								</ul>
+								<ul class="acco_box type5">
+									<li class="ac_wrap acco_wrap">
+										<div class="acco_tit">
+											<input type="checkbox" name="agree2" id="agree_chk11" value=""/>
+											<label for="agree_chk11">회원가입 약관 전체 동의</label>										
+											<button type="button">
+												<span>열기</span>
+											</button>
+										</div>
+										<div class="ac_cont acco_cont">											
+											<input type="checkbox" name="agree2" id="agree_chk21" value=""/>
+											<label for="agree_chk21">개인 가입 약관 동의</label> <br/>
+											<input type="checkbox" name="agree2" id="agree_chk31" value=""/>
+											<label for="agree_chk31">사이트 가입 약관 동의</label>											
+										</div>
+									</li>
+								</ul>								
+								<script>
+								$(window).load(function(){
+									$('.acco_box.type5').uxAccodian({
+										btnText : ["펼치기","숨기기"]
+									});									
+								});
+								</script>
+							</div>
+							
+		
+							
+							
+
+	                    </article>
+	                   <!--// sample_box -->
+					</div>
+					<!-- run_sample -->	               					        
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-css">
+.acco_wrap > .acco_tit {border: 1px solid #d9d9d9; 	background: #fff; margin-top:-1px; border-radius:2px; position:relative;}
+.acco_wrap > .acco_tit button{display:block; width:100%; text-align:left; position:relative; padding:10px;}
+.acco_wrap > .acco_tit button span{display:block; position:absolute; top:50%; right:10px; height:20px; margin-top:-10px;}
+.acco_wrap > .acco_tit button span:after {display: inline-block; content:''; width: 10px; height: 7px; background:url(img/bg_select_down.svg) no-repeat 0 0; 
+	background-size: 20px auto; vertical-align:middle; margin-left:5px;}
+.acco_wrap.on > .acco_tit{box-shadow: 0px 0px 5px rgba(180,180,180,0.2);}
+.acco_wrap.on > .acco_tit button span:after {transform: rotate(180deg);}
+.acco_wrap > .acco_cont {padding:10px;}
+							
+/*체크박스 인풋이 있는 아코디언일때*/
+.acco_wrap > .acco_tit.inputed {padding:10px;}	
+.acco_wrap > .acco_tit.inputed button{display:block; width:auto; height:100%; float:right; margin:-10px -10px -10px 0; font-size: 14px;}
+.acco_wrap > .acco_tit.inputed button span {display: inline-block; position: static; top:0; right: 0; height: auto; margin-top: 0; margin-left:20px;}
+.acco_wrap > .acco_tit.inputed:after{display:block; content:''; clear:both;}
+</code>
+</pre>
+<!--// codebox -->
+				
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-markup">
+<!-- 기본 일반 -->
+<ul class="acco_box">
+	<li class="acco_wrap">
+		<div class="acco_tit">
+			<button type="button">타이틀 <span>열기</span></button>
+		</div>
+		<div class="acco_cont">
+			컨텐츠
+		</div>
+	</li>
+</ul>
+	
+<!-- 약관 형태 -->
+<ul class="acco_box type5">
+	<li class="ac_wrap acco_wrap">
+		<div class="acco_tit">
+			<input type="checkbox" name="agree" id="agree_chk1" value=""/>
+			<label for="agree_chk1">사이트약관 약관 전체 동의</label>	
+			<button type="button"> <span>열기</span></button>
+		</div>
+		<div class="ac_cont acco_cont">											
+			<input type="checkbox" name="agree" id="agree_chk2" value=""/>
+			<label for="agree_chk2">개인 이용정보 약관 동의</label>											
+		</div>
+	</li>
+</ul>	
+</code>
+</pre>
+<!--// codebox -->     				
+				
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-javascript">
+$.fn.extend({//#################### 7.uxAccodian ####################
+	uxAccodian : function(opt){		
+		var defaults = {
+			toggleCont : false,     // true 전체 닫힘 상태,
+			className : 'acco',     //class name class="acco_box"
+			baseView : false,       // 1,2,3....., all 전체 열림, false 전체닫힘
+			btnText : ["열기","닫기"], //토글상태에 따른 버튼 텍스트
+			contFocus : false, // 컨텐츠 자동 포커스 이동
+			slideSpeed : 300, // 슬라이드 속도
+			inputCheck : true // 체크박스에 대한 접근성 처리
+		}
+		var opt = $.extend(defaults,opt);
+		
+		return this.each(function(){
+			var $this		= $(this),
+				className	= opt.className,
+				$wrap		= $this.find('.'+ className + '_wrap'),
+				$tit			= $wrap.children('.'+ className + '_tit'),
+				$cont			= $wrap.children('.'+ className + '_cont'),
+				$btn			= $tit.children('button'),
+				btnText		= opt.btnText,
+				contFocus	= opt.contFocus,
+				slideSpeed	= opt.slideSpeed,
+				txt				= $btn.text(),
+				$btnTxt		= $btn.children('span').text(), //버튼내  span 상태 텍스트
+				toggleCont	= opt.toggleCont,				
+				baseView	= opt.baseView,
+				inputCheck	= opt.inputCheck;
+			
+			var app = {
+				init: function(){
+					$btntxt = $tit.find('button span');
+					$btntxt.text(btnText[0]);//디폴트 버튼 상태를 "열기"로 설정함
+					
+					if (!!baseView) { //baseView일때
+						if (baseView === 'all') { //baseView: all 일때
+							$cont.show();
+							$wrap.data('cont-toggle', true).addClass('on');
+							$btnTxt = $wrap.find('> .acco_tit button span').text(btnText[1]); //baseView를 all로 load하기때문에 "닫기"로 상태변경
+						} else { //baseView: all이 아닐때
+							$wrap.data('cont-toggle', false).removeClass('on');
+							$cont.hide();
+							
+							var $btntxt;
+							
+							if(!baseView[1]) { //baseView[1]일때
+								$wrap.data('cont-toggle', false);
+								$wrap.eq(baseView - 1).data('cont-toggle', true).addClass('on').find('> .acco_tit button').data('selected', true);
+								$wrap.eq(baseView - 1).children('.acco_cont').show();
+								
+								$btntxt = $wrap.eq(baseView - 1).find('> .acco_tit button span');
+								$btntxt.addClass('on');
+								$btntxt.text(btnText[1]); //baseView를 all로 load하기때문에 "닫기"로 상태변경
+								//console.log("!baseView[1] 일때 : "+$btntxt.text());
+							} else { //!baseView[1] 아닐때
+								var viewLen = baseView.length,
+									i= 0;
+								$wrap.data('cont-toggle', false);
+								for (i; i < viewLen; i++) {
+									$wrap.eq(baseView[i] - 1).data('cont-toggle', true).addClass('on').find('> .acco_tit button').data('selected', true);
+									$wrap.eq(baseView[i] - 1).children('.acco_cont').show();
+									$btntxt = $wrap.eq(baseView[i] - 1).find('> .acco_tit button span');
+									$btntxt.addClass('on');
+									$btntxt.text(btnText[1]); //baseView를 all로 load하기때문에 "닫기"로 상태변경
+									//console.log("!baseView[1] 아닐때 : "+$btntxt.text());
+								}
+							}
+						}
+					} else { //baseView 아닐때 나머지에 대한 처리
+						$wrap.data('cont-toggle', false).removeClass('on');
+						$cont.hide();
+					}
+					app.eventHandler();
+					if(inputCheck){//체크박스가 있을때
+						app.inputCheck();	
+					}
+				}, //init.end
+				inputCheck: function(current){
+					var inputUsed = $wrap.find("input").length;
+					if (inputUsed){ //console.log("인풋처리:" + inputUsed);
+						var agreeTxt = $tit.find("label").text();
+						var BtnTxt = $tit.find("button").html();					
+						$tit.find("button").html(agreeTxt + BtnTxt);
+						$tit.addClass("inputed");
+					}
+				}, //inputCheck.end
+				accordion: function(current){
+					var $current_btn	= $(current),
+						$current_tit		= $current_btn.parent('.'+ className + '_tit'),
+						$current_wrap	= $current_tit.parent('.'+ className + '_wrap'),
+						$current_cont	= $current_wrap.children('.'+ className + '_cont'),
+						$cWraps			= $current_wrap.siblings('.'+ className + '_wrap'),
+						$cCont			= $current_cont.find('.'+ className + '_cont'),
+						$cWrap			= $current_cont.find('.'+ className + '_wrap');
+					
+					var $this = $(this),
+						$wrap = $(current).closest('.'+className+'_wrap').children('.'+className+'_cont'),
+						$wrapParent = $(current).closest('.'+className+'_wrap'),
+						sc_top= 0;					
+					
+					if ($current_wrap.data('cont-toggle') === false) {
+						if (toggleCont) { //toggleCont일때
+							$cWraps.find('.accoin_tit button').removeClass('on').data('btn-open',false);
+							$cWraps.data('cont-toggle', false).removeClass('on').find('.'+ className + '_cont').stop().slideUp(slideSpeed);
+							$cCont.stop().slideUp(slideSpeed);
+							$cWrap.data('cont-toggle', false).removeClass('on');
+							$(current).addClass('on');
+						}
+						
+						$current_cont.stop().slideDown(slideSpeed,function(){
+							if(contFocus){//자동포커스 옵션일때
+								//actopen();
+								$wrap.attr('tabIndex',0).focus();
+								sc_top = $wrapParent.offset().top;
+								app.scrollMove(sc_top);								
+							}
+						});
+						$current_wrap.data('cont-toggle', true).addClass('on');
+					} else {
+						$current_cont.stop().slideUp(slideSpeed,function(){
+							/* 닫을때는 포커싱을 하지 않는것을 추천
+							if(contFocus){//자동포커스 옵션일때		
+								sc_top = $current_tit.offset().top;								
+								app.scrollMove(sc_top);								
+							}*/
+						});
+						$current_wrap.data('cont-toggle', false).removeClass('on');
+					}
+				}, //accordion.end
+				scrollMove : function(sc_top){//contFocus일때 페이지 스크롤처리
+					$('html, body').stop().animate({scrollTop : sc_top});
+				},
+				eventHandler: function(){
+					$btn.off('click.acco').on('click.acco', function(e){//버튼 클릭시
+						e.preventDefault();
+						var current = this,
+							$this = $(this),
+							$thisStatus = $(current).closest('.'+className+'_wrap').find('.'+className+'_tit span');
+						
+						if($this.closest('.'+className+'_wrap').hasClass('on')){//false: 열린상태
+							$thisStatus.text(btnText[0]);
+						}else{//true: 닫힌 상태
+							$thisStatus.text(btnText[1]);
+						}//console.log($thisStatus.text());
+						
+						app.accordion(current);
+						
+						$('.'+className+'_cont').removeAttr('tabindex');
+					});
+				}, //eventHandler.end
+			}
+			app.init();
+		});
+	}
+});//####################// 7.uxAccodian ####################
+</code>
+</pre>
+<!--// codebox -->      				
+				
+	        </div>
+	    </section>
+		<!--#####################// uxAccodian #####################-->	    
+		
+	</div><!--// contents --> 
+
+	<script src="js/jquery-ui.min.js"></script><!-- jquery ui-->
+	<script src="js/jquery.ui.touch-punch.js"></script><!-- jquery ui using mobile -->
+    <script src="js/frontUxer.js"></script><!-- plugin -->
+
+</body>
+</html>

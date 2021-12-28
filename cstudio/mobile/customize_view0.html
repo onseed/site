@@ -1,0 +1,1289 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<title> C STUDIO </title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=2.0" /><!--20150914 maximum-scale 수정-->
+<!--[if IE]>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<![endif]-->
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script><!--jquery flatform.js-->
+<!--[if lt IE 9]>
+<script src="js/html5shiv.js" type="text/javascript"></script>
+<![endif]-->
+<script type="text/javascript" src="js/common.js"></script><!-- common.js -->
+<script type="text/javascript" src="js/jquery.ezmark.js"></script><!-- jquery.ezmark.js 20151113 추가-->
+<link rel="stylesheet" type="text/css" href="css/basic.css" /><!--basic.css-->
+</head>
+
+<body ontouchstart="">
+<link rel="stylesheet" type="text/css" href="css/custom_ui.css" /><!--custom_ui.css-->
+<script src="js/canvg.js" type="text/javascript"></script><!-- canvg.js -->
+<script src="js/iscroll.js" type="text/javascript"></script><!-- iscroll.js -->
+<script type="text/javascript">
+//### 변수 및 설정값 : 이미지 폴더내 파일규칙 참고
+
+/*설정값 - default*/
+var bag_base = 0; //컬러값 base: strab, 밑판, 내피등 기본 선택
+var bag_front = 0; //컬러값 front 선택
+var bag_back = 0; //컬러값 back 선택
+var bag_side = 0; //컬러값 side 선택
+var bag_handle = 0; //컬러값 handle 선택
+var bag_front_pattern = 0; //패턴값 front 선택
+var bag_back_pattern = 0; //패턴값 back 선택
+var bag_side_pattern = 0; //패턴값 side 선택
+var bag_emblem = 0; //엠블렘값 선택
+var bag_glimm= false; //엠블렘 glimm 선택
+var strab_spec = "normal"; // 스트랩 선택
+
+/*와펜 설정값 - staphanie*/
+var small_select_num = new Array(); // small Array
+var small_select_Imgnum = new Array(); // small Img Array
+
+var big_select_num = new Array(); // big Array
+var big_select_Imgnum = new Array(); // big Img Array
+
+var select_num = new Array( ); //기본 Array
+var limit = 40; // total 영역
+var delete_small_rec = new Array("2","3","4","5","6","7","10","11","12","13","14","15"); //small 제외 영역 
+var delete_big_rec = new Array("2","3","4","5","6","7","10","11","12","13","14","15","1","8","9","16","24","32","33","34","35","36","37","38","39","40");//big 제외 영역 
+
+var wappen_num; //와펜 numer 체크
+var wappen_status="small"; //와펜 처리상태: small,big,delete
+
+/*파일 경로*/
+var svg_front_url = "svg/svg_stephanie_front.html"; //svg front url
+var svg_side_url = "svg/svg_stephanie_side.html";  //svg side url
+var svg_back_url = "svg/svg_stephanie_back.html"; //svg back url
+var svg_top_url = "svg/svg_stephanie_top.html"; //svg top url
+var img_url="img/custom/" //이미지폴더 경로
+var base_url="img/custom/bag/" //custom_bag 이미지 폴더 경로
+var bag_type="staphanie" //bag type(파일이름)
+
+var wappen_url; //와펜 이미지 주소 fabric 1번대, metal 100번대  ex: wappen_set_small15.jpg
+var wappen_url_none = img_url + "wappen/wappen0.png"; //와펜 이미지 없음 생성
+
+</script>
+<script src="js/custom_stephine_svg_ui.js" type="text/javascript"></script><!-- custom_stephine_svg_ui.js : stephine SVG 및 zoom 로드 //-->
+<script src="js/custom_stephine_wappen.js" type="text/javascript"></script><!-- custom_stephine_wappen.js : stephine wappen 로드 //-->
+<!--loading-->
+<div id="loading_div"><img src="img/loading.gif"></div>
+<!--//loading-->
+
+<!--wrap-->
+<div class="wrap">
+
+<!--###### headerArea ######-->
+<div class="headerArea">
+	<h1 class="logo on"><a href="/"><span>C STUDIO</span></a></h1><!--로그인 후-->
+	<!--<h1 class="logo"><a href="/"><span>C STUDIO</span></a></h1> 로그인 전-->
+
+	<div class="gnb">
+		<a href="#" class="go_couronne"><span>COURONNE</span></a>
+		<ul>
+			<!--로그인 전
+			<li><a href="#">MY PAGE</a></li>
+			<li><a href="#">CART</a></li>-->
+			<!--//로그인 전-->
+			<!--로그인 후-->
+			<li><a href="#">LOGOUT</a></li>
+			<li><a href="#">MY PAGE</a></li>
+			<!--//로그인 후-->
+		</ul>
+	</div>
+
+	<div class="head_menu">
+		<ul>
+			<li><a href="#">YOUR STUDIO</a></li>
+			<li><a href="#">CUSTOMIZE</a></li>
+			<li><a href="#">MY STUDIO</a></li>
+		</ul>
+	</div>
+</div>
+<!--###### //headerArea ######-->
+
+<!--###### contentArea ######-->
+<div class="contentArea">
+<!--내용 영역-->
+
+	<!--###custom_layout###-->
+	<div id="custom_layout">
+
+		<!--## SVG 저장하기 -->
+		<canvas id="canvas_capture" style="display:none;"></canvas>
+		<script type="text/javascript" >
+		$(document).ready(function(){
+
+			$("#page_save").click(function(){
+
+				view_status='front';//viewside를 front로 만들고 캡춰
+				$("#front_view").click();
+
+				$("#front_svg").attr({"width":"640","height":"640"}); //캡춰 사이즈로 조정후 20150916 사이즈 조정
+				
+				check_skin_ev(); //저장된 정보를 뿌려줌
+			
+				var svg = $("#front_svg_layout").html().replace(/>\s+/g, ">").replace(/\s+</g, "<");
+				var canvas = $("#canvas_capture")[0];
+
+				var saveWindow = window.open('','MyNewWindow'); //테스트용 이미지 호출창: 임시
+
+				canvg(canvas, svg, {//canvg();실행 https://github.com/gabelerner/canvg 참고
+					renderCallback : function(){
+						$("#front_svg").attr({"width":"856","height":"856"});//캡춰 이전 사이즈로 처리
+
+						var imgData = canvas.toDataURL('image/png');
+						var img = new Image();
+						img.src = imgData; //이미지 데이터 저장
+						
+						saveWindow.document.write("<a href='"+imgData+"'><img src='"+imgData+"'/></a>");//테스트용 이미지: 임시
+					}
+				});//end				
+
+			});
+
+			//page_menu_toggle			
+			$("#page_menu").click(function(){
+				if(page_menu_toggle == false){	
+					$("#page_menu").addClass("on");
+					$("#btn_custom_page").css("display","block");
+					page_menu_toggle = true;
+				}else{
+					$("#page_menu").removeClass("on");
+					$("#btn_custom_page").css("display","none");
+					page_menu_toggle = false;
+
+					$("#gride_rule1").css("display","none");
+					rule_guide = false;
+				}
+			});//end. page_menu_toggle
+			
+		});
+		</script>
+		<!--##// SVG 저장하기 -->
+
+		<div id="menu_custom_page">
+			<button id="page_menu"></button>
+			<!--btn_custom_page-->
+			<div class="btn_custom_page" id="btn_custom_page">
+				<span><button id="page_save">SAVE</button></span><!--onclick="window.open('customize_view_pop2.html', '_blank')" save 테스트때문에 주석처리함 20150916-->
+				<span><button id="page_sns" onclick="window.open('customize_view_pop3.html', '_blank')">SNS</button></span>
+				<span><button id="rule_guide">SIZE</button></span>
+				<!-- 20151113 가이드 버튼추가 -->
+				<span><button id="guide_page">GUIDE</button></span>
+				<!--// 20151113 가이드 버튼추가 -->
+			</div>
+			<!--//btn_custom_page-->
+		</div>
+
+		<div id="viewport_set">
+			<span id="front_view" onclick="view_status='front'" class="on"><button>fornt</button></span>
+			<span id="side_view" onclick="view_status='side'"><button>side</button></span>
+			<span id="back_view" onclick="view_status='back'"><button>back</button></span>
+			<span id="top_view" onclick="view_status='top'"><button>top</button></span>
+		</div>
+
+		<!--##custom_visual##-->
+		<div id="custom_visual">
+
+		</div>
+		<!--##//custom_visual##-->
+
+		<!--##visual_360  20151113 추가 및 변경##-->
+		<div class="visual_360_ly">
+			<div class="ly">
+				<div id='visual_360'></div>
+			</div>			
+		</div>
+		<script type="text/javascript" src="js/spritespin.js"></script><!-- spritespin.js -->
+		<script type="text/javascript">
+			var play360 = false; //20151113 360도 조건변수 추가
+			
+			$(".ui_guide_layer").css("display","none");
+
+			$(document).ready(function(){//화면 가이드 UI 그만보기 쿠키처리
+					cookiedata = document.cookie; 
+					if (cookiedata.indexOf("guide_ui=done") < 0 ){ //쿠키전
+						play360 = false;
+						$(".ui_guide_layer").css("display","block");
+					}else{//쿠키 후
+						play360 = true;
+						init_360();//360도 처리
+						$(".ui_guide_layer").css("display","none");
+					}	
+			});
+
+			function init_360(){//function 처리
+				//stepani
+				var spin1 = $('#visual_360');
+				var frames1 = SpriteSpin.sourceArray('img/custom/360/new_stepani.{frame}.jpg', {
+					frame: [1, 20], 
+					digits: 3 
+				});
+				spin1.spritespin({
+					source: frames1,
+					sense: -1,
+					renderer: 'canvas',
+					animate : true,
+					loop: false,//360도 loop
+					lanes: 1,
+					module: '360',
+					width: 320,
+					height: 320
+				});
+				var api1 = spin1.spritespin("api");
+				spin1.bind("onFrame", function(){
+						var data = api1.data;
+						if(data.frame == 19){//마지막컷 체크후 실행
+							$(".visual_360_ly").fadeOut("fast");		
+						}	
+				});				
+			}
+
+			if(play360==true){//360도 조건처리
+				init_360();
+			}
+
+			$('#visual_360').click(function(){
+				$(".visual_360_ly").fadeOut("fast");
+				return false;
+			});
+			$('#guide_page').click(function(){//가이드 화면 다시 불러오기
+				$(".ui_guide_layer").fadeIn("fast");
+				return false;
+			});
+		</script>		
+		<!--##end. visual_360  20151113 추가 및 변경##-->
+
+		<!--##wappen_system##-->
+		<div class="wappen_module">
+			<div class="wappen_box">
+				<ul class="selelct">
+					<li id="wappen_svg1" small_chk="false" big_chk="false" class="wappen_svg"></li>
+					<li id="wappen_svg2" small_chk="false" big_chk="false" class="wappen_svg"></li>
+					<li id="wappen_svg3" small_chk="false" big_chk="false" class="wappen_svg"></li>
+					<li id="wappen_svg4" small_chk="false" big_chk="false" class="wappen_svg"></li>
+					<li id="wappen_svg5" small_chk="false" big_chk="false" class="wappen_svg"></li>
+					<li id="wappen_svg6" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg7" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg8" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg9" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg10" small_chk="false" big_chk="false" class="wappen_svg"></li>			
+					<li id="wappen_svg11" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg12" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg13" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg14" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg15" small_chk="false" big_chk="false" class="wappen_svg"></li>
+					<li id="wappen_svg16" small_chk="false" big_chk="false" class="wappen_svg"></li>
+					<li id="wappen_svg17" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg18" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg19" small_chk="false" big_chk="false" class="wappen_svg"></li>
+					<li id="wappen_svg20" small_chk="false" big_chk="false" class="wappen_svg"></li>
+					<li id="wappen_svg21" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg22" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg23" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg24" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg25" small_chk="false" big_chk="false" class="wappen_svg"></li>
+					<li id="wappen_svg26" small_chk="false" big_chk="false" class="wappen_svg"></li>
+					<li id="wappen_svg27" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg28" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg29" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg30" small_chk="false" big_chk="false" class="wappen_svg"></li>
+					<li id="wappen_svg31" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg32" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg33" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg34" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg35" small_chk="false" big_chk="false" class="wappen_svg"></li>
+					<li id="wappen_svg36" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg37" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg38" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg39" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg40" small_chk="false" big_chk="false" class="wappen_svg"></li>
+				</ul>	
+			</div>
+		</div>
+		<!--##//wappen_system##-->
+
+		<div id="gride_rule1"><span><img src="img/pic_rule.png" alt=""/></span></div>
+
+		<!--# custom_menu #-->
+		<div id="custom_menu">
+			<div id="custom_navi">
+				<ul>
+					<li class="color on"><button>color</button></li>
+					<li class="print"><button>print</button></li>
+					<li class="emblem"><button>emblem</button></li>
+					<li class="strab"><button>strab</button></li>
+					<li class="patch"><button>patch</button></li>
+				</ul>
+			</div>
+
+			<!--choice_box: choice_box_color-->
+			<div class="choice_box" id="choice_box_color">
+
+				<!--color_choice-->
+				<div class="sort_tab color" id="sort_color_tab">
+					<ul>
+						<li class="tab01" id="section_color_base"><span><button>base</button></span></li>
+						<li class="tab02" id="section_color_side"><span><button>side</button></span></li>
+						<!--<li class="tab03" id="section_color_front"><span><button>front</button></span></li> 20151113 삭제 -->
+						<li class="tab04" id="section_color_handle"><span><button>handle</button></span></li>
+					</ul>
+				</div>
+				<!--color_choice-->
+
+				<!--플리킹 영역-->
+				<div class="sort_wrap color" id="sort_wrap_color">
+					<div class="sort_wrap_box">
+						<div class="btn_set" id="btn_color_set">
+							<ul>
+								<li>
+									<span>
+										<button class="select_change on" onclick="bag_color_Img_url_make(0); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/btn_none.png" alt=""/></button>
+										<a href="#" class="select_detail" onclick="return false">NONE</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change" onclick="bag_color_Img_url_make(1); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/color/stephanie_color_small1.jpg" alt=""/></button>
+										<a href="customize_view_pop1.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change" onclick="bag_color_Img_url_make(2); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/color/stephanie_color_small2.jpg" alt=""/></button>			
+										<a href="customize_view_pop1.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change" onclick="bag_color_Img_url_make(3); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/color/stephanie_color_small3.jpg" alt=""/></button>				
+										<a href="customize_view_pop1.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change" onclick="bag_color_Img_url_make(4); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/color/stephanie_color_small4.jpg" alt=""/></button>			
+										<a href="customize_view_pop1.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change" onclick="bag_color_Img_url_make(5); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/color/stephanie_color_small5.jpg" alt=""/></button>			
+										<a href="customize_view_pop1.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="bag_color_Img_url_make(6); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/color/stephanie_color_small6.jpg" alt=""/></button>				
+										<a href="customize_view_pop1.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change" onclick="bag_color_Img_url_make(7); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/color/stephanie_color_small7.jpg" alt=""/></button>			
+										<a href="customize_view_pop1.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change" onclick="bag_color_Img_url_make(8); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/color/stephanie_color_small8.jpg" alt=""/></button>			
+										<a href="customize_view_pop1.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change" onclick="bag_color_Img_url_make(9); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/color/stephanie_color_small9.jpg" alt=""/></button>			
+										<a href="customize_view_pop1.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change" onclick="bag_color_Img_url_make(10); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/color/stephanie_color_small10.jpg" alt=""/></button>			
+										<a href="customize_view_pop1.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!--//플리킹 영역-->
+
+				<!--20151113 문구추가-->
+				<div class="tip_txt">
+					<span>해상도에 따라 색상차이가 있을수 있습니다.</span>
+				</div>
+				<!--//20151113 문구추가-->
+
+			</div>
+			<!--//choice_box: choice_box_color-->
+
+			<!--choice_box: choice_box_pattern-->
+			<div class="choice_box" id="choice_box_pattern">
+
+				<!--pattern_choice-->
+				<div class="sort_tab pattern" id="sort_pattern_tab">
+					<ul>
+						<li class="tab01" id="section_pattern_base"><span><button>base</button></span></li>
+						<!--<li class="tab02" id="section_pattern_front"><span><button>front</button></span></li> 20151113 삭제 -->
+						<li class="tab03" id="section_pattern_side"><span><button>side</button></span></li>
+					</ul>
+				</div>
+				<!--pattern_choice-->
+
+				<!--플리킹 영역-->
+				<div class="sort_wrap pattern" id="sort_wrap_pattern">
+					<div class="sort_wrap_box">
+						<div class="btn_set" id="btn_pattern_set">
+							<ul>
+								<li>
+									<span>
+										<button class="select_change on" onclick="bag_pattrern_Img_url_make(0); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/btn_none.png" alt=""/></button>
+										<a href="#" class="select_detail" onclick="return false">NONE</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change" onclick="bag_pattrern_Img_url_make(1); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/pattern/stephanie_pattern_small1.jpg" alt=""/></button>
+										<a href="customize_view_pop12.html" target="_blank" class="select_detail">DETAIL</a>										
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change" onclick="bag_pattrern_Img_url_make(2); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/pattern/stephanie_pattern_small2.jpg" alt=""/></button>				
+										<a href="customize_view_pop12.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change" onclick="bag_pattrern_Img_url_make(3); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/pattern/stephanie_pattern_small3.jpg" alt=""/></button>				
+										<a href="customize_view_pop12.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change" onclick="bag_pattrern_Img_url_make(4); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/pattern/stephanie_pattern_small4.jpg" alt=""/></button>				
+										<a href="customize_view_pop12.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change" onclick="bag_pattrern_Img_url_make(5); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/pattern/stephanie_pattern_small5.jpg" alt=""/></button>				
+										<a href="customize_view_pop12.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="bag_pattrern_Img_url_make(6); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/pattern/stephanie_pattern_small6.jpg" alt=""/></button>				
+										<a href="customize_view_pop12.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change" onclick="bag_pattrern_Img_url_make(7); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/pattern/stephanie_pattern_small7.jpg" alt=""/></button>				
+										<a href="customize_view_pop12.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change" onclick="bag_pattrern_Img_url_make(8); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/pattern/stephanie_pattern_small8.jpg" alt=""/></button>				
+										<a href="customize_view_pop12.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change" onclick="bag_pattrern_Img_url_make(9); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/pattern/stephanie_pattern_small9.jpg" alt=""/></button>				
+										<a href="customize_view_pop12.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change" onclick="bag_pattrern_Img_url_make(10); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/pattern/stephanie_pattern_small10.jpg" alt=""/></button>					
+										<a href="customize_view_pop12.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!--//플리킹 영역-->
+
+				<!--20151113 문구추가-->
+				<div class="tip_txt">
+					<span>패턴의 경우 제작에 따라 위치가 다소 차이가 있을수 있습니다.</span>
+				</div>
+				<!--//20151113 문구추가-->
+
+			</div>
+			<!--//choice_box: choice_box_pattern-->
+
+			<!--choice_box: choice_box_emblem-->
+			<div class="choice_box" id="choice_box_emblem">
+
+				<!--emblem_choice-->
+				<div class="sort_tab emblem" id="sort_emblem_tab">
+					<ul>
+						<li class="tab01" id="section_emblem_basic"><span><button>basic</button></span></li>
+						<li class="tab02" id="section_emblem_glimm"><span><button>glimm</button></span></li>
+					</ul>
+				</div>
+				<!--//emblem_choice-->
+
+				<!--플리킹 영역-->
+				<div class="sort_wrap emblem" id="sort_wrap_emblem1">
+					<div class="sort_wrap_box">
+						<div class="btn_set" id="btn_emblem_set1">
+							<ul>
+								<li>
+									<span>
+										<button class="select_change on" onclick="bag_emblem_url_make(0); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/emblem/stephanie_emblem_small0.jpg" alt=""/></button>
+										<a href="customize_view_pop13.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change" onclick="bag_emblem_url_make(1); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/emblem/stephanie_emblem_small1.jpg" alt=""/></button>
+										<a href="customize_view_pop13.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change" onclick="bag_emblem_url_make(2); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/emblem/stephanie_emblem_small2.jpg" alt=""/></button>
+										<a href="customize_view_pop13.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="sort_wrap emblem" id="sort_wrap_emblem2">
+					<div class="sort_wrap_box">
+						<div class="btn_set" id="btn_emblem_set2">
+							<ul>
+								<li>
+									<span>
+										<button class="select_change on" onclick="bag_emblem_url_make(0); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/emblem/stephanie_emblem_small0.jpg" alt=""/></button>
+										<a href="customize_view_pop14.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change" onclick="bag_emblem_url_make(1); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/emblem/stephanie_emblem_small1.jpg" alt=""/></button>
+										<a href="customize_view_pop14.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change" onclick="bag_emblem_url_make(2); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/emblem/stephanie_emblem_small2.jpg" alt=""/></button>
+										<a href="customize_view_pop14.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!--//플리킹 영역-->
+
+				<!-- 20151113 추가 -->
+				<div class="tip_txt">
+					<span>선택한 엠블럼의 유형에 따라 부자재 컬러가 자동으로 선택됩니다.</span>
+					<a href="customize_view_pop6.html" target="_blank">glimm 샘플보기</a>
+				</div>
+				<!--// 20151113 추가 -->
+
+			</div>
+			<!--//choice_box: choice_box_emblem-->
+
+			<!--choice_box: choice_box_strab 20151113 cm 추가-->
+			<div class="choice_box" id="choice_box_strab">
+				<div class="strab_select_set">
+					<ul>
+						<li><button class="strab_select select1 on" onclick="strab_spec='normal'"><span></span> Normal (60cm)</button></li>
+						<li><button class="strab_select select2" onclick="strab_spec='long'"><span></span> Long (80cm)</button></li>
+					</ul>
+				</div>
+			</div>
+			<!--//choice_box: choice_box_strab-->
+
+			<!--choice_box: choice_box_wappen-->
+			<div class="choice_box" id="choice_box_wappen">
+
+				<!--emblem_choice-->
+				<div class="sort_tab wappen" id="sort_wappen_tab">
+					<ul>
+						<li class="tab01 on" id="section_wappen_fabric"><span><button>Fabric</button></span></li>
+						<li class="tab02" id="section_wappen_metal"><span><button>Metal</button></span></li>
+					</ul>
+				</div>
+				<!--//emblem_choice-->
+
+				<!--플리킹 영역-->
+				<div class="sort_wrap wappen" id="sort_wrap_wappen1">
+					<div class="sort_wrap_box">
+						<div class="btn_set" id="btn_wappen_set1">
+							<ul>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='big'; wappen_num=1;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big1.jpg" alt="" class="soldout"/></button>	<!--20150915 품절일때-->										
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='big'; wappen_num=2;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big2.jpg" alt=""/></button>											
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='big'; wappen_num=3;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big3.jpg" alt="" class="soldout"/></button>	<!--20150915 품절일때-->												
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='big'; wappen_num=4;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big4.jpg" alt=""/></button>											
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='big'; wappen_num=5;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big5.jpg" alt=""/></button>											
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='big'; wappen_num=6;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big6.jpg" alt=""/></button>											
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='big'; wappen_num=7;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big7.jpg" alt=""/></button>											
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='big'; wappen_num=8;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big8.jpg" alt=""/></button>											
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='big'; wappen_num=9;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big9.jpg" alt=""/></button>											
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='big'; wappen_num=10;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big10.jpg" alt=""/></button>											
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='big'; wappen_num=11;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big11.jpg" alt=""/></button>											
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='big'; wappen_num=12;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big12.jpg" alt=""/></button>											
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='big'; wappen_num=13;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big13.jpg" alt=""/></button>											
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='big'; wappen_num=14;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big14.jpg" alt=""/></button>											
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='big'; wappen_num=15;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big15.jpg" alt=""/></button>											
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='big'; wappen_num=16;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big16.jpg" alt=""/></button>											
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='big'; wappen_num=17;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big17.jpg" alt=""/></button>											
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='big'; wappen_num=18;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big18.jpg" alt=""/></button>											
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='small'; wappen_num=1;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small1.jpg" alt="" class="soldout"/></button>	<!--20150915 품절일때-->																			
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='small'; wappen_num=2;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small2.jpg" alt=""/></button>											
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='small'; wappen_num=3;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small3.jpg" alt="" class="soldout"/></button>	<!--20150915 품절일때-->																
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='small'; wappen_num=4;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small4.jpg" alt=""/></button>											
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='small'; wappen_num=5;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small5.jpg" alt=""/></button>											
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='small'; wappen_num=6;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small6.jpg" alt=""/></button>											
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='small'; wappen_num=7;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small7.jpg" alt=""/></button>											
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='small'; wappen_num=8;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small8.jpg" alt=""/></button>											
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='small'; wappen_num=9;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small9.jpg" alt=""/></button>											
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='small'; wappen_num=10;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small10.jpg" alt=""/></button>											
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='small'; wappen_num=11;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small11.jpg" alt=""/></button>											
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='small'; wappen_num=12;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small12.jpg" alt=""/></button>											
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='small'; wappen_num=13;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small13.jpg" alt=""/></button>											
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='small'; wappen_num=14;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small4.jpg" alt=""/></button>											
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='small'; wappen_num=15;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small5.jpg" alt=""/></button>											
+										<a href="customize_view_pop15.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="sort_wrap wappen" id="sort_wrap_wappen2">
+					<div class="sort_wrap_box">
+						<div class="btn_set" id="btn_wappen_set2">
+							<ul>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='big'; wappen_num=101;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big101.jpg" alt=""/></button>											
+										<a href="customize_view_pop16.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='big'; wappen_num=102;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big102.jpg" alt=""/></button>											
+										<a href="customize_view_pop16.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='small'; wappen_num=101;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small101.jpg" alt=""/></button>											
+										<a href="customize_view_pop16.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='small'; wappen_num=102;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small102.jpg" alt=""/></button>											
+										<a href="customize_view_pop16.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='small'; wappen_num=103;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small103.jpg" alt=""/></button>											
+										<a href="customize_view_pop16.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='small'; wappen_num=104;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small104.jpg" alt=""/></button>											
+										<a href="customize_view_pop16.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='small'; wappen_num=105;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small105.jpg" alt=""/></button>											
+										<a href="customize_view_pop16.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='small'; wappen_num=106;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small106.jpg" alt=""/></button>											
+										<a href="customize_view_pop16.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='small'; wappen_num=107;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small107.jpg" alt=""/></button>											
+										<a href="customize_view_pop16.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='small'; wappen_num=108;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small108.jpg" alt=""/></button>											
+										<a href="customize_view_pop16.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+								<li>
+									<span>
+										<button class="select_change"  onclick="wappen_status='small'; wappen_num=109;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small109.jpg" alt=""/></button>											
+										<a href="customize_view_pop16.html" target="_blank" class="select_detail">DETAIL</a>
+									</span>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!--//플리킹 영역-->				
+
+				<!--wappen_tool-->
+				<div class="wappen_tool">
+					<span><button id="wappen_del" onclick="wappen_status='del'; alert('삭제하시려는 패치를 클릭하세요');">delete</button></span>
+					<span><button id="wappen_reset" onclick="wappen_reset();">reset</button></span>
+					<span><button id="wappen_grid">grid</button></span>
+				</div>
+				<!--//wappen_tool-->
+
+			</div>
+			<!--//choice_box: choice_box_wappen-->
+
+			<!--custom_info-->
+			<div class="custom_info">
+				<div class="color_info">
+					<span>COLOR : </span>
+					<strong>FREE</strong>
+				</div>
+				<div class="print_info">
+					<span>PRINT : </span>
+					<strong>FREE</strong>
+				</div>
+				<div class="emblem_info">
+					<span>EMPLEM : </span>
+					<strong>FREE</strong>
+				</div>
+				<div class="strab_info">
+					<span>STRAB : </span>
+					<strong>FREE</strong>
+				</div>
+				<div class="patch_info">
+					<span>PATCH : </span>
+					<strong>FREE</strong>
+				</div>
+			</div>
+			<!--//custom_info-->
+
+			<!--total_box-->
+			<div class="total_box">
+				<div class="left_info">
+					<span class="price">835,000</span> <span class="won">won</span>
+					<div class="point hidden">6,800 point</div>
+					<div class="qty_box">
+						<span class="tl">Qty</span>
+						<span>
+							<a href="#" class="bt_down_click">-</a>
+							<label for="u_qty" class="hidden">수량 입력</label>
+							<span class="qty_input"><input type="text" name="order_qty" class="qty_inputbox" id="u_qty" readonly="readonly" value="1" /></span>
+							<a href="#" class="bt_up_click">+</a>
+						</span>
+					</div>
+				</div>
+				<div class="right_info">
+					<!--<span><button id="btn_buy" onclick="login_popup_open();">BUY</button></span>로그인팝업
+					<span><button id="btn_cart" onclick="not_member_popup_open();">CART</button></span>비회원구매-->
+					<span class="soldout">sold out</span>
+				</div>
+			</div>
+			<!--//total_box-->
+
+			<div class="guide_more">
+				<a href="#">PRODUCT / BUYING GUIDE</a>
+			</div>
+
+		</div>
+		<!--# custom_menu #-->
+
+	</div>
+	<!--//###custom_layout###-->	
+
+<!--//내용 영역-->
+</div>
+<!--###### //contentArea ######-->
+
+<!--###### footerArea ######-->
+<div class="footerArea">
+	<div class="f_menu">
+		<ul class="f_menu_top">
+			<li><a href="javascript:login('reload');">로그인</a></li>
+			<li><a href="javascript:memberJoin();">회원가입</a></li>
+			<li><a href="https://member.kolon.com/mobile/policy/policy.jsp" target="_blank">이용안내</a></li>
+			<li><a href="javascript:callCenter('main');">고객센터</a></li>
+		</ul>
+		<ul class="f_menu_btm">
+			<li><a href="/about/shopInfo.jsp">store</a></li>
+			<li><a href="http://m.thecouronne.com/">english</a></li>
+		</ul>
+	</div>
+
+	<ul class="f_sns">
+		<li><a href="http://www.facebook.com/thecouronne" class="facebook"><span>facebook</span></a></li>
+		<li><a href="http://instagram.com/thecouronne" class="instagram"><span>instagram</span></a></li>
+	</ul>
+	
+	<div class="f_info_wrap">
+		<div class="f_info">
+			<h2><img src="img/logo_footer.png" alt="KOLON INDUSTRIES" /></h2>
+			<div class="info">
+				코오롱인더스트리 FnC부문<br />
+				대표이사:박동문 | 개인정보관리 책임자:경영지원본부 손정현상무<br />
+				개인정보관리 담당자 : 빅데이터팀 김정혁 과장<br />
+				서울시 서초구 서초동 1317-23 GT타워 | TEL : 1588-7667<br />
+				EMAIL : <a href="mailto:COURONNEmall@kolon.com">COURONNEmall@kolon.com</a><br />
+				통신판매업신고 제2012-서울서초 0593호<br />
+				사업자등록번호 : 138-85-19612 <a href="http://www.ftc.go.kr/info/bizinfo/communicationList.jsp" class="business">사업자등록확인</a>
+				<span class="escro"><img src="img/escro02.gif" alt="LG U+" />  에스크로 고객님은 안전거래를 위해 
+				결제시 저희 사이트<br/>
+				에서 가입한 LG U+의 구매안전서비스를 이용하실 수 있습니다.<br/> 
+				<a href="https://pgweb.uplus.co.kr/pg/wmp/mertadmin/jsp/mertservice/s_escrowYn.jsp?mertid=joykolon" class="joining">가입사실 확인</a></span>
+			</div>
+			<div class="copyright">Copyright ⓒ 2013 by COURONNE All rights reserved</div>
+		</div>
+	</div>
+</div>
+<!--###### //footerArea ######-->
+
+</div>
+<!--//wrap-->
+
+<script type="text/javascript">
+//*************팝업 시작
+function pop_vertical(){//팝업 센터 정렬
+	var pop_height = $('.layer_popup .popup').outerHeight();
+	var pop_height_device = -1 * (pop_height / 2);
+
+	if (pop_height > $(window).height())
+	{
+		$('.layer_popup .popup').css("paddingTop", $(window).scrollTop());
+	} else {		
+		$('.layer_popup .popup').css("paddingTop", ($(window).height()/2) + pop_height_device + $(window).scrollTop());
+	}
+}
+
+//팝업 닫기
+function pop_close(){
+	$('.layer_popup, .layer_bg').fadeOut('fast');
+	$('.wrap').css({ height: 'auto', overflow: 'visible' });
+}
+
+function login_popup_open(){//login popup
+	$('#login_layer, .layer_bg').fadeIn("fast",function(){
+		pop_vertical();
+	});	
+}
+function not_member_popup_open(){//not_member_layer popup 20150924 fadeIn으로 수정
+	$('#not_member_layer, .layer_bg').fadeIn("fast",function(){
+		pop_vertical();
+	});	
+}
+function add_cart_popup_open(){//add_cart_layer popup 20150924 추가
+	$('#add_cart_layer, .layer_bg').fadeIn("fast",function(){
+		pop_vertical();
+	});	
+}
+function add_cart_popup_open(){//add_cart_layer popup 20150924 추가
+	$('#add_cart_layer, .layer_bg').fadeIn("fast",function(){
+		pop_vertical();
+	});	
+}
+function soldout_popup_open(){//soldout_layer popup 2011113 추가
+	$('#soldout_layer, .layer_bg').fadeIn("fast",function(){
+		pop_vertical();
+	});	
+}
+//*************팝업 끝
+</script>
+
+<!--레이어팝업-->
+<div class="layer_bg"></div>
+<!--20151113 로그인 팝업 전체수정-->
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.loginAllWrap .loginIpt .saveId input').ezMark({checkboxCls: 'ez-checkbox'});//checkbox 이미지처리
+});
+</script>
+<div class="layer_popup" id="login_layer">	
+	<div class="popup">
+		<div class="pop_basic">
+			<h2 class="pop_tit">LOGIN</h2>
+
+			<div class="pop_logintxt ">상품 구입을 위해 로그인이 필요합니다.</div>
+
+			<div class="loginAllWrap">
+				<form name="form_login" method="post">
+					<fieldset>
+						<legend>로그인</legend>
+						<div class="login_wrap">				
+							<div class="loginIpt">
+								<dl>
+									<dd><input type="text" name="cust_id" id="u_id" placeholder="ID" /></dd>
+									<dd><input type="password" name="cust_password" id="u_pw" placeholder="PW" /></dd>
+								</dl>
+								<div class="saveId">
+									<input type="checkbox" id="u_save" name="idcheck" />
+									<label for="u_save">아이디 저장</label> 
+									<span>|</span>
+									<a href="#">아이디/비밀번호 찾기</a>
+								</div>
+							</div>
+							<div class="loginBtn">
+								<button type="button">LOG IN</button>
+							</div>
+						</div>
+
+						<div class="buy_nonmember">
+							<p>COURONNE의 회원이 되시면<br/> 더 많은 혜택을 누리실 수 있습니다.</p>
+							<a href="#" class="btn_gyline_rect">회원가입</a>
+							<a href="#" class="btn_gyline_rect">비회원 구매</a>					
+						</div>
+
+					</fieldset>
+				</form>
+			</div>
+
+			<a href="#" class="pop_cls" onclick="pop_close();return false;"><img src="img/btn_close.png" alt="창닫기" /></a>
+		</div>
+	</div>
+</div>
+<!--//20151113 로그인 팝업 전체수정-->
+<!--20150924 추가-->
+<div class="layer_popup" id="add_cart_layer"> 	
+	<div class="popup">
+		<div class="pop_basic">
+			<h2 class="pop_tit">장바구니 추가</h2>
+
+			<div class="pop_logintxt mt10">상품이 장바구니에 추가 되었습니다.<br/>장바구니를 확인하시겠습니까?</div>
+
+			<!--pop_roundBtn-->
+			<div class="popup_roundBtn mt30 mb30">
+				<a href="#" class="l_bt">Yes</a><a href="#" class="r_bt">No</a>
+			</div>
+			<!--//pop_roundBtn-->
+
+			<a href="#" class="pop_cls" onclick="pop_close();return false;"><img src="img/btn_close.png" alt="창닫기" /></a>
+		</div>
+	</div>
+</div>
+<!--//20150924 추가-->
+<div class="layer_popup" id="not_member_layer">
+	<div class="popup">
+		<div class="pop_basic pb20">
+			<h2 class="pop_tit">비회원 주문</h2>
+			
+			<div class="pop_policy">
+				<h3>수집하는 개인정보의 항목</h3>
+				성명, 주민등록번호, e-mail, 전화번호, 주소, 은행계좌번호, 신용카드번호
+
+				<h3>개인정보의 수집ㆍ이용목적</h3>
+				성명, 비밀번호, e-mail, 전화번호: 고지의 전달. 불만 처리나 주문/배송 정보 안내 등 원활한 의사소통 경로의 확보.<br />
+				주소: 고지의 전달, 청구서, 정확한 상품 배송지의 확보.<br />
+				은행계좌번호, 신용카드번호: 유료정보에 대한 이용 및 상품구매에 대한 결제
+
+				<h3>수집하는 개인정보의 보유기간</h3>
+				계약 또는 청약철회 등에 관한 기록 : 5년<br />
+				대금결제 및 재화 등의 공급에 관한 기록 : 5년<br />
+				소비자의 불만 또는 분쟁처리에 관한 기록 : 3년<br />
+				본인확인에 관한 기록 : 6개월
+
+				<h3>개인정보 수집 동의 거부 권리</h3>
+				코오롱인더스트리(주)는 원활한 서비스 제공을 위해 개인정보를 수집하고 있습니다.<br />
+				개인정보수집, 이용에 대한 동의를 거부할 수 있으나, 일부 서비스 이용이 제한될 수 있습니다.
+			</div>
+
+			<div class="pop_policychk mt20">
+				<div class="top">비회원 주문시 비회원 개인정보 수집/이용에 동의하십니까?</div>
+				<div class="chk">
+					<input type="radio" name="radio" checked="checked" /> 동의합니다. &nbsp; &nbsp; &nbsp; &nbsp; 
+					<input type="radio" name="radio" /> 동의하지 않습니다.
+				</div>
+			</div>
+
+			<!--pop_roundBtn-->
+			<div class="popup_roundBtn mt20">
+				<a href="#" class="l_bt">Confirm</a><a href="#" class="r_bt">Cancel</a>
+			</div>
+			<!--//pop_roundBtn-->
+
+			<a href="#" class="pop_cls" onclick="pop_close();return false;"><img src="img/btn_close.png" alt="창닫기" /></a>
+		</div>
+	</div>
+</div>
+
+<!--로드시 적용된 커스터마이징 제품에 대한 품절 안내 20151113 -->
+<script type="text/javascript">
+$(document).ready(function(){
+	soldout_popup_open();// 커스터마이징 옵션 품절정보 팝업 20151113 임시
+});
+</script>
+<div class="layer_popup" id="soldout_layer">
+	<div class="popup">
+		<div class="pop_basic">
+			<h2 class="pop_tit">품절항목 안내<span>(New Stephanie)</span></h2>
+			<div class="pop_info_table">
+				<span class="pop_desc">* 본 제품은 아래와 같이 품절된 옵션이 있습니다.</span>
+				<!--color-->
+				<h3 class="tb_tit">COLOR</h3>
+				<table class="sol_tb">
+					<tr class="sol_th">
+						<th class="th_w">Base</th>
+						<th class="th_w">Side</th>
+						<th class="th_w">Handle</th>
+					</tr>
+					<tr>
+						<td><span class="soldout">Sold out</span></td>
+						<td><span>OK</span></td>
+						<td><span>OK</span></td>
+					</tr>
+				</table>
+				<!--//color-->
+				<!--image-->
+				<h3 class="tb_tit">IMAGE</h3>
+				<table class="sol_tb">
+					<tr class="sol_th">
+						<th class="th_w">Base</th>
+						<th class="th_w">Side</th>
+					</tr>
+					<tr>
+						<td><span class="soldout">Sold out</span></td>
+						<td><span>OK</span></td>
+					</tr>
+				</table>
+				<!--//image-->
+				<!--pacth-->
+				<h3 class="tb_tit">PATCH</h3>
+				<table class="sol_tb">
+					<tr class="sol_th">
+						<th class="th_w">wappen 1</th>
+						<th class="th_w">wappen 2</th>
+						<th class="th_w">wappen 3</th>
+						<th class="th_w">wappen 4</th>
+					</tr>
+					<tr>
+						<td><span class="soldout">Sold out</span></td>
+						<td><span>OK</span></td>
+						<td><span>OK</span></td>
+						<td><span>OK</span></td>
+					</tr>
+					<!--아래 리스트는 없을수도 있음 무조건 tr당 td는 4개씩 끊음-->
+					<tr>
+						<th class="th_w">wappen 5</th>
+						<th class="th_w">wappen 6</th>
+						<th class="th_w"> </th>
+						<th class="th_w"> </th>
+					</tr>
+					<tr>
+						<td><span class="soldout">Sold out</span></td>
+						<td><span>OK</span></td>
+						<td> </td>
+						<td> </td>
+					</tr>
+				</table>
+				<!--//pacth-->
+			</div>
+			<a href="#" class="pop_cls" onclick="pop_close();return false;"><img src="img/btn_close.png" alt="창닫기" /></a>
+		</div>
+	</div>
+</div>
+<!--//로드시 적용된 커스터마이징 제품에 대한 품절 안내 20151113 -->
+
+<!--가이드 팝업 20151113 추가-->
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".ui_guide_layer").css("height",$(document).height());	
+});
+</script>
+<div class="ui_guide_layer" id="ui_guide_layer">
+
+	<a href="#" class="guide_close" onclick="closeGuide_cookie(); return false;"><img src="img/btn_guide_close.png" alt="그만보기"/></a>
+
+	<a href="#" class="guide_view" onclick="closeGuide(); return false;">
+		<img src="img/pic_guide11.png" alt="다양한 뷰"/><!-- 스테파니 일때-->
+		<!--<img src="img/pic_guide12.png" alt="다양한 뷰"/> 에이미 일때-->
+		<!--<img src="img/pic_guide13.png" alt="다양한 뷰"/> 잭키 일때-->
+		<!--<img src="img/pic_guide14.png" alt="다양한 뷰"/> 왈렛 일때-->
+	</a>
+	<a href="#" class="guide_hmenu" onclick="closeGuide(); return false;"><img src="img/pic_guide2.png" alt="메뉴"/></a>
+	<div class="guide_btn"><a href="#" onclick="closeGuide(); return false;"><img src="img/pic_guide3.png" alt="버튼기능"/></a></div>
+	<a href="#" class="guide_buy" onclick="closeGuide(); return false;"><img src="img/pic_guide5.png" alt="구매하기"/></a>
+	<a href="#" class="guide_price" onclick="closeGuide(); return false;"><img src="img/pic_guide4.png" alt="옵션 가격"/></a>
+	<a href="#" class="guide_deliver" onclick="closeGuide(); return false;"><img src="img/pic_guide6.png" alt="구매 가이드"/></a>
+
+	<a href="#" class="guide_close2" onclick="closeGuide_cookie(); return false;"><img src="img/btn_guide_close2.png" alt="닫기"/></a>
+</div>
+<!--//가이드 팝업 20151113 추가-->
+
+<!--//레이어팝업-->
+</body>
+</html>

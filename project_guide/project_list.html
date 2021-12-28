@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="ko" class="no-js">
+<head>
+<meta charset="utf-8">
+<title>Project Guide</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<script src="jquery-1.11.2.min.js"></script>
+<script src="project_list.js"></script>
+<link rel="stylesheet" href="project_list.css">
+</head>
+<body>
+	<div class="wrapper">
+		<header id="header" class="pbHeader">
+			<h1>Project Guide  ver 1.0</h1>
+			<div class="seach_box">
+				<div class="search">
+					<label for="keyword">search</label> <input type="text" id="keyword" placeholder="검색어 입력">
+				</div>
+			</div>			
+		</header>
+		
+		<!-- siteInfo -->
+		<div class="siteInfo">
+			<div class="infoL">
+				<ul>
+					<li><span>전체</span> <span id="p_total" class="ico_rp"></span></li>
+					<li><span>완료</span> <span id="p_end" class="ico_re"></span></li>
+					<li><span>진척율</span> <span id="p_com" class="ico_rc"></span></li>
+					<li class="view"><span>선택</span> <span id="p_view" class="ico_rv">0</span></li>
+				</ul>
+			</div>			
+			<div class="infoR">
+				<div>
+					<a href="../guide/gd_info.html" target="_guide"><em>&#94;</em> 퍼블리싱 가이드</a>
+				</div>
+			</div>			
+		</div>
+		<!--// siteInfo -->
+		
+		<!-- tabWrap -->
+		<div class="tabWrap">
+			<ul>
+				<li class="on"><a href="#tabCont1">사이트</a></li>
+				<li><a href="#tabCont2">가이드</a></li>
+			</ul>
+			<dl class="list_status">
+				<dd><i class="st_ing" title="ing"></i> 진행</dd>
+				<dd><i class="st_planner" title="pl"></i>1차 검수 <em>기획</em></dd>
+				<dd><i class="st_client"  title="cl"></i>2차 검수 <em>고객</em></dd>
+				<dd><i class="st_comp"  title="ok"></i> 완료 <em>개발전달</em></dd>
+				<dd><i class="st_edit"  title="dv"></i>수정 <em>개발전달 후 수정</em></dd>
+			</dl>
+		</div>
+		<!--// tabWrap -->		
+		
+		<div class="menuWrap">
+			<table id="tabCont1" class="table">
+				<caption>사이트 퍼블리스트</caption>
+				<colgroup>
+					<col style="width: 120px" />
+					<col style="width: 120px" />
+					<col style="width: 150px" />
+					<col style="width: 150px" />
+					<col style="width: 150px" />
+					<col style="width: 130px" />
+					<col style="width: 130px" />
+					<col style="width: 65px" />
+					<col style="width: 70px" />
+					<col style="width: 30px" />
+					<col style="width: auto" />
+				</colgroup>
+				<thead>					
+					<tr>
+						<th scope="col"><label for="depth1">D1</label><br> <select id="depth1" style="width: 110px;"></select>
+						</th>
+						<th scope="col"><label for="depth2">D2</label><br> <select id="depth2" style="width: 110px;"></select>
+						</th>
+						<th scope="col">D3</th>
+						<th scope="col">D4</th>
+						<th scope="col">D5</th>
+						<th scope="col">P ID</th>
+						<th scope="col">M ID</th>						
+						<th scope="col"><label for="owner">담당자</label> <select id="owner" style="width: 55px;"></select></th>
+						<th scope="col" class="p_sta"><label for="stDate">완료일</label> <select id="stDate" style="width: 60px;"></select></th>
+						<th scope="col"><label for="status">현황</label><br> <select id="status" style="width: 20px;"></select></th>
+						<th scope="col">비고</th>						
+					</tr>
+				</thead>
+				<tbody>
+					<tr data-user="C">
+						<td>대분류 1</td>
+						<td>중분류 1</td>
+						<td></td>
+						<td></td>
+						<td>링크 팝업 처리</td>
+						<td class="p_id"><a href="popUp1.html" target="_pc" class="popView" data-width ="700" data-height ="500"></a></td>
+						<td class="m_id"><a href="popUp2.html" target="_mobile" class="popView"  data-width ="300" data-height ="200"></a></td>						
+						<td class="p_owner">-</td>
+						<td class="p_sta"></td>						
+						<td class="status"></td>
+						<td>
+							팝업용: a링크 클래스 및  data옵션 <br/> 
+							class="<strong>popView</strong>" <br/> 
+							<strong>data-width</strong> ="700"  <br/>
+							<strong>data-height</strong> ="500"
+						</td>
+					</tr>
+					<!-- <tr data-user="C"> J : 정과장, M : 김대리, C : 최차장 -->
+					
+                    <tr data-user="C">
+                        <td></td>
+                        <td>중분류 2</td>
+                        <td>소분류 1</td>
+                        <td></td>
+                        <td>담당자 처리</td>
+                        <td class="p_id"><a href="html명.html"  target="_pc"></a></td>
+                        <td class="m_id"></td>                        
+                        <td class="p_owner"></td>
+                        <td class="p_sta">20201010</td>
+                        <td class="status"></td>
+                        <td>
+                        	tr내 data속성으로 담당자 구분 <br/>
+                         	tr <strong>data-user="C"</strong> <br/>
+                        	 J : 정과장, M : 김대리, C : 최차장                        	
+                        </td>
+                    </tr>
+                    <tr class="t_group"  data-user="C">
+                        <td>대분류 2</td>
+                        <td>중분류 1</td>
+                        <td></td>
+                        <td></td>
+                        <td>대분류 라인 구분 처리</td>
+                        <td class="p_id"><a href="html명.html" target="_pc"></a></td>
+                        <td class="m_id"><a href="html명.html" target="_mobile"></a></td>                        
+                        <td class="p_owner"></td>
+                        <td class="p_sta">20201011</td>                        
+                        <td class="status"></td>
+                        <td>
+                        	tr내 class속성으로 대분류 라인 구분 <br/>
+                        	tr data-user="C" <strong>class="t_group"</strong>           
+                        </td>
+                    </tr>
+                    <tr data-user="J">
+                        <td></td>
+                        <td>중분류 2</td>
+                        <td>소분류 1</td>
+                        <td></td>
+                        <td></td>
+                        <td class="p_id"><a href="html명.html" target="_pc"></a></td>
+                        <td class="m_id"><a href="html명.html" target="_mobile"></a></td>                        
+                        <td class="p_owner"></td>
+                        <td class="p_sta"></td>
+                        <td class="status"></td>
+                        <td></td>
+                    </tr>
+                    <tr data-user="J" class="delCont">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>문서명 1</td>
+                        <td>취소선 처리</td>
+                        <td class="p_id"><a href="html명.html" target="_pc"></a></td>
+                        <td class="m_id"><a href="html명.html" target="_mobile"></a></td>                        
+                        <td class="p_owner"></td>
+                        <td class="p_sta"></td>
+                        <td class="status"></td>
+                        <td>
+                        	tr내 class속성으로 취소 구분 <br/>
+                        	tr data-user="C" <strong>class="delCont"</strong> <br/>
+                        </td>
+                    </tr>
+                    <tr data-user="J">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>문서명 2</td>
+                        <td></td>
+                        <td class="p_id"></td>
+                        <td class="m_id"><a href="html명.html" target="_mobile"></a></td>                        
+                        <td class="p_owner"></td>
+                        <td class="p_sta"></td>
+                        <td class="status"></td> 
+                        <td></td>
+                    </tr>
+                    <tr class="t_group"  data-user="K">
+                        <td>대분류 3</td>
+                        <td>중분류 1</td>
+                        <td>소분류 1</td>
+                        <td>완료일 입력</td>
+                        <td></td>
+                        <td class="p_id"><a href="html명.html" target="_pc"></a></td>
+                        <td class="m_id"><a href="html명.html" target="_mobile"></a></td>                        
+                        <td class="p_owner"></td>
+                        <td class="p_sta"></td>
+                        <td class="status"></td>
+                        <td>
+                        	완료일 입력<br/>
+                        	완료일: "<strong>20201011</strong>" 형식 <br/>
+                        	html등록시 작업일자를 입력해야<br/>
+                        	<strong>작업완료</strong> 및 <strong>진척율</strong>이 표시됨             
+                        </td>
+                    </tr>
+                    <tr data-user="K">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>현황 표시</td>
+                        <td>진행 처리</td>
+                        <td class="p_id"><a href="html명.html" target="_pc"></a></td>
+                        <td class="m_id"><a href="html명.html" target="_mobile"></a></td>                        
+                        <td class="p_owner"></td>
+                        <td class="p_sta"></td>
+                        <td class="status"></td>
+                        <td>
+                        	완료일 없음: <strong>"진행"</strong>                
+                        </td>
+                    </tr>
+                    <tr data-user="K">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>완료 처리</td>
+                        <td class="p_id"><a href="html명.html" target="_pc"></a></td>
+                        <td class="m_id"><a href="html명.html" target="_mobile"></a></td>
+                        <td class="p_owner"></td>
+                        <td class="p_sta">20201010</td>
+                        <td class="status"></td>
+                        <td>
+							완료일 존재: <strong>"완료"</strong><br/>
+                        	td <strong>class="p_sta"</strong>에 날짜 <strong>20201010</strong> 입력 <br>                 
+                        	td class="status"는 공란  
+                        </td>
+                    </tr>
+                    <tr data-user="K">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>1차 검수 처리</td>
+                        <td class="p_id"><a href="html명.html" target="_pc"></a></td>
+                        <td class="m_id"><a href="html명.html" target="_mobile"></a></td>                        
+                        <td class="p_owner"></td>
+                        <td class="p_sta">20201010</td>
+                        <td class="status">1</td>
+                        <td>
+							완료일 존재 & 현황 1: <strong>"1차 검수"</strong> 기획<br/>
+                        	td <strong>class="p_sta"</strong>에 날짜 <strong>20201010</strong> 입력 <br/>
+                        	td <strong>class="status"</strong>에 숫자 <strong>1</strong> 입력
+                        </td>
+                    </tr>
+                    <tr data-user="K">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>2차 검수 처리</td>
+                        <td class="p_id"><a href="html명.html" target="_pc"></a></td>
+                        <td class="m_id"><a href="html명.html" target="_mobile"></a></td>                        
+                        <td class="p_owner"></td>
+                        <td class="p_sta">20201010</td>
+                        <td class="status">2</td>
+                        <td>
+							완료일 존재 & 현황 2: <strong>"2차 검수"</strong> 고객<br/>
+                        	td <strong>class="p_sta"</strong>에 날짜 <strong>20201010</strong> 입력 <br/>
+                        	td <strong>class="status"</strong>에 숫자 <strong>2</strong> 입력                           
+                        </td>
+                    </tr>
+                    <tr data-user="J">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>수정 처리</td>
+                        <td class="p_id"><a href="html명.html" target="_pc"></a></td>
+                        <td class="m_id"><a href="html명.html" target="_mobile"></a></td>                        
+                        <td class="p_owner"></td>
+                        <td class="p_sta">20201010</td>
+                        <td class="status">3</td>
+                        <td>
+							완료일 존재 & 현황 3: <strong>"수정"</strong> 개발<br/>
+                        	td <strong>class="p_sta"</strong>에 날짜 <strong>20201010</strong> 입력 <br/>
+                        	td <strong>class="status"</strong>에 숫자 <strong>3</strong> 입력
+                        </td>
+                    </tr>
+                    <tr data-user="C">
+                        <td></td>
+                        <td></td>
+                        <td>소분류 2</td>
+                        <td>문서명 1</td>
+                        <td></td>
+                        <td class="p_id"><a href="html명.html" target="_pc"></a></td>
+                        <td class="m_id"><a href="html명.html" target="_mobile"></a></td>                        
+                        <td class="p_owner"></td>
+                        <td class="p_sta"></td>
+                        <td class="status"></td>
+                        <td></td>
+                    </tr>                                                     
+				</tbody>
+			</table>
+			
+			<table id="tabCont2" class="gd_table" style="display:none;">
+				<caption>가이드 리스트</caption>
+				<colgroup>
+					<col style="width: 200px" />
+					<col style="width: 200px" />
+					<col style="width: auto" />
+					<col style="width: 40px" />
+				</colgroup>
+				<thead>					
+					<tr>
+						<th scope="col">구분</th>
+						<th scope="col">파일명</th>
+						<th scope="col">설명</th>
+						<th scope="col">진행</th>			
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>기본규약</td>
+						<td><a href="../guide/gd_info.html" target="_guide">gd_info.html</a></td>
+						<td>HTML / CSS / 디바이스 환경</td>
+						<td class="status"><i class="ok"></i></td>
+					</tr>
+					<tr>
+						<td>레이아웃</td>
+						<td><a href="../guide/gd_layout.html" target="_guide">gd_layout.html</a></td>
+						<td>페이지 레이아웃</td>
+						<td class="status"><i class="ok"></i></td>
+					</tr> 					 
+					<tr>
+						<td>버튼</td>
+						<td><a href="../guide/gd_button.html" target="_guide">gd_button.html</a></td>
+						<td>버튼</td>
+						<td class="status"><i class="ok"></i></td>
+					</tr>		
+					<tr>
+						<td>탭/스텝</td>
+						<td><a href="../guide/gd_stab.html" target="_guide">gd_list.html</a></td>
+						<td>탭 및 스텝에 대한 가이드</td>
+						<td class="status"><i class="ok"></i></td>
+					</tr>
+					<tr>
+						<td>테이블</td>
+						<td><a href="../guide/gd_table.html" target="_guide">gd_table.html</a></td>
+						<td>가로형, 세로형 테이블</td>
+						<td class="status"><i class="ok"></i></td>
+					</tr>					
+					<tr>
+						<td>리스트</td>
+						<td><a href="../guide/gd_list.html" target="_guide">gd_list.html</a></td>
+						<td>링크 리스트 페이지, 리스트 페이지네이션</td>
+						<td class="status"><i class="ok"></i></td>
+					</tr>
+					<tr>
+						<td>토글</td>
+						<td><a href="../guide/gd_toggle.html" target="_guide" target="_guide">gd_toggle.html</a></td>
+						<td>기본 열림 고정, 기본 닫힘</td>
+						<td class="status"><i class="ok"></i></td>
+					</tr>					
+					<tr>
+						<td>팝업</td>
+						<td><a href="../guide/gd_popup.html" target="_guide" target="_guide">gd_popup.html</a></td>
+						<td>레이어 팝업</td>
+						<td class="status"><i class="ok"></i></td>
+					</tr>					
+					<tr>
+						<td>입력폼</td>
+						<td><a href="#" target="_guide" onclick="alert('준비중'); return false">gd_form_layout.html</a></td>
+						<td>인증입력, 견적등록</td>
+						<td class="status"><i class="ing"></i></td>
+					</tr>			
+					<tr>
+						<td>폼스타일</td>
+						<td><a href="#" target="_guide" onclick="alert('준비중'); return false">gd_form_style.html</a></td>
+						<td>체크박스, 라디오, 셀렉트, 입력폼 그룹</td>
+						<td class="status"><i class="ing"></i></td>
+					</tr>	
+					<tr>
+						<td>블릿 스타일</td>
+						<td><a href="#" target="_guide" onclick="alert('준비중'); return false">gd_bullet_style.html</a></td>
+						<td>hyphen list, dot list, error text, info text </td>
+						<td class="status"><i class="ing"></i></td>
+					</tr>				
+					<tr>
+						<td>아이콘</td>
+						<td><a href="#" target="_guide" onclick="alert('준비중'); return false">gd_icon.html</a></td>
+						<td> 결과안내, 신청관련 </td>
+						<td class="status"><i class="ing"></i></td>
+					</tr>	
+					<tr>
+						<td>약관</td>
+						<td><a href="#" target="_guide" onclick="alert('준비중'); return false">gd_rule.html</a></td>
+						<td> 본문형, 팝업 </td>
+						<td class="status"><i class="ing"></i></td>
+					</tr>																																		
+				</tbody>
+			</table>						
+		</div>
+	</div>
+	
+	<script>
+	$("#tabCont2 .status .ing").each(function(){
+		$(this).closest('tr').find('a').css("color","#d9d9d9");//가이드 준비중 gray 처리
+		$(this).closest('tr').find('td').css("color","#d9d9d9");//가이드 준비중 gray 처리
+	})
+	</script>
+
+
+
+</body>
+</html>

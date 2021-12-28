@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+	<title> C STUDIO </title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+
+	<link rel="stylesheet" type="text/css" href="_guide/guide.css" />
+	<style type="text/common/css">
+		body	{background-color:#f9f9f9;}
+	</style>
+	<script type="text/javascript" src="_guide/dtree.js"></script>
+</head>
+<body>
+
+	<div id="content_guide_list">
+		<h1 style="font-weight:26px; line-height:20px;">C STUDIO<br/>코딩진행표</h1>
+		<h2 style="font-weight:normal;">진행 표시</h2>
+		<ol>
+			<li><span style="color:#57980b;">■ 작업중</span></li>
+			<li><span style="color:#333;">■ 작업완료</span></li>
+			<li><span style="color:#5727ff;">■ 신규</span></li>
+			<li><span style="color:#f55;">■ 수정</span></li>
+		</ol>
+		<span id="t_title"></span>
+	</div>
+
+	<div class="dtree">
+
+		<script type="text/javascript">
+			//<![CDATA[
+			//d = new dTree('d');
+			//d.add(0,-1,'프로젝트 게시판','http://www.w-st.co.kr/bbs/board.php?bo_table=recouronne','완료','targetName:');
+			//document.write(d);
+			//]]>
+		</script>
+
+		<script type="text/javascript">
+			//<![CDATA[
+			/*c = new dTree('c');
+			c.add(0,-1,'코딩 안내','coding_issue.html','완료','mainFrame');
+			document.write(c);*/
+			//]]>
+		</script>
+
+<!-- WebPage -->
+		<div class="area_btn">
+			<a href="javascript: b.openAll();"><img src="_guide/img/btn_expand.gif" alt="Expand All" /></a>
+			<a href="javascript: b.closeAll();"><img src="_guide/img/btn_collapse.gif" alt="Collapse All" /></a>
+		</div>
+		<script type="text/javascript">
+			//<![CDATA[
+			b = new dTree('b');
+			b.add(0,-1,'Web');
+			b.add(1,0,'1. 공통');
+			b.add(1.10,1,'1. 레이아웃','layout.html','완료','mainFrame');
+			b.add(1.11,1,'2. 메인_전사 오픈','main.html','완료','mainFrame');
+			b.add(1.12,1,'2. 메인_대고객 오픈','main2.html','완료','mainFrame');
+
+			b.add(2,0,'2. YOUR STUDIO');
+			b.add(2.20,2,'1.1. CELEB 리스트','celeb.html','완료','mainFrame');
+			b.add(2.201,2,'1.2. CELEB 상세','celeb_view.html','완료','mainFrame');
+			b.add(2.202,2,'1.2. CELEB 커밍순','celeb_view2.html','완료','mainFrame');
+			b.add(2.21,2,'2. BEST','best.html','완료','mainFrame');
+
+			b.add(3,0,'3. CUSTOMIZE');
+			b.add(3.30,3,'1. CUSTOMIZE','customize.html','완료','mainFrame');//20150909 주석처리
+			b.add(3.31,3,'2. CUSTOMIZE 상세_품절','customize_view0.html','완료','mainFrame');//황민
+			b.add(3.32,3,'2. CUSTOMIZE 상세_stephnay','customize_view.html','완료','mainFrame');//황민
+			b.add(3.33,3,'2. CUSTOMIZE 상세_emy','customize_view1.html','완료','mainFrame');//황민
+			b.add(3.34,3,'2. CUSTOMIZE 상세_jackie','customize_view2.html','완료','mainFrame');//황민
+			b.add(3.34,3,'2. CUSTOMIZE 상세_wallet','customize_view3.html','완료','mainFrame');//황민
+			b.add(3.35,3,'2. CUSTOMIZE 상세_반지갑','customize_view4.html','완료','mainFrame');//황민
+
+			//b.add(3.310,3,'2.1. CUSTOMIZE 상세 팝업(제품 컬러 선택)','customize_view_pop1.html','완료','mainFrame');
+//			b.add(3.311,3,'2.2. CUSTOMIZE 상세 팝업(내디자인 정하기)','customize_view_pop2.html','완료','mainFrame');
+//			b.add(3.312,3,'2.3. CUSTOMIZE 상세 팝업(공유하기)','customize_view_pop3.html','완료','mainFrame');
+			b.add(3.313,3,'2.4. CUSTOMIZE 상세 팝업(로그인)','customize_view_pop4.html','완료','mainFrame');
+			b.add(3.314,3,'2.5. CUSTOMIZE 상세 팝업(비회원 주문)','customize_view_pop5.html','완료','mainFrame');
+			b.add(3.315,3,'2.6. CUSTOMIZE ie8이하 체크페이지','customize_view_ie8.html','완료','mainFrame');//황민
+
+			b.add(4,0,'4. MY STUDIO');
+			b.add(4.40,4,'1. MY WORK','mywork.html','완료','mainFrame');
+			b.add(4.41,4,'2. MY CHOICE','mychoice.html','완료','mainFrame');
+			b.add(4.42,4,'3. 비교하기 팝업','mystudio_vs_pop.html','완료','mainFrame');
+			
+
+			b.add(5,0,'5. MEMBER');
+			b.add(5.50,5,'1. LOGIN','login.html','완료','mainFrame');
+
+			b.add(6,0,'6. EVENT');
+			b.add(6.60,6,'1. 리스트','event.html','완료','mainFrame');
+			b.add(6.61,6,'2. 상세','event_view.html','완료','mainFrame');
+
+
+			document.write(b);
+			//]]>
+		</script>
+<!-- //WebPage -->
+
+		<div style="height:80px;"></div>
+	</div>
+</body>
+</html>

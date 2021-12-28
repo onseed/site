@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>frontUxer</title>
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/frontUxer.css">
+<script src="js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript">        
+	var menuArry = ['3','7'];//1depth, 2depth
+</script>
+</head>
+<body>
+<script src="js/guide.js"></script><!-- site guide -->
+	
+	<div class="start_dim"><span></span></div>
+
+	<h1 class="hide">module</h1>
+	
+	<div class="contents"><!-- contents -->
+    
+        <!--##################### Jog Dial #####################-->
+		<section class="aws_box">
+			<h2 class="aws_tl"> 조그 다이얼 (beta) </h2>
+			<ul class="dcs">
+				<li>
+					조그 다이얼 플러그인 사용<br/>
+					<span style="display:inline-block; background:#f9f8f8; padding:10px 20px; border-radius:10px; margin:5px 0 10px 0; font-size:12px;">
+						<a href="https://github.com/ohsiwon/JogDial.js" style="color:#005eea;" target="_blank">JogDial.js</a> - v 1.0<br/>
+						Copyright (c) 2014 Sean Oh<br/>
+						Licensed under the MIT license
+					</span>					
+				</li> 				
+				<li>
+					ie 이슈로 모바일만 지원함.(beta)<br>
+					- ie는 css filter 미지원으로 인해 컬러링 미적용(ms edge는 가능) <br>
+					- ie는 초기 animation처리시 버퍼가 커서 느림. (웹킷계열 또는 모바일 적합)
+				</li>
+			</ul> 			
+			<div class="code_area">
+	        	
+	        	<div class="play_box">
+	        		<!-- code -->
+	        		<article class="code_box">
+	        			<div  class="option_txt">
+	        				<p><strong>기본: </strong> <span class="incodebox"><code class="language-javascript">data-target="modal_deafault"</code></span></p>
+	        			</div>
+	        			
+						<!-- run_sample -->
+						<div class="run_sample">
+							<style>
+								
+							</style>
+						
+							<dl class="dcs">
+								<dt>패치 노트</dt>
+								<dd>20200403: 플러그인내 다이얼 중앙 컬러링을 위한 엘리먼트 추가</dd>
+							</dl>
+							
+							<!-- 1. 기본: -->						
+		               		<article class="sample_box">
+		               		
+		               			<script src="js/jogDial-1.0.js"></script><!--  jogDial-1.0.js -->
+		               		
+			               		<div style="text-align:right;">
+			               			<button type="button" id=jog_onoff title="on/off" class="switch on">ON</button>
+			               			
+			               			<button type="button" id="replay">replay</button>
+			               		</div>
+			               		
+			               		<div id="example" class="jog_dial pie big"><span class="num_box"><em class="num">0</em></span></div>
+			               		
+			               		<div id="example2" class="jog_dial big"><span class="num_box"><em class="num">0</em></span></div>
+			               		
+			               		<div id="example3" class="jog_dial"><span class="num_box"><em class="num">0</em></span></div>
+			               		<div id="example4" class="jog_dial"><span class="num_box"><em class="num">0</em></span></div>
+			               		<style>			               			
+			               			.jog_dial {width:100px; height:100px; display:inline-block; position:relative; border-radius:50%; background:#fff; margin:0 5px;
+										box-shadow: inset -1px -1px 10px rgba(0, 0, 0, 0.05), inset 5px 5px 10px rgba(0, 0, 0, 0.13);} 
+									.jog_dial.pie{/*box-shadow: -1px -1px 10px rgba(0, 0, 0, 0.05), 5px 5px 10px rgba(0, 0, 0, 0.13);*/}
+									.jog_dial.big {width:200px; height:200px;} 
+									.jog_dial .jog_wheel{opacity:0;  cursor:pointer;}/*휠 영역 debug mode*/
+			               			.jog_dial .jog_knob{background:#fff; border-radius:50%;
+			               				box-shadow: 1px 2px 10px 0px rgba(0, 0, 0, 0.28), inset 12px 14px 20px rgb(255, 255, 255), inset -4px -6px 4px rgba(0, 0, 0, 0.18);
+			               				transform: scale(0.65);
+			               			}/*드래그 원*/
+			               			.jog_dial.big .jog_knob{
+			               				box-shadow: 1px 2px 10px 0px rgba(0, 0, 0, 0.28), inset 12px 14px 20px rgb(255, 255, 255), inset -4px -6px 4px rgba(0, 0, 0, 0.18);
+			               				transition: box-shadow ease 1s !important;
+			               			}	
+			               			/*		               			
+			               			.jog_dial.big:hover .jog_knob{
+			               				box-shadow: inset 2px 3px 20px 0px rgba(0, 0, 0, 0.38), 12px 14px 20px rgba(255, 255, 255, 0.53), -2px -2px 8px rgba(0, 0, 0, 0.1);
+			               			}*/
+			               			
+
+			               			
+			               			.jog_dial .num_box{display:block; position:absolute; width:50%; height:50%; border-radius:50%; top:50%; left:50%; margin:-25% 0 0 -25%;
+			               				box-shadow: 1px 1px 20px 0px rgba(0, 0, 0, 0.36);
+			               			}
+			               			.jog_dial .num{display:block; content:''; position:absolute; width:100%; height:100%; border-radius:50%; top:0%; left:0%;text-align:center; color:#fff; pointer-events: none; user-select:none;
+			               				background: radial-gradient( #77bfff 15%, #5bb3ff 30% , #448af5 60%, #005eea 90% );
+			               				background-position:0 30px;
+			               				box-shadow: inset 1px 1px 9px 0px rgba(0, 28, 123), 0px 0px 2px 0px rgba(0, 0, 0, 0.47);
+			               				text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3);
+			               				font-size:20px; line-height:44px; letter-spacing:-0.05em;}
+			               				
+			               			.jog_dial.big.pie .num{	background: #fff; box-shadow: rgba(0, 0, 0, 0.12) 1px 16px 30px 0px inset; color:#333; text-shadow: rgba(0, 0, 0, 0.4) 0px 0px 8px;	}			               				
+			               						               				
+			               				
+			               			.jog_dial .num:after{display:inline-block; content:' %'; font-size:9px; margin-left:1px;}
+			               			.jog_dial .block{display:block; width:100%; height:100%; position:absolute; top:0; left:0; background:#fff; z-index:99999; opacity: 0.0;}
+			               			.jog_dial.big .num{font-size:48px; line-height:90px; background-position:0 60px;
+			               				box-shadow: inset 2px 2px 18px 0px rgba(0, 28, 123), 0px 0px 3px 0px rgba(0, 0, 0, 0.47);
+			               				text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);}  /*폰트사이즈와 라인height는 수동으로*/
+			               			.jog_dial.big .num:after{display:inline-block; content:' %'; font-size:12px;}
+			               			
+			               			
+			               			/*도넛 차트 svg*/			               			
+			               			.dounut_chart {display:block; position:absolute; width:100%; height:100%; top:0; left:0;}
+			               			.dounut_chart svg{filter:drop-shadow(0px 0px 3px rgba(0,0,0,0.3));}
+			               			.dounut_chart .arc{fill: url(#fiilgra);
+			               			 stroke-width: 0;
+			               			 /*
+									    stroke: url(#fiilgra);
+									    stroke-width: 0;
+									    stroke-linejoin: round;
+									    stroke-linecap: round;									    
+									   
+									    stroke-dashoffset: 0;
+									    stroke-dasharray: 30;
+									    
+
+									    */
+			               			}
+			               			.jog_dial:hover .dounut_chart .arc{}
+			               			
+			               			#svg_color1{stop-colo:red}
+			               			#svg_color2{stop-colo:green}
+			               			         			
+			               		</style>
+			               		
+			               		<script>
+			               			function donutAdd(target){//도넛차트 추가 // example			               				
+			               				
+			               				var addHtml	 =	'<div class="dounut_chart" style="transform:rotate(-90deg);">';
+		               						addHtml +=	'	<svg width="'+$(target).width()+'px" height="'+$(target).height()+'px" xmlns="http://www.w3.org/2000/svg">';
+		               						addHtml +=	'		<defs>';
+		               						addHtml +=	'			<linearGradient id="fiilgra">';
+		               						addHtml +=	'				<stop offset="4%" stop-color="#005eea" id="svg_color1"/>';
+		               						addHtml +=	'				<stop offset="90%" stop-color="#448af5" id="svg_color2"/>';
+		               						addHtml +=	'			</linearGradient>';
+		               						addHtml +=	'		</defs>';
+		               						addHtml +=	'		<path class="arc"></path> ';
+		               						addHtml +=	'	</svg>';
+			               					addHtml +=	'</div>';
+
+			               				$(target).prepend(addHtml);
+			               				
+			               				//$(".arc").attr("d", toPieItemPath(250, 250, 220, 250, 0, 270)); //x, y:  파이 중심점, radiusIn: 내부 반지름, radiusOut: 외부 반지름, startAngle: 시작각도 3시방향 0도,  endAngle: 종료각도 시계방향
+			               				//$(".arc").attr("d", toPieItemPath(boxWidth, boxHeight, degreeIn, degreeOut, 0, 45)); 
+			               				
+			               			}
+			               			donutAdd("#example"); //each처리 안되어 있음으로 id로 접근할것
+			               			
+			               			
+			               			
+			               			/*파이차트 그리기 gisdeveloper.co.kr*/
+			               			function toPieItemPath( x, y, radiusIn, radiusOut, startAngle, endAngle){
+			               				
+			               				function _toXY( cX, cY, r, degrees){
+			               					var rad = (degrees) * Math.PI / 180.0;
+			               					
+			               					return {
+			               						x: cX + (r * Math.cos(rad)),
+			               						y: cY + (r * Math.sin(rad))
+			               					};
+			               				}
+			               				
+				               			var startIn 	= _toXY(x, y, radiusIn, endAngle);
+				               			var endIn		= _toXY(x, y, radiusIn, startAngle);			               			
+				               			var startOut	= _toXY(x, y, radiusOut, endAngle);
+				               			var endOut	= _toXY(x, y, radiusOut, startAngle);
+				               			
+				               			var arcSweep = (endAngle - startAngle) <= 180 ? "0" : "1";
+				               			
+				               			var d= [
+											"M", startIn.x, startIn.y, 
+											"L", startOut.x, startOut.y,
+											"A", radiusOut, radiusOut, 0, arcSweep, 0, endOut.x, endOut.y,
+											"L", endIn.x, endIn.y,
+											"A", radiusIn, radiusIn, 0, arcSweep, 1, startIn.x, startIn.y,
+											"z"
+										].join(" ");
+				               			return d;
+			               			}
+			               			
+			               			//document.getElementById("arc1").setAttribute("d", toPieItemPath(250, 250, 100, 240, 0, 45)); //바닐라 처리
+			               			//$(".arc").attr("d", toPieItemPath(250, 250, 220, 250, 0, 270)); //x, y:  파이 중심점, radiusIn: 내부 반지름, radiusOut: 외부 반지름, startAngle: 시작각도 3시방향 0도,  endAngle: 종료각도 시계방향
+			               		</script>			               		
+			               		
+			               		<script>
+			               		var initNum = 0;
+			               		var dial = JogDial(document.getElementById('example'),{
+			               			debug : false,
+			               			touchMode : 'Knob', // knob : wheel
+			               			knobSize : '30%' ,
+			               			wheelSize : '104%' ,
+			               			zIndex : 9999 ,			               			
+			               			minDegree : 0, // (null) infinity
+			               			maxDegree : 360, // (null) infinity
+			               			degreeStartAt : 0
+			               		}).on('mousemove', function(evt){
+			               			var thisVal = Math.round((evt.target.rotation/360)*100);
+			               			$(this).prev('.num_box').find('.num').text(thisVal);
+			               			//console.log(Math.round(evt.target.rotation));
+			               			if(!$(this).hasClass('pie')){
+			               				$(this).prev('.num_box').find('.num').css("filter","hue-rotate(-"+Math.round(evt.target.rotation/1.7)+"deg)");	
+			               			}
+			               			
+			               			//console.log(Math.round(evt.target.rotation));
+			               			if(!$("html").hasClass('ie')){//ie는 필터를 지원안하므로
+				               			$("#example").find('.circle').css("transform","rotate("+Math.round(evt.target.rotation)+"deg)"); //센터 컬러링			               			
+				               			$(this).prev().prev('.dounut_chart').css("filter","hue-rotate(-"+Math.round(evt.target.rotation/1.7)+"deg)"); //파이 컬러링			               				
+			               			}
+
+			               			
+			               			/*파이 궤적 그리기 - start*/
+			               			var target = $(this).closest('.jog_dial');
+		               				var boxWidth = Math.round($(target).width()/2); //200px
+		               				var boxHeight = Math.round($(target).height()/2); //200px
+		               				var degreeIn = Math.round(boxWidth * 0.6); //안쪽 반지름
+		               				var degreeOut = Math.round(boxWidth * 0.85); //바깥쪽 반지름			               			
+		               				$(".arc").attr("d", toPieItemPath(boxWidth, boxHeight, degreeIn, degreeOut, 0, evt.target.rotation-1));
+		               				/*파이 궤적 그리기 - end*/
+			               			
+			               		});
+
+			               		function dialAni(target,num){//다이얼 애니메이션
+			               			var  txtNum = 0; 			               		
+				               		function timer() {
+				               			txtNum += 1;				               			
+				               			target.angle(txtNum); //console.log(txtNum);				               			
+				               			
+				               			if(txtNum === num){//END //console.log("END: "+txtNum);
+				               				if(target == dial){//첫번째 다이얼 예외처리
+				               					$("#replay").attr("disabled",false);
+				               				}
+											return false
+				               			}else{
+				               				setTimeout(timer, 0); //아이콘 애니 //console.log(txtNum);
+				               			}
+				               			
+				               		}			
+			               			timer();			               			
+			               		}
+			               		//dialAni(dial,359);
+			               		
+			               		var dial2 = JogDial(document.getElementById('example2'),{			               			
+			               			knobSize : '30%' ,
+			               			wheelSize : '104%' ,	               			
+			               			minDegree : 0, // (null) infinity
+			               			maxDegree : 360, // (null) infinity
+			               		}).on('mousemove', function(evt){
+			               			var thisVal = Math.round((evt.target.rotation/360)*100);
+			               			$(this).prev('.num_box').find('.num').text(thisVal);
+			               			if(!$("html").hasClass('ie')){//ie는 필터를 지원안하므로
+			               				$(this).prev('.num_box').find('.num').css("filter","hue-rotate(-"+Math.round(evt.target.rotation/1.6)+"deg)"); // grayscale(1)
+			               			}
+			               		});
+			               		//dial2.angle(10);
+			               		//dialAni(dial2,35);
+			               		
+			               		var dial3 = JogDial(document.getElementById('example3'),{			               				               			
+			               			minDegree : 0, // (null) infinity
+			               			maxDegree : 360, // (null) infinity
+			               		}).on('mousemove', function(evt){
+			               			var thisVal = Math.round((evt.target.rotation/360)*100);
+			               			$(this).prev('.num_box').find('.num').text(thisVal);
+			               			if(!$("html").hasClass('ie')){//ie는 필터를 지원안하므로
+			               				$(this).prev('.num_box').find('.num').css("filter","hue-rotate(-"+Math.round(evt.target.rotation/1.6)+"deg)");
+			               			}
+			               		});
+			               		//dial3.angle(135);
+			               		//dialAni(dial3,135);
+			               		
+			               		var dial4 = JogDial(document.getElementById('example4'),{			               			   			
+			               			minDegree : 0, // (null) infinity
+			               			maxDegree : 360, // (null) infinity
+			               		}).on('mousemove', function(evt){
+			               			var thisVal = Math.round((evt.target.rotation/360)*100);
+			               			$(this).prev('.num_box').find('.num').text(thisVal);
+			               			if(!$("html").hasClass('ie')){//ie는 필터를 지원안하므로
+			               				$(this).prev('.num_box').find('.num').css("filter","hue-rotate(-"+Math.round(evt.target.rotation/1.6)+"deg)");
+			               			}
+			               		});
+			               		//dial4.angle(265);			               		
+			               		//dialAni(dial4,265);
+			               		
+			               		function funcInit(){
+			               			dial.angle(0);
+			               			dial2.angle(0);
+			               			dial3.angle(0);
+			               			dial4.angle(0);
+			               		}
+			               		function funcPlay(){
+			               			funcInit();
+			               			dialAni(dial,335);
+			               			dialAni(dial2,10);
+			               			dialAni(dial3,135);
+			               			dialAni(dial4,265);
+			               		}			             
+			               		funcPlay();
+			               		$("#replay").attr("disabled",true);
+			               		
+			               		$("#replay").click(function(){
+			               			funcPlay();	
+			               			$(this).attr("disabled",true);
+			               		});
+			               		
+			               		
+			               		</script>
+			               		
+
+			               		<script>
+			               			$("button.switch").click(function(){
+			               				$(this).toggleClass('on');
+			               				if($(this).hasClass('on')){
+			               					$(this).text('ON');
+			               					$(".jog_dial .block").remove();
+			               					$(".jog_dial").css({"filter":"grayscale(0)", "opacity":"1.0"}); //sepia(1)
+			               				}else{
+			               					$(this).text('OFF');
+			               					$(".jog_dial").append("<div class='block'></div>");
+			               					$(".jog_dial").css({"filter":"grayscale(1)", "opacity":"0.7"}); //sepia(1)
+			               				}			               				
+			               			});
+			               		</script>
+			               		
+			               		<style>
+				               		body.new_mopism section.aws_box .sample_box  button.switch,
+				               		body section.aws_box .sample_box  button.switch{
+				               			border:none;
+										vertical-align: middle;
+									    background: #f9f8f8;
+									    border-radius: 16px;
+									    margin-right: 3px;
+									    position: relative;
+									    width: 60px;
+									    height: 32px;
+									    color: #fff;
+									    font-size: 12px;
+									    padding: 0px 10px 0px 28px;
+									    margin:0;
+									    overflow: hidden;
+										background: #828282;
+    									box-shadow: inset 0px 0px 9px rgba(0, 0, 0, 0.16), inset 11px 5px 10px rgba(0, 0, 0, 0.28), 0px 0px 5px rgba(0, 0, 0, 0.32);									    
+									}
+				               		body.new_mopism section.aws_box .sample_box  button.switch:hover,
+				               		body section.aws_box .sample_box  button.switch:hover{
+				               			border:none;
+										background: #828282;
+										box-shadow: inset 0px 0px 9px rgba(0, 0, 0, 0.16), inset 11px 5px 10px rgba(0, 0, 0, 0.28), 0px 0px 5px rgba(0, 0, 0, 0.32);
+				               		}											    
+									    
+				               		body.new_mopism section.aws_box .sample_box  button.switch.on,
+				               		body section.aws_box .sample_box  button.switch.on{
+										background: #f36a36;
+										padding: 0px 28px 0px 10px;				               		
+				               		}				          
+				               		body.new_mopism section.aws_box .sample_box  button.switch.on:hover,
+				               		body section.aws_box .sample_box  button.switch.on:hover{
+				               			border:none;
+										background: #f35317;
+				               		}							               		     		
+				               						    
+			               		
+				               		body.new_mopism section.aws_box .sample_box  button.switch:after,
+				               		body section.aws_box .sample_box  button.switch:after{
+									    position: absolute;
+									    top: 7px;
+									    left: 5px;
+									    width: 18px;
+									    height: 18px;
+									    display: block;
+									    border-radius: 50%;
+									    content: '';
+									    background: #fff;
+									    box-shadow: 1px 2px 10px 0px rgba(0, 0, 0, 0.28), inset 12px 14px 20px rgb(255, 255, 255), inset -4px -6px 4px rgba(0, 0, 0, 0.18);			               		
+									    }
+				               		body.new_mopism section.aws_box .sample_box  button.switch.on:after,
+				               		body section.aws_box .sample_box  button.switch.on:after{
+				               			left: auto;
+				               			left: unset;
+				               			right: 5px;
+				               		}									    
+			               		</style>
+
+			               		
+		               		</article>
+		               		<!--// 1. 기본: -->
+						
+						</div>
+						<!--// run_sample -->
+
+	        		</article>
+	        		<!-- code -->
+				</div>		               		
+	        
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-markup">
+
+</code>
+</pre>
+<!--// codebox -->     
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-css">    
+
+</code>
+</pre>
+<!--// codebox -->     
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-javascript">           
+
+</code>
+</pre>
+<!--// codebox -->      	        
+	        
+			</div>
+		</section>
+		<!--#####################// 레이어 팝업 #####################-->
+		
+	</div><!--// contents -->
+		
+	<script src="js/jquery-ui.min.js"></script><!-- jquery ui-->
+	<script src="js/jquery.ui.touch-punch.js"></script><!-- jquery ui using mobile -->
+    <script src="js/frontUxer.js"></script><!-- plugin -->
+
+	<script type="text/javascript">
+
+	
+    </script>
+    
+</body>
+</html>

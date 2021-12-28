@@ -1,0 +1,420 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<title> C STUDIO </title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=1280" />
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script><!--jquery flatform.js-->
+<script type="text/javascript" src="js/common.js"></script><!-- common.js -->
+<link rel="stylesheet" type="text/css" href="css/basic.css" /><!--basic.css-->
+<link rel="stylesheet" type="text/css" href="css/custom_ui.css" /><!--custom_ui.css 20151214 추가-->
+<script type="text/javascript">
+$(document).ready(function(){
+	
+});
+</script>
+</head>
+
+<body>
+
+<!--container-->
+<div id="container">
+
+<!--header-->
+<div id="header">
+	<!--h_top-->
+	<div class="h_top">
+		<h1 class="h_logo"><a href="/">C STUDIO</a></h1><!--로그인 되어있으면 a태그에 on 클래스 붙임-->
+		<h2 class="hidden">C STUDIO 상단영역</h2>
+
+		<h3 class="hidden">GNB</h3>
+		<div class="h_right">
+			<ul>
+				<li><a href="#">LOG IN</a></li>
+				<li><a href="#">JOIN</a></li>
+				<li><a href="#">MY PAGE</a></li>
+			</ul>
+		</div>
+		<div class="h_couronne">
+			<a href="http://www.couronne.co.kr/" target="_blank">COURONNE</a>
+		</div>
+
+		<h3 class="hidden">SNS</h3>
+		<div class="h_left">
+			<div class="h_sns">
+				<a href="#" class="facebook" target="_blank">facebook</a>
+				<a href="#" class="instagram" target="_blank">instagram</a>
+				<a href="#" class="youtube" target="_blank">youtube</a>
+			</div>
+		</div>
+	</div>
+	<!--//h_top-->
+
+	<!--h_buttom-->
+	<div class="h_buttom">
+		<h3 class="hidden">MAIN MENU</h3>
+		<ul class="h_menu">
+			<li><a href="#">YOUR STUDIO</a></li>
+			<li><a href="#">CUSTOMIZE</a></li>
+			<li><a href="#">MY STUDIO</a></li>
+		</ul>
+	</div>
+	<!--//h_buttom-->
+</div>
+<!--//header-->
+
+<!--contents-->
+<h2 class="hidden">C STUDIO 본문영역</h2>
+<div id="cstudioContent" class="custom_list"><!-- class="custom_list" 추가 20151214-->
+	<!--내용-->
+
+	<!--타이틀 수정 20151214 -->
+	<h3 class="customize_tit">
+		<img src="img/customize_tit.png" alt="CUSTOMIZE ~ C STUDIO, DESIGN YOUR COURONNE!"/>
+	</h3>
+	<!--//타이틀 수정 20151214 -->
+	<!--동영상 영역 추가 20151214-->
+	<div class="mov_guide">
+		<div class="mov_guide_box">
+			<a href="#" onclick="movGuide_popup_open(); return false;">동영상 보기</a>
+		</div>
+		<ul class="hidden">
+			<li>1. 커스터마이즈 하고싶은 제품을 선택하세요</li>
+			<li>2. 원하는 가죽색상과 패턴으로 디자인하세요</li>
+			<li>3. 엠블럼을 색상과 기능별로 선택하세요</li>
+			<li>4. 다양한 패치를 올려서 나만의 쿠론을 완성하세요</li>
+		</ul>
+	</div>
+	<!--//동영상 영역 추가 20151214-->
+
+	<!--comm_layout-->
+	<div class="comm_layout"><!-- class="comm_layout mt140"에서 "mt140" 삭제 20151214-->
+		<!--customize_prodTp-->
+		<div class="customize_prodTp">
+			<h4><img src="img/stit_check.png" alt="" /></h4>
+			<ul>
+				<!--리스트-->
+				<li>
+					<div class="thumb">
+						<a href="#"><div id='spritespin1'></div></a><!--20151201 추가-->
+						<span class="bt">
+							<a href="#" class="bt_rotate bt_rotate_tp1" id="lotate_start1">제품 360도 회전</a>
+						</span>
+						<!--20150909 BEST/NEW아이콘 추가-->
+						<span class="ic_wrap">
+							<span class="ic_bt ic_best"><span>BEST</span></span>
+							<span class="ic_bt ic_new"><span>NEW</span></span>
+						</span>
+						<!--//BEST/NEW아이콘 추가-->
+					</div>
+					<div class="thumb_etc">
+						<span class="prod_nm">Stephano Men ID Half Wallet</span>
+						<span class="prod_bt">
+							<img src="img/btn_soldout.png" alt="SOLD OUT" /><!--20150909 SOLD OUT 추가-->
+						</span>
+					</div>
+				</li>
+				<!--//리스트-->
+				<!--리스트-->
+				<li>
+					<div class="thumb">
+						<a href="#"><div id='spritespin2'></div></a><!--20151201 추가-->
+						<span class="bt">
+							<a href="#" class="bt_rotate bt_rotate_tp2" id="lotate_start2">제품 360도 회전</a>
+						</span>						
+					</div>
+					<div class="thumb_etc">
+						<span class="prod_nm">Jackie Cross</span>
+						<span class="prod_bt">
+							<a href="#"><img src="img/btn_customize.png" alt="CUSTOMIZE IT" /></a>
+						</span>
+					</div>
+				</li>
+				<!--//리스트-->
+				<!--리스트-->
+				<li>
+					<div class="thumb">
+						<a href="#"><div id='spritespin3'></div></a><!--20151201 추가-->
+						<span class="bt">
+							<a href="#" class="bt_rotate bt_rotate_tp3" id="lotate_start3">제품 360도 회전</a>
+						</span>
+					</div>
+					<div class="thumb_etc">
+						<span class="prod_nm">Amy</span>
+						<span class="prod_bt">
+							<a href="#"><img src="img/btn_customize.png" alt="CUSTOMIZE IT" /></a>
+						</span>
+					</div>
+				</li>
+				<!--//리스트-->
+				<!--리스트-->
+				<li>
+					<div class="thumb">
+						<a href="#"><div id='spritespin4'></div></a><!--20151201 추가-->
+						<span class="bt">
+							<a href="#" class="bt_rotate bt_rotate_tp4" id="lotate_start4">제품 360도 회전</a>
+						</span>
+					</div>
+					<div class="thumb_etc">
+						<span class="prod_nm">Stephanie Wallet</span>
+						<span class="prod_bt">
+							<a href="#"><img src="img/btn_customize.png" alt="CUSTOMIZE IT" /></a>
+						</span>
+					</div>
+				</li>
+				<!--//리스트-->
+			</ul>
+		</div>
+		<!--//customize_prodTp-->
+	</div>
+	<!--//comm_layout-->
+
+	<!--//내용-->
+</div>
+<!--//contents-->
+
+<!--contentFooter-->
+<div class="contentFooter">
+	<div class="CFContent CFCustomer">
+		<h4><a href="/call_center/noticeList.jsp">고객센터</a></h4>
+		<strong>1588-7667</strong>
+		월~금 (10:00~18:00)
+	</div>
+	<div class="CFContent CFOrder">
+		<h4>주문/배송</h4>
+		<ul>
+			<li><a href="/mypage/order/orderList.jsp">주문/배송 조회</a></li>
+			<li><a href="/mypage/order/cancleList.jsp">취소/교환/반품 조회</a></li>
+			<li><a href="/call_center/orderSearch.jsp">비회원주문조회</a></li>
+		</ul>
+	</div>
+	<div class="CFContent CFQna">
+		<h4>문의사항</h4>
+		<ul>
+			<li><a href="/call_center/faqList.jsp">자주묻는 질문 FAQ</a></li>
+			<li><a href="/call_center/afterService.jsp">A/S</a></li>
+			<li><a href="/call_center/qnaList.jsp">1:1 상담</a></li>
+		</ul>
+	</div>
+	
+	<!--20150903 수정-->
+	<div class="CFContent CFMyInfo">
+		<h4>혜택정보</h4>
+		<ul>
+			<li><a href="/mtm/mypage/diary/mycheckProduct.jsp">My choice</a></li>
+			<li><a href="/mtm/mypage/diary/myDepositList.jsp">나의 예치금</a></li>
+			<li><a href="/html/event/membership_event.jsp">온라인 스토어 맴버쉽</a></li>
+		</ul>
+	</div>
+	<!--//20150903 수정-->
+
+	<div class="CFContent CFNotice">
+		<h4>공지사항</h4>
+		<ul>
+			<li><a href="#">[공지] 우편번호 체계 변경으로 인한 시스템 작업 안내</a></li>
+			<li><a href="#">[공지] 우편번호 체계 변경으로 인한 시스템 작업 안내</a></li>
+			<li><a href="#">[공지] 우편번호 체계 변경으로 인한 시스템 작업 안내</a></li>
+		</ul>
+	</div>
+</div>
+<!--//contentFooter-->
+
+<!--footer-->
+<div id="footer">
+	<h2><img src="img/logo_footer.png" alt="COURONNE" /></h2><!--20151214이미지경로 수정-->
+
+	<h3 class="hidden">하단메뉴</h3>
+	<!--f_menu-->
+	<div class="f_menu">
+		<ul>
+			<li><a href="#">매장정보</a></li>
+			<li><a href="#">바이어 상담</a></li>
+			<li><a href="#">고객센터</a></li>
+			<li><a href="#">이용약관</a></li>
+			<li><a href="#">개인정보취급방침</a></li>
+			<li><a href="#">개인정보처리방침</a></li>
+		</ul>
+	</div>
+	<!--//f_menu-->
+
+	<h3 class="hidden">사이트 정보 및 카피라이트</h3>
+	<!--f_siteInfo-->
+	<div class="f_siteInfo">
+		<span>코오롱인더스트리 FnC부문</span>
+		<span>대표이사 : 박동문</span>
+		<span>개인정보관리 책임자 : 경영지원본부 손정현 상무</span>
+		<span>개인정보관리 담당자 : 빅데이터팀 김정혁 과장</span><br />
+		<address>서울시 서초구 서초대로 411 GT타워</address>
+		<span>통신판매업신고:제2012-서울서초-0593호</span>
+		<span>사업자등록번호:138-85-19612</span>
+		<button type="button" class="trans_xsBk w84" onclick="window.open('http://www.ftc.go.kr/info/bizinfo/communicationList.jsp');" title="사업자등록확인 새창열기">사업자등록확인</button><br />
+		<span>EMAIL: <a href="mailto:couronne_admin@kolon.com">couronne_admin@kolon.com</a></span>
+		<span>TEL : 1588-7667</span>
+		<span>FAX : 02-3677-7546</span>
+		<div class="copyright">Copyright © 2013 couronne All Rights Reserved.</div>
+	</div>
+	<!--//f_siteInfo-->
+
+	<h3 class="hidden">구매안전서비스 안내</h3>
+	<!--f_escro-->
+	<div class="f_escro"><img src="img/escro.gif" alt="LG U+ 에스크로"><!--20151214이미지경로 수정-->
+		<p>
+			고객님은 안전거래를 위해 결제시<br />
+			저희 사이트에서 가입한 LG U+의<br />
+			구매안전서비스를 이용하실 수 있습니다.
+		</p>
+		<button type="button" class="trans_xsBk w75" onclick="window.open('https://pgweb.uplus.co.kr/pg/wmp/mertadmin/jsp/mertservice/s_escrowYn.jsp?mertid=joykolon','_winPop','width=340px,height=263px');" title="LG U+ 에스크로 가입사실 확인하기 새창열기">가입사실확인</button>
+	</div>
+	<!--//f_escro-->
+</div>
+<!--//footer-->
+	
+</div>
+<!--//container-->
+
+<!--20151007 360도 처리 페이지 하단에 위치해야 작동합니다-->
+<script type="text/javascript" src="js/spritespin.js"></script><!-- spritespin.js -->
+<script type="text/javascript">
+
+	//stepani
+	var spin1 = $('#spritespin1');
+	var api1;
+	var frames1 = SpriteSpin.sourceArray('img/custom/360/new_stepani.{frame}.jpg', {
+		frame: [1, 20], 
+		digits: 3 
+	});
+	spin1.spritespin({
+		source: frames1,
+		sense: -1,
+		renderer: 'canvas',
+		animate : false,
+		loop: false,//360도 loop
+		lanes: 1,
+		module: '360',
+		frameTime: 100, //속도조절
+		width: 270,
+		height: 270
+	});
+	api1 = spin1.spritespin("api");
+	$('#lotate_start1').click(function(){
+			api1.toggleAnimation();
+			return false;
+	});
+
+	//amy
+	var spin2 = $('#spritespin2');
+	var api2;
+	var frames2 = SpriteSpin.sourceArray('img/custom/360/jackie.{frame}.jpg', { //20151012 가방이미지 순서변경
+		frame: [1, 20], 
+		digits: 3 
+	});
+	spin2.spritespin({
+		source: frames2,
+		sense: -1,
+		renderer: 'canvas',
+		animate : false,
+		loop: false,//360도 loop
+		lanes: 1,
+		module: '360',
+		frameTime: 100, //속도조절
+		width: 270,
+		height: 270
+	});
+	api2 = spin2.spritespin("api");
+	$('#lotate_start2').click(function(){
+			api2.toggleAnimation();
+			return false;
+	});
+
+	//jackie
+	var spin3 = $('#spritespin3');
+	var api3;
+	var frames3 = SpriteSpin.sourceArray('img/custom/360/amy.{frame}.jpg', { //20151012 가방이미지 순서변경
+		frame: [1, 20], 
+		digits: 3 
+	});
+	spin3.spritespin({
+		source: frames3,
+		sense: -1,
+		renderer: 'canvas',
+		animate : false,
+		loop: false,//360도 loop
+		lanes: 1,
+		module: '360',
+		frameTime: 100, //속도조절
+		width: 270,
+		height: 270
+	});
+	api3 = spin3.spritespin("api");
+	$('#lotate_start3').click(function(){
+			api3.toggleAnimation();
+			return false;
+	});
+
+	//stephanie_wallet
+	var spin4 = $('#spritespin4');
+	var api4;
+	var frames4 = SpriteSpin.sourceArray('img/custom/360/stephanie_wallet.{frame}.jpg', {
+		frame: [1, 20], 
+		digits: 3 
+	});
+	spin4.spritespin({
+		source: frames4,
+		sense: -1,
+		renderer: 'canvas',
+		animate : false,
+		loop: false,//360도 loop
+		lanes: 1,
+		module: '360',
+		frameTime: 100, //속도조절
+		width: 270,
+		height: 270
+	});
+	api4 = spin4.spritespin("api");
+	$('#lotate_start4').click(function(){
+			api4.toggleAnimation();
+			return false;
+	});
+</script>
+<!--//20151007 360도 처리-->
+
+<!--20151214 가이드 동영상 팝업 처리-->
+<script type="text/javascript">
+function movGuide_popup_open(){
+	$('#mov_guide_detail, .layer_bg').fadeIn("fast",function(){
+		$('#movPlayer').attr("src","http://www.youtube.com/embed/W59hayzROhE?autoplay=1&amp;theme=light&amp;controls=0&amp;showinfo=0&amp;wmode=opaque&amp;rel=0");
+		pop_vertical();
+	});	
+}
+function pop_vertical(){//팝업 센터 정렬
+	var pop_height = $('.layer_popup .popup').outerHeight();
+	var pop_height_device = -1 * (pop_height / 2);
+
+	if (pop_height > $(window).height())
+	{
+		$('.layer_popup .popup').css("paddingTop", $(window).scrollTop());
+	} else {		
+		$('.layer_popup .popup').css("paddingTop", ($(window).height()/2) + pop_height_device + $(window).scrollTop());
+	}
+}
+//팝업 닫기
+function pop_close(){
+	$('.layer_popup, .layer_bg').fadeOut('fast');
+	$('#movPlayer').attr("src","about:blank");
+	$('html, body').stop().animate({ scrollTop: 580 }, 500); //타이틀로 이동
+}
+</script>
+<div class="layer_bg"></div>
+<div class="layer_popup" id="mov_guide_detail">
+	<div class="popup">
+		<div class="pop_basic" style="width:800px; height:450px;">
+			<iframe width="100%" height="450" src="about:blank" frameborder="0" id="movPlayer"></iframe>
+			<a href="#" class="pop_cls" onclick="pop_close();return false;"><img src="img/btn_close.png" alt="창닫기" /></a>
+		</div>		
+	</div>
+</div>
+<!--//20151214 가이드 동영상 팝업 처리-->
+
+</body>
+</html>

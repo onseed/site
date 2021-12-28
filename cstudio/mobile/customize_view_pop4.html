@@ -1,0 +1,203 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<title> C STUDIO </title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=2.0" /><!--20150914 maximum-scale 수정-->
+<!--[if IE]>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<![endif]-->
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script><!--jquery flatform.js-->
+<!--[if lt IE 9]>
+<script src="js/html5shiv.js" type="text/javascript"></script>
+<![endif]-->
+
+<script type="text/javascript" src="js/common.js"></script><!-- common.js -->
+<link rel="stylesheet" type="text/css" href="css/basic.css" /><!--basic.css-->
+
+<link rel="stylesheet" type="text/css" href="css/custom_ui.css" /><!--custom_ui.css 20151113 추가-->
+<script type="text/javascript" src="js/jquery.ezmark.js"></script><!-- jquery.ezmark.js 20151113 추가-->
+
+<script type="text/javascript">
+//*************팝업 시작
+$(window).load(function(){
+	function pop_vertical(){//팝업 센터 정렬
+		var pop_height = $('.layer_popup .popup').outerHeight();
+		var pop_height_device = -1 * (pop_height / 2);
+
+		if (pop_height > $(window).height())
+		{
+			$('.layer_popup .popup').css("paddingTop", $(window).scrollTop());
+			$('.wrap').css({ height: pop_height, overflow: 'hidden' });
+		} else {		
+			$('.layer_popup .popup').css("paddingTop", ($(window).height()/2) + pop_height_device + $(window).scrollTop());
+			$('.wrap').css({ height: $(window).height(), overflow: 'hidden' });
+		}
+	}
+
+	$('#login_layer, .layer_bg').fadeIn("fast",function(){
+		pop_vertical();
+	});	
+
+});
+
+//팝업 닫기
+function pop_close(){
+	$('.layer_popup').fadeOut('fast');
+	$('.wrap').css({ height: 'auto', overflow: 'visible' });
+}
+//*************팝업 끝
+</script>
+</head>
+
+<body>
+
+<!--wrap-->
+<div class="wrap">
+
+<!--###### headerArea ######-->
+<div class="headerArea">
+	<h1 class="logo on"><a href="/"><span>C STUDIO</span></a></h1><!--로그인 후-->
+	<!--<h1 class="logo"><a href="/"><span>C STUDIO</span></a></h1> 로그인 전-->
+
+	<div class="gnb">
+		<a href="#" class="go_couronne"><span>COURONNE</span></a>
+		<ul>
+			<!--로그인 전
+			<li><a href="#">MY PAGE</a></li>
+			<li><a href="#">CART</a></li>-->
+			<!--//로그인 전-->
+			<!--로그인 후-->
+			<li><a href="#">LOGOUT</a></li>
+			<li><a href="#">MY PAGE</a></li>
+			<!--//로그인 후-->
+		</ul>
+	</div>
+
+	<div class="head_menu">
+		<ul>
+			<li><a href="#">YOUR STUDIO</a></li>
+			<li><a href="#">CUSTOMIZE</a></li>
+			<li><a href="#">MY STUDIO</a></li>
+		</ul>
+	</div>
+</div>
+<!--###### //headerArea ######-->
+
+<!--###### contentArea ######-->
+<div class="contentArea">
+<!--내용 영역-->
+	<!--커스터마이즈 상세 샘플영역-->
+	<div style="position:relative; margin-bottom:-20px;">
+		<img src="img/temp/sample3.jpg" alt="" style="display:block; max-width:100%; margin:0 auto;" /> 
+	</div>
+	<!--//커스터마이즈 상세 샘플영역-->
+<!--//내용 영역-->
+</div>
+<!--###### //contentArea ######-->
+
+<!--###### footerArea ######-->
+<div class="footerArea">
+	<div class="f_menu">
+		<ul class="f_menu_top">
+			<li><a href="javascript:login('reload');">로그인</a></li>
+			<li><a href="javascript:memberJoin();">회원가입</a></li>
+			<li><a href="https://member.kolon.com/mobile/policy/policy.jsp" target="_blank">이용안내</a></li>
+			<li><a href="javascript:callCenter('main');">고객센터</a></li>
+		</ul>
+		<ul class="f_menu_btm">
+			<li><a href="/about/shopInfo.jsp">store</a></li>
+			<li><a href="http://m.thecouronne.com/">english</a></li>
+		</ul>
+	</div>
+
+	<ul class="f_sns">
+		<li><a href="http://www.facebook.com/thecouronne" class="facebook"><span>facebook</span></a></li>
+		<li><a href="http://instagram.com/thecouronne" class="instagram"><span>instagram</span></a></li>
+	</ul>
+	
+	<div class="f_info_wrap">
+		<div class="f_info">
+			<h2><img src="img/logo_footer.png" alt="KOLON INDUSTRIES" /></h2>
+			<div class="info">
+				코오롱인더스트리 FnC부문<br />
+				대표이사:박동문 | 개인정보관리 책임자:경영지원본부 손정현상무<br />
+				개인정보관리 담당자 : 빅데이터팀 김정혁 과장<br />
+				서울시 서초구 서초동 1317-23 GT타워 | TEL : 1588-7667<br />
+				EMAIL : <a href="mailto:COURONNEmall@kolon.com">COURONNEmall@kolon.com</a><br />
+				통신판매업신고 제2012-서울서초 0593호<br />
+				사업자등록번호 : 138-85-19612 <a href="http://www.ftc.go.kr/info/bizinfo/communicationList.jsp" class="business">사업자등록확인</a>
+				<span class="escro"><img src="img/escro02.gif" alt="LG U+" />  에스크로 고객님은 안전거래를 위해 
+				결제시 저희 사이트<br/>
+				에서 가입한 LG U+의 구매안전서비스를 이용하실 수 있습니다.<br/> 
+				<a href="https://pgweb.uplus.co.kr/pg/wmp/mertadmin/jsp/mertservice/s_escrowYn.jsp?mertid=joykolon" class="joining">가입사실 확인</a></span>
+			</div>
+			<div class="copyright">Copyright ⓒ 2013 by COURONNE All rights reserved</div>
+		</div>
+	</div>
+</div>
+<!--###### //footerArea ######-->
+
+</div>
+<!--//wrap-->
+
+<!--레이어팝업-->
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.loginAllWrap .loginIpt .saveId input').ezMark({checkboxCls: 'ez-checkbox'});//checkbox 이미지처리
+});
+</script>
+<div class="layer_bg"></div>
+
+<!--20151113 로그인 팝업 전체수정-->
+<div class="layer_popup" id="login_layer">
+	<div class="popup">
+		<div class="pop_basic">
+			<h2 class="pop_tit">LOGIN</h2>
+
+			<div class="pop_logintxt">상품 구입을 위해 로그인이 필요합니다.</div>
+
+			<!--20151113 추가수정 커스텀용을 참고 하세요.-->
+			<div class="loginAllWrap">
+				<form name="form_login" method="post">
+					<fieldset>
+						<legend>로그인</legend>
+						<div class="login_wrap">				
+							<div class="loginIpt">
+								<dl>
+									<dd><input type="text" name="cust_id" id="u_id" placeholder="ID" /></dd>
+									<dd><input type="password" name="cust_password" id="u_pw" placeholder="PW" /></dd>
+								</dl>
+								<div class="saveId">
+									<input type="checkbox" id="u_save" name="idcheck" />
+									<label for="u_save">아이디 저장</label> 
+									<span>|</span>
+									<a href="#">아이디/비밀번호 찾기</a>
+								</div>
+							</div>
+							<div class="loginBtn">
+								<button type="button">LOG IN</button>
+							</div>
+						</div>
+
+						<div class="buy_nonmember">
+							<p>COURONNE의 회원이 되시면<br/> 더 많은 혜택을 누리실 수 있습니다.</p>
+							<a href="#" class="btn_gyline_rect">회원가입</a>
+							<a href="#" class="btn_gyline_rect">비회원 구매</a>					
+						</div>
+
+					</fieldset>
+				</form>
+			</div>
+			<!--//20151113 추가수정-->
+
+			<a href="#" class="pop_cls" onclick="pop_close();return false;"><img src="img/btn_close.png" alt="창닫기" /></a>
+		</div>
+	</div>
+</div>
+<!--//20151113 로그인 팝업 전체수정-->
+
+<!--//레이어팝업-->
+
+</body>
+</html>

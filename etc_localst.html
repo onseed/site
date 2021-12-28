@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>frontUxer</title>
+<script src="js/jquery-1.11.2.min.js"></script>
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/frontUxer.css">
+<script type="text/javascript">         
+	var menuArry = ['3','5'];//1depth, 2depth
+</script>
+</head>
+<body>
+<script src="js/guide.js"></script><!-- site guide -->
+	
+	<div class="start_dim"><span></span></div>
+		
+	<h1 class="hide"> basic</h1>
+
+	<div class="contents">
+	
+	 	<!--######################################  로컬스토리지 -######################################-->
+		<section class="aws_box">
+	        <h2 class="aws_tl"> localStorage Memo</h2>
+        	<ul class="dcs">
+        		<li>html5 전용 로컬 스토리지로 웹서버없이(ie는필요) 작동</li>
+        		<li>브라우저마다 다르지만 5Mb정도 지원</li>
+        		<li>localStorage  테스트(콘솔에서 "localStorage"로 확인)</li>
+        	</ul>	        
+	        <div class="code_area">	        	
+	            <div class="play_box">
+	            	<!--# code #-->
+	            	<article class="code_box">
+	            	
+	    <!--//-###################################### 이곳에 컨텐츠 테스트를 합니다. -######################################-->
+		<!-- sample_box -->	                    
+	    <article class="sample_box">
+	     <i class="icn icn128" style="background-position:-153px -556px;  transform: scale(0.5);"></i><strong>todo Write</strong>       
+		<style>
+		.input_tb{border-radius:10px; box-shadow: 0px 1px 15px rgba(180,180,180,0.2); border:1px solid #f1f1f1;}
+		.input_tb table{width:100%; }		
+		.input_tb tr:first-child th,
+		.input_tb tr:first-child td{ border-bottom:1px solid #f1f1f1;}	
+		.input_tb th{text-align:left; padding:23px 15px 15px; vertical-align:top;}
+		.input_tb td{padding:2px 10px; padding:15px;}
+		.btn_wrap {text-align:right;}
+		.btn_wrap button{margin-top:10px !important;}
+				
+		.noti th, .noti td{font-size:12px; padding:2px; color:#555;}
+		
+		.storage_del{display:inline-block; background:#f7f7f7; width:20px; height:20px; text-align:center; line-height:20px;  border-radius:5px;}
+		
+		/*달력*/
+		.ui-widget-header .ui-icon{background-image:url("img/icn_etc.svg"); background-repeat:no-repeat; cursor:pointer; background-size:auto 450px;}
+		.ui-widget.ui-widget-content {height:auto; background:#fff; border-radius: 10px; box-shadow: 0px 1px 15px rgba(180,180,180,0.2); border: 1px solid #f1f1f1; padding:5px;}
+		.ui-datepicker .ui-datepicker-prev span{width:17px; height:17px;  background-position:/*-769px -432px*/ -384px -216px;}
+		.ui-datepicker .ui-datepicker-next span{width:17px; height:17px;  background-position:/*-692px -432px*/ -346px -216px;}
+		.ui-datepicker .ui-datepicker-title select{height:26px; line-height:26px; margin:0 2px;}
+		
+		/*상단 슬라이더 css 패치*/
+		.ui_guideline .ui-widget.ui-widget-content { border: none; margin-bottom: 0; background: #c4d3e4; box-shadow: none; height: 3px; padding:0;}
+		
+		/*메모장*/
+		.local_storage p:first-child{border:none; padding-top:0;}
+		.local_storage .memo{border-top:1px dashed #d9d9d9; padding:5px 0;}
+		</style>
+		<div class="input_tb ">
+		<table>
+			<tr>
+				<th style="width:85px;">스토리지 이름: </th>
+				<td>
+					<input type="text" value="" placeholder="날짜를 입력하세요." class="add_input_name" style="border:none; width:100%; background-color: #f7f7f7; padding:8px; border-radius:5px; box-sizing:border-box;"/>
+					<script>
+					$(window).load(function(){    
+						$(".add_input_name").datepicker({							
+							nextText: '다음달',
+							prevText: '이전달',
+							buttonImage: "../img/icn_etc.svg",
+							buttonImageOnly: true,
+							changeMonth: true, //달을 바꿀수 있는 셀렉트박스 표시
+							changeYear: true,  //년을 바꿀수 있는 셀렉트박스 표시
+							
+							showButtonPanel: true, //하단에 버튼패널 표시(오늘날짜/닫기)
+							currentText: '오늘 날짜',
+							closeText: '닫기',
+									
+							showMonthAfterYear: true, //팝업창 년,월 순으로
+							//dayNames:['(월)', '(화)', '(수)', '(목)', '(금)', '(토)', '(일)'], //요일 한글 형식 //아니 왜 일표시가 틀리냐?
+							//dayNamesMin:['월', '화', '수', '목', '금', '토', '일'], //요일 한글 형식 //아니 왜 일표시가 틀리냐?
+							dayNames:['(일)','(월)', '(화)', '(수)', '(목)', '(금)', '(토)'], //요일 한글 형식
+							dayNamesMin:['일', '월', '화', '수', '목', '금', '토'], //요일 한글 형식							
+							monthNamesShort:['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월' ], //월 한글 형식
+							dateFormat: "yy.mm.dd DD", //인풋 텍스트필드 순서 및 포맷
+							yearRange:'c-2 : c+0' //년도 범위 현재c에서 앞뒤로 5년씩만 표시(아래와 같이 표기할수도)
+							//yearRange: "2010:2013" //년도 범위
+							//maxDate: 0 //오늘 이후 날짜 선택 불가
+						});
+						
+						$(".add_input_name").val($.datepicker.formatDate('yy.mm.dd DD', new Date(), {dayNames:['(월)', '(화)', '(수)', '(목)', '(금)', '(토)', '(일)']}));
+						$(".add_input_value").val(localStorage.getItem($.datepicker.formatDate('yy.mm.dd DD', new Date(), {dayNames:['(월)', '(화)', '(수)', '(목)', '(금)', '(토)', '(일)']})));
+					});
+					</script>
+				</td>
+			</tr>		
+			<!-- 
+			<tr>
+				<th style="width:85px;">스토리지 이름: </th>
+				<td>
+					<input type="text" value="" placeholder="제목을 입력하세요" class="add_input_name" style="border:none; width:100%; background-color: #f7f7f7; padding:8px; border-radius:5px; box-sizing:border-box;"/>
+				</td>
+			</tr>-->
+			<tr>
+				<th>스토리지 값: </th>
+				<td>
+					<!-- <input type="text" value="값" class="add_input_value"/> -->				
+					<textarea class="add_input_value" style="width:100%; height:80px; border:none;  width:100%;  background-color: #f7f7f7; padding:8px; border-radius:5px;  box-sizing:border-box;" placeholder="내용을 입력하세요"></textarea>
+				</td>				
+			</tr>
+		</table>
+		</div>
+		<p class="btn_wrap">
+			<a class="result" id="result" style="display:none; margin-right:10px;"><i class="icn icn133" style="background-position:-538px -556px; transform: scale(0.5);"></i>CSV from localStorage</a>
+			<button class="btn_scv point">CSV</button>
+			<button class="btn_add">write</button>
+			<button class="btn_del">del</button>
+			<button class="btn_clear">clear</button>
+		</p>
+		
+		<p><i class="icn" style="background-position:-461px -122px; transform: scale(0.5);"></i><strong>todo List</strong> <span class="local_storage_total"></span></p>
+		<div style="padding:10px 20px; border-radius:10px; box-shadow: 0px 1px 15px rgba(180,180,180,0.2);  border:2px solid #5b5b5b;">			
+			<div class="local_storage" style="margin-top:10px; line-height:1.8em;"></div>		
+		</div>
+		<div class="mgt_l"><i class="icn" style="background-position:-1000px -432px; transform: scale(0.5); opacity:0.3;"></i><strong>버튼 설명</strong></div>
+		<table class="mgt_s noti">
+			<tr>
+				<th style="width:60px;">CSV</th>
+				<td>다운로드 받을수 있는 CSV 텍스트 파일 생성(메모장 전용 텍스트 파일)</td>
+			</tr>		
+			<tr>
+				<th>write</th>
+				<td>localStorage에 이름(key)과 값을 쓰거나 이름이 같은경우 값(value)을 덮어씌움</td>
+			</tr>
+			<tr>
+				<th>del</th>
+				<td>localStorage에 해당 이름(key)을 찾아 값(value)을 포함해서 같이 지움</td>
+			</tr>
+			<tr>
+				<th>clear</th>
+				<td>localStorage 모두 비움</td>
+			</tr>
+		</table>			
+
+
+<!-- 20200429 글로벌메뉴내 로그인/회원가입 삭제 -->
+<script>
+	$(".login_sec a").eq(1).remove(); //글로벌 메뉴 회원가입 삭제
+	$(".loginSideMenu").remove(); //로그인페이지시 메뉴 삭제
+</script>		
+<!--// 20200429 글로벌메뉴내 로그인/회원가입 삭제 -->
+		
+<script>
+	var test_storage = "";
+	var input_push_name = "";
+	var input_push_value = "";
+	
+//	localStorage['foo'] = "bar";
+//	test_storage = localStorage["foo"];
+
+	$(".btn_add").click(function(){// 스토리지 입력
+		$(".local_storage").empty();
+		
+		input_push_name = $(".add_input_name").val();
+		add_input_value = $(".add_input_value").val();
+		
+		if(input_push_name == ""){
+				alert("제목을 입력하세요");
+		}else if(add_input_value == ""){
+				alert("내용을 입력하세요");
+		}else{
+			localStorage[input_push_name] = add_input_value;
+		}
+		
+		
+		storage_load_txt();
+	});
+	$(".btn_del").click(function(){// 스토리지  지우기
+		$(".local_storage").empty();
+		
+		input_push_name = $(".add_input_name").val();
+		add_input_value = $(".add_input_value").val();
+		
+		localStorage.removeItem(input_push_name);
+		
+		storage_load_txt();
+	});	
+	$(".btn_clear").click(function(){// 스토리지 비우기
+		
+		var ldnleng = localStorage.length;
+		if(ldnleng <=3 ){//스킨설정(텍스트,반전,컬러러이징값은 빼자)
+			ldnleng= 0
+		}else{
+			ldnleng= ldnleng - 3;
+		}
+		
+		if(ldnleng > 1){//로컬스토리지가 있을때
+			if(confirm("로컬스토리지내 모든 데이터가 지워집니다.\n정말 비우시겠습니까?") == true){//혹인
+				$(".local_storage").empty();
+			
+				//localStorage.clear();// 스킨설정까지 모두 지워진다. 스킨설정은 아래 이벤트로 예외처리하자
+				storage_empty_txt();
+				
+				storage_load_txt();			
+			}else{//취소
+				return false
+			}			
+		}else{
+			alert('로컬스토리지에 데이터가 없습니다.');
+		}
+		
+
+	});	
+	$(".add_input_value").on('keyup',function(){//텍스트 글쓰기
+		$(".local_storage").empty();
+	
+		input_push_name = $(".add_input_name").val();
+		add_input_value = $(".add_input_value").val();
+		
+		if(input_push_name != ""){
+			localStorage[input_push_name] = add_input_value;	
+		}
+		
+		
+		storage_load_txt();
+	});
+	
+	$(".btn_scv").click(function(){// csv 다운로드
+		//var ary = localStorage;
+		var ary = [];
+		let keys = Object.keys(localStorage);		
+		for (let index in keys){
+			//alert(keys[index]);//key			
+			if(keys[index] == "color" || keys[index] == "view" || keys[index] == "invert"){//스킨설정만 빼고 추가한다
+					
+			}else{				 
+				//console.log(keys[index] ); //제목
+				//console.log(localStorage.getItem(Object.keys(localStorage)[index]) ); //내용				
+				ary.push("\n"+keys[index]+" : \r"+ localStorage.getItem(Object.keys(localStorage)[index]));
+			}
+		}			
+		
+		
+		console.log(ary);
+		
+		var blob = new Blob([ary], {type: "text/csv"});
+		var url = URL.createObjectURL(blob);
+		
+		$("#result").css("display","inline-block");
+				
+		var timeCk = new Date();
+		var fileTimeCk = timeCk.getSeconds();
+		
+		var a =document.querySelector("#result");
+		a.href = url;
+		a.download = $(".add_input_name").val()+"_"+fileTimeCk +"s_file.csv";
+		
+/* 		$("a.result").attr("href", url);
+		$("a.result").download = "file.csv"; */
+		
+		
+	});
+	
+	
+	
+	storage_load_txt();	
+	
+/*스토리지 로드*/
+function storage_load_txt(){
+	var ldnleng = localStorage.length;
+	if(ldnleng <=3 ){//스킨설정(텍스트,반전,컬러러이징값은 빼자)
+		ldnleng= 0
+	}else{
+		ldnleng= ldnleng - 3;
+	}
+	
+	$(".local_storage_total").html("<strong>: "+ldnleng+"</strong> 건");
+	
+	
+	let keys = Object.keys(localStorage);		
+	/*
+	for (let key of keys){
+		$(".local_storage").append(key +": "+ localStorage.getItem(key)+" , ");//값
+	}*/
+	for (let index in keys){
+		//alert(keys[index]);//key
+		
+		if(keys[index] == "color" || keys[index] == "view" || keys[index] == "invert"){//스킨설정만 빼고 추가한다
+				
+		}else{
+			$(".local_storage").append("<p class='memo'><em data-target-selDb='"+index+"'>"+keys[index] +
+					" : <em style='color:#1648ff; font-weight:bold;'>"+ localStorage.getItem(keys[index]) + "</em></em> <a href='javascript:void(0);' data-target-ldb='"+index+"' class='storage_del'>x</a></p>"); //값
+			
+			$("a[data-target-ldb='"+index+"']").on("click", function(){
+				localStorage.removeItem(Object.keys(localStorage)[index]);
+				$(".local_storage").empty();
+				storage_load_txt();
+			});
+			
+			$("em[data-target-selDb='"+index+"']").on("click", function(){
+				localStorage.getItem(Object.keys(localStorage)[index]); 
+				//console.log(keys[index] ); //제목
+				//console.log(localStorage.getItem(Object.keys(localStorage)[index]) ); //내용				
+				$(".add_input_name").val(keys[index]);
+				$(".add_input_value").val(localStorage.getItem(Object.keys(localStorage)[index]));
+				
+				//$(".local_storage").empty();
+				//storage_load_txt();
+			});			
+			
+		}
+		
+	}	
+}
+
+/*스토리지 비우기*/
+function storage_empty_txt(){
+	let keys = Object.keys(localStorage);
+	
+	console.log(keys);
+	
+	for (let index in keys){
+		
+		if(keys[index] == "color" || keys[index] == "view" || keys[index] == "invert"){//스킨설정만 빼고 추가한다
+				
+		}else{
+			localStorage.removeItem(keys[index]);
+			//console.log(keys[index]);
+		}
+	}
+	
+}
+
+</script>
+	                    
+	    </article>
+		<!--// sample_box -->
+
+<p class="mgt_l">localStorage는 아래와 같이 정리합니다.</p>
+						<div class="option_txt mgt_s">
+<!--## incodebox: markup, css, clike, javascript ##-->
+<pre class="incodebox">
+<code class="language-javascript">
+//스토리지 저장과 로드1
+localStorage.setItem('obj','value'); //값을 저장
+localStorage.getItem('obj'); //값을 불러옴 -> 'value'
+
+//스토리지 저장과 로드2(이슈가 있어 1을 추천)
+localStorage['obj'] = 'value'; //값을 저장
+localStorage.['obj']; //값을 불러옴 -> 'value'
+
+//스토리지 기타 메서드 및 속성 
+localStorage.removeItem(키) //해당 키를 지운다.
+localStorage.clear() //모두 지운다.
+
+localStorage.length; //저장된 키의 갯수
+localStorage.key() //값으로 키를 찾는다.
+</code>
+</pre>
+<!--##// incodebox: markup, css, clike, javascript ##-->
+						</div>
+	    
+<p class="mgt_l">localStorage 데이터를 배열로 로드하거나 저장할때는 아래소스를 참고</p>
+						<div class="option_txt mgt_s">
+<!--## incodebox: markup, css, clike, javascript ##-->
+<pre class="incodebox">
+<code class="language-javascript">
+function load_storage(){ //로컬스토리지를  array 로드
+	var loadArray = new Array(); //data 담을 array list
+	if(localStorage.getItem('intereCarList')){//로컬스토리지값 있을때만
+		loadArray = JSON.parse(localStorage.getItem('intereCarList'));
+	}else{//없으면 빈배열
+		loadArray = [];
+	}
+	console.log("loadArray: "+loadArray + ", loadArray.length: "+loadArray.length);
+}	
+load_storage();
+
+function save_storage(item){ //로컬스토리지에 item값을 저장
+	var loadMem = new Array(); //data 담을 array list
+	if(localStorage.getItem('intereCarList')){//로컬스토리지값 있을때만
+		loadMem = JSON.parse(localStorage.getItem('intereCarList'));
+	}
+	loadMem.unshift(item);//item값을 앞에 추가
+	loadMem = Array.from(new Set(loadMem)); //중복 item값 필터링
+		
+	if(loadMem.length > 3){//제한 갯수보다 크면 제한갯수 뒤의 값을 제거.
+		console.log("제한갯수보다 크다");
+		loadMem.splice(3, 1); //시작넘버, 제거갯수
+	}
+	localStorage.setItem('intereCarList',JSON.stringify(loadMem));//로컬 스토리지 배열로 저장
+	
+	console.log("loadMem최종: "+loadMem+",loadMem최종 length: "+loadMem.length);		
+}
+</code>
+</pre>
+<!--##// incodebox: markup, css, clike, javascript ##-->
+						</div>
+							    
+<p class="mgt_l">localStorage 데이터를 간단한 아스키 처리로 로컬데이터 확인 및 변조를 어렵게 한다.<br/>외부에서 복호화 후 재 코드화 후 로컬로 심으면 되긴한다.(외부 암호화 모듈도 사용가능)</p>
+						<div class="option_txt mgt_s">
+<!--## incodebox: markup, css, clike, javascript ##-->
+<pre class="incodebox">
+<code class="language-javascript">
+/* 
+cryptCode함수는 fromCharCode()함수를 통해 아스키코드로 변환후 
+로컬스토리지에 저장한 후 charCodeAt()함수를 통해 복호화 처리 후 문자를 불러옵니다.
+*/
+function Encrypt(theText){//암호화
+	output = new String; 
+	Temp = new Array(); 
+	Temp2 = new Array(); 
+	TextSize = theText.length;
+	for (i = 0; i< TextSize; i++){ 
+		rnd = Math.round(Math.random() * 122) + 68; 
+		Temp[i] = theText.charCodeAt(i) + rnd; 
+		Temp2[i] = rnd;
+	}
+	for (i=0;  i< TextSize; i++){ 
+		output += String.fromCharCode(Temp[i], Temp2[i]);
+	}
+	return output;
+}//암호화.end
+function unEncrypt(theText){//복호화
+	output = new String; 
+	Temp = new Array(); 
+	Temp2 = new Array(); 
+	TextSize = theText.length;
+	for (i = 0; i< TextSize; i++){ 
+		Temp[i] = theText.charCodeAt(i); 
+		Temp2[i] = theText.charCodeAt(i + 1);
+	}
+	for (i=0;  i< TextSize; i = i+2){
+		output += String.fromCharCode(Temp[i] - Temp2[i]);
+	}
+	return output;
+}//복호화.end
+/*
+사용법:
+var codeText = "한글을암호화복호화";
+var cryptCode =  Encrypt(codeText);
+var uncryptCode = unEncrypt(cryptCode); 
+console.log("암호화: "+cryptCode);
+console.log("복호화: "+uncryptCode);
+*/
+/*
+로컬스토리지 연동시:
+//#################### 1-1. 복호화 로드 ####################//		
+var cryTxt = JSON.parse(localStorage.getItem('localMyOapList')); //암호화
+loadArray = unEncrypt(cryTxt);
+loadMem = JSON.parse(loadArray);
+ 		
+//#################### 1-2. 일반 로드 ####################//
+loadMem = JSON.parse(localStorage.getItem('localMyOapList'));
+
+
+//#################### 01. 암호화 저장 ####################//
+var cryTxt = Encrypt(JSON.stringify(loadMem)); //암호화
+localStorage.setItem('localMyOapList',JSON.stringify(cryTxt));//로컬 스토리지 객체로  저장
+	
+//#################### 02. 일반 저장 ####################//
+localStorage.setItem('localMyOapList',JSON.stringify(loadMem));//로컬 스토리지 객체로 저장
+*/
+</code>
+</pre>
+<!--##// incodebox: markup, css, clike, javascript ##-->
+						</div>						
+	    
+	    <!--//-######################################// 이곳에 컨텐츠 테스트를 합니다. -######################################-->
+	    
+	    			</article>
+	    		</div>
+	    	</div>
+	    </section>
+	 	<!--######################################//  로컬스토리지 -######################################-->
+	 		
+	 	<!--######################################  쿠키 -######################################-->
+		<section class="aws_box">
+	        <h2 class="aws_tl"> Cookie</h2>
+        	<ul class="dcs">
+        		<li>쿠키 저장 및 로드, 	웹서버위에서만 작동</li>
+        		<li>보안 문제나 로컬스토리지 사용이 불가할때</li>
+        	</ul>	        
+	        <div class="code_area">	        	
+	            <div class="play_box">
+	            	<!--# code #-->
+	            	<article class="code_box">
+
+쿠키 저장 및 로드는 아래와 같이 예제로 정리합니다.
+						<div class="option_txt mgt_s">
+<!--## incodebox: markup, css, clike, javascript ##-->
+<pre class="incodebox">
+<code class="language-javascript">
+
+//###01. 쿠키 저장 및 로드 이벤트	
+function setCookie(name,value,days){//1.cookie save
+	var exdate = new Date();
+	exdate.setDate(exdate.getDate()+days); //setting date (current date + end date)
+	
+	var cookieVal = "";
+	cookieVal += name + '=' + encodeURIComponent(value) + ';';
+	cookieVal += 'Expires=' + exdate.toUTCString() + '';
+	
+	document.cookie = cookieVal;
+	//console.log("▶cookieVal: "+cookieVal);	
+};//cookie save.end
+
+function getCookie(name){//cookie load
+	var cookies = document.cookie.split(';');	
+	for(var i in cookies){
+		if(cookies[i].search(name) != -1){			
+			if(name=='view'){
+				ckSkin = decodeURIComponent(cookies[i].replace(name+"=","").replace(/^\s\s*/,"").replace(/^\s\s*$/,""));
+				if(window.location.href.indexOf("file:///") > -1){//파일클릭으로 접근할때
+					ckSkin = "skin"
+				}
+			}else if(name=='invert'){
+				ckInvert = decodeURIComponent(cookies[i].replace(name+"=","").replace(/^\s\s*/,"").replace(/^\s\s*$/,""));
+			}else if(name=='color'){
+				ckHueNum = decodeURIComponent(cookies[i].replace(name+"=","").replace(/^\s\s*/,"").replace(/^\s\s*$/,""));
+				ckInverHueNum = ckHueNum - 180;
+			}
+		}
+	}
+}//cookie load.emd
+
+
+//###02. 쿠키값을 셋팅하고 값을 로드한다	
+setCookie('view','skin','3');//apply skin(text)
+setCookie('invert','light','3');//apply light in skin (dark)
+setCookie('color',0,'3');//apply hueNumber (0)
+		
+getCookie('view'); //skin mode value load
+getCookie('invert'); //dark mode value load
+getCookie('color'); //dark mode value load	
+
+
+//###03. 쿠키값을 읽어 변수값확인
+console.log("▶ document.cooki = ckSkin: "+ckSkin +", ckInvert: "+ckInvert + ", ckHueNum:"+ckHueNum); //3. 쿠키값을 읽은 후 변수에 값이 저장되었다.	
+</code>
+</pre>
+<!--##// incodebox: markup, css, clike, javascript ##-->
+						</div>
+	    
+	    			</article>
+	    		</div>
+	    	</div>
+	    </section>
+	 	<!--######################################//  쿠키 -######################################-->	
+	 		
+	 		    
+    </div>
+    
+	<script src="js/jquery-ui.min.js"></script><!-- jquery ui-->
+	<script src="js/jquery.ui.touch-punch.js"></script><!-- jquery ui using mobile -->
+    <script src="js/frontUxer.js"></script><!-- plugin -->
+    
+
+    
+    
+</body>
+</html>

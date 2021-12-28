@@ -1,0 +1,11 @@
+<svg width="100%" height="100%"  viewBox="0 0 1920 400" id="svg_unit">
+	<defs>
+	<!--
+		<style> 
+		.cls-1{stroke:#ff0000; stroke-width:5px;}
+		</style>-->
+	</defs>	
+	
+	<image  xlink:href="http://40.1.16.31:8921/wcms/oap/images/desktop/cardinst_v8_hero_pc_bg.jpg" x="0px" y="0px" width="1920px" height="400px"/>
+	<rect x="34" y="50" width="59" height="37" rx="2" ry="2" class="cls-1"/>																																																								
+</svg>

@@ -1,0 +1,438 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<title> C STUDIO </title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=1280" />
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script><!--jquery flatform.js-->
+<script type="text/javascript" src="js/common.js"></script><!-- common.js -->
+<script type="text/javascript" src="js/jquery.ezmark.js"></script><!-- jquery.ezmark.js -->
+<link rel="stylesheet" type="text/css" href="css/basic.css" /><!--basic.css-->
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.mystudio_list input').ezMark({checkboxCls: 'ez-checkbox'});//checkbox 이미지처리
+});
+//*************팝업 시작
+$(window).load(function(){
+	function pop_vertical(){//팝업 센터 정렬
+		var pop_height = $('.layer_popup .popup').outerHeight();
+		var pop_height_device = -1 * (pop_height / 2);
+
+		if (pop_height > $(window).height())
+		{
+			$('.layer_popup .popup').css("paddingTop", $(window).scrollTop());
+		} else {		
+			$('.layer_popup .popup').css("paddingTop", ($(window).height()/2) + pop_height_device + $(window).scrollTop());
+		}
+	}
+	pop_vertical();
+});
+
+//팝업 닫기
+function pop_close(){
+	$('.layer_popup').fadeOut('fast');
+}
+//*************팝업 끝
+</script>
+</head>
+
+<body>
+
+<!--container-->
+<div id="container">
+
+<!--header-->
+<div id="header">
+	<!--h_top-->
+	<div class="h_top">
+		<h1 class="h_logo"><a href="/">C STUDIO</a></h1><!--로그인 되어있으면 a태그에 on 클래스 붙임-->
+		<h2 class="hidden">C STUDIO 상단영역</h2>
+
+		<h3 class="hidden">GNB</h3>
+		<div class="h_right">
+			<ul>
+				<li><a href="#">LOG IN</a></li>
+				<li><a href="#">JOIN</a></li>
+				<li><a href="#">MY PAGE</a></li>
+			</ul>
+		</div>
+		<div class="h_couronne">
+			<a href="http://www.couronne.co.kr/" target="_blank">COURONNE</a>
+		</div>
+
+		<h3 class="hidden">SNS</h3>
+		<div class="h_left">
+			<div class="h_sns">
+				<a href="#" class="facebook" target="_blank">facebook</a>
+				<a href="#" class="instagram" target="_blank">instagram</a>
+				<a href="#" class="youtube" target="_blank">youtube</a>
+			</div>
+		</div>
+	</div>
+	<!--//h_top-->
+
+	<!--h_buttom-->
+	<div class="h_buttom">
+		<h3 class="hidden">MAIN MENU</h3>
+		<ul class="h_menu">
+			<li><a href="#">YOUR STUDIO</a></li>
+			<li><a href="#">CUSTOMIZE</a></li>
+			<li><a href="#">MY STUDIO</a></li>
+		</ul>
+	</div>
+	<!--//h_buttom-->
+</div>
+<!--//header-->
+
+<!--contents-->
+<h2 class="hidden">C STUDIO 본문영역</h2>
+<div id="cstudioContent">
+	<!--내용-->
+	<h3 class="commtp_tit"><img src="img/tit_mystudio.png" alt="MY STUDIO ~ MY SPECIAL DESIGN!" /></h3>	
+
+	<!--comm_layout-->
+	<div class="comm_layout">
+		<!--tab_mystudio-->
+		<ul class="tab_mystudio">
+			<li class="tab1"><a href="#">MY WORK</a></li>
+			<li class="tab2"><a href="#" class="on">MY CHOICE</a></li><!--해당 탭에 on 클래스 붙임-->
+		</ul>
+		<!--//tab_mystudio-->
+
+		<!--top_mystudio-->
+		<div class="top_mystudio mt40">
+			<div class="left"><a href="#" class="bt_mystudio bt_my_vs"><span></span>VS</a></div>
+			<div class="right">
+				<a href="#" class="bt_mystudio bt_my_buy"><span></span>BUY</a>
+				<a href="#" class="bt_mystudio bt_my_delete"><span></span>DELETE</a>
+			</div>
+		</div>
+		<!--//top_mystudio-->
+
+		<!--mystudio_list-->
+		<div class="mystudio_list mt40">
+			<ul>
+				<!--리스트-->
+				<li>
+					<div class="thumb">
+						<img src="img/temp/tmp_product.png" alt="" />
+					</div>
+					<div class="thumb_etc">
+						<a href="#">
+							<span class="prod_nm">Smile Claire Tote S Smile Claire Tote S Smile Claire Tote S</span>
+							<span class="prod_by">Designed by Chelo222</span>
+						</a>
+						<span class="prod_bt">
+							<div><a href="#"><img src="img/btn_customize.png" alt="CUSTOMIZE IT" /></a></div>
+						</span>
+					</div>
+					<div class="thumb_chk">
+						<input type="checkbox" name="check" />
+					</div>
+				</li>
+				<!--//리스트-->
+				<!--리스트-->
+				<li>
+					<div class="thumb">
+						<img src="img/temp/tmp_product.png" alt="" />
+					</div>
+					<div class="thumb_etc">
+						<a href="#">
+							<span class="prod_nm">Smile Claire Tote S</span>
+							<span class="prod_by">Designed by Chelo222</span>
+						</a>
+						<span class="prod_bt">
+							<div><a href="#"><img src="img/btn_customize.png" alt="CUSTOMIZE IT" /></a></div>
+						</span>
+					</div>
+					<div class="thumb_chk">
+						<input type="checkbox" name="check" />
+					</div>
+				</li>
+				<!--//리스트-->
+				<!--리스트-->
+				<li>
+					<div class="thumb">
+						<img src="img/temp/tmp_product.png" alt="" />
+					</div>
+					<div class="thumb_etc">
+						<a href="#">
+							<span class="prod_nm">Smile Claire Tote S</span>
+							<span class="prod_by">Designed by Chelo222</span>
+						</a>
+						<span class="prod_bt">
+							<div><a href="#"><img src="img/btn_customize.png" alt="CUSTOMIZE IT" /></a></div>
+						</span>
+					</div>
+					<div class="thumb_chk">
+						<input type="checkbox" name="check" />
+					</div>
+				</li>
+				<!--//리스트-->
+				<!--리스트-->
+				<li>
+					<div class="thumb">
+						<img src="img/temp/tmp_product.png" alt="" />
+					</div>
+					<div class="thumb_etc">
+						<a href="#">
+							<span class="prod_nm">Smile Claire Tote S</span>
+							<span class="prod_by">Designed by Chelo222</span>
+						</a>
+						<span class="prod_bt">
+							<div><a href="#"><img src="img/btn_customize.png" alt="CUSTOMIZE IT" /></a></div>
+						</span>
+					</div>
+					<div class="thumb_chk">
+						<input type="checkbox" name="check" />
+					</div>
+				</li>
+				<!--//리스트-->
+				<!--리스트-->
+				<li>
+					<div class="thumb">
+						<img src="img/temp/tmp_product.png" alt="" />
+					</div>
+					<div class="thumb_etc">
+						<a href="#">
+							<span class="prod_nm">Smile Claire Tote S Smile Claire Tote S Smile Claire Tote S</span>
+							<span class="prod_by">Designed by Chelo222</span>
+						</a>
+						<span class="prod_bt">
+							<div><a href="#"><img src="img/btn_customize.png" alt="CUSTOMIZE IT" /></a></div>
+						</span>
+					</div>
+					<div class="thumb_chk">
+						<input type="checkbox" name="check" />
+					</div>
+				</li>
+				<!--//리스트-->
+				<!--리스트-->
+				<li>
+					<div class="thumb">
+						<img src="img/temp/tmp_product.png" alt="" />
+					</div>
+					<div class="thumb_etc">
+						<a href="#">
+							<span class="prod_nm">Smile Claire Tote S</span>
+							<span class="prod_by">Designed by Chelo222</span>
+						</a>
+						<span class="prod_bt">
+							<div><a href="#"><img src="img/btn_customize.png" alt="CUSTOMIZE IT" /></a></div>
+						</span>
+					</div>
+					<div class="thumb_chk">
+						<input type="checkbox" name="check" />
+					</div>
+				</li>
+				<!--//리스트-->
+				<!--리스트-->
+				<li>
+					<div class="thumb">
+						<img src="img/temp/tmp_product.png" alt="" />
+					</div>
+					<div class="thumb_etc">
+						<a href="#">
+							<span class="prod_nm">Smile Claire Tote S</span>
+							<span class="prod_by">Designed by Chelo222</span>
+						</a>
+						<span class="prod_bt">
+							<div><a href="#"><img src="img/btn_customize.png" alt="CUSTOMIZE IT" /></a></div>
+						</span>
+					</div>
+					<div class="thumb_chk">
+						<input type="checkbox" name="check" />
+					</div>
+				</li>
+				<!--//리스트-->
+				<!--리스트-->
+				<li>
+					<div class="thumb">
+						<img src="img/temp/tmp_product.png" alt="" />
+					</div>
+					<div class="thumb_etc">
+						<a href="#">
+							<span class="prod_nm">Smile Claire Tote S</span>
+							<span class="prod_by">Designed by Chelo222</span>
+						</a>
+						<span class="prod_bt">
+							<div><a href="#"><img src="img/btn_customize.png" alt="CUSTOMIZE IT" /></a></div>
+						</span>
+					</div>
+					<div class="thumb_chk">
+						<input type="checkbox" name="check" />
+					</div>
+				</li>
+				<!--//리스트-->
+			</ul>
+		</div>
+		<!--//mystudio_list-->
+
+		<!--list_btn-->
+		<div class="list_btn">
+			<a href="#" class="btn_gy_line">MORE</a>
+		</div>
+		<!--//list_btn-->
+
+	</div>
+	<!--//comm_layout-->
+	<!--//내용-->
+</div>
+<!--//contents-->
+
+<!--contentFooter-->
+<div class="contentFooter">
+	<div class="CFContent CFCustomer">
+		<h4><a href="/call_center/noticeList.jsp">고객센터</a></h4>
+		<strong>1588-7667</strong>
+		월~금 (10:00~18:00)
+	</div>
+	<div class="CFContent CFOrder">
+		<h4>주문/배송</h4>
+		<ul>
+			<li><a href="/mypage/order/orderList.jsp">주문/배송 조회</a></li>
+			<li><a href="/mypage/order/cancleList.jsp">취소/교환/반품 조회</a></li>
+			<li><a href="/call_center/orderSearch.jsp">비회원주문조회</a></li>
+		</ul>
+	</div>
+	<div class="CFContent CFQna">
+		<h4>문의사항</h4>
+		<ul>
+			<li><a href="/call_center/faqList.jsp">자주묻는 질문 FAQ</a></li>
+			<li><a href="/call_center/afterService.jsp">A/S</a></li>
+			<li><a href="/call_center/qnaList.jsp">1:1 상담</a></li>
+		</ul>
+	</div>
+	
+	<!--20150903 수정-->
+	<div class="CFContent CFMyInfo">
+		<h4>혜택정보</h4>
+		<ul>
+			<li><a href="/mtm/mypage/diary/mycheckProduct.jsp">My choice</a></li>
+			<li><a href="/mtm/mypage/diary/myDepositList.jsp">나의 예치금</a></li>
+			<li><a href="/html/event/membership_event.jsp">온라인 스토어 맴버쉽</a></li>
+		</ul>
+	</div>
+	<!--//20150903 수정-->
+
+	<div class="CFContent CFNotice">
+		<h4>공지사항</h4>
+		<ul>
+			<li><a href="#">[공지] 우편번호 체계 변경으로 인한 시스템 작업 안내</a></li>
+			<li><a href="#">[공지] 우편번호 체계 변경으로 인한 시스템 작업 안내</a></li>
+			<li><a href="#">[공지] 우편번호 체계 변경으로 인한 시스템 작업 안내</a></li>
+		</ul>
+	</div>
+</div>
+<!--//contentFooter-->
+
+<!--footer-->
+<div id="footer">
+	<h2><img src="img/logo_footer.png" alt="COURONNE" /></h2><!--20151214이미지경로 수정-->
+
+	<h3 class="hidden">하단메뉴</h3>
+	<!--f_menu-->
+	<div class="f_menu">
+		<ul>
+			<li><a href="#">매장정보</a></li>
+			<li><a href="#">바이어 상담</a></li>
+			<li><a href="#">고객센터</a></li>
+			<li><a href="#">이용약관</a></li>
+			<li><a href="#">개인정보취급방침</a></li>
+			<li><a href="#">개인정보처리방침</a></li>
+		</ul>
+	</div>
+	<!--//f_menu-->
+
+	<h3 class="hidden">사이트 정보 및 카피라이트</h3>
+	<!--f_siteInfo-->
+	<div class="f_siteInfo">
+		<span>코오롱인더스트리 FnC부문</span>
+		<span>대표이사 : 박동문</span>
+		<span>개인정보관리 책임자 : 경영지원본부 손정현 상무</span>
+		<span>개인정보관리 담당자 : 빅데이터팀 김정혁 과장</span><br />
+		<address>서울시 서초구 서초대로 411 GT타워</address>
+		<span>통신판매업신고:제2012-서울서초-0593호</span>
+		<span>사업자등록번호:138-85-19612</span>
+		<button type="button" class="trans_xsBk w84" onclick="window.open('http://www.ftc.go.kr/info/bizinfo/communicationList.jsp');" title="사업자등록확인 새창열기">사업자등록확인</button><br />
+		<span>EMAIL: <a href="mailto:couronne_admin@kolon.com">couronne_admin@kolon.com</a></span>
+		<span>TEL : 1588-7667</span>
+		<span>FAX : 02-3677-7546</span>
+		<div class="copyright">Copyright © 2013 couronne All Rights Reserved.</div>
+	</div>
+	<!--//f_siteInfo-->
+
+	<h3 class="hidden">구매안전서비스 안내</h3>
+	<!--f_escro-->
+	<div class="f_escro"><img src="img/escro.gif" alt="LG U+ 에스크로"><!--20151214이미지경로 수정-->
+		<p>
+			고객님은 안전거래를 위해 결제시<br />
+			저희 사이트에서 가입한 LG U+의<br />
+			구매안전서비스를 이용하실 수 있습니다.
+		</p>
+		<button type="button" class="trans_xsBk w75" onclick="window.open('https://pgweb.uplus.co.kr/pg/wmp/mertadmin/jsp/mertservice/s_escrowYn.jsp?mertid=joykolon','_winPop','width=340px,height=263px');" title="LG U+ 에스크로 가입사실 확인하기 새창열기">가입사실확인</button>
+	</div>
+	<!--//f_escro-->
+</div>
+<!--//footer-->
+	
+</div>
+<!--//container-->
+
+<!--레이어팝업-->
+<div class="layer_popup">
+	<div class="layer_bg"></div>
+	<div class="popup">
+		<div class="pop_basic">
+
+			<!--compare_vsArea-->
+			<div class="compare_vsArea">
+				<div class="compare_area">
+
+					<div class="vs_both vs_left">
+						<label for="radio1">
+							<img src="img/temp/tmp_product.png" alt="" class="thumb" />
+							<div class="price">670,000 WON</div>
+						</label>
+						<div class="chk">
+							<input type="radio" name="radio" id="radio1" checked="checked" />
+						</div>
+					</div>
+
+					<div class="vs_both vs_right">
+						<label for="radio2">
+							<img src="img/temp/tmp_product.png" alt="" class="thumb" />
+							<div class="price">650,000 WON</div>
+						</label>
+						<div class="chk">
+							<input type="radio" name="radio" id="radio2" />
+						</div>
+					</div>
+
+				</div>
+
+				<div class="txt_area">
+					* 선택하신 제품으로 공유됩니다.
+				</div>
+			</div>
+			<!--//compare_vsArea-->
+
+			<!--compare_snsArea-->
+			<div class="compare_snsArea">
+				<h2>SNS 친구에게 공유하기</h2>
+				<a href="#" class="bt_sns_commB bt_sns_fbB"><span>facebook</span></a>
+				<a href="#" class="bt_sns_commB bt_sns_kasB"><span>kakaostory</span></a>
+				<a href="#" class="bt_sns_commB bt_sns_pinB"><span>pinterest</span></a>
+			</div>
+			<!--//compare_snsArea-->
+
+			<a href="#" class="pop_cls" onclick="pop_close();return false;"><img src="img/btn_close.png" alt="창닫기" /></a>
+		</div>
+		
+	</div>
+</div>
+<!--//레이어팝업-->
+
+</body>
+</html>

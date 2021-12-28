@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="format-detection" content="telephone=no, address=no, email=no" /><!-- 숫자인식, 메일주소, 지도상의 주소링크 막기-->
+<meta name="title" content="사이트 제목">
+<meta name="keywords" content="검색 키워드">
+<meta name="description" content="사이트 소개내용">
+<meta name="twitter:title" content="사이트 제목">
+<meta name="twitter:description" content="사이트 소개내용">
+<meta property="og:title" content="사이트 제목">
+<meta property="og:description" content="사이트 소개내용">
+<title>가이드 - 팝업</title>
+<link rel="shortcut icon" type="image/x-icon" href="img/site.ico">
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/guide_mobile.css">
+<script src="js/jquery-1.11.2.min.js"></script>
+<script src="js/init.js"></script>
+</head>
+<body>
+<div class="wrap">
+	
+	<nav id="skip"><a href="#contents" class="skip">본문바로가기</a></nav>
+
+	<!-- header -->
+	<header><script src="inc/inc_header.js"></script></header>
+	<!--// header -->
+	
+	<!-- Content -->
+	<section id="contents">
+		<aside>
+			<nav>
+				<ul>
+					<li>
+						<a href="#sec_1">팝업</a>						
+						<dl>
+							<dd>기본</dd>
+						</dl>
+					</li>						
+				</ul>
+			</nav>
+		</aside>
+		
+		<section class="content">
+			
+			<!-- sec_1 -->
+			<section class="lg_box" id="sec_1">
+				<h1>팝업</h1>			
+				<!-- <h2 class="hide">3단계</h2>-->
+				<div class="mg_box">
+
+					<dl class="txt_list normal">
+						<dt>컨텐츠 팝업</dt>
+						<dd>
+							<!-- 소스 입력 -->	
+							<button data-target="modal_deafault" class="btn_wht_s">컨텐츠 팝업</button>
+							<button data-target="modal_notice" class="btn_wht_s">공지 팝업</button>
+							<button data-target="modal_dialog" class="btn_wht_s">메세지 팝업</button>
+							
+<style>
+/******************************************* uxerLayerPop *******************************************/
+html.desktop.noscroll {overflow:hidden;}
+html.desktop.noscroll .wrap{padding-right:17px;}
+
+.modal_cont {display:none; overflow:hidden; position:fixed; z-index:10001; margin:0; background:#fff; border-radius:10px;}
+.modal_cont > header {position:relative; width:100%; font-size:16px; padding:15px; text-align:left; border-bottom:1px solid #f8f8f8; box-sizing:border-box;}
+.modal_cont > header h1{margin:0 !important; font-weight:bold; color:#333;}
+.modal_cont .cont{padding:10px;}
+.modal_cont .cont .btn_wrap{padding:10px; text-align:center;}
+
+.modal_cont .modal_footer{position:relative; height:60px; text-align:center; box-sizing:border-box; padding:10px; margin-top:0; border-top:1px solid #f8f8f8;}
+.modal_cont .modal_footer:after{display:block; content:''; clear:both;}
+.modal_cont.notice .modal_footer{border:none; height:45px;  text-align:left; padding:0 10px; }
+
+.modal_bg, .modal_bg2 {position:fixed; top:0; left:0; z-index:10000; width:100%; height:100%; background:#25252f; opacity:0.7}
+
+.modal_cont .cont > .ui_scrollview {height:500px;}
+.mobile .modal_cont .cont > .ui_scrollview {height:auto;}
+
+/*.modal_cont .btn_close{position:absolute; top:10px; right:10px; height:30px; width:30px; min-width:30px; line-height:30px; text-align:center; padding:0;} 
+.modal_cont .modal_footer .btn_close{top:0;}*/
+.modal_cont .modal_footer button{margin:0 5px;}
+
+.modal_cont.notice .modal_footer{border:none; height:45px;  text-align:left; padding:0 10px;}
+.modal_cont.notice .modal_footer button{margin:0px; float:right;}
+
+.width800{max-width:800px;}
+.height300{height:300px;}
+</style>							
+							
+				
+							
+	<section id="modal_b" class="modal_cont width800" role="dialog">
+		<header>
+			<h1 >레이어팝업</h1>
+		</header>
+		<div class="cont center height300 ui_scrollview" style="padding:0;">
+			<div class="ui_scrollarea">
+				<div class="ui_content">
+					<p class="cont_bg" style="height:1500px;">6. maxW:800<br/>7. maxH:  300px<br/> 8. scrlLock</p>
+				</div>
+			</div>
+		</div>
+		<div class="modal_footer">
+			<button type="button" class="btn_close end" data-dismiss="modal">닫기</button>
+		</div>
+	</section>
+	
+							
+								
+							<!--// 소스 입력 -->
+						</dd>			
+					</dl>				
+					
+					<!-- code -->
+					<div class="code">									
+<xmp>
+<table class="tbl_list">
+	<caption>표 제목</caption>
+	<colgroup>
+		<col style="width:150px">
+		<col style="width:auto">
+	</colgroup>
+	<thead>
+		<tr>
+			<th scope="col">구분</th>
+			<th scope="col">내용</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<th scope="row">제목1</th>
+			<td>내용1</td>
+		</tr>
+		<tr>
+			<th scope="row">제목2</th>
+			<td>내용2</td>
+		</tr>
+	</tbody>
+</table>
+</xmp>	
+					</div>	
+					<!--// code -->
+					
+					<!--
+					<dl class="txt_list normal">
+						<dt>세로형 .tbl_list</dt>
+						<dd>
+							!-- 소스 입력 --							
+							<table class="tbl_list">
+								<caption>표 제목</caption>
+								<colgroup>
+									<col style="width:150px">
+									<col style="width:auto">
+								</colgroup>
+								<tbody>
+									<tr>
+										<th scope="row">제목1</th>
+										<td>내용1</td>
+									</tr>
+									<tr>
+										<th scope="row">제목2</th>
+										<td>내용2</td>
+									</tr>
+									<tr>
+										<th scope="row">제목3</th>
+										<td>내용3</td>
+									</tr>
+								</tbody>
+							</table>
+							!--// 소스 입력 --
+						</dd>			
+					</dl>						
+<xmp>
+<table class="tbl_list">
+	<caption>표 제목</caption>
+	<colgroup>
+		<col style="width:150px">
+		<col style="width:auto">
+	</colgroup>
+	<tbody>
+		<tr>
+			<th scope="row">제목1</th>
+			<td>내용1</td>
+		</tr>
+		<tr>
+			<th scope="row">제목2</th>
+			<td>내용2</td>
+		</tr>
+		<tr>
+			<th scope="row">제목3</th>
+			<td>내용3</td>
+		</tr>
+	</tbody>
+</table>
+</xmp>				-->
+				</div>
+			</section>	
+			<!--// sec_1 -->
+			
+		</section>
+	</section>
+	<!--// Content -->
+
+	<!-- footer -->
+	<footer id="footer"><script src="inc/inc_footer.js"></script></footer>
+	<!-- footer -->
+
+<script src="js/module.js"></script>
+<script src="js/common.js"></script>	
+</div>
+
+<style>
+
+</style>
+	<!--컨텐츠 팝업 -->	
+	<section id="modal_deafault" class="modal_cont">
+		<header>
+			<h1>레이어 컨텐츠 팝업</h1>
+		</header>
+		<div class="cont">
+			<!-- ui_scrollview -->
+			<div class="ui_scrollview">				 
+				<div class="ui_scrollarea">
+					<div class="ui_content">
+						<p class="mgt_l">
+							일반 텍스트 일반 텍스트  <br/>
+							일반 텍스트 일반 텍스트 일반 텍스트
+ 							<!-- <br/>
+							일반 텍스트 일반 텍스트  <br/>
+							일반 텍스트 일반 텍스트 일반 텍스트 -->														
+						</p>
+						<p class="mgt_l">
+							<a href="#">링크 텍스트</a><br/>
+							<a href="#">링크 텍스트</a>
+						</p>
+						<p class="mgt_l">
+							<div style="background:#f8f8f8; height:100px; padding:20px; margin:20px 0;">이미지</div>
+						</p>
+						<p class="mgt_l">
+							<button type="button" class="btn_wht_s">페이지 버튼</button> <button type="button" class="btn_wht_s">페이지 버튼</button>
+						</p>
+						<p class="mgt_l">
+							<table class="tbl_list">
+								<caption>표 제목</caption>
+								<colgroup>
+									<col style="width:150px">
+									<col style="width:auto">
+								</colgroup>
+								<thead>
+									<tr>
+										<th scope="col">구분</th>
+										<th scope="col">내용</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<th scope="row">제목1</th>
+										<td>내용1</td>
+									</tr>
+									<tr>
+										<th scope="row">제목2</th>
+										<td>내용2</td>
+									</tr>
+								</tbody>
+							</table>							
+						</p>
+					</div>
+				</div>				
+			</div>
+			<!--// ui_scrollview -->
+		</div>
+		<div class="modal_footer">
+			<button type="button" class="btn_gry_m">취소</button>
+			<button type="button" class="btn_org_m" data-dismiss="modal">확인</button>
+		</div>		
+	</section>
+	<!--//컨텐츠 팝업 -->
+	
+	<!--공지 팝업 -->	
+	<section id="modal_notice" class="modal_cont notice">
+		<!-- <header>
+			<h1>레이어 컨텐츠 팝업</h1>
+			<button type="button" class="btn_close btn_wht_s" data-dismiss="modal">X</button>
+		</header>-->
+		<div class="cont">
+			<p style="background:#f8f8f8; height:100px; padding:20px; ">공지 이미지 / 공지 텍스트</p>
+		</div>
+		<div class="modal_footer">
+			<label><input type="checkbox" id="" value=""> 오늘하루 열지 않음</label>
+			<button type="button" class="btn_close btn_wht_s" data-dismiss="modal">확인</button>
+		</div>
+	</section>
+	<!--//공지 팝업 -->	
+	
+	<!--메세지 팝업 -->	
+	<section id="modal_dialog" class="modal_cont dialog">
+		<div class="cont">
+			<div style="text-align:center; padding:20px; font-size:16px; color:#333; line-height:1.8em;">
+				확인을 클릭하시면 신청이 됩니다.<br/>
+				<strong>신청하시겠습니까?</strong>
+			</div>
+		</div>
+		<div class="modal_footer">
+			<button type="button" class="btn_gry_m">취소</button>
+			<button type="button" class="btn_org_m" data-dismiss="modal">확인</button>
+		</div>
+	</section>
+	<!--//메세지 팝업 -->		
+	
+	<script type="text/javascript">
+		$(window).load(function(){           
+			var popupOpt ={};
+			if(isMobile){
+				popupOpt = {scrlLock: true};
+			}else{
+				popupOpt = {scrlLock: true,
+	              	callback: function(){
+	              		$(".ui_scrollview").uxScrollView(); //셀렉터 실행
+	              	}						 
+				};
+			}
+			
+			$('.modal_cont').uxLayerPop(popupOpt);
+			
+			/*
+              $('#modal_b').uxLayerPop({//팝업 width, height 지정
+              	maxW: 800, maxH:300, scrlLock: true,
+              	callback: function(){
+              		$(".ui_scrollview").uxScrollView(); //셀렉터 실행
+              	}
+              }); //자동
+              */
+   		});
+	</script>	
+
+</body>
+</html>

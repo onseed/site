@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>frontUxer</title>
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/frontUxer.css">
+<script src="js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript">         
+    var menuArry = ['3','1'];//1depth, 2depth
+</script>
+</head>
+<body>
+<script src="js/guide.js"></script><!-- site guide -->
+	
+	<div class="start_dim"><span></span></div>
+	
+	<h1 class="hide"> Etc</h1>
+	
+    <div class="contents"><!-- contents -->
+    
+        <!--##################### 이미지 로딩 #####################-->
+        <section class="aws_box">
+            <h1 class="aws_tl">PNG 시퀀스 애니메이션 </h1>
+			<ul class="dcs">
+				<li>비트맵 이미지를 사용, 프레임 애니메이션 처리 </li>
+			</ul>	  	                        
+            
+            <div class="code_area">
+            
+                <div class="play_box">
+                   <!-- code -->
+                   	
+                 	<div class="option_txt">  
+                 		<p><strong>실행 :</strong> <span class="incodebox"><code class="language-markup">bgAni.play(el , fps, col, totalframe); //el:클래스명, fps: 초당 프레임, col: 라인당 프레임수, totalframe: 전체 프레임</code></span></p>
+                 		<p><strong>중지 :</strong> <span class="incodebox"><code class="language-markup">bgAni.stop('셀렉터');//이미지 클래스</code></span></p>                   		
+					</div>
+                   	
+					<!-- run_sample -->
+					<div class="run_sample">
+					
+						실행 : bgAni.play('loading_img' , 24, 10 ,87);<br/>					
+						중지 : bgAni.stop('loading_img');					
+					
+						<!-- sample_box -->	                    
+	                    <article class="sample_box clear" style="position:relative;">
+	                    
+							<style>
+							.loading_img {width:70px;height:88px; border:1px solid #999;
+							background-size:700px 792px; display:block;} /*pc*/					
+							.mobile .loading_img {width:58px;height:66px; border:1px solid #999;
+							background-size:580px 594px;} /*mo*/
+								
+							.img_sample{float:right;}
+							.img_sample img{width:200px;}	
+							.ui_loading_sec{float:left; width:100%; width:calc(100% - 230px); margin-top:40px;}
+							
+							.mobile .img_sample{float:none;}
+							.mobile .ui_loading_sec{float:none; width:100%;  margin-top:5px;}
+							
+							</style>            	                    
+	                    
+	                    	<p class="mgt_m"><strong>데스크탑 기준:</strong> <strong id="framebufer" class="point">0</strong> / <strong id="framett" class="point">0</strong> frame</p>
+	                    	
+							<div class="img_sample"></div>
+							
+							<div class="ui_loading_sec bg_psd">
+								<div class="loading_img"></div>
+							</div>
+							
+		                    <div>
+		                        <button class="ui_loading one">플레이 1배속</button>
+		                        <button class="ui_loading two">플레이 0.3 배속</button>                        
+		                        <!-- <button class="ui_loading_end" style="position:relative; z-index: 10000;">멈춤</button>-->
+		                        <button class="ui_loading per3">-1 프레임 (beta)</button>   
+		                        <button class="ui_loading per2">+5 프레임</button>
+		                        <button class="ui_loading per">+1 프레임</button>
+		                    </div>	                    
+	                    
+	                    </article>
+	                    <!--// sample_box -->
+	                    
+	                </div>
+					<!-- run_sample -->					
+
+                    
+            
+                    
+                    <script type="text/javascript">
+                   	var bgUrl = " ";
+
+                    var loadImg = function(){
+                    	$('.loading_img').css('background-image', "url('"+bgUrl+"')");
+                    	$('.img_sample').html('<a href="'+bgUrl+'" target="_balnk"><img src="'+bgUrl+'" alt=""/></a>');                    	
+                    }
+                    $(document).ready(function () {//모바일분기
+                       	if(isMobile){                   		
+                       		//bgUrl = "http://devstatic12.samsungcard.com/images/personal/chatbot/floatingBnr/w_bot_dao_70x88_0312.png";
+                       		bgUrl = "img/dao_bot_116x132_m.svg";
+                       	}else{
+                       		//bgUrl = "http://devstatic12.samsungcard.com/images/personal/chatbot/floatingBnr/w_bot_dao_70x88_0312.png";
+                       		bgUrl = "img/dao_bot_70x88_w.svg";
+                       	}                    	
+                    	loadImg();
+                    });
+                                       
+                    
+                    var timerInterval,
+                	bgAni = {
+                		'play' : function(el , fps, col, totalframe){ //el:클래스명 , fps: 초당 프레임, col: 라인당 프레임수, totalframe: 전체 프레임
+                			
+	        	            var width = 0, height= 0,
+	    	                total = 0,
+	    	                top = 0,
+	    	                left = 0,
+	    	                xIndex = 0,
+	    	                yIndex = 0,
+	    	                frameSnd = fps;
+	          	
+	        	            var frameCol = col, //1행 프레임 수
+	        	            frameRow = Math.ceil(totalframe/col),//행 갯수 (총프레임수/1행 프레임)	
+	        	            frameTotal = totalframe;//총 프레임수
+	        	            //console.log("frameCol: "+ frameCol + ", frameRow: "+frameRow+", frameTotal: "+frameTotal);
+	        	            $('#framett').text(frameTotal);//걍 샘플
+	        	            
+	        	            width = $('.'+el).width();
+	        	            height = $('.'+el).height();
+	        	            total = width * - frameCol;
+	        	            frameSnd = Math.floor(1000/frameSnd);
+
+	        	            frameRow = frameRow -1;
+	        	            	
+	        	            function timer() {
+	        	                left -= width;
+	        	                xIndex ++;//console.log('left: '+ left + ', top: '+ top +', xIndex: '+ xIndex +', yIndex: '+ yIndex);
+	        	                $('#framebufer').text(xIndex);//걍 샘플
+	       	                	 if(xIndex == frameTotal){//01. 전체 프레임 완료 후 리셋
+	       	                		xIndex = 0;
+	     	                		yIndex = 0;
+	     	                		top = 0;
+	     	                		left = 0;
+	     	                		clearTimeout(timerInterval);
+	     	                		console.log("사이클 완료!");
+	     	                	}
+	        	                if(left <= total){//02. 1줄 완료 후  left 리셋//console.log('<= total');
+	        	                	left = 0;
+	        	                	yIndex ++;
+	        	                	if(yIndex==0){
+	        	                		top = 0;	
+	        	                	}else{
+	        	                		top -= height;	
+	        	                	}
+	        	                }	
+	        	                $('.loading_img').css('background-position-x', left);
+	        	                $('.loading_img').css('background-position-y', top);
+	        	                timerInterval  = setTimeout(timer, frameSnd);//1번 이동       	                
+	        	                
+	        	            }						   
+	        	            timer();
+	        	            
+	        	            
+	        	            
+        					$('.ui_loading.per').on('click',function(){//임시1 +1프레임
+        						bgAni.stop('loading_img');
+	        	                left -= width;
+	        	                xIndex ++;
+	        	                $('#framebufer').text(xIndex);//걍 샘플
+	        	                
+	       	                	 if(xIndex == frameTotal){//01. 전체 프레임 완료 후 리셋
+	       	                		xIndex = 0;
+	     	                		yIndex = 0;
+	     	                		top = 0;
+	     	                		left = 0;
+	     	                		clearTimeout(timerInterval);
+	     	                		console.log("사이클 완료!");
+	     	                	}
+	        	                if(left <= total){//02. 1줄 완료 후  left 리셋//console.log('<= total');
+	        	                	left = 0;
+	        	                	yIndex ++;
+	        	                	if(yIndex==0){
+	        	                		top = 0;	
+	        	                	}else{
+	        	                		top -= height;	
+	        	                	}
+	        	                }	
+	        	               
+	        	                $('.loading_img').css('background-position-x', left);
+	        	                $('.loading_img').css('background-position-y', top);
+	        	                      
+        					});
+        					$('.ui_loading.per2').on('click',function(){//임시2
+        						bgAni.stop('loading_img');
+	        	                
+	        	                for(i=0; i<5; i++){
+		        	                left -= width;
+		        	                xIndex++;
+	        	                }
+	        	                
+	        	                $('#framebufer').text(xIndex);//걍 샘플
+	        	                
+	       	                	 if(xIndex >= frameTotal ){//01. 전체 프레임 완료 후 리셋
+	       	                		xIndex = 0;
+	     	                		yIndex = 0;
+	     	                		top = 0;
+	     	                		left = 0;
+	     	                		clearTimeout(timerInterval);
+	     	                		console.log("사이클 완료!");
+	     	                	}
+	        	                if(left <= total){//02. 1줄 완료 후  left 리셋//console.log('<= total');
+	        	                	left = 0;
+	        	                	yIndex ++;
+	        	                	if(yIndex==0){
+	        	                		top = 0;	
+	        	                	}else{
+	        	                		top -= height;	
+	        	                	}
+	        	                }
+	        	                
+	        	                $('.loading_img').css('background-position-x', left);
+	        	                $('.loading_img').css('background-position-y', top);
+	        	                      
+        					});        
+        					
+        					$('.ui_loading.per3').on('click',function(){//임시3 -1프레임
+        						bgAni.stop('loading_img');
+	        	                
+	        	                left += width;
+	        	                xIndex --;
+	        	                /*
+	        	                if(left > 0){
+	        	                	left = -700;
+	        	                	console.log(left);	
+	        	                }
+	        	                */
+	        	                
+	        	                
+	        	                $('#framebufer').text(xIndex);//걍 샘플
+	       	                	 if(xIndex < 0){//01. 전체 프레임 - 리셋
+	       	                		xIndex = 0;
+	     	                		yIndex = 0;
+	     	                		top = 0;	
+	     	                		left = 0;
+	     	                		clearTimeout(timerInterval);
+	     	                		console.log("사이클 완료!");
+	     	                	}
+	        	                if(left <= total){//02. 1줄 완료 후  left 리셋//console.log('<= total');
+	        	                	left = 0;
+	        	                	yIndex ++;
+	        	                	if(yIndex==0){
+	        	                		top = 0;	
+	        	                	}else{
+	        	                		top -= height;	
+	        	                	}
+	        	                }	
+	        	                
+	        	                $('.loading_img').css('background-position-x', left);
+	        	                $('.loading_img').css('background-position-y', top);
+	        	                      
+        					});        					
+        					
+	        	            
+	                	},
+	                	'stop' : function(){
+	                		clearTimeout(timerInterval);
+	                	}
+                	}
+                    
+                   					
+					bgAni.play('loading_img' , 24, 10 ,87);
+					bgAni.stop('loading_img');
+					$('.ui_loading.per3').click();
+                	
+					$('.ui_loading.one').on('click',function(){
+						bgAni.stop('loading_img');
+						bgAni.play('loading_img' , 24, 10 ,87);
+						$(this).attr("disabled",true);
+						$('.ui_loading.two').attr("disabled",false);
+					});
+					$('.ui_loading.two').on('click',function(){
+						bgAni.stop('loading_img');
+						bgAni.play('loading_img' , 8, 10 ,87);
+						$(this).attr("disabled",true);
+						$('.ui_loading.one').attr("disabled",false);
+					});                    
+            		$('.ui_loading_end').on('click',function(){
+            			bgAni.stop('loading_img');
+            			$('.ui_loading.one, .ui_loading.two').attr("disabled",false);
+            		});              
+            		
+
+                    </script>
+                   
+                    <!--// code -->
+                </div>                
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-javascript">    
+var timerInterval,
+bgAni = {
+	'play' : function(el , fps, col, totalframe){ //el:클래스명 , fps: 초당 프레임, col: 라인당 프레임수, totalframe: 전체 프레임
+		
+      var width = 0, height= 0,
+      total = 0,
+      top = 0,
+      left = 0,
+      xIndex = 0,
+      yIndex = 0,
+      frameSnd = fps;	        	            
+
+      var frameCol = col, //1라인(행)내 프레임 수
+      frameRow = Math.ceil(totalframe/col),//행 갯수 (총프레임수/1행 프레임)	
+      frameTotal = totalframe;//총 프레임수
+      console.log("frameCol: "+ frameCol + ", frameRow: "+frameRow+", frameTotal: "+frameTotal);
+      
+      width = $('.'+el).width();
+      height = $('.'+el).height();
+      total = width * - frameCol;
+      frameSnd = Math.floor(1000/frameSnd);
+
+      frameRow = frameRow -1;
+      	
+      function timer() {
+          left -= width;
+          xIndex ++;//console.log('left: '+ left + ', top: '+ top +', xIndex: '+ xIndex +', yIndex: '+ yIndex);
+        	 if(xIndex == frameTotal){//01. 전체 프레임 완료 후 리셋
+        		xIndex = 0;
+      		yIndex = 0;
+      		top = 0;
+      		left = 0;
+      		clearTimeout(timerInterval);
+      	}
+          if(left <= total){//02. 1줄 완료 후  left 리셋//console.log('<= total');
+          	left = 0;
+          	yIndex ++;
+          	if(yIndex==0){
+          		top = 0;	
+          	}else{
+          		top -= height;	
+          	}
+          }	
+          $('.loading_img').css('background-position-x', left);
+          $('.loading_img').css('background-position-y', top);
+          timerInterval  = setTimeout(timer, frameSnd);//1번 이동
+      }						   
+      timer();
+	},
+	'stop' : function(){
+		clearTimeout(timerInterval);
+	}
+}
+</code>
+</pre>
+
+<pre class="codebox">
+<code class="language-css">   			
+.loading_img {width:90px;height:100px; background-image:url(''); 
+	width:70px;height:88px; border:1px solid #999; background-size:700px 792px;}	
+</code>
+</pre> 
+<!--// codebox -->      
+            
+            </div>
+        </section>
+        <!--#####################// 이미지 로딩 #####################-->        
+        
+        <!--##################### css KeyFrame #####################-->
+        <section class="aws_box">
+            <h1 class="aws_tl"> CSS @keyframes</h1>
+			<ul class="dcs">
+				<li> CSS animation keyframes 애니메이션 예제</li>
+			</ul>	  	         
+			            
+            <div class="code_area">
+            
+                <div class="play_box">
+                   <!-- code -->
+                   <div class="option_txt">
+<pre class="incodebox">
+<code class="language-css">   	
+<!-- 카드 업다운 -->		
+.animated_updown{animation:upndown 1s infinite;animation:upndown 1s infinite}
+@keyframes upndown{
+	0% {top:-10px}
+	40% {top:7px}
+	100% {top:-10px}
+}
+<!-- 돈주머니 강조 -->
+.animated_rleft{animation:rleft 1s infinite;animation:rleft 1s infinite;}
+@keyframes rleft{
+  from {transform: scale3d(1, 1, 1);}
+  10%, 20% {transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);}
+  30%, 50%, 70%, 90% {transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);}
+  40%, 60%, 80% {transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);}
+  to {transform: scale3d(1, 1, 1);} 
+}
+</code>
+</pre> 	              
+                    </div>
+                    
+					<!-- run_sample -->
+					<div class="run_sample">
+						css 애니메이션 키프레임을 이용, 디테일한 애니메이션 가능. 평소 애니메이션을 즐겨보는 감이 중요. <br/>
+						@-webkit-animation, @-webkit-keyframes의 벤더 프리픽스까지 처리 필요.<br/>
+						- 밴딩프리픽스: -webkit-(크롬,사파리) ,-moz-(파이어폭스), -o-(오페라), -ms-(익스플로어)
+						<!-- sample_box -->	                    
+	                    <article class="sample_box">
+	                    	<style>
+								.keyframe > span {position: relative; display: inline-block; width: 150px; height: 80px;}						
+								.keyframe > span .card{position:absolute;width:106px;height:76px;bottom:10px;left:34px}
+								.keyframe > span .cardarrow{position:absolute;width:42px;height:58px;top:-10px;left:70px}
+								.keyframe > span .hand{position:absolute;width:82px;height:33px;bottom:10px;left:37px}
+								.keyframe > span .moneybag{position:absolute;width:48px;height:58px;bottom:25px;left:65px;}
+								.animated_updown{-webkit-animation:upndown 1s infinite;animation:upndown 1s infinite}
+								@keyframes upndown{
+									0% {top:-10px}
+									40% {top:7px}
+									100% {top:-10px}
+								}
+								.animated_rleft{-webkit-animation:rleft 1s infinite;animation:rleft 1s infinite;}
+								@keyframes rleft{
+								  from {transform: scale3d(1, 1, 1);}
+								  10%, 20% {transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);}
+								  30%, 50%, 70%, 90% {transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);}
+								  40%, 60%, 80% {transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);}
+								  to {transform: scale3d(1, 1, 1);} 
+								}								
+	                    	</style>	                    
+		                    <div class="center keyframe mgt_l">
+		                    	<span>
+			                    	<img src="img/ani/icn_card.svg" alt="" class="cardarrow animated_updown">
+			                    	<img src="img/ani/icn_card_hand.svg" alt="" class="card">
+		                    	</span>
+				                <span>
+				                	<img src="img/ani/icn_money.svg" alt="" class="moneybag animated_rleft">
+				                	<img src="img/ani/icn_money_hand.svg" alt="" class="hand">
+				                </span>		                    	
+		                    </div>	                    
+	                    </article>
+	                    <!-- sample_box -->
+	                    
+	                </div>
+					<!-- run_sample -->	                        
+                    
+                    
+                    <script type="text/javascript">
+            		
+                    </script>
+                    <!--// code -->
+                </div>
+                
+<!-- codebox: markup, css, clike, javascript -->		                
+<pre class="codebox">
+<code class="language-markup">   			
+<span>
+  	<img src="img/ani/icn_card.svg" alt="" class="cardarrow animated_updown">
+  	<img src="img/ani/icn_card_hand.svg" alt="" class="card">
+</span>
+<span>
+	<img src="img/ani/icn_money.svg" alt="" class="moneybag animated_rleft">
+	<img src="img/ani/icn_money_hand.svg" alt="" class="hand">
+</span>		
+</code>
+</pre>  
+<!--// codebox: markup, css, clike, javascript -->        
+                
+            
+            </div>
+        </section>
+        <!--##################### css KeyFrame #####################-->        
+        
+        <!--##################### css3 transition #####################-->
+        <section class="aws_box">
+            <h1 class="aws_tl"> CSS3 transition</h1>
+			<ul class="dcs">
+				<li>css transition 애니메이션</li>
+			</ul>	  	         
+			            
+            <div class="code_area">
+            
+                <div class="play_box">
+                   <!-- code -->
+                   <div class="option_txt">
+<pre class="incodebox">
+<code class="language-css">   			
+.css_trans{display:inline-block; width:80px; height:80px; border-radius:10px; background-color:#fff; transition:all ease 0.4s; box-shadow: 0px 1px 3px rgba(180,180,180,1.0); margin:0 5px;}			                   	
+.css_trans:hover{border-radius:50%; box-shadow: none;}
+.css_trans.color1:hover{background-color:#8bc34a;}
+.css_trans.color2:hover{background-color:#00bcd4;}
+.css_trans.color3:hover{background-color:#cddc39;}
+.css_trans.color4:hover{background-color:#ffeb3b;}
+.css_trans.color5:hover{background-color:#ffc107;}	
+</code>
+</pre> 	              
+                    </div>
+                    
+					<!-- run_sample -->
+					<div class="run_sample">
+						별도 키프레임 없이 	transition을 이용 (<strong class="point">ie는 10부터 지원</strong>)
+						
+						<!-- sample_box -->	                    
+	                    <article class="sample_box">
+	                    	<style>	                    		
+			                   	.css_trans{display:inline-block; width:80px; height:80px; border-radius:10px; background-color:#fff; transition:all ease 0.4s; box-shadow: 0px 1px 3px rgba(180,180,180,1.0); margin:0 5px;}
+			                   	body.new_mopism .contents .css_trans {transition: all ease 0.4s; }
+			                   				                   	
+			                   	.css_trans:hover{border-radius:50%; box-shadow: none;}
+			                   	.css_trans.color1:hover{background-color:#00bcd4;}
+			                   	.css_trans.color2:hover{background-color:#8bc34a;}
+			                   	.css_trans.color3:hover{background-color:#cddc39;}
+			                   	.css_trans.color4:hover{background-color:#ffeb3b;}
+			                   	.css_trans.color5:hover{background-color:#ffc107;}
+	                    	</style>	                    
+		                    <div class="center">
+		                        <span class="css_trans color1"></span>
+		                        <span class="css_trans color2"></span>
+		                        <span class="css_trans color3"></span>
+		                        <span class="css_trans color4"></span>
+		                        <span class="css_trans color5"></span>
+		                    </div>	                    
+	                    </article>
+	                    <!-- sample_box -->
+	                    
+	                </div>
+					<!-- run_sample -->	                        
+                    
+                    
+                    <div style="padding:10px 0 0 0;">
+
+
+                    </div>  
+                    
+                    <script type="text/javascript">
+            		
+                    </script>
+                    <!--// code -->
+                </div>
+                
+<!-- codebox: markup, css, clike, javascript -->		                
+<pre class="codebox">
+<code class="language-markup">   			
+<span class="css_trans color1"></span>
+<span class="css_trans color2"></span>
+<span class="css_trans color3"></span>
+<span class="css_trans color4"></span>
+<span class="css_trans color5"></span>	
+</code>
+</pre>  
+<!--// codebox: markup, css, clike, javascript -->        
+                
+            
+            </div>
+        </section>
+        <!--#####################// css3 transition #####################-->
+        
+        <!--##################### css3 Easing #####################-->
+        <section class="aws_box">
+            <h1 class="aws_tl"> CSS3 Easing</h1>
+			<ul class="dcs">
+				<li>CSS3 transition사용시 easing처리를 위한 기능 추가</li>
+			</ul>	  	         
+			            
+            <div class="code_area">
+            
+                <div class="play_box">
+                   <!-- code -->
+                   <div class="option_txt">
+<pre class="incodebox">
+<code class="language-css">  
+.testBall{
+	transition-property:all; //대상
+	transition-duration:0.6s; //시간
+	transition-timing-function: cubic-bezier(0.420, 0.000, 1.000, 1.000) //easing값
+} 
+</code>
+</pre>
+                    </div>
+                                        
+					<!-- run_sample -->
+					<div class="run_sample">
+						transition을 이용. 키프레임과 혼용가능  (<strong class="point">ie는 10부터 지원</strong>)	
+						 <p class="mgt_s">from "Ceaser - CSS Easing Animation Tool - Matthew Lein" http://matthewlein.com/ceaser/</p>
+						<style>
+						.playball_ground.css  .testBall{display:block; position:absolute; top:50%; left:140px; border-radius:50%; background-color:#333; box-shadow: 0px 1px 3px rgba(180,180,180,1.0);  width:60px; height:60px; margin:-30px 0 0 -100px;
+						transition-property:all; transition-duration:0.6s;}
+						.playball_ground.css  .testBall.trans{left:100%;}
+						
+						.playball_ground.css  .playball.point{color:inherit !important; border-color:#111 !important;}
+						.effect_tit strong.point{display:inline-block; margin:0 10px;}
+						</style>	 						
+						<!-- sample_box -->	                    
+                   
+	                    <article class="sample_box playball_ground css">
+	                    	<sapn>Effect CSS: <em class="effect_tit"></em></sapn>
+                    		<div class="bg_psd mgt_s" style="height:100px; position:relative;">
+                    			<span class="testBall"></span>                    		
+                    		</div>
+                			
+	                    	<button class="playball">linear</button>
+	                    	<button class="playball">ease</button>
+	                    	<button class="playball">easeIn</button>
+	                    	<button class="playball">easeOut</button>
+	                    	<button class="playball">easeInOut</button>
+	                    	<button class="playball">easeInQuad</button>
+	                    	<button class="playball">easeInCubic</button>
+	                    	<button class="playball">easeInQuart</button>
+	                    	<button class="playball">easeInQuint</button>
+	                    	<button class="playball">easeInSine</button>
+	                    	<button class="playball">easeInExpo</button>
+	                    	<button class="playball">easeInCirc</button>
+	                    	<button class="playball">easeInBack</button>
+	                    	<button class="playball">easeOutQuad</button>
+	                    	<button class="playball">easeOutCubic</button>
+	                    	<button class="playball">easeOutQuart</button>
+	                    	<button class="playball">easeOutQuint</button>
+	                    	<button class="playball">easeOutSine</button>
+	                    	<button class="playball">easeOutExpo</button>
+	                    	<button class="playball">easeOutCirc</button>
+	                    	<button class="playball">easeOutBack</button>
+	                    	<button class="playball">easeInOutQuad</button>
+	                    	<button class="playball">easeInOutCubic</button>
+	                    	<button class="playball">easeInOutQuart</button>
+	                    	<button class="playball">easeInOutQuint</button>
+	                    	<button class="playball">easeInOutSine</button>
+	                    	<button class="playball">easeInOutExpo</button>
+	                    	<button class="playball">easeInOutCirc</button>
+	                    	<button class="playball">easeInOutBack</button>               			
+                			
+                			<script>
+                    		$(window).load(function(){
+                    			var $runElCss = $(".playball_ground.css .playball");
+                    			$runElCss.click(function(){
+                    				var wdLeft = $(".playball_ground.css .bg_psd").outerWidth(),
+                    					easing = $(this).text(),
+                    					efNum = [140, "600ms"]; //StartX, Time
+                    					                    					
+                    				 eval("var cubicbezier = cubicbeziers."+easing+";"); //var cubicbezier = cubicbeziers.easing;
+                    				 $(".css .effect_tit").html("<strong class='point'>"+easing + "</strong> (transition-timing-function: cubic-bezier("+cubicbezier+")");
+                    				 
+                    				 $(".css .testBall").css({"transition-timing-function" : "cubic-bezier("+cubicbezier+")" });
+                    				 $(".css .testBall").toggleClass("trans");
+                    			});
+                    		});
+                    		</script>
+	                    </article>
+	                    <!-- sample_box -->		                    
+	                    
+	                </div>
+					<!-- run_sample -->	                        
+                    
+                    
+                    <div style="padding:10px 0 0 0;">
+
+
+                    </div>  
+                    
+                    <script type="text/javascript">
+                    /*
+                    * css transition cubic-bezier
+                    * from "Ceaser - CSS Easing Animation Tool - Matthew Lein" http://matthewlein.com/ceaser/
+                    */
+                    var cubicbeziers = {
+                    	linear: '0.250, 0.250, 0.750, 0.750',
+                    	ease: '0.250, 0.100, 0.250, 1.000',
+                    	easeIn: '0.420, 0.000, 1.000, 1.000',
+                    	easeOut: '0.000, 0.000, 0.580, 1.000',
+                    	easeInOut: '0.420, 0.000, 0.580, 1.000',
+                    	easeInQuad: '0.550, 0.085, 0.680, 0.530',
+                    	easeInCubic: '0.550, 0.055, 0.675, 0.190',
+                    	easeInQuart: '0.895, 0.030, 0.685, 0.220',
+                    	easeInQuint: '0.755, 0.050, 0.855, 0.060',
+                    	easeInSine: '0.470, 0.000, 0.745, 0.715',
+                    	easeInExpo: '0.950, 0.050, 0.795, 0.035',
+                    	easeInCirc: '0.600, 0.040, 0.980, 0.335',
+                    	easeInBack: '0.600, -0.280, 0.735, 0.045',
+                    	easeOutQuad: '0.250, 0.460, 0.450, 0.940',
+                    	easeOutCubic: '0.215, 0.610, 0.355, 1.000',
+                    	easeOutQuart: '0.165, 0.840, 0.440, 1.000',
+                    	easeOutQuint: '0.230, 1.000, 0.320, 1.000',
+                    	easeOutSine: '0.390, 0.575, 0.565, 1.000',
+                    	easeOutExpo: '0.190, 1.000, 0.220, 1.000',
+                    	easeOutCirc: '0.075, 0.820, 0.165, 1.000',
+                    	easeOutBack: '0.175, 0.885, 0.320, 1.275',
+                    	easeInOutQuad: '0.455, 0.030, 0.515, 0.955',
+                    	easeInOutCubic: '0.645, 0.045, 0.355, 1.000',
+                    	easeInOutQuart: '0.770, 0.000, 0.175, 1.000',
+                    	easeInOutQuint: '0.860, 0.000, 0.070, 1.000',
+                    	easeInOutSine: '0.445, 0.050, 0.550, 0.950',
+                    	easeInOutExpo: '1.000, 0.000, 0.000, 1.000',
+                    	easeInOutCirc: '0.785, 0.135, 0.150, 0.860',
+                    	easeInOutBack: '0.680, -0.550, 0.265, 1.550'
+                    };            		
+                    </script>
+                    <!--// code -->
+                </div>
+                
+<!-- codebox: markup, css, clike, javascript --                
+<pre class="codebox">
+<code class="language-css">
+
+</code>   			
+</pre>  
+!--// codebox: markup, css, clike, javascript -->        
+                
+            
+            </div>
+        </section>
+        <!--#####################// css3 Easing #####################-->        
+        
+       <!--##################### Jquery Easing #####################-->
+        <section class="aws_box">
+            <h1 class="aws_tl">Jquery Easing</h1>
+			<ul class="dcs">
+				<li>Jquery Animation 사용시 easing처리를 위한 기능 추가</li>
+			</ul>	  	         
+			            
+            <div class="code_area">
+            
+                <div class="play_box">
+                   <!-- code -->                    
+                   <div class="option_txt">
+<pre class="incodebox">
+<code class="language-javascript">  
+$(".jquery .testBall").stop().animate({"left" : wdLeft}, efNum[1] , easing ,  function(){ });   
+</code>
+</pre>
+                    </div>
+                    
+					<!-- run_sample -->
+					<div class="run_sample">
+						Jquery Animation 사용시 light한 easing처리를 위한 기능 추가.<br/>
+						<strong>Jquery Ui</strong> 플러그인을 쓰면 편하지만 무겁다.<br/>
+						 되도록 필요한 이펙트 코드만 뽑아서 쓴다. <br/>
+						 <p class="mgt_s">Convert to JS from "Robert Penner's Easing Functions" http://www.robertpenner.com/easing/</p>
+						 
+						<!-- sample_box -->
+						<style>
+						.testBall{display:block; position:absolute; top:50%; left:140px; border-radius:50%; background-color:#333; box-shadow: 0px 1px 3px rgba(180,180,180,1.0);  width:60px; height:60px; margin:-30px 0 0 -100px;}
+						.playball.point{color:inherit !important; border-color:#111 !important;}
+						</style>	                    
+	                    <article class="sample_box playball_ground jquery">
+	                    	<strong>Effect Name: <em class="effect_tit point"></em></strong>
+                    		<div class="bg_psd mgt_s" style="height:100px; position:relative;">
+                    			<span class="testBall"></span>                    		
+                    		</div>
+                    		
+                			<button class="playball">linear</button>
+                			<button class="playball point">easeInQuad</button>
+                			<button class="playball point">easeOutQuad</button>
+                			<button class="playball point">easeInOutQuad</button>
+                			<button class="playball">easeOutInQuad</button>
+                			<button class="playball">easeInCubic</button>
+                			<button class="playball">easeOutCubic</button>
+                			<button class="playball point">easeInOutCubic</button>
+                			<button class="playball">easeOutInCubic</button>
+                			<button class="playball point">easeInQuart</button>
+                			<button class="playball">easeOutQuart</button>
+                			<button class="playball">easeInOutQuart</button>
+                			<button class="playball">easeOutInQuart</button>
+                			<button class="playball point">easeInQuint</button>
+                			<button class="playball point">easeOutQuint</button>
+                			<button class="playball point">easeInOutQuint</button>
+                			<button class="playball">easeOutInQuint</button>
+                			<button class="playball">easeInSine</button>
+                			<button class="playball">easeOutSine</button>
+                			<button class="playball">easeInOutSine</button>
+                			<button class="playball">easeOutInSine</button>
+                			<button class="playball">easeInExpo</button>
+                			<button class="playball">easeOutExpo</button>
+                			<button class="playball">easeInOutExpo</button>
+                			<button class="playball">easeOutInExpo</button>
+                			<button class="playball">easeInCirc</button>
+                			<button class="playball">easeOutCirc</button>
+                			<button class="playball point">easeInOutCirc</button>
+                			<button class="playball">easeOutInCirc</button>
+                			<button class="playball">easeInElastic</button>
+                			<button class="playball">easeOutElastic</button>
+                			<button class="playball">easeInOutElastic</button>
+                			<button class="playball">easeOutInElastic</button>
+                			<button class="playball">easeInBack</button>
+                			<button class="playball point">easeOutBack</button>
+                			<button class="playball">easeInOutBack</button>
+                			<button class="playball">easeOutInBack</button>
+                			<button class="playball">easeInBounce</button>
+                			<button class="playball point">easeOutBounce</button>
+                			<button class="playball">easeInOutBounce</button>
+                			<button class="playball">easeOutInBounce</button>
+                    		<script>
+                    		$(window).load(function(){	
+                    			var $runEl = $(".playball_ground.jquery .playball");
+                    			var clickSt = false;
+                    			var wdLeft;
+                    			$runEl.click(function(){
+                    				var easing = $(this).text(),
+                    					efNum = [140, 600]; //StartX, Time
+                    				$(".jquery .effect_tit").text(easing);
+                    				if(clickSt){
+                    					clickSt = false;
+                    					wdLeft = efNum[0];
+                    				}else{
+                    					clickSt = true;
+                    					wdLeft = $(".playball_ground.jquery .bg_psd").outerWidth();
+                    					
+                    				}                    				
+                    				$(".jquery .testBall").stop().animate({"left" : wdLeft}, efNum[1] , easing ,  function(){ });                    				
+                    				
+                    			});
+                    		});
+                    		</script>
+                    		
+	                    <script>
+var easings = {
+		linear : function(t,b,c,d){return c*t/d+b;},
+		easeInQuad : function(t,b,c,d){return c*(t/=d)*t+b;},
+		easeOutQuad : function(t,b,c,d){return -c*(t/=d)*(t-2)+b;},
+		easeInOutQuad : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t+b;return -c/2*((--t)*(t-2)-1)+b;},
+		easeOutInQuad : function(t,b,c,d){if(t < d/2)return easings.easeOutQuad(t*2,b,c/2,d);return easings.easeInQuad((t*2)-d,b+c/2,c/2,d);},
+		easeInCubic : function(t,b,c,d){return c*(t/=d)*t*t+b;},
+		easeOutCubic : function(t,b,c,d){return c*((t=t/d-1)*t*t+1)+b;},
+		easeInOutCubic : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t*t+b;return c/2*((t-=2)*t*t+2)+b;},
+		easeOutInCubic : function(t,b,c,d){if(t<d/2)return easings.easeOutCubic(t*2,b,c/2,d);return easings.easeInCubic((t*2)-d,b+c/2,c/2,d);},
+		easeInQuart : function(t,b,c,d){return c*(t/=d)*t*t*t+b;},
+		easeOutQuart : function(t,b,c,d){return -c*((t=t/d-1)*t*t*t-1)+b;},
+		easeInOutQuart : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t*t*t+b;return -c/2*((t-=2)*t*t*t-2)+b;},
+		easeOutInQuart : function(t,b,c,d){if(t<d/2)return easings.easeOutQuart(t*2,b,c/2,d);return easings.easeInQuart((t*2)-d,b+c/2,c/2,d);},
+		easeInQuint : function(t,b,c,d){return c*(t/=d)*t*t*t*t+b;},
+		easeOutQuint : function(t,b,c,d){return c*((t=t/d-1)*t*t*t*t+1)+b;},
+		easeInOutQuint : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t*t*t*t+b;return c/2*((t-=2)*t*t*t*t+2)+b;},
+		easeOutInQuint : function(t,b,c,d){if(t<d/2)return easings.easeOutQuint(t*2,b,c/2,d);return easings.easeInQuint((t*2)-d,b+c/2,c/2,d);},
+		easeInSine : function(t,b,c,d){return -c*Math.cos(t/d*(Math.PI/2))+c+b;},
+		easeOutSine : function(t,b,c,d){return c*Math.sin(t/d*(Math.PI/2))+b;},
+		easeInOutSine : function(t,b,c,d){return -c/2*(Math.cos(Math.PI*t/d)-1)+b;},
+		easeOutInSine : function(t,b,c,d){if(t<d/2)return easings.easeOutSine(t*2,b,c/2,d);return easings.easeInSine((t*2)-d,b+c/2,c/2,d);},
+		easeInExpo : function(t,b,c,d){return (t==0)? b : c*Math.pow(2,10*(t/d-1))+b-c*0.001;},
+		easeOutExpo : function(t,b,c,d){return (t==d)? b+c : c*1.001*(-Math.pow(2,-10*t/d)+1)+b;},
+		easeInOutExpo : function(t,b,c,d){if(t==0)return b;if(t==d)return b+c;if((t/=d/2)<1)return c/2*Math.pow(2,10*(t-1))+b-c*0.0005;return c/2*1.0005*(-Math.pow(2,-10*--t)+2)+b;},
+		easeOutInExpo : function(t,b,c,d){if(t<d/2)return easings.easeOutExpo(t*2,b,c/2,d);return easings.easeInExpo((t*2)-d,b+c/2,c/2,d);},
+		easeInCirc : function(t,b,c,d){return -c*(Math.sqrt(1-(t/=d)*t)-1)+b;},
+		easeOutCirc : function(t,b,c,d){return c*Math.sqrt(1-(t=t/d-1)*t)+b;},
+		easeInOutCirc : function(t,b,c,d){if((t/=d/2)<1)return -c/2*(Math.sqrt(1-t*t)-1)+b;return c/2*(Math.sqrt(1-(t-=2)*t)+1)+b;},
+		easeOutInCirc : function(t,b,c,d){if (t<d/2)return easings.easeOutCirc(t*2,b,c/2,d);return easings.easeInCirc((t*2)-d,b+c/2,c/2,d);},
+		easeInElastic : function(t,b,c,d,a,p){if(!t)return b;if((t/=d)==1)return b+c;var s,p=(!p||typeof(p)!='number')? d*.3 : p,a=(!a||typeof(a)!='number')? 0 : a;if(!a||a<Math.abs(c)){a=c;s=p/4;}else s=p/(2*Math.PI)*Math.asin(c/a);return -(a*Math.pow(2,10*(t-=1))*Math.sin((t*d-s)*(2*Math.PI)/p))+b;},
+		easeOutElastic : function(t,b,c,d,a,p){if(!t)return b;if((t/=d)==1)return b+c;var s,p=(!p||typeof(p)!='number')? d*.3 : p,a=(!a||typeof(a)!='number')? 0 : a;if(!a||a<Math.abs(c)){a=c;s=p/4;}else s=p/(2*Math.PI)*Math.asin(c/a);return (a*Math.pow(2,-10*t)*Math.sin((t*d-s)*(2*Math.PI)/p)+c+b);},
+		easeInOutElastic : function(t,b,c,d,a,p){if(t==0)return b;if((t/=d/2)==2)return b+c;var s,p=d*(.3*1.5),a=0;var s,p=(!p||typeof(p)!='number')? d*(.3*1.5) : p,a=(!a||typeof(a)!='number')? 0 : a;if(!a||a<Math.abs(c)){a=c;s=p/4;}else s=p/(2*Math.PI)*Math.asin(c/a);if(t<1)return -.5*(a*Math.pow(2,10*(t-=1))*Math.sin((t*d-s)*(2*Math.PI)/p))+b;return a*Math.pow(2,-10*(t-=1))*Math.sin((t*d-s)*(2*Math.PI)/p)*.5+c+b;},
+		easeOutInElastic : function(t,b,c,d,a,p){if (t<d/2)return easings.easeOutElastic(t*2,b,c/2,d,a,p);return easings.easeInElastic((t*2)-d,b+c/2,c/2,d,a,p);},
+		easeInBack : function(t,b,c,d,s){var s=(!s||typeof(s)!='number')? 1.70158 : s;return c*(t/=d)*t*((s+1)*t-s)+b;},
+		easeOutBack : function(t,b,c,d,s){var s=(!s||typeof(s)!='number')? 1.70158 : s;return c*((t=t/d-1)*t*((s+1)*t+s)+1)+b;},
+		easeInOutBack : function(t,b,c,d,s){var s=(!s||typeof(s)!='number')? 1.70158 : s;if((t/=d/2)<1)return c/2*(t*t*(((s*=(1.525))+1)*t-s))+b;return c/2*((t-=2)*t*(((s*=(1.525))+1)*t+s)+2)+b;},
+		easeOutInBack : function(t,b,c,d,s){if(t<d/2)return easings.easeOutBack(t*2,b,c/2,d,s);return easings.easeInBack((t*2)-d,b+c/2,c/2,d,s);},
+		easeInBounce : function(t,b,c,d){return c-easings.easeOutBounce(d-t,0,c,d)+b;},
+		easeOutBounce : function(t,b,c,d){if((t/=d)<(1/2.75))return c*(7.5625*t*t)+b;else if(t<(2/2.75))return c*(7.5625*(t-=(1.5/2.75))*t+.75)+b;else if(t<(2.5/2.75))return c*(7.5625*(t-=(2.25/2.75))*t+.9375)+b;else return c*(7.5625*(t-=(2.625/2.75))*t+.984375)+b;},
+		easeInOutBounce : function(t,b,c,d){if(t<d/2)return easings.easeInBounce(t*2,0,c,d)*.5+b;else return easings.easeOutBounce(t*2-d,0,c,d)*.5+c*.5+b;},
+		easeOutInBounce : function(t,b,c,d){if(t<d/2)return easings.easeOutBounce(t*2,b,c/2,d);return easings.easeInBounce((t*2)-d,b+c/2,c/2,d);}
+	},
+easing;
+
+
+for ( easing in easings ) {
+	jQuery.easing[easing] = (function(easingname) {
+		return function(x, t, b, c, d) {
+			return easings[easingname](t, b, c, d);
+		}
+	})(easing);
+}                	
+	                    	                    
+	                    </script>                    		
+                    		
+                   			<div class="option_txt mgt_l">
+<xmp style="font-size:12px; font-family: '맑은 고딕'; color:#333;">
+var easings = {
+		linear : function(t,b,c,d){return c*t/d+b;},
+		easeInQuad : function(t,b,c,d){return c*(t/=d)*t+b;},
+		easeOutQuad : function(t,b,c,d){return -c*(t/=d)*(t-2)+b;},
+		easeInOutQuad : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t+b;return -c/2*((--t)*(t-2)-1)+b;},
+		easeOutInQuad : function(t,b,c,d){if(t < d/2)return easings.easeOutQuad(t*2,b,c/2,d);return easings.easeInQuad((t*2)-d,b+c/2,c/2,d);},
+		easeInCubic : function(t,b,c,d){return c*(t/=d)*t*t+b;},
+		easeOutCubic : function(t,b,c,d){return c*((t=t/d-1)*t*t+1)+b;},
+		easeInOutCubic : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t*t+b;return c/2*((t-=2)*t*t+2)+b;},
+		easeOutInCubic : function(t,b,c,d){if(t<d/2)return easings.easeOutCubic(t*2,b,c/2,d);return easings.easeInCubic((t*2)-d,b+c/2,c/2,d);},
+		easeInQuart : function(t,b,c,d){return c*(t/=d)*t*t*t+b;},
+		easeOutQuart : function(t,b,c,d){return -c*((t=t/d-1)*t*t*t-1)+b;},
+		easeInOutQuart : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t*t*t+b;return -c/2*((t-=2)*t*t*t-2)+b;},
+		easeOutInQuart : function(t,b,c,d){if(t<d/2)return easings.easeOutQuart(t*2,b,c/2,d);return easings.easeInQuart((t*2)-d,b+c/2,c/2,d);},
+		easeInQuint : function(t,b,c,d){return c*(t/=d)*t*t*t*t+b;},
+		easeOutQuint : function(t,b,c,d){return c*((t=t/d-1)*t*t*t*t+1)+b;},
+		easeInOutQuint : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t*t*t*t+b;return c/2*((t-=2)*t*t*t*t+2)+b;},
+		easeOutInQuint : function(t,b,c,d){if(t<d/2)return easings.easeOutQuint(t*2,b,c/2,d);return easings.easeInQuint((t*2)-d,b+c/2,c/2,d);},
+		easeInSine : function(t,b,c,d){return -c*Math.cos(t/d*(Math.PI/2))+c+b;},
+		easeOutSine : function(t,b,c,d){return c*Math.sin(t/d*(Math.PI/2))+b;},
+		easeInOutSine : function(t,b,c,d){return -c/2*(Math.cos(Math.PI*t/d)-1)+b;},
+		easeOutInSine : function(t,b,c,d){if(t<d/2)return easings.easeOutSine(t*2,b,c/2,d);return easings.easeInSine((t*2)-d,b+c/2,c/2,d);},
+		easeInExpo : function(t,b,c,d){return (t==0)? b : c*Math.pow(2,10*(t/d-1))+b-c*0.001;},
+		easeOutExpo : function(t,b,c,d){return (t==d)? b+c : c*1.001*(-Math.pow(2,-10*t/d)+1)+b;},
+		easeInOutExpo : function(t,b,c,d){if(t==0)return b;if(t==d)return b+c;if((t/=d/2)<1)return c/2*Math.pow(2,10*(t-1))+b-c*0.0005;return c/2*1.0005*(-Math.pow(2,-10*--t)+2)+b;},
+		easeOutInExpo : function(t,b,c,d){if(t<d/2)return easings.easeOutExpo(t*2,b,c/2,d);return easings.easeInExpo((t*2)-d,b+c/2,c/2,d);},
+		easeInCirc : function(t,b,c,d){return -c*(Math.sqrt(1-(t/=d)*t)-1)+b;},
+		easeOutCirc : function(t,b,c,d){return c*Math.sqrt(1-(t=t/d-1)*t)+b;},
+		easeInOutCirc : function(t,b,c,d){if((t/=d/2)<1)return -c/2*(Math.sqrt(1-t*t)-1)+b;return c/2*(Math.sqrt(1-(t-=2)*t)+1)+b;},
+		easeOutInCirc : function(t,b,c,d){if (t<d/2)return easings.easeOutCirc(t*2,b,c/2,d);return easings.easeInCirc((t*2)-d,b+c/2,c/2,d);},
+		easeInElastic : function(t,b,c,d,a,p){if(!t)return b;if((t/=d)==1)return b+c;var s,p=(!p||typeof(p)!='number')? d*.3 : p,a=(!a||typeof(a)!='number')? 0 : a;if(!a||a<Math.abs(c)){a=c;s=p/4;}else s=p/(2*Math.PI)*Math.asin(c/a);return -(a*Math.pow(2,10*(t-=1))*Math.sin((t*d-s)*(2*Math.PI)/p))+b;},
+		easeOutElastic : function(t,b,c,d,a,p){if(!t)return b;if((t/=d)==1)return b+c;var s,p=(!p||typeof(p)!='number')? d*.3 : p,a=(!a||typeof(a)!='number')? 0 : a;if(!a||a<Math.abs(c)){a=c;s=p/4;}else s=p/(2*Math.PI)*Math.asin(c/a);return (a*Math.pow(2,-10*t)*Math.sin((t*d-s)*(2*Math.PI)/p)+c+b);},
+		easeInOutElastic : function(t,b,c,d,a,p){if(t==0)return b;if((t/=d/2)==2)return b+c;var s,p=d*(.3*1.5),a=0;var s,p=(!p||typeof(p)!='number')? d*(.3*1.5) : p,a=(!a||typeof(a)!='number')? 0 : a;if(!a||a<Math.abs(c)){a=c;s=p/4;}else s=p/(2*Math.PI)*Math.asin(c/a);if(t<1)return -.5*(a*Math.pow(2,10*(t-=1))*Math.sin((t*d-s)*(2*Math.PI)/p))+b;return a*Math.pow(2,-10*(t-=1))*Math.sin((t*d-s)*(2*Math.PI)/p)*.5+c+b;},
+		easeOutInElastic : function(t,b,c,d,a,p){if (t<d/2)return easings.easeOutElastic(t*2,b,c/2,d,a,p);return easings.easeInElastic((t*2)-d,b+c/2,c/2,d,a,p);},
+		easeInBack : function(t,b,c,d,s){var s=(!s||typeof(s)!='number')? 1.70158 : s;return c*(t/=d)*t*((s+1)*t-s)+b;},
+		easeOutBack : function(t,b,c,d,s){var s=(!s||typeof(s)!='number')? 1.70158 : s;return c*((t=t/d-1)*t*((s+1)*t+s)+1)+b;},
+		easeInOutBack : function(t,b,c,d,s){var s=(!s||typeof(s)!='number')? 1.70158 : s;if((t/=d/2)<1)return c/2*(t*t*(((s*=(1.525))+1)*t-s))+b;return c/2*((t-=2)*t*(((s*=(1.525))+1)*t+s)+2)+b;},
+		easeOutInBack : function(t,b,c,d,s){if(t<d/2)return easings.easeOutBack(t*2,b,c/2,d,s);return easings.easeInBack((t*2)-d,b+c/2,c/2,d,s);},
+		easeInBounce : function(t,b,c,d){return c-easings.easeOutBounce(d-t,0,c,d)+b;},
+		easeOutBounce : function(t,b,c,d){if((t/=d)<(1/2.75))return c*(7.5625*t*t)+b;else if(t<(2/2.75))return c*(7.5625*(t-=(1.5/2.75))*t+.75)+b;else if(t<(2.5/2.75))return c*(7.5625*(t-=(2.25/2.75))*t+.9375)+b;else return c*(7.5625*(t-=(2.625/2.75))*t+.984375)+b;},
+		easeInOutBounce : function(t,b,c,d){if(t<d/2)return easings.easeInBounce(t*2,0,c,d)*.5+b;else return easings.easeOutBounce(t*2-d,0,c,d)*.5+c*.5+b;},
+		easeOutInBounce : function(t,b,c,d){if(t<d/2)return easings.easeOutBounce(t*2,b,c/2,d);return easings.easeInBounce((t*2)-d,b+c/2,c/2,d);}
+	},
+easing;
+for ( easing in easings ) {
+	jQuery.easing[easing] = (function(easingname) {
+		return function(x, t, b, c, d) {
+			return easings[easingname](t, b, c, d);
+		}
+	})(easing);
+}      
+</xmp>
+                    		</div>	                           		
+                    		
+	                    </article>
+	                    <!-- sample_box -->
+	                    
+	                </div>
+					<!-- run_sample -->	                        
+                    
+                    
+                    <div style="padding:10px 0 0 0;">
+
+
+                    </div>  
+                    
+                    <script type="text/javascript">
+            		
+                    </script>
+                    <!--// code -->
+                </div>
+            
+            </div>
+        </section>
+        <!--#####################// Jquery Easing #####################-->                    
+		
+		    	    
+    </div><!-- contents -->
+    
+	<script src="js/jquery-ui.min.js"></script><!-- jquery ui-->
+	<script src="js/jquery.ui.touch-punch.js"></script><!-- jquery ui using mobile -->
+    <script src="js/frontUxer.js"></script><!-- plugin -->
+        
+</body>
+</html>

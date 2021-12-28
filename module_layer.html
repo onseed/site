@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>frontUxer</title>
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/frontUxer.css">
+<script src="js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript">        
+	var menuArry = ['1','0'];//1depth, 2depth
+</script>
+</head>
+<body>
+<script src="js/guide.js"></script><!-- site guide -->
+	
+	<div class="start_dim"><span></span></div>
+
+	<h1 class="hide">module</h1>
+	
+	<div class="contents"><!-- contents -->
+    
+        <!--##################### 레이어 팝업 #####################-->
+		<section class="aws_box">
+			<h2 class="aws_tl"> 레이어 팝업 </h2>
+			<ul class="dcs">
+				<li>반응형 레이어 팝업처리</li>
+			</ul> 			
+			<div class="code_area">
+	        	
+	        	<div class="play_box">
+	        		<!-- code -->
+	        		<article class="code_box">
+	        			<div  class="option_txt">
+	        				<p><strong>버튼: </strong> <span class="incodebox"><code class="language-javascript">data-target="modal_deafault"</code></span></p>
+	        				<p><strong>팝업: </strong> <span class="incodebox"><code class="language-javascript">id="modal_deafault" class="modal_cont"</code></span></p>
+	        				<p><strong>실행: </strong> <span class="incodebox"><code class="language-javascript">$('셀렉터').uxLayerPop();</code></span></p>
+	        			</div>
+	        			
+						<!-- run_sample -->
+						<div class="run_sample">
+							<style>
+								.cont_bg{background-image:url("img/bg_trance_psd.svg"); padding:10px;}
+							</style>
+						
+							<dl class="dcs">
+								<dt>패치 노트</dt>
+								<dd>20190230: 이중팝업시 dim이 같이 사라지는 오류의 건 처리</dd>
+								<dd>20190917: 데스크탑일때 scrlLock옵션내 휠스크롤 막기 오류 수정</dd>
+								<dd>20201105: 팝업오픈시 컨텐츠 영역과 팝업영역에 대한 aria-hidden 상태처리 <br>
+									ariaTarget : '.contents, header.ui' //디폴트 셀렉터
+								</dd>
+								<dd>20201105: ios일때 포커싱을 팝업내 첫번째 버튼으로 분기처리(모바일웹 접근성)</dd>
+							</dl>
+							<dl class="dcs">
+								<dt>개선 예정</dt>
+								<dd>"오늘하루 보지 않음"에 대한 쿠키 처리 진행</dd>
+							</dl>
+							
+							<!-- 1. 기본: -->						
+		               		<article class="bd_top">
+		               			<p>1. 기본: <span class="normal"><code class="language-javascript">$('.modal_cont').uxLayerPop();</code></span></p>
+			               		<button data-target="modal_deafault">레이어팝업 (컨텐츠)</button>
+		               		</article>
+		               		<!--// 1. 기본: -->
+		               		
+		               		<!-- 2. 자동 열기, 3. 자동 닫기, 4. 이중 팝업, 5. 콜백 처리 -->	
+		               		<article class="bd_top">
+		               			<p>2. 자동 열기: <span class="normal"><code class="language-javascript">$('.modal_cont').uxLayerPop({auto: true});</code></span></p>
+		               			<p>3. 자동 닫기: <span class="normal"><code class="language-javascript">$('.modal_cont').uxLayerPop({popClose: true});</code></span></p>
+		               			<p>4. 이중 팝업: <span class="normal"><code class="language-javascript">$('.modal_cont').uxLayerPop({qspop: true});</code></span></p>
+		               			<p>5. 콜백 처리: <span class="normal"><code class="language-javascript">$('.modal_cont').uxLayerPop({callback: function(){ //오픈시 콜백처리} });</code></span></p>
+		               			<button data-target="modal_a"  id="autopop">레이어팝업 (메세지)</button>		               		
+		               		</article>
+		               		<!--// 2. 자동 열기, 3. 자동 닫기, 4. 이중 팝업, 5. 콜백 처리 -->
+		               		
+							<!-- 6. maxW, 7. maxH, 8. scrlLock -->						
+		               		<article class="bd_top">
+		               			<p>6. maxW: <span class="normal"><code class="language-javascript">$('.modal_cont').uxLayerPop({maxW: 800});</code></span></p>
+		               			<p>7. maxH: <span class="normal"><code class="language-javascript">$('.modal_cont').uxLayerPop({maxH: 300});</code></span></p>
+		               			<p>8. scrlLock: <span class="normal"><code class="language-javascript">$('.modal_cont').uxLayerPop({scrlLock: true, callback: function(){ $(".ui_scrollview").uxScrollView(); //uxScrollView 실행 }});</code></span></p>
+		               			
+			               		<div class="option_txt mgt_s">
+			               			레이어팝업에 대한 width와 height추가시 해당 css 픽셀 number값이 필요 
+			               			<p><span class="incodebox"><code class="language-css">.modal_cont {max-width: 800px;} .modal_cont .cont{height:300px;}</code></span></p>
+			               			휠스크롤 막기 옵션(scrlLock)시 window내 모든 스크롤이 binding되어 uxScrollView을 사용해야함.
+			               			<p><span class="incodebox"><code class="language-javascript">$(".ui_scrollview").uxScrollView(); //uxScrollView 실행</code></span></p>
+			               		</div>
+			               		
+			               		<button data-target="modal_b" class="point">레이어팝업 (컨텐츠)</button>				               		
+		               		</article>
+		               		<!--// 6. maxW, 7. maxH, 8. scrlLock -->
+		               		
+		               		<!-- 9. 외곽 여백 -->
+	               			<article class="bd_top">
+		               			<p>9. 외곽 여백: <span class="normal"><code class="language-javascript">$('.modal_cont').uxLayerPop({mg: 40});//최소창시 top, right, bottom, left의 css를 '40'으로 조정</code></span></p>
+		               			<button data-target="modal_c">레이어팝업 (컨텐츠)</button>
+		               		</article>
+		               		<!--// 9. 외곽 여백 -->
+		               		
+		               		<!-- 10. 포지션상단, 11. 포지션 하단 -->
+	               			<article class="bd_top">
+	               				<p>10. 포지션 상단: <span class="normal"><code class="language-javascript">$('.modal_cont').uxLayerPop({ps: 'top'});</code></span></p>
+	               				<p>11. 포지션 하단: <span class="normal"><code class="language-javascript">$('.modal_cont').uxLayerPop({ps: 'bottom'});</code></span></p>
+	               				
+		               			<button id="open_top">레이어 <strong>Top</strong>팝업</button><br/>
+		               			<button id="open_bottom">레이어 <strong>Bottom</strong>팝업</button>	               				
+		               		</article>
+		               		<!--// 10. 포지션상단, 11. 포지션 하단 -->
+		               		
+		               		<!-- 스크롤방지 관련 -->		               		
+		               		<article class="bd_top">
+		               			<p>
+		               				<p class="mgb_s"><strong>20190917: 크롬 업데이트 관련 preventDefault 패치</strong> </p>
+		               				데스크탑시 아래소스로 modern standard기준으로 스크롤 방지.<br/>
+		               				old browser와 ie 구버전은 ux플러그인과 맞지않아 삭제.
+		               				필요하다면 <strong>uxAgent()</strong>으로 검사 후 해당 구문을 분기처리.
+		               			</p>
+	               				<div class="option_txt mgt_s">
+<!-- incodebox: markup, css, clike, javascript -->					
+<pre class="incodebox">
+<code class="language-javascript">
+function disableScroll() {//console.log("스크롤 막기");
+	if (window.addEventListener){ // older FF
+		window.addEventListener('DOMMouseScroll', preventDefault, false);
+	}
+	//window.onwheel = preventDefault; // asis: modern standard
+	window.addEventListener('wheel', preventDefault, {passive:false}); //modern standard 20190917 chrome 패치
+	//window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE 20190917 삭제(현재 구조와 맞지않음) 
+	window.ontouchmove  = preventDefault; // mobile
+	document.onkeydown  = preventDefaultForScrollKeys;
+}
+
+function enableScroll() {//console.log("스크롤 풀기");
+	if (window.removeEventListener){
+		window.removeEventListener('DOMMouseScroll', preventDefault, false);
+	}				
+	//window.onwheel = null; //  asis: modern standard
+    window.removeEventListener('wheel', preventDefault, {passive:false}); //modern standard 20190917 chrome 패치
+    window.onmousewheel = document.onmousewheel = null; // older browsers, IE 20190917 삭제(현재 구조와 맞지않음)
+    window.ontouchmove = null;  
+    document.onkeydown = null;
+}
+</code>
+</pre>
+	               				</div>		               			
+	               			</article>
+	               			<!--// 스크롤방지 관련 -->
+						
+						</div>
+						<!--// run_sample -->
+
+	        		</article>
+	        		<!-- code -->
+				</div>		               		
+	        
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-markup">
+<!-- 버튼 -->
+<button data-target="modal_deafault">레이어팝업</button>
+
+<!-- 레이어 팝업 -->
+<section id="modal_deafault" class="modal_cont" role="dialog">
+	<header>
+		<h1 >팝업제목</h1>
+	</header>
+	<div class="cont">
+	
+		<!-- 1.일반 컨텐츠일때 -->
+		<p>팝업 컨텐츠</p>
+		
+		<!-- 2.스크롤 유형일때 -->		
+		<div class="ui_scrollarea">
+			<div class="ui_content">
+				<p>팝업 컨텐츠</p>
+			</div>
+		</div>		
+		
+	</div>
+	<div class="modal_footer">
+		<button type="button" data-dismiss="modal">닫기</button>
+	</div>
+</section>
+</code>
+</pre>
+<!--// codebox -->     
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-css">            
+.modal_cont {display:none; overflow:hidden; position:fixed; z-index:10001; margin:0; background:#fff;}
+.modal_cont > header {position:relative; width:100%; border-bottom:1px solid #d4d4d4; box-sizing:border-box; font-size:1.3em; padding:15px 40px; text-align:center;}
+.modal_cont .cont {padding:20px;}
+.modal_cont .cont .btn_wrap{padding:10px; text-align:center;}
+.modal_cont .modal_footer{ position:relative;height:62px;border-top:1px solid #e8ecef; text-align:center; box-sizing:border-box; padding:15px 0 20px; margin-top:0;}
+.modal_bg, .modal_bg2 {position:fixed; top:0; left:0; z-index:10000; width:100%; height:100%; background:#25252f; opacity:0.7}
+</code>
+</pre>
+<!--// codebox -->     
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-javascript">           
+$.fn.extend({//#################### 3.uxLayerPop ####################
+	uxLayerPop : function(opt) {
+		var defaults = {
+			maxW : 500,
+			maxH : 0,
+			auto : false,
+			ariaTarget : '.contents, header.ui', //20201105 aria를 적용시킬 컨텐츠 셀렉터 
+			mg : 15,
+			popClose : false,
+			qspop : false,//모달 중복
+			callback:'', //콜백 추가
+			ps : '', // 'top', 'bottom'
+			hFix : false, // height 고정
+			scrlLock : false // 스크롤 막기 옵션
+		},
+		opt = $.extend(defaults, opt);
+		
+		return this.each(function(){
+			var $this		= $(this),
+				$win			= $(window),
+				$doc			= $(document),
+				$body		= $('body'),
+				$wrapper	= $('.wrap'),
+				auto			= opt.auto,
+				ariaTarget	= opt.ariaTarget, //20201105 aria target
+				maxW			= opt.maxW,
+				maxH			= opt.maxH,
+				mg				= opt.mg,
+				popClose		= opt.popClose,
+				qspop			= opt.qspop,
+				ps				= opt.ps,
+				target		= $this.attr('id'),
+				$btn			= $('[data-target="' + target + '"]'),
+				$modal		= $('#' + target),
+				$modal_h	= $modal.children('header'),
+				$modal_c	= $modal.children('.cont'),
+				$modal_f		= $modal.children('.modal_footer'),
+				$modalBtn	= $modal.find('button, a'),
+				modalBg		= '<div class="modal_bg"></div>',
+				$modalBg	= $('.modal_bg'),
+				modalBg2	= '<div class="modal_bg2"></div>',
+				$modalBg2	= $('.modal_bg2'),
+				mhH			= $modal_h.outerHeight(),
+				mcH			= $modal_c.outerHeight(),
+				mfH			= $modal_f.outerHeight(),
+				winW			= $win.width(),
+				layW			= Number(winW - 20),
+				layH,
+				nPs			= $(document).scrollTop(),
+				callback		= opt.callback, //콜백
+				scrlLock		= opt.scrlLock, //스크롤 막기 옵션
+				hFix			= opt.hFix, //height 고정
+				wH;
+				
+				$this.data('ps', ps);
+				
+			//ux15 오버플로우 속성 안쓰고, 마우스 스크롤 막기
+			// left: 37, up: 38, right: 39, down: 40,
+			// spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
+			var keys = {37: 1, 38: 1, 39: 1, 40: 1};
+	
+			function preventDefault(e) {
+				e = e || window.event;
+				if (e.preventDefault){
+					e.preventDefault();
+				}
+				e.returnValue = false
+			}
+			
+			function preventDefaultForScrollKeys(e) {
+				if (keys[e.keyCode]) {
+					preventDefault(e);
+					return false;
+				}
+			}
+						
+			function disableScroll() {//console.log("스크롤 막기");
+				if (window.addEventListener){ // older FF
+					window.addEventListener('DOMMouseScroll', preventDefault, false);
+				}
+				//window.onwheel = preventDefault; // asis: modern standard
+				window.addEventListener('wheel', preventDefault, {passive:false}); //modern standard 20190917 chrome 패치
+				//window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE 20190917 삭제(현재 구조와 맞지않음) 
+				window.ontouchmove  = preventDefault; // mobile
+				document.onkeydown  = preventDefaultForScrollKeys;
+			}
+			
+			function enableScroll() {//console.log("스크롤 풀기");
+				if (window.removeEventListener){
+					window.removeEventListener('DOMMouseScroll', preventDefault, false);
+				}				
+				//window.onwheel = null; //  asis: modern standard
+			    window.removeEventListener('wheel', preventDefault, {passive:false}); //modern standard 20190917 chrome 추가
+			    window.onmousewheel = document.onmousewheel = null; // older browsers, IE 20190917 삭제(현재 구조와 맞지않음)
+			    window.ontouchmove = null;  
+			    document.onkeydown = null;
+			}
+			
+			var app = {
+					
+				show : function(target) {
+					$modal = $('#' + target);
+					$modal.css({
+						display : 'block',
+						opacity : 0
+					});
+					
+					wH = $win.height();
+					winW = $win.width(),
+					layW = Number(winW - (mg*2));
+					layH = $modal.outerHeight();
+					
+					var _t	= (wH < layH) ? mg : '50%',
+						_w		= 'auto',   //($this.data('ps') === 'top') ? winW : layW,
+						_mw	= maxW,
+						_l		= mg, //'50%'
+						_r		= mg, //'50%'
+						_ml	= 0, //($this.data('ps') === 'top') ? 0 : (layW / 2) * -1,
+						_mt	= (layH / 1.5) * -1,
+						_mt2	= (wH < layH) ? 0 : (layH / 2) * -1 ;
+					
+					// 모바일 메인 상태진행 배너
+					if ($this.data('ps') === 'top') {
+						_t = 0,
+						_mw = '',
+						_l = 0,
+						_r = 0,
+						_mt = layH * -1,
+						_mt2 = 0;
+					}
+					
+					//maxH 있을때
+					if(maxH !== 0){
+						$modal_c.css({'height':maxH,'overflowY': 'auto'});
+						//layH	= $('#' + target).outerHeight();
+						layH	= maxH + $('#' + target).children('header').outerHeight() + $('#' + target).children('.modal_footer').outerHeight();
+						_t 		= (wH < layH) ? mg : '50%';
+						_mt2	= (wH < layH) ? 0 : (layH / 2) * -1 ;
+						//console.log(target +', _mt2: '+_mt2 + ' , layH: '+layH + ', modal_footer: ' +$('#' + target).children('.modal_footer').outerHeight());
+						
+						$modal
+							.css({
+								width : _w,
+								top : _t,
+								left : _l,
+								right : _r,
+								marginLeft : _ml,
+								marginTop : _mt,//marginTop : '-500px',
+								maxWidth : _mw
+							})
+							.stop().animate({
+								opacity : 1,
+								marginTop : _mt2,
+							}, 200, function(){
+								marginTop : _mt2
+							}); //console.log(_mt +', _mt2: '+ _mt2 +' : '+ wH + ' : '+layH);
+					} else{
+						if ($this.data('ps') === 'bottom') {
+							$modal
+								.css({
+									width : _w,
+									bottom : 0,
+									opacity : 1,
+									left : 0,
+									right : 0,
+									marginLeft : _ml,
+									marginTop : 0,
+									marginBottom : _mt,
+									maxWidth : '100%'
+								})
+								.stop().animate({
+									opacity : 1,
+									marginBottom : 0,
+									left : 0,
+								}, 200, function(){
+									
+								});//console.log('_l: '+_l+', _r: '+_r + ', _t:'+_t);
+						}else{
+							$modal
+								.css({
+									width : _w,
+									top : _t,
+									left : _l,
+									right : _r,
+									marginLeft : _ml,
+									marginTop : _mt,
+									maxWidth : _mw
+								})
+								.stop().animate({
+									opacity : 1,
+									marginTop : _mt2,
+								}, 200, function(){
+									
+								});//console.log('_l: '+_l+', _r: '+_r + ', _t:'+_t);
+						}
+					}
+					
+					/*
+					if(isMobile !== true){disableScroll();}// 모바일에선 안씀
+					if(isMobile == true){// 모바일 스크롤 막기
+						$('html').css('overflow','hidden');
+						if(scrlLock === true ){//스크롤 막기 옵션 true일때
+							disableScroll();//console.log('scrlLock');
+						}
+					}*/
+					
+
+					if(scrlLock === true ){//페이지내 휠스크롤 안쓸때
+						disableScroll();
+						console.log('scrlLock');
+					}
+					
+					if ($this.data('ps') !== 'top') {
+						$(window).resize(function(){
+							var layH2   = $modal.outerHeight();
+							if (wH < layH || wH < (layH2 + mg*2)) {
+								app.overLayer(target);
+							}
+							if ($modal.outerWidth() >= maxW) {
+								var maxW_l = ($win.width() - maxW) / 2;
+								$modal.css('left', maxW_l);
+							} else {
+								$modal.css('left', mg );
+							}
+	                      }).resize();                
+					}
+					
+					if($('html').hasClass('ios')){ //ios접근성 추가 20201105
+						$modalBtn.eq(0).focus();
+					}else{
+						$modal.attr('tabindex', 0).focus();
+					} //ios접근성 추가.end
+					
+					$(ariaTarget).attr("aria-hidden",true); //arai 접근성 추가 20201105
+					$modal.attr("aria-hidden",false); //arai 접근성 추가					
+					
+					setTimeout(function(){//ux15 quick start용 모달위에 뜰경우
+						if(qspop === true){
+							// return false;
+							$body.append(modalBg2);//20190230 "modalBg2"에 대한 패치 추가
+							$modalBg2 = $('.modal_bg2');
+							$modal.css('z-index', 10003);
+							$modalBg2.css('z-index', 10002).css('opacity', 0.5).on('click', function(){
+								app.hide();
+							});
+	                      } else {
+	                          $body.append(modalBg);
+	                          $modalBg = $('.modal_bg');
+	                          $modalBg.css('opacity', 0.7).on('click', function(){
+	                              app.hide();
+	                          });
+	                      }
+					},30);
+					$modalBtn.off('click.layerPopUp_close').on('click.layerPopUp_close', function() {
+						($(this).data('dismiss') === 'modal') ? app.hide() : '';
+					});
+				},
+				
+				overLayer : function(){
+					$modal = $('#' + target);
+					$modal_h = $modal.children('header');
+					$modal_c = $modal.children('.cont');
+					$modal_f  = $modal.children('.modal_footer');
+					
+					wH  = $win.height();
+					mhH = $modal_h.outerHeight();
+					mfH = $modal_f.outerHeight();
+					
+					$modal.stop().animate({
+						opacity:1,
+						top : mg,
+						marginTop : 0
+					},300);
+					
+					//maxH
+					if(maxH !== 0){
+						$modal_c.removeAttr('style').css({
+							height: maxH, overflowY: 'scroll',
+							boxSizing : 'border-box'
+						});
+					}else{
+						$modal_c.removeAttr('style').css({
+							height: wH - (mfH + mhH + (mg*2)), overflowY: 'scroll',
+							boxSizing : 'border-box'
+						});
+					}
+					
+					//$modal_f.css('border-top', '1px solid #d4d4d4');
+					console.log("overLayer");
+				},
+				hide : function() {
+					$wrapper.css({
+						height : '',
+						overflow: ''
+					});
+					$modal.stop().animate({
+						opacity : 0,
+						marginTop : (layH / 1.5) * -1
+					}, 300, function(){
+						$modal.css('display', 'none' ).removeAttr('tabindex').removeAttr('style');
+						
+						//height fix 옵션
+						if(hFix){
+							
+						} else{
+							$modal_c.removeAttr('style');
+						}
+					});
+					
+					$modalBg = $('.modal_bg');
+					$modalBg2 = $('.modal_bg2');
+					//$modalBg.css('opacity', 0).remove();
+					//$modalBtn.removeClass('on hover');
+					
+					//ux15 스크롤 막았던거 품
+					enableScroll();
+					$('html').removeAttr('style');
+					
+					if ($btn.length < 1) {
+						$('#wrap').attr('tabindex',0).focus();
+					} else {
+						$btn.focus();
+					}
+					$(".contents, header.ui").attr("aria-hidden",true); //arai 접근성 추가 20201105
+					$modal.attr("aria-hidden",false); //arai 접근성 추가					
+					
+					//ux15 quick start용 모달위에 뜰경우
+					if(qspop === true){
+						$modalBg2.css('opacity', 0).remove();
+						$modalBtn.removeClass('on hover');
+					} else {
+						$modalBg.css('opacity', 0).remove();
+						$modalBtn.removeClass('on hover');
+					}
+					if ($btn.length < 1) {
+						$('#wrap').attr('tabindex',0).focus();
+					} else {
+						$btn.focus();
+					}
+				},
+				
+				imprison : function(){ //웹접근성 탭처리
+					var $modalFocus = $modal.find('a, input, button, label');
+					
+					$modalFocus.eq(0).addClass('fst');
+					$modalFocus.eq(-1).addClass('end');
+					$modal.on('keydown.modal',function(e){
+						if(e.shiftKey && e.keyCode == 9) {
+							e.preventDefault();
+							$modal.find('.end').focus();
+						}
+					});
+					
+					$modal.find('.fst').off('keydown.layerpop').on('keydown.layerpop',function(e){
+						$modal.off('keydown.modal');
+						if(e.shiftKey && e.keyCode == 9) {
+							e.preventDefault();
+							$modal.find('.end').focus();
+						}
+					});
+					$modal.find('.end').off('keydown.layerpop').on('keydown.layerpop',function(e){
+						$modal.off('keydown.modal');
+						if(!e.shiftKey && e.keyCode == 9) {
+							e.preventDefault();
+							$modal.find('.fst').focus();
+						}
+					});
+				},
+				
+				eventHandler : function() {
+					if (auto) {
+						// if (!$._cookie.get(target)) {쿠키적용여부 확인
+							app.show(target);
+							app.imprison();
+						// }
+					}
+					
+					if (popClose) {
+						app.hide();
+						setTimeout(function(){
+							$modalBg.css('opacity', 0).remove();
+							$modalBg2.css('opacity', 0).remove();
+						},100);
+					}
+					
+					$btn.off('click.layerPopUp_open').on('click.layerPopUp_open', function(e) {
+						e.preventDefault();
+						target = $(this).data('target');
+						
+						if (!$(this).data('clicked')) {
+							app.show(target);
+							app.imprison();
+							$(this).data('clicked', true);
+						} else {
+							app.show(target);
+						}
+					});
+					
+					//콜백이 함수면 콜백 호출
+					if($.isFunction(callback)){
+						callback.call(this);
+					}
+				}
+			}
+			app.eventHandler();			   
+		});
+		console.log("레이어팝업: uxLayerPop();");
+	}
+});//####################// 3.uxLayerPop ####################
+</code>
+</pre>
+<!--// codebox -->      	        
+	        
+			</div>
+		</section>
+		<!--#####################// 레이어 팝업 #####################-->
+		
+	</div><!--// contents -->
+	
+	<!-- 팝업: 1. 기본 -->
+	<section id="modal_deafault" class="modal_cont">
+		<header>
+			<h1 >1. 기본</h1>
+		</header>
+		<div class="cont center">
+			<p class="cont_bg" style="height:500px;">컨텐츠 height = 500px</p>
+		</div>
+		<div class="modal_footer">
+			<button type="button" class="btn_close" data-dismiss="modal">닫기</button>
+		</div>
+	</section>
+	<!--// 팝업: 1. 기본 -->
+	
+	<!-- 팝업: 2. 자동 열기, 3. 자동 닫기, 4. 이중 팝업, 5. 콜백 처리 -->	
+	<section id="modal_a" class="modal_cont " role="dialog">
+		<div class="cont center">
+			<p class="cont_bg">
+				자동 열기
+			</p>
+			<div class="btn_wrap">
+				<button type="button" data-dismiss="modal">닫기</button>
+				<button id="qspop">이중팝업호출</button>
+			</div>
+		</div>
+	</section>
+	
+	<section id="md_qspop" class="modal_cont " role="dialog">
+		<div class="cont center">
+			<p class="cont_bg">		
+				이중 팝업<br/>
+				콜백 처리
+			</p>
+			<div class="btn_wrap">
+				<button type="button" class="end" data-dismiss="modal">닫기</button>
+			</div>
+		</div>
+	</section>	
+
+	<script type="text/javascript">
+	$(window).load(function(){
+		$('.modal_cont').uxLayerPop(); //기본 레이어 팝업 전체적용
+		
+		var paramSlice = "?";
+		if(window.location.href.indexOf("?") > -1){
+			paramSlice = "&"
+		}
+			
+		var urlIndexAutoPop = window.location.toString()+paramSlice+ "autopop";
+		$('#autopop').click(function(){
+			(window.location.href.indexOf("autopop") > -1)?"":window.location.href=urlIndexAutoPop;
+		});
+            
+		if(window.location.href.indexOf("autopop") > -1){ //오토팝업 파라미터일때
+			$('#modal_a').uxLayerPop({auto: true}); //자동열기 //자동닫기 popClose: true
+			
+			$('#qspop').click(function(){
+				$('#md_qspop').uxLayerPop({
+				auto: true,//자동열기
+				qspop: true,//자동 닫기, 이중팝업
+				callback: function(){
+					console.log('callback: 이중 팝업');//콜백처리
+				}
+				});
+			});
+              
+			$('#autopop').text('레이어팝업 (메세지)');
+		}else{ //오토팝업 파라미터 아닐때
+			$('#autopop').text('자동팝업 확인 (window load)');
+		}
+	});
+	</script>
+	<!--// 팝업: 2. 자동 열기, 3. 자동 닫기, 4. 이중 팝업, 5. 콜백 처리 -->
+	
+	<!-- 팝업: 6. maxW, 7. maxH, 8. scrlLock -->	
+	<style>
+	.width800{max-width:800px;}
+	.height300{height:300px;}
+	</style>
+	<section id="modal_b" class="modal_cont width800" role="dialog">
+		<header>
+			<h1 >레이어팝업</h1>
+		</header>
+		<div class="cont center height300 ui_scrollview" style="padding:0;">
+			<div class="ui_scrollarea">
+				<div class="ui_content">
+					<p class="cont_bg" style="height:1500px;">6. maxW:800<br/>7. maxH:  300px<br/> 8. scrlLock</p>
+				</div>
+			</div>
+		</div>
+		<div class="modal_footer">
+			<button type="button" class="btn_close end" data-dismiss="modal">닫기</button>
+		</div>
+	</section>
+	<script type="text/javascript">
+		$(window).load(function(){                                
+              $('#modal_b').uxLayerPop({//팝업 width, height 지정
+              	maxW: 800, maxH:300, scrlLock: true,
+              	callback: function(){
+              		$(".ui_scrollview").uxScrollView(); //셀렉터 실행
+              	}
+              }); //자동
+   		});
+	</script>
+	<!--// 팝업: 6. maxW, 7. maxH, 8. scrlLock -->
+	
+	<!-- 팝업: 9. 외곽 여백 -->
+	<section id="modal_c" class="modal_cont">
+		<header>
+			<h1 >1. 기본</h1>
+		</header>
+		<div class="cont center">
+			<p class="cont_bg" style="height:500px;">컨텐츠 height = 500px</p>
+		</div>
+		<div class="modal_footer">
+			<button type="button" data-dismiss="modal">닫기</button>
+		</div>
+	</section>
+	<script type="text/javascript">
+	$(window).load(function(){
+			$('#modal_c').uxLayerPop({//스크롤락 true,
+				mg: 40 //scrlLock:true,
+			}); //자동
+	});
+	</script>	
+	<!--// 팝업: 9. 외곽 여백 -->
+	
+	<!-- 팝업: 10. 포지션상단, 11. 포지션 하단 -->
+	<section id="modal_d" class="modal_cont" role="dialog">
+		<div class="cont">
+			<p>레이어 컨텐츠</p>
+			<div class="btn_wrap">
+				<button type="button" data-dismiss="modal">닫기</button>
+			</div>
+		</div>
+	</section>	
+	<script type="text/javascript">
+	$(window).load(function(){                                
+        $('#open_top').click(function(){
+        	$('#modal_d').uxLayerPop({//스크롤락 true,
+        		ps: 'top', auto: true
+        	}); //자동
+        });
+        
+        $('#open_bottom').click(function(){
+        	$('#modal_d').uxLayerPop({//스크롤락 true,
+        			ps: 'bottom', auto: true
+        	}); //자동
+        });
+   	});
+	</script>		
+	<!--// 팝업: 10. 포지션상단, 11. 포지션 하단 -->	
+	
+	<script src="js/jquery-ui.min.js"></script><!-- jquery ui-->
+	<script src="js/jquery.ui.touch-punch.js"></script><!-- jquery ui using mobile -->
+    <script src="js/frontUxer.js"></script><!-- plugin -->
+
+	<script type="text/javascript">
+	
+    </script>
+    
+</body>
+</html>

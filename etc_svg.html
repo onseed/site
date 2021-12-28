@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>frontUxer</title>
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/frontUxer.css">
+<script src="js/jquery-1.11.2.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script type="text/javascript">        
+	var menuArry = ['3','8'];//1depth, 2depth
+</script>
+</head>
+<body>
+<script src="js/guide.js"></script><!-- site guide -->
+	
+	<div class="start_dim"><span></span></div>
+	
+	<h1 class="hide">module</h1>
+	
+	<div class="contents"><!-- contents -->
+	
+			
+        <!--##################### SVG Effect #####################-->
+		<section class="aws_box">
+			<h2 class="aws_tl">SVG Filter Effect</h2>
+			<ul class="dcs">
+				<li>SVG Filter Effect</li>
+			</ul> 			
+			<div class="code_area">
+	        	<!-- 
+				<div class="option_txt">
+					<strong class="js-show-code c-code__pre">효과 버튼을 클릭하거나 슬라이더로 값을 조정하세요.</strong>
+				</div>-->
+					        	
+	        	<div class="sample_box">
+		        	
+		        	<div class="play_box">
+		        		<!-- code -->
+		        		<article class="code_box">
+							<!-- run_sample -->
+							<div class="run_sample">
+							
+								<!-- clip-path  -->
+								<style>
+									.clip_box{position:relative; background:#f9f9f9;}
+									.clip_box .clip_img{width:300px; height:300px;}
+									.clip_box .clip_img .svg_img{clip-path: url(#clip-path);}
+									.clip_box .svg_defs{width:300px; height:300px; position:absolute; top:0; left:0; }
+								</style>
+								<div class="tit_samlple">	
+									<strong style="float:left; display:block; margin:10px 0 0 0;">svg clipPath <em style="font-weight:normal;">(ie도 같이 적용됨)</em></strong>
+									<button class="btn_cmoph" style="float:right; margin:0;">clip path</button> 
+								</div>
+																
+								<div class="clip_box">
+									<svg class="svg_defs">									
+										<defs>
+											<clipPath id="clip-path" >
+												<path id="pathd"  style="transition: all ease 0.3s;" 
+													d="M125.000,75.000 C121.046,63.142 148.673,149.633 74.000,125.000 C149.152,149.750 50.595,199.101 75.000,187.000 C149.020,150.299 118.346,245.192 125.000,225.000 C149.642,150.227 208.211,265.677 187.000,224.000 C149.679,150.669 235.137,193.697 224.000,188.000 C149.482,149.880 224.000,125.000 224.000,125.000 C224.000,125.000 150.145,149.987 187.000,76.000 C193.936,62.076 150.186,150.540 125.000,75.000 Z"/>
+											</clipPath>
+										</defs>
+									</svg>
+									<svg  class="clip_img">
+										<image xlink:href="img/data/ul_pic_land_car05.svg" x="0px" y="0px" width="300px" height="300px" class="svg_img"/>
+									</svg>									
+								</div>
+								
+								<script>
+									var cmoph1_fill ="#ffae00";
+									var cmoph1 = "M144.560,101.000 C119.810,101.000 101.000,119.810 101.000,144.560 C101.000,150.747 101.000,150.747 101.000,156.935 C101.000,181.685 119.810,200.000 144.560,200.000 C150.747,200.000 150.500,200.000 156.935,200.000 C181.685,200.000 200.000,181.685 200.000,156.935 C200.000,150.743 200.000,150.752 200.000,144.560 C200.000,119.810 181.685,101.000 156.935,101.000 C150.995,101.000 150.747,101.000 144.560,101.000 Z";
+									var cmoph2_fill ="#fff200";
+									var cmoph2 = "M125.000,75.000 C121.046,63.142 148.673,149.633 74.000,125.000 C149.152,149.750 50.595,199.101 75.000,187.000 C149.020,150.299 118.346,245.192 125.000,225.000 C149.642,150.227 208.211,265.677 187.000,224.000 C149.679,150.669 235.137,193.697 224.000,188.000 C149.482,149.880 224.000,125.000 224.000,125.000 C224.000,125.000 150.145,149.987 187.000,76.000 C193.936,62.076 150.186,150.540 125.000,75.000 Z";
+									var cmoph3_fill ="#fa3367";
+									var cmoph3 = "M75.000,50.000 C62.500,50.000 50.000,62.500 50.000,75.000 C50.000,87.500 50.000,212.500 50.000,225.000 C50.000,237.500 62.500,250.000 75.000,250.000 C87.500,250.000 211.500,250.000 224.500,250.000 C237.500,250.000 249.000,237.500 249.500,225.000 C250.000,212.500 249.000,87.500 249.500,75.000 C250.000,62.500 236.500,50.000 224.500,50.000 C212.500,50.000 87.500,50.000 75.000,50.000 Z";									
+									var cmophCk = "type1";
+									$(".btn_cmoph").click(function(){
+										if(cmophCk == "type1"){
+											$("#pathd").attr("d",cmoph1);
+											cmophCk = "type2";											
+										}else if(cmophCk == "type2"){
+											$("#pathd").attr("d",cmoph2);											
+											cmophCk = "type3";
+										}else{
+											$("#pathd").attr("d",cmoph3);
+											cmophCk = "type1";											
+										}
+									});
+									setInterval(function(){
+										$(".btn_cmoph").click();
+									},2000);
+								</script>										
+								
+								<!--// clip-path  -->
+								
+								<style>
+									.svg_ef_canvas{width:300px; height:200px; background-image:url("img/bg_trance_psd.svg"); border:1px solid #d9d9d9; padding:10px;}
+									.svg_ef_box{display:inline-block;}
+									.svg_ef_box strong{display:block; padding:10px 0 5px 0;}									
+									.tit_samlple{padding:10px 0 5px 0;}
+									.tit_samlple:after{display:block; content:''; clear:both;}
+								</style>							
+							
+								<!-- ani path-->
+								<div class="tit_samlple">	
+									<strong style="float:left; display:block; margin:10px 0 0 0;">svg ani <em style="font-weight:normal;">(ie 제외)</em></strong>
+									<button class="btn_moph" style="float:right; margin:0;">shape moph <span class="moph_txt">네모</span></button> 
+								</div>
+								<style>
+								.ani_path_area{display:block; position:relative; width:100%; height:300px; background:#f9f9f9; }
+								.ani_path_area .path_svg{width:100%; display:block; position:absolute;} 
+								.ani_path_area .ball{width:120px; height:120px; 
+									offset-path: path('M298.353,32.031 C299.365,32.031 597.293,26.339 597.293,156.016 C597.293,156.761 614.526,278.000 889.281,278.000 C1167.310,278.000 1172.000,161.513 1172.000,160.015 C1172.000,158.768 1166.408,32.031 882.329,32.031 C859.492,32.031 597.293,29.693 597.293,155.016 C597.293,156.016 594.204,280.000 298.353,280.000 C139.652,280.000 11.000,224.490 11.000,156.016 C11.000,87.541 139.652,32.031 298.353,32.031 Z'); 
+									offset-distance: 0%;
+									/*animation: red-ball 2s linear alternate infinite;*/
+									/*animation: red-ball 3s cubic-bezier(0.96, 0.1, 1, 1) infinite;*/
+									animation: red-ball 40s ease-in-out infinite;
+								 }
+								 @keyframes red-ball{
+								 	from{
+								 		offset-distance: 0%;
+								 	}to{
+								 		offset-distance: 100%;
+								 	}
+								 }
+								 
+								 body.new_mopism .code_area .ani_path_area * {transition: all ease 0.3s;}
+								</style>
+								<div class="ani_path_area" style="height:300px">
+									<svg width="100%" height="300px" class="path_svg">
+										<path fill="transparent" stroke="#f3f3f3" stroke-width="10"
+											d="M298.353,32.031 C299.365,32.031 597.293,26.339 597.293,156.016 C597.293,156.761 614.526,278.000 889.281,278.000 C1167.310,278.000 1172.000,161.513 1172.000,160.015 C1172.000,158.768 1166.408,32.031 882.329,32.031 C859.492,32.031 597.293,29.693 597.293,155.016 C597.293,156.016 594.204,280.000 298.353,280.000 C139.652,280.000 11.000,224.490 11.000,156.016 C11.000,87.541 139.652,32.031 298.353,32.031 Z"
+											 class="path"></path>	
+										<g>
+											<text>SVG</text>
+											<image xlink:href="img/data/ul_pic_land_car05.svg" x="-20px" y="-20px" width="100px" height="100px" />										
+											<animateMotion  path="M298.353,32.031 C299.365,32.031 597.293,26.339 597.293,156.016 C597.293,156.761 614.526,278.000 889.281,278.000 C1167.310,278.000 1172.000,161.513 1172.000,160.015 C1172.000,158.768 1166.408,32.031 882.329,32.031 C859.492,32.031 597.293,29.693 597.293,155.016 C597.293,156.016 594.204,280.000 298.353,280.000 C139.652,280.000 11.000,224.490 11.000,156.016 C11.000,87.541 139.652,32.031 298.353,32.031 Z"
+											 dur="10s" repeatCount = "indefinite" rotate="auto" calcMode="spline" keySplines=".5 0 .5 1"/>
+										</g>
+										
+										<g>											
+											<image xlink:href="img/data/ul_pic_land_car05.svg" x="-20px" y="-20px" width="100px" height="100px" />
+											<text>SVG click</text>										
+											<animateMotion  path="M298.353,32.031 C299.365,32.031 597.293,26.339 597.293,156.016 C597.293,156.761 614.526,278.000 889.281,278.000 C1167.310,278.000 1172.000,161.513 1172.000,160.015 C1172.000,158.768 1166.408,32.031 882.329,32.031 C859.492,32.031 597.293,29.693 597.293,155.016 C597.293,156.016 594.204,280.000 298.353,280.000 C139.652,280.000 11.000,224.490 11.000,156.016 C11.000,87.541 139.652,32.031 298.353,32.031 Z"
+											 begin="click" dur="10s" repeatCount = "indefinite" rotate="auto"/>
+										</g>
+										
+										<circle cx="20" cy="20" r="40" fill="#809c00">
+											<animate attributeName="cx"
+											  begin="0s" dur="3s" fill="freez" repeatCount="indefinite" values="20; 70; 150; 100; 300; 100; 70; 20;"/>
+										</circle>	
+										
+									</svg>
+									<div class="ball">css<img src="img/data/ul_pic_land_car05.svg"></div>
+									<svg width="100%" height="250px" class="path_svg" style="position:absolute; bottom:0; left:0;" >
+											<path d="M75.000,50.000 C62.500,50.000 50.000,62.500 50.000,75.000 C50.000,87.500 50.000,212.500 50.000,225.000 C50.000,237.500 62.500,250.000 75.000,250.000 C87.500,250.000 211.500,250.000 224.500,250.000 C237.500,250.000 249.000,237.500 249.500,225.000 C250.000,212.500 249.000,87.500 249.500,75.000 C250.000,62.500 236.500,50.000 224.500,50.000 C212.500,50.000 87.500,50.000 75.000,50.000 Z"
+												fill="#fa3367" id="shapeTarget">
+											</path>								
+									</svg>									
+								</div>
+
+											
+								<script>
+									var moph1_fill ="#ffae00";
+									var moph1 = "M144.560,101.000 C119.810,101.000 101.000,119.810 101.000,144.560 C101.000,150.747 101.000,150.747 101.000,156.935 C101.000,181.685 119.810,200.000 144.560,200.000 C150.747,200.000 150.500,200.000 156.935,200.000 C181.685,200.000 200.000,181.685 200.000,156.935 C200.000,150.743 200.000,150.752 200.000,144.560 C200.000,119.810 181.685,101.000 156.935,101.000 C150.995,101.000 150.747,101.000 144.560,101.000 Z";
+									var moph2_fill ="#fff200";
+									var moph2 = "M125.000,75.000 C121.046,63.142 148.673,149.633 74.000,125.000 C149.152,149.750 50.595,199.101 75.000,187.000 C149.020,150.299 118.346,245.192 125.000,225.000 C149.642,150.227 208.211,265.677 187.000,224.000 C149.679,150.669 235.137,193.697 224.000,188.000 C149.482,149.880 224.000,125.000 224.000,125.000 C224.000,125.000 150.145,149.987 187.000,76.000 C193.936,62.076 150.186,150.540 125.000,75.000 Z";
+									var moph3_fill ="#fa3367";
+									var moph3 = "M75.000,50.000 C62.500,50.000 50.000,62.500 50.000,75.000 C50.000,87.500 50.000,212.500 50.000,225.000 C50.000,237.500 62.500,250.000 75.000,250.000 C87.500,250.000 211.500,250.000 224.500,250.000 C237.500,250.000 249.000,237.500 249.500,225.000 C250.000,212.500 249.000,87.500 249.500,75.000 C250.000,62.500 236.500,50.000 224.500,50.000 C212.500,50.000 87.500,50.000 75.000,50.000 Z";									
+									var mophCk = "type1";
+									$(".btn_moph").click(function(){
+										if(mophCk == "type1"){
+											$("#shapeTarget").attr("d",moph1);
+											$("#shapeTarget").attr("fill",moph1_fill);
+											mophCk = "type2";
+											
+											$(".moph_txt").text("원");
+										}else if(mophCk == "type2"){
+											$("#shapeTarget").attr("d",moph2);
+											$("#shapeTarget").attr("fill",moph2_fill);
+											
+											mophCk = "type3";
+											$(".moph_txt").text("햇살");
+										}else{
+											$("#shapeTarget").attr("d",moph3);
+											$("#shapeTarget").attr("fill",moph3_fill);
+											
+											mophCk = "type1";
+											$(".moph_txt").text("네모");											
+										}
+									});
+									setInterval(function(){
+										$(".btn_moph").click();
+									},2000);
+								</script>								
+								<!-- ani path-->
+								
+								<!-- blur div -->
+								<style>
+									.filter_test_area{position:relative;  width:100%; height:300px; overflow:hidden;  
+										background:#ffd77e  url('https://static31.samsungcard.com/wcms/oap/images/desktop/mycar_v1_pchero_bg.jpg') no-repeat 0 0;}
+										
+									.filter_test_area .filter_test_txt{position:absolute; top:0; left:0;  width:95%; font-weight:bold; color:#010101; padding:20px; transition: all ease 0.3s !important;}
+									.filter_test_area:hover .filter_test_txt{width:85%;}
+									
+									.filter_test_area .filter_test{ transition: all ease 0.3s !important; position:absolute; top:0; left:0; width:60%; height:300px; backdrop-filter: blur(10px) ; /*background: rgba(255,255,255,0.1)*/;}
+									.filter_test_area:hover .filter_test{width:85%; backdrop-filter: blur(10px) /*hue-rotate(-30deg)*/; /*background: rgba(255,255,255,0.5);*/}			
+									
+									.filter_test_area .filter_test_svg{transition: all ease 0.3s !important; position:absolute; top:0; left:0;  width:100%; height:300px;  overflow:hidden; }
+									.filter_test_area:hover .filter_test_svg{width:30%;}
+									.filter_test_area .blend_txt{width:100%; text-align:right; font-size:180px; line-height: 1.0; mix-blend-mode: hard-light; color: #676d75; letter-spacing: -23px;}
+									.ie .filter_test_area .blend_txt{opacity:0.2;}
+																
+								</style>
+							
+								<p style="padding:10px 0 5px 0;"><strong>blur+blend<em style="font-weight:normal;">(블렌드 필터는 ie 제외)</em></strong></p>
+								<div class="filter_test_area">
+									<!-- <div class="filter_test"></div> -->
+									<!--  svg 필터 -->
+									<svg>		
+										<defs>
+											<filter id="fillterGaussian_eff">
+												<feGaussianBlur stdDeviation="7"/>
+											</filter>											
+										</defs>									
+									</svg>
+									<!--//  svg 필터 -->									
+									<svg class="filter_test_svg">	
+										<image  filter="url(#fillterGaussian_eff)"
+										xlink:href="https://static31.samsungcard.com/wcms/oap/images/desktop/mycar_v1_pchero_bg.jpg" x="0px" y="0px" width="1920px" height="400px" preserveAspectRatio="xMinYMin meet"/>																																									
+									</svg>
+									<div class="filter_test_txt">
+										<p style="font-size:50px;">Title h1 Text</p>
+										<p style="font-size:20px;">Title sub Text</p>
+										<p class="blend_txt">Blend</p>
+									</div>									
+								</div>	
+								<script>
+								/*
+									$(".svg_ef_box .filter_effect").mouseover(function(){
+										$(this).width("70%");
+									});
+									$(".svg_ef_box .filter_effect").mouseout(function(){
+										$(this).width("50%");
+									});							*/		
+								</script>
+								<!--// blur div -->
+								
+							
+								<div class="svg_ef_box">
+									<strong>normal</strong>
+									<svg class="svg_ef_canvas">										
+										<image xlink:href="img/data/ul_pic_land_car02.svg" x="0px" y="0px" width="300px" height="200px" preserveAspectRatio="xMinYMin meet"/>																																									
+									</svg>
+								</div>	
+								<br/>									
+							
+								<span class="svg_ef_box">
+									<strong>feGaussian</strong>
+									<svg class="svg_ef_canvas">
+										<defs>
+											<filter id="fillterGaussian">
+												<feGaussianBlur stdDeviation="5"/>
+											</filter>
+										</defs>	
+										<image   filter="url(#fillterGaussian)"
+										xlink:href="img/data/ul_pic_land_car02.svg" x="0px" y="0px" width="300px" height="200px" preserveAspectRatio="xMinYMin meet"/>																																									
+									</svg>
+								</span>
+								
+								<span class="svg_ef_box">
+									<strong>feGaussianBlur(x y)</strong>
+									<svg class="svg_ef_canvas">
+										<defs>
+											<filter id="fillterGaussianBlur">
+												<feGaussianBlur stdDeviation="5 0"/>
+											</filter>
+										</defs>	
+										<image   filter="url(#fillterGaussianBlur)"
+										xlink:href="img/data/ul_pic_land_car02.svg" x="0px" y="0px" width="300px" height="200px" preserveAspectRatio="xMinYMin meet"/>																																									
+									</svg>
+								</span>			
+								
+								<span class="svg_ef_box">
+									<strong>feGaussianBlur HardEdge</strong>
+									<svg class="svg_ef_canvas">
+										<defs>
+											<filter id="fillterGaussianHard" x="0%" y="0%" width="100%" height="100%">
+												<feGaussianBlur stdDeviation="5"/>
+												<feComponentTransfer>
+													<feFuncA type="table" tableValues="1 1"/>
+												</feComponentTransfer>
+											</filter>
+										</defs>	
+										<image   filter="url(#fillterGaussianHard)"
+										xlink:href="img/data/ul_pic_land_car02.svg" x="0px" y="0px" width="300px" height="200px" preserveAspectRatio="xMinYMin meet"/>																																									
+									</svg>
+								</span>												
+								
+								<span class="svg_ef_box">
+									<strong>feGaussianBlur HardEdge2</strong>
+									<svg class="svg_ef_canvas">
+										<defs>
+											<filter id="fillterGaussianHard2">
+												<feConvolveMatrix order="3" kernelMatrix=" 1 1 1
+																									   1 1 1
+																									   1 1 1 "/>
+											</filter>
+										</defs>	
+										<image   filter="url(#fillterGaussianHard2)"
+										xlink:href="img/data/ul_pic_land_car02.svg" x="0px" y="0px" width="300px" height="200px" preserveAspectRatio="xMinYMin meet"/>																																									
+									</svg>
+								</span>	
+								
+								
+								<span class="svg_ef_box">
+									<strong>feGaussianBlur Bokeh Blur (3 Layer, multi channel Merge)</strong>
+									<svg class="svg_ef_canvas" style="width:600px; height:400px;">
+										<defs>
+											<filter id="fillterGaussianBoke" color-interpolation-filters="sRGB">
+											
+												<feGaussianBlur stdDeviation="2" result="blurSource"/>
+												<feColorMatrix type="luminanceToAlpha"/>
+												<feComponentTransfer result="brightness-mask">
+													<feFuncA type="discrete" tableValues="0 0 0 1 1"/>
+												</feComponentTransfer> 
+												
+												<!-- boke layer1 -->
+												<feTurbulence type="fractalNoise" seed="1" baseFrequency=".67" numOctaves="3"/>
+												<feColorMatrix type="luminanceToAlpha"/>
+												<feComponentTransfer>
+													<feFuncA type="discrete" tableValues="0 0 0 1"/>
+												</feComponentTransfer>
+												<feComposite operator="in" in="brightness-mask"/>
+												<feComposite operator="in" in="blurSource"/>
+												
+												<feMorphology operator="dilate" radius="5"/>
+												<feGaussianBlur stdDeviation="8"/>
+												<feColorMatrix type="matrix" values="1 0 0 0 0 	0 1 0 0 0 	0 0 1 0 0 	0 0 0 9 0" /> 
+												<feComponentTransfer result="boke1">
+													<feFuncA type="linear" slope=".5" />
+												</feComponentTransfer>
+												
+												<!-- boke layer2 -->
+												<feTurbulence type="fractalNoise" seed="49" baseFrequency=".67" numOctaves="3"/>
+												<feColorMatrix type="luminanceToAlpha"/>
+												<feComponentTransfer>
+													<feFuncA type="discrete" tableValues="0 0 0 1"/>
+												</feComponentTransfer>
+												<feComposite operator="in" in="brightness-mask"/>
+												<feComposite operator="in" in="blurSource"/>
+												
+												<feMorphology operator="dilate" radius="10"/>
+												<feGaussianBlur stdDeviation="8"/>
+												<feColorMatrix type="matrix" values="1 0 0 0 0 	0 1 0 0 0 	0 0 1 0 0 	0 0 0 15 0" /> 
+												<feComponentTransfer result="boke2">
+													<feFuncA type="linear" slope=".3" />
+												</feComponentTransfer>				
+												
+												<!-- boke layer3 -->
+												<feTurbulence type="fractalNoise" seed="44" baseFrequency=".67" numOctaves="3"/>
+												<feColorMatrix type="luminanceToAlpha"/>
+												<feComponentTransfer>
+													<feFuncA type="discrete" tableValues="0 0 0 1"/>
+												</feComponentTransfer>
+												<feComposite operator="in" in="brightness-mask"/>
+												<feComposite operator="in" in="blurSource"/>
+												
+												<feMorphology operator="dilate" radius="10"/>
+												<feGaussianBlur stdDeviation="18"/>
+												<feColorMatrix type="matrix" values="1 0 0 0 0 	0 1 0 0 0 	0 0 1 0 0 	0 0 0 15 0" /> 
+												<feComponentTransfer result="boke3">
+													<feFuncA type="linear" slope=".2" />
+												</feComponentTransfer>
+												
+												<!-- Merge -->
+												<feBlend mode="multiply" in="boke3" in2="boke2"/>
+												<feBlend mode="lighten" in2="boke1"/>
+												
+												<feMorphology  operator="erode" radius="0" result="bokeh"/>
+												<feGaussianBlur stdDeviation="9" in="SourceGraphic"/>
+												<feComposite operator="over" in="boke"/>
+												<feComposite operator="in" in2="SourceGraphic"/>
+																																											
+												
+																						
+											</filter>
+										</defs>	
+										<image filter="url(#fillterGaussianBoke)"
+										xlink:href="img/data/ul_pic_land_car02.svg" x="0px" y="0px" width="300px" height="200px" preserveAspectRatio="xMinYMin meet"/>
+										<image filter="url(#fillterGaussianBoke)"
+										xlink:href="img/data/ul_pic_land_car03.svg" x="0px" y="200px" width="300px" height="200px" preserveAspectRatio="xMinYMin meet"/>
+										<image filter="url(#fillterGaussianBoke)"
+										xlink:href="img/data/ul_pic_land_car04.svg" x="300px" y="0px" width="300px" height="200px" preserveAspectRatio="xMinYMin meet"/>
+										<image filter="url(#fillterGaussianBoke)"
+										xlink:href="img/data/ul_pic_land_car05.svg" x="300px" y="200px" width="300px" height="200px" preserveAspectRatio="xMinYMin meet"/>																																																																				
+									</svg>
+								</span>								
+								
+																					
+							</div>
+							<!--// run_sample -->
+	
+		        		</article>
+		        		<!-- code -->
+					</div>		               		
+		        	
+	        	</div>
+			</div>
+		</section>
+		<!--#####################// SVG Effect #####################-->				
+		
+	</div><!--// contents -->
+
+	<script src="js/jquery-ui.min.js"></script><!-- jquery ui-->
+	<script src="js/jquery.ui.touch-punch.js"></script><!-- jquery ui using mobile -->
+    <script src="js/frontUxer.js"></script><!-- plugin -->
+
+	<script type="text/javascript">
+	
+    </script>
+    
+</body>
+</html>

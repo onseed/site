@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="format-detection" content="telephone=no, address=no, email=no" /><!-- 숫자인식, 메일주소, 지도상의 주소링크 막기-->
+<meta name="title" content="사이트 제목">
+<meta name="keywords" content="검색 키워드">
+<meta name="description" content="사이트 소개내용">
+<meta name="twitter:title" content="사이트 제목">
+<meta name="twitter:description" content="사이트 소개내용">
+<meta property="og:title" content="사이트 제목">
+<meta property="og:description" content="사이트 소개내용">
+<title>가이드 - 기본규약</title>
+<link rel="shortcut icon" type="image/x-icon" href="img/site.ico">
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/guide_mobile.css">
+<script src="js/jquery-1.11.2.min.js"></script>
+<script src="js/init.js"></script>
+</head>
+<body>
+<div class="wrap">
+	
+	<nav id="skip"><a href="#contents" class="skip">본문바로가기</a></nav>
+
+	<!-- header -->
+	<header><script src="inc/inc_header.js"></script></header>
+	<!--// header -->
+	
+	<!-- Content -->
+	<section id="contents">
+		<aside>
+			<nav>
+				<ul class="clearfix">
+					<li>
+						<a href="#sec_1">HTML</a>
+						<dl>
+							<dd>주석 및 네이밍 규칙</dd>
+							<dd>HTML 작성</dd>
+						</dl>
+					</li>
+					<li>
+						<a href="#sec_2">CSS</a>
+						<dl>
+							<dd>css 작성</dd>
+							<dd>css 속성 순위</dd>
+						</dl>
+					</li>
+					<li>
+						<a href="#sec_3">Image</a>
+					</li>				
+					<li>
+						<a href="#sec_4">접근성</a>
+						<dl>
+							<dd>접근성 고려</dd>
+							<dd>모바일 웹접근성 주의사항</dd>
+						</dl>						
+					</li>				
+					<li>
+						<a href="#sec_5">반응형</a>
+						<dl>
+							<dd>반응형 작성</dd>
+							<dd>지원 해상도</dd>
+						</dl>						
+					</li>														
+					<li>
+						<a href="#sec_6">디바이스 환경</a>
+						<dl>
+							<dd>PC</dd>
+							<dd>Mobile</dd>
+						</dl>
+					</li>					
+				</ul>
+			</nav>
+		</aside>
+		
+		<section class="content">			
+			<section class="lg_box" id="sec_1">
+				<h1>HTML</h1>
+				
+				<h2>주석 및 네이밍 규칙</h2>
+				<div class="mg_box">
+					<dl class="txt_list">
+						<dt>HTML</dt>
+						<dd>일반적인 페이지 : <strong>산출물ID</strong>.html</dd>
+						<dd>Ajax DOM 컨텐츠(step case) : <strong>산출물ID_step01</strong>.html</dd>
+						<dd>Case별 페이지 : <strong>산출물ID_case01</strong>.html</dd>
+						<dd>더보기 클릭시 Ajax로 추가되는 리스트 페이지 : <strong>산출물ID_more</strong>.html</dd>
+						<dd>레이아웃 공통(인클루드) : <strong>gnb_include</strong>.html, <strong>footer_include</strong>.html 등.</dd>
+						<dd>레이어 팝업: <strong>산출물ID_pop</strong>.html</dd>
+					</dl>
+					
+					<dl class="txt_list">
+						<dt>주석 가이드</dt>
+						<dd>수정영역 주석 : <-- 날짜_내용 -->, <-- //날짜_내용 --></dd>
+						<dd>수정내역은 페이지내 body태그 바로 위에 기재(최근 수정일이 앞으로) : <-- 수정일 150925/150921 --></dd>
+						<dd>CMS영역 주석(줄 맨앞으로) : <-- CMS -->, <-- //CMS --></dd>
+						<dd>AJAX영역 주석(줄 맨앞으로) : <-- AJAX -->, <-- //AJAX --></dd>						
+						<dd>개발요구사항 주석 : <-- 개발참고사항 : 메세지 -->, <-- //개발참고사항 : 메세지 --></dd>						
+					</dl>
+					
+				</div>
+
+				<h2>HTML 작성</h2>
+				<div class="mg_box">
+					<ul class="txt_list">
+						<li>Style 및 script 요소의 type 속성 생략</li>
+						<li><strong>JS파일 인클루드는 하단에 작성:</strong> jquery 플랫폼 및 초기화 js는 예외</li>
+						<li>프로젝트 내 모든 네임은 소문자 사용.</li>				
+					</ul>
+					
+					<ul class="txt_list">
+						
+						<li>Table 에 summary 대신 <strong>caption</strong>을 이용하여 정보 제공.</li>
+						<li><strong>z-index는 50까지만 사용</strong><br/>header: 50 , contents:1-10, footer: 20~30</li>				
+						<li>상하 컨텐츠간의 간격은 확장을 고려하여 하단 컨텐츠 기준으로 간격 정의<br>ex) <strong>top-margin,top-padding</strong>으로 정의</li>
+						<li><strong>단독 여백 클래스 사용 지양</strong>.<br/>
+							ml, mt, mgt10, mgt20등 여백만 지정되어 있는 클래스는 수정 발생시 html 수정까지 발생하게 되므로 되도록 사용 안함.							
+						</li>
+						<li>html 태그 내 속성 순서(권장):<br><strong>'src(href)-class-name-id-title-alt-인라인스타일'</strong> 순</li>
+						<li>인라인 태그(a/span) 중첩 형태중 가장 하위태그는 span <br>
+							
+							<div>
+							ex) &lt;a href="#" title=""&gt; &lt;span&gt;링크&lt;/span&gt; &lt;/a&gt; (<strong>O</strong>) <br>
+							ex) &lt;span&gt; &lt;a href="" title=""&gt; &lt;/a&gt; &lt;/span&gt; (<strong>X</strong>)
+							</div>
+							
+						</li>
+						<li>인풋박스 삭제 버튼 (IE8,9) 확인 필요</li>
+					</ul>								
+					
+					
+				</div>
+			</section>
+			
+			<section class="lg_box" id="sec_2">
+				<h1>CSS</h1>
+				
+				<h2>CSS 작성</h2>
+				<div class="mg_box">
+					
+					<ul class="txt_list">						
+						<li>'_' 로 구분하여 선언 ex) .guide_list</li>
+						<li>'#' id로 스타일 설정 불가 (id는 스크립트에서만 사용)</li>
+						<li><strong>'ui_'</strong>클래스 접두어는 UI 스크립트 class로 사용 지양.(권장)<br>
+							ex) .ui_box (<strong>X</strong>) </li>
+						<li>'_01'로 작성 불가.<br>
+							ex) .tbl_list1 (<strong>X</strong>) </li>
+						<li>버튼 - btn_*<br>
+							테이블 - tbl_*<br>
+							탭 - tab_*<br>
+						</li>
+						<li>
+							CSS3의 자식선택자, 인접형제선택자, A태그외 의사클래스 사용 절대 불가.(html 구조 수정 이슈 발생.) <br>
+							최대한 <strong>크로스브라우징이 되지않는 CSS3 자제.</strong><br/>
+							ex) ol > li (<strong>X</strong>) <br>
+							ex) p + p (<strong>X</strong>) <br>
+							ex) p:hover, span:hover, button:hover (<strong>X</strong>) <br>						
+						</li>					
+						<li>
+							의사 클래스의 경우 A태그 이외에 사용이 불가하므로 클래스로 정의. 대부분 스크립트 구현.<br>
+							ex) 마우스오버/탭: <strong>.active</strong><br>
+							ex) 활성화 상태: <strong>.on</strong>	
+						</li>
+						<li>'_01'로 작성 불가. ex) .tbl_list1</li>
+						<li>버튼 - btn_*<br>
+							테이블 - tbl_*<br>
+							탭 - tab_*<br>
+						</li>
+						<li><strong>'ui_'</strong>클래스 접두어는 스크립트 관련 class로 사용 지양.(권장)</li>
+					</ul>			
+				</div>				
+				
+				<h2>CSS 속성 순위</h2>
+				<div class="mg_box">
+					<ul class="txt_list">
+						<li>display</li>
+						<li>list-style</li>
+						<li>position</li>
+						<li>float</li>
+						<li>clear</li>
+						<li>width / height</li>
+						<li>padding / margin</li>
+						<li>color / font</li>
+						<li>text-align / vertical-align</li>
+						<li>border / background</li>
+						<li>text-decoration</li>
+						<li>white-space</li>
+						<li>other text</li>
+						<li>content</li>
+					</ul>		
+<xmp>
+ .ClassName {display:block; position:absolute; z-index:10; top:0; left:0; width:100px; height:100px; margin:0; padding:0; 
+ 	background:url('') 0 0 no-repeat; font-family:'Malgun Gothic'; font-size:13px; font-weight:bold; color:#686868; line-height:17px; letter-spacing:-1px;}
+</xmp>	
+				</div>					
+			</section>			
+			
+			<section class="lg_box" id="sec_3">
+				<h1>Image</h1>
+				<!-- <h2>CSS 작성</h2>-->
+				<div class="mg_box">
+					<ul class="txt_list">						
+						<li>'_' 로 구분하여 선언 <br>ex) <strong>이름1_이름2_01, 이름1_이름2_02</strong>.png</li>
+						<li>별도 블릿 및 라인 이미지 사용시 아래 형식 네이밍.<br>
+						<strong>bl_색상_모양_사이즈</strong>.png<br>
+						ex) bl_gray_square_2x2.png<br>
+						ex) line_light_gray_19x1.png</li>
+						<li>이미지 기본 압축은 png8, 퀄리티용은 png24, jpg 사용.</li>
+						<li>유형별 이미지는 sprite 기법으로 작업.</li>
+						<li>
+							btn_* : 버튼<br>
+							ico_* : 아이콘<br>
+							bl_* : 블릿<br>
+							bg_* : 배경<br>
+							img_* : 페이지명_이미지성격: 기타 이미지<br>
+							pic_* : 비쥬얼용 이미지<br>
+							line_* : 라인	<br>
+						</li>
+					</ul>
+				</div>
+			</section>		
+			
+			<section class="lg_box" id="sec_4">
+				<h1>접근성</h1>
+				
+				<h2>접근성 고려</h2>
+				<div class="mg_box">
+					
+					<ul class="txt_list">
+						<li>한페이지에 유일한 버튼명일 경우 버튼 타이들은 기재하지 않음<br>
+						동일 버튼명이 한페이지 내에 다수 존재시 버튼 타이틀 기재</li>
+						<li>alt="" 값은 200자 제한. 그 이상일 경우 IR 기법 사용. IR기법시 hide 클래스
+<xmp>						
+.hide {display: inline-block; position: absolute; z-index: -10; width: 0 !important; height: 0 !important; overflow: hidden !important; opacity: 0 !important;
+	filter: alpha(opacity=0); -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(opacity=0)'; font-size: medium; line-height: normal; word-break: break-all;}
+</xmp>
+						</li>
+						<li>target="_blank"외 새 창은 title="새 창"</li>
+						<li><strong>value와 placeholder속성</strong>은 스크린리더에서 지원하지 않으므로 반드시 <strong>타이틀과 함께 기재.</strong></li>
+						<li>윈도우 팝업의 페이지 타이틀은 <strong>팝업창-제목</strong> 형식으로 기재</li>
+						<li>아이프레임 사용시 타이틀 사용.</li>
+						<li><strong>레이어 팝업은 반드시 "contents" 영역밖으로 처리</strong><br>(레이어 팝업 모듈은 탭키등 포커스 이동 이슈로 "contents" 영역은 aria-hidden 처리됨)</li>
+						<li>
+							A link: 단순 URL을 가지고 있는 페이지 이동 혹은 새창일 경우<br>
+							Button: 정보성(데이터)을 포함하고 있는 경우, 페이지가 이동 혹은 새창일 때
+						</li>
+						<li>작업 후 검수요청 전 <strong>자가검수 (탭컨트롤/접근성확인 tool 확인)</strong></li>
+					</ul>
+				</div>
+				
+				<h2>모바일 웹접근성 주의사항 </h2>
+				<div class="mg_box">
+					<dl class="txt_list">						
+						<dd>안드로이드는 크롬 에뮬레이터로 테스트 가능하니<br><strong>모바일 접근성은 ios기준</strong>으로 테스트 해야함.</dd>
+						<dd>
+							링크 텍스트를 font-size:0으로 숨기는 경우 iOS_VoiceOver 초점이 접근불가.<br/>
+							&lt;a&gt;를 &lt;button&gt;으로 교체하거나 &lt;a&gt;에 role="button"을 추가.
+						</dd>
+						<dd>
+							pc나 안드로이드는 div에 tabindex나 focus가 가능하나 ios는 불가능. <br>
+							레이어팝업 오픈시 초점을 레이어팝업내 버튼에 두도록 함. 
+						</dd>
+					</dl>				
+				</div>				
+			</section>					
+			
+			<section class="lg_box" id="sec_5">
+				<h1>반응형</h1>
+				
+				<h2>반응형 작성</h2>
+				<div class="mg_box">
+					
+					<ul class="txt_list">
+						<li>모바일과 PC는 동일한 DOM 구조 (ONE Source)</li>
+						<li>소규모 프로젝트는 <strong>반응형</strong> 미디어쿼리 처리</li>
+						<li>페이지수가 많거나 분리해야 하는 경우는 <strong>채널형, 적응형</strong>으로 명시하여 아래와 같이 처리</li>
+						<li>모바일 CSS는 따로 존재하며 PC웹과 상이한 부분은 별도 스타일을 지정.</li>
+						<li>모바일 CSS명은 PC웹과 동일하며 <strong>"_mobile"</strong>을 구분자 추가</li>
+						<li>html 소스내  PC웹과 모바일 CSS를 둘다 import, 쌍으로 존재. 
+<xmp>
+<link rel="stylesheet" type="text/css" href="css/guide.css"> <!-- pc용 -->
+<link rel="stylesheet" type="text/css" href="css/guide_mobile.css"> <!-- mobile용 -->
+</xmp>
+						</li>
+						<li>개발에서 분리하거나, html단에서 분기처리</li>
+					</ul>
+				</div>
+				
+				<h2>지원 해상도</h2>
+				<div class="mg_box">
+					
+					<ul class="txt_list">
+						<li>모바일은 별도 미디어쿼리로 처리</li>
+						<li>모바일은 <strong>태블릿 사이즈(768)</strong>까지 지원(PC용 CSS의 .w768 스타일과 유사)</li>
+						<li>
+							PC화면 해상도에 따른 구분 클래스(로드시만 적용)<br>
+							900 이상: <strong>w1</strong><br>
+							768 이상: <strong>w1 w2</strong> <br>
+							413 이상: <strong>m12 m2</strong> <br>
+							413 이하: <strong>m12 m1</strong>
+						</li>
+					</ul>
+				</div>				
+			</section>					
+			
+			<section class="lg_box" id="sec_6">
+				<h1>디바이스 환경</h1>
+				<h2>PC</h2>
+				<div class="mg_box">
+					<table class="tbl_list">
+						<colgroup>
+							<col style="width:15%;">
+							<col style="width:10%;">
+							<col style="width:auto;">
+						</colgroup>
+						<tbody>
+						<tr>
+							<th rowspan="2">OS/브라우져</th>	
+							<th>표준</th>
+							<td>
+								OS: Windows 8.1, 8, Mac OSX 10.10 (32, 64bit) (※ Windows 10 포함: ‘14.7.29일부터 무료 업그레이드 예정)<br>
+								브라우저: IE11,  Firefox / Chrome / Safari(Mac용) 최신 버전
+							</td>
+						</tr>
+						<tr>							
+							<th>호환</th>
+							<td>
+								OS: Windows 7, XP, Mac OSX 10.9 (32, 64bit)<br>
+								브라우저: IE 8/9/10, Firefox, Chrome, Safari(Mac용) 최신 버전<br>
+								※ Windows용 Safari는 ’05년 이후 Apple에서 업데이트 중단
+							</td>
+						</tr>
+						</tbody>
+					</table>		
+				</div>
+				
+				<h2>Mobile</h2>
+				<div class="mg_box">
+					<table class="tbl_list">
+						<colgroup>
+							<col style="width:15%;">
+							<col style="width:10%;">
+							<col style="width:auto;">
+						</colgroup>
+						
+						<tbody>
+						<tr>
+							<th rowspan="2">OS</th>	
+							<th>표준</th>
+							<td>
+								- Android 5.1 롤리팝<br>
+								- IOS 8
+							</td>
+						</tr>
+						<tr>							
+							<th>호환</th>
+							<td>
+								- Android 4.4 킷캣<br>
+								 ※ 킷캣 이후 버전부터는 Chrome Browser<br>
+								- iOS 7
+							</td>
+						</tr>
+						<tr>
+							<th rowspan="2">디바이스</th>	
+							<th>표준</th>
+							<td>
+								- Android (스마트폰: 갤럭시 S6, 갤럭시 노트4, LG G4, LG G3, 태블릿: 갤럭시탭S 10.5)<br>
+								- iOS (스마트폰: 아이폰 6+, 태블릿: 아이패드 에어2)
+							</td>
+						</tr>
+						<tr>							
+							<th>호환</th>
+							<td>
+								- Android (갤럭시 S5, 갤럭시 노트3, LG G3)<br>
+								- iOS (아이폰 5s)
+							</td>
+						</tr>
+						<tr>
+							<th colspan="2">브라우저</th>							
+							<td>
+								해당 디바이스에 탑재된 기본 브라우저<br>
+								- Android: Android Browser, Chrome Mobile<br>
+								- iOS: Mobile Safari
+							</td>
+						</tr>
+						<tr>
+							<th colspan="2">기타</th>							
+							<td>
+								Phone App.과 Tablet PC App.은 동일한 컨텐츠에서 해당 디바이스에 최적화된 UI로 변형된 수준으로 구현
+							</td>
+						</tr>
+						</tbody>
+					</table>	
+				</div>				
+			</section>			
+			
+		</section>
+	</section>
+	<!--// Content -->
+
+	<!-- footer -->
+	<footer id="footer"><script src="inc/inc_footer.js"></script></footer>
+	<!-- footer -->
+	
+<script src="js/common.js"></script>
+<script src="js/module.js"></script>	
+</div>
+
+</body>
+</html>

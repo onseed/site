@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="ko" class="desktop ">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+
+
+	<meta name="description" content="" />
+	<meta name="keywords" content="삼성카드, 삼성카드 다이렉트 오토, 다이렉트, 할부" />
+
+	<meta property="og:title" content="" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="" />
+	<meta property="og:image" content="" />
+	<meta property="og:site_name" content="" />
+	<meta property="og:description" content="" />
+
+	<meta itemprop="name" content="" />
+	<meta itemprop="image" content="" />
+	<meta itemprop="url" content="" />
+	<meta itemprop="description" content="" />
+	<meta itemprop="keywords" content="" />
+
+	<title>다이렉트 오토할부 가능 확인 - 삼성카드 다이렉트 오토</title>
+
+	<link rel="stylesheet" href="/css/oap/common/common_ux15_custom.css">
+	<link rel="stylesheet" href="/css/oap/common/content_ux15.css">
+	<link rel="stylesheet" href="/css/oap/common/content_ux16.css">
+			
+	<script src="/js/oap/common/ui/init.js"></script>
+	
+	<!--### html전용 #### -->
+	<script>
+		var scard = {env : {level :{dev: {}},sysEnv:{}}}//html전용: scrad 개발계 스크래핑처리관련 오류로 인한 로컬용 빈 변수 추가 20180716
+	</script>
+	<!--###// html전용: 20190107 #### -->
+																
+</head>
+<body>
+	<div id="wrap" class="wrap">
+		<a href="#contents" id="skip" class="skip">본문 바로가기</a>
+		<!--########################## header  Include ##########################-->
+		<header id="header" class="header">
+		</header>	
+		<script src="/pub_final/oap/ux15/html_inc/headerInc.js"></script>
+		<script src="/js/oap/libs/jquery-1.11.2.min.js"></script>
+		<script type="text/javascript">	
+			$(document).ready(function(){
+				$(".gnb li:eq(1)").addClass("on"); 			
+			});
+		</script>
+		<!--##########################// header  Include ##########################-->
+
+		<section id="contents" class="contents ux_info_sec">
+			<h1 class="hide">다이렉트 오토할부</h1>
+			<div class="ux_rent_section"><!-- 개발 sink: ux_rent_section 변경-->
+			
+				<!-- 현재 스탭 확인 -->
+				<div class="top_breadscrumb">
+					<span class="depth1">오토할부 견적</span> <!-- 20190107 타이틀 변경-->
+				</div>
+				<!--// 현재 스탭 확인 -->
+				
+				<!-- 상단 step 20190407 삭제-->
+			
+				<!--20180717 wcms 추가-->
+				<style>
+.cert_guide{background:#fbfbfb; border:1px solid #c3c3c3; border-radius:10px; text-align:center;  color:#2b2e38; letter-spacing:-0.08em; position:relative; margin:80px auto 0 auto; padding:20px 0 25px 0; width:916px;}
+.cert_guide i{display:block; margin:0 auto; width:70px;}
+.cert_guide .txt {font-size:24px; margin-top:5px;}
+.cert_guide .txt strong{color:#f05000; font-weight:normal;}
+.cert_guide .dsc{font-size:16px; margin-top:5px;}
+.cert_guide .mbr{display:none;}
+.mobile .cert_guide{width:auto; margin:20px 15px 0 15px; padding:15px 10px 15px 10px; text-align:center;}
+.mobile .cert_guide i{width:45px; position:absolute; top:24px; left:50%; margin:10px 0 0 -114px;}
+.mobile .cert_guide .txt{display:inline-block; font-size:15px; padding-left:65px; text-align:left; }
+.mobile .cert_guide .dsc{clear:left; font-size:13px;}
+.mobile .cert_guide .mbr{display:block;}
+				</style>
+				<div class="cert_guide">
+					<i><img src="http://40.1.16.31:8921/wcms/oap/images/desktop/icn_ifty_v2.png" alt=""/></i>
+					<p class="txt">간편한 본인인증을 통해 <br class="mbr"/><strong>신청가능여부</strong> 및 <strong>이용한도</strong>를 <br class="mbr"/><strong>확인</strong>하세요!</p>
+					<p class="dsc">조회 시, 고객님의 신용등급에 영향이 없습니다.</p>
+				</div>
+				<script src="/js/oap/libs/jquery-1.11.2.min.js"></script>
+				<script type="text/javascript">
+				if($("html").hasClass("mobile")){
+					$(window).load(function(){						
+						var scrollTimer = 5000, //타이머
+						objHeight = $(".certTit").offset().top-62,
+						scrTop = $(window).scrollTop(),
+						fstPlay = true;
+					
+						if(fstPlay){
+							if(objHeight > scrTop){
+								setTimeout(function(){
+									$('html,body').stop().animate({scrollTop:objHeight}, 1000);
+								},scrollTimer);												
+							}	
+							fstPlay = false;												
+						}
+					});					
+				}
+				</script>
+				<!--//20180717 wcms 추가-->				
+
+				<!-- wcms : ux1.5 -->
+				<h1 class="certTit">고객정보 입력 및 본인인증</h1>
+				<!--// wcms : ux1.5 -->
+				
+				<script src="/js/oap/libs/jquery-1.11.2.min.js"></script>
+				<script>
+				$(document).ready(function(){
+					
+				//###### 인증 탭 노출/비노출 20190320 html전용 Ui스크립트 추가######//		            	
+		            var $btn_cert_tab = $('.certTab li'),
+		            	$hp_add_current = $('.hp_add_current'), //휴대폰 인증시
+		            	$card_add_current = $('.card_add_current'), //카드 인증시
+		            	$cert_add_current = $('.cert_add_current'); //공인인증시		            
+		            	
+		            $btn_cert_tab.click(function(){//탭 클릭시 추가
+		            	if($(this).hasClass('mb')){//휴대폰
+		            		$hp_add_current.show();
+		            		$card_add_current.hide();
+		            		$cert_add_current.hide();
+		            	}else if($(this).hasClass('cd')){//카드
+		            		$hp_add_current.hide();
+		            		$card_add_current.show();
+		            		$cert_add_current.hide();		            		
+		            	}else{//공인인증
+		            		$hp_add_current.hide();
+		            		$card_add_current.hide();
+		            		$cert_add_current.show();		            		
+		            	}
+		            });
+				//######// 인증 탭 노출/비노출 20190320 html전용 Ui스크립트 추가######//
+				});
+		        </script>
+				
+				<!-- 인증방법선택 탭 -->
+				<div class="certTab tab3 ui_tab_radio">
+					<ul>
+						<li class="mb on"><input type="radio" id="agree_radio1" name="radio1" data-tab-idx="0" checked="checked"><label for="agree_radio1"><span>휴대폰</span></label></li>
+						<li class="cd"><input type="radio" id="agree_radio2" name="radio1" data-tab-idx="1"><label for="agree_radio2"><span>카드</span></label></li>
+						<li class="cert"><input type="radio" id="agree_radio3" name="radio1" data-tab-idx="2"><label for="agree_radio3"><span>공인인증</span></label></li>
+					</ul>
+				</div>
+				<!-- //인증방법선택 탭 -->
+
+				<div class="ux15_sec certPage">
+					<div class="tab_cont" id="tab_list1_cont" data-tab="radio1">
+					
+						<!-- 20190320 메세지 수정 및 현행화-->											
+						<div class="hp_area mgt_none hp_add_current">
+							<p class="certMsg ">
+								본인명의의 휴대전화번호로 본인 확인 후 할부금융 가능 확인을 할 수 있습니다.
+							</p>
+						</div>
+						
+						<div class="card_area mgt_none card_add_current" style="display:none;">
+							<p class="certMsg">
+								보유하신 삼성카드로만 인증이 가능합니다.
+							</p>
+						</div>
+						
+						<div class="cert_area mgt_none cert_add_current" style="display:none;">
+							<p class="certMsg">
+								공인인증서를 통한 본인 확인 후 다이렉트 오토할부 가능 확인을 할 수 있습니다.
+							</p>
+						</div>
+						<!--// 20190320 메세지 수정 및 현행화-->
+						
+						<div class="agreeCertBox">							
+							<strong class="label">개인정보 수집/이용/취급/위탁 동의</strong>			
+							
+							<!-- 20193020 "agree_outlineBox" 감싸는 div추가-->
+							<div class="agree_outlineBox">
+								<!-- 약관동의 -->
+								<div class="hp_area">
+									<ul class="acco_box addType0"> <!-- 20190107  addType0 클래스 추가-->
+										<li class="acco_wrap cont_open">
+											<div class="acco_tit">
+												<input type="checkbox" name="agree2" id="agree21" class="agree2_allcheck" /><label for="agree21" class="allCheckToggle">개인정보&middot;고유식별정보 전체 동의</label>
+											</div>
+											<ul class="acco_cont accoin_box">
+												<li class="accoin_wrap">
+													<div class="accoin_tit">
+														<input type="checkbox" name="agree2" id="indvInfOfrAgYn" /><label for="indvInfOfrAgYn">개인정보 이용 및 제공 동의(필수)</label>
+														<button type="button">열기</button>
+													</div>
+													<div class="accoin_cont agree_area">
+														<!-- 통신사별 이용 약관(필수) 내용 -->
+														<div class="in_tab" id="in_tab2">
+															<ul>
+																<li class="on"><button type="button"><span>SKT</span></button></li>
+																<li><button type="button"><span>KT</span></button></li>
+																<li><button type="button"><span>LG U+</span></button></li>
+															</ul>
+														</div>
+														<div class="in_tab_cont" id="in_tab2_cont">
+															<section class="sec_on">
+																<div class="ui_scrollview">
+																	<div class="ui_scrollarea">
+																		<div class="ui_content">
+																			<div class="cont_area">
+																				<article class="terms">
+																		 			<!-- SKT 통신사 세부 내용 -->
+																					<!-- WCMS --> 
+																					<strong class="tcolor_o code">PO0211B</strong><!--0. wcns 입력 -->
+																					<div id="wcms1"></div><!--1. WCMS용 div 추가-->
+																					<script type="text/javascript">																
+																					window.addEventListener("load",function(){
+																					    $.ajax({
+																					      type:'post' ,
+																					       url:'http://40.1.16.31:8921/wcms/oap/clause/1234566_6101.html', //2. WCMS 경로
+																					       dataType:'html',
+																					       success:function(data){
+																					         $('#wcms1').html(data); //3. WCMS용  id 확인																         
+																					       }
+																					     });
+																					  });
+																					</script>																
+																					<!--// WCMS -->																			 			
+																				</article>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</section>
+															<section>
+																<div class="ui_scrollview">
+																	<div class="ui_scrollarea">
+																		<div class="ui_content">
+																			<div class="cont_area">
+																				<article class="terms">
+																		 			<!-- KT 통신사 세부 내용 -->
+																					<!-- WCMS --> 
+																					<strong class="tcolor_o code">PO0221B</strong><!--0. wcns 입력 -->
+																					<div id="wcms2"></div><!--1. WCMS용 div 추가-->
+																					<script type="text/javascript">																
+																					window.addEventListener("load",function(){
+																					    $.ajax({
+																					      type:'post' ,
+																					       url:'http://40.1.16.31:8921/wcms/oap/clause/1234567_6101.html', //2. WCMS 경로
+																					       dataType:'html',
+																					       success:function(data){
+																					         $('#wcms2').html(data); //3. WCMS용  id 확인																         
+																					       }
+																					     });
+																					  });
+																					</script>																
+																					<!--// WCMS -->																				 			
+																				</article>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</section>
+															<section>
+																<div class="ui_scrollview">
+																	<div class="ui_scrollarea">
+																		<div class="ui_content">
+																			<div class="cont_area">
+																				<article class="terms">
+																		 			<!-- LG U+ 통신사 세부 내용 -->
+																					<!-- WCMS --> 
+																					<strong class="tcolor_o code">PO0231B</strong><!--0. wcns 입력 -->
+																					<div id="wcms3"></div><!--1. WCMS용 div 추가-->
+																					<script type="text/javascript">																
+																					window.addEventListener("load",function(){
+																					    $.ajax({
+																					      type:'post' ,
+																					       url:'http://40.1.16.31:8921/wcms/oap/clause/1234568_6101.html', //2. WCMS 경로
+																					       dataType:'html',
+																					       success:function(data){
+																					         $('#wcms3').html(data); //3. WCMS용  id 확인																         
+																					       }
+																					     });
+																					  });
+																					</script>																
+																					<!--// WCMS -->																			 			
+																				</article>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</section>
+														</div>
+														<!-- // 통신사별 이용 약관(필수) 내용 -->
+													</div>
+												</li>
+												<li class="accoin_wrap">
+													<div class="accoin_tit">
+														<input type="checkbox" name="agree2" id="agr4" /><label for="agr4">고유 식별 정보 처리(필수)</label>
+														<button type="button">열기</button>
+													</div>
+													<div class="accoin_cont agree_area">
+														<!-- 통신사별 이용 약관(필수) 내용 -->
+														<div class="in_tab" id="in_tab3">
+															<ul>
+																<li class="on"><button type="button"><span>SKT</span></button></li>
+																<li><button type="button"><span>KT</span></button></li>
+																<li><button type="button"><span>LG U+</span></button></li>
+															</ul>
+														</div>
+														<div class="in_tab_cont" id="in_tab3_cont">
+															<section class="sec_on">
+																<div class="ui_scrollview">
+																	<div class="ui_scrollarea">
+																		<div class="ui_content">
+																			<div class="cont_area">
+																				<article class="terms">
+																		 			<!-- SKT 통신사 세부 내용 -->
+																					<!-- WCMS --> 
+																					<strong class="tcolor_o code">PO0212B</strong><!--0. wcns 입력 -->
+																					<div id="wcms4"></div><!--1. WCMS용 div 추가-->
+																					<script type="text/javascript">																
+																					window.addEventListener("load",function(){
+																					    $.ajax({
+																					      type:'post' ,
+																					       url:'http://40.1.16.31:8921/wcms/oap/clause/1234569_6101.html', //2. WCMS 경로
+																					       dataType:'html',
+																					       success:function(data){
+																					         $('#wcms4').html(data); //3. WCMS용  id 확인																         
+																					       }
+																					     });
+																					  });
+																					</script>																
+																					<!--// WCMS -->																			 			
+																				</article>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</section>
+															<section>
+																<div class="ui_scrollview">
+																	<div class="ui_scrollarea">
+																		<div class="ui_content">
+																			<div class="cont_area">
+																				<article class="terms">
+																		 			<!-- KT 통신사 세부 내용 -->
+																					<!-- WCMS --> 
+																					<strong class="tcolor_o code">PO0222B</strong><!--0. wcns 입력 -->
+																					<div id="wcms5"></div><!--1. WCMS용 div 추가-->
+																					<script type="text/javascript">																
+																					window.addEventListener("load",function(){
+																					    $.ajax({
+																					      type:'post' ,
+																					       url:'http://40.1.16.31:8921/wcms/oap/clause/1234570_6101.html', //2. WCMS 경로
+																					       dataType:'html',
+																					       success:function(data){
+																					         $('#wcms5').html(data); //3. WCMS용  id 확인																         
+																					       }
+																					     });
+																					  });
+																					</script>																
+																					<!--// WCMS -->																				 			
+																				</article>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</section>
+															<section>
+																<div class="ui_scrollview">
+																	<div class="ui_scrollarea">
+																		<div class="ui_content">
+																			<div class="cont_area">
+																				<article class="terms">
+																		 			<!-- LG U+ 통신사 세부 내용 -->
+																					<!-- WCMS --> 
+																					<strong class="tcolor_o code">PO0232B</strong><!--0. wcns 입력 -->
+																					<div id="wcms6"></div><!--1. WCMS용 div 추가-->
+																					<script type="text/javascript">																
+																					window.addEventListener("load",function(){
+																					    $.ajax({
+																					      type:'post' ,
+																					       url:'http://40.1.16.31:8921/wcms/oap/clause/1234571_6101.html', //2. WCMS 경로
+																					       dataType:'html',
+																					       success:function(data){
+																					         $('#wcms6').html(data); //3. WCMS용  id 확인																         
+																					       }
+																					     });
+																					  });
+																					</script>																
+																					<!--// WCMS -->																					 			
+																				</article>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</section>
+														</div>
+														<!-- // 통신사별 이용 약관(필수) 내용 -->
+													</div>
+												</li>
+												<li class="accoin_wrap">
+													<div class="accoin_tit">
+														<input type="checkbox" name="agree2" id="mtcmcoPrvAgYn" /><label for="mtcmcoPrvAgYn">통신사별 이용 약관(필수)</label>
+														<button type="button">열기</button>
+													</div>
+													<div class="accoin_cont agree_area">
+														<!-- 통신사별 이용 약관(필수) 내용 -->
+														<div class="in_tab" id="in_tab4">
+															<ul>
+																<li class="on"><button type="button"><span>SKT</span></button></li>
+																<li><button type="button"><span>KT</span></button></li>
+																<li><button type="button"><span>LG U+</span></button></li>
+															</ul>
+														</div>
+														<div class="in_tab_cont" id="in_tab4_cont">
+															<section class="sec_on">
+																<div class="ui_scrollview">
+																	<div class="ui_scrollarea">
+																		<div class="ui_content">
+																			<div class="cont_area">
+																				<article class="terms">
+																		 			<!-- SKT 통신사 세부 내용 -->
+																					<!-- WCMS --> 
+																					<strong class="tcolor_o code">PO0212B</strong><!--0. wcns 입력 -->
+																					<div id="wcms7"></div><!--1. WCMS용 div 추가-->
+																					<script type="text/javascript">																
+																					window.addEventListener("load",function(){
+																					    $.ajax({
+																					      type:'post' ,
+																					       url:'http://40.1.16.31:8921/wcms/oap/clause/1234569_6101.html', //2. WCMS 경로
+																					       dataType:'html',
+																					       success:function(data){
+																					         $('#wcms7').html(data); //3. WCMS용  id 확인																         
+																					       }
+																					     });
+																					  });
+																					</script>																
+																					<!--// WCMS -->																			 			
+																				</article>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</section>
+															<section>
+																<div class="ui_scrollview">
+																	<div class="ui_scrollarea">
+																		<div class="ui_content">
+																			<div class="cont_area">
+																				<article class="terms">
+																		 			<!-- KT 통신사 세부 내용 -->
+																					<!-- WCMS --> 
+																					<strong class="tcolor_o code">PO0222B</strong><!--0. wcns 입력 -->
+																					<div id="wcms8"></div><!--1. WCMS용 div 추가-->
+																					<script type="text/javascript">																
+																					window.addEventListener("load",function(){
+																					    $.ajax({
+																					      type:'post' ,
+																					       url:'http://40.1.16.31:8921/wcms/oap/clause/1234570_6101.html', //2. WCMS 경로
+																					       dataType:'html',
+																					       success:function(data){
+																					         $('#wcms8').html(data); //3. WCMS용  id 확인																         
+																					       }
+																					     });
+																					  });
+																					</script>																
+																					<!--// WCMS -->																				 			
+																				</article>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</section>
+															<section>
+																<div class="ui_scrollview">
+																	<div class="ui_scrollarea">
+																		<div class="ui_content">
+																			<div class="cont_area">
+																				<article class="terms">
+																		 			<!-- LG U+ 통신사 세부 내용 -->
+																					<!-- WCMS --> 
+																					<strong class="tcolor_o code">PO0232B</strong><!--0. wcns 입력 -->
+																					<div id="wcms9"></div><!--1. WCMS용 div 추가-->
+																					<script type="text/javascript">																
+																					window.addEventListener("load",function(){
+																					    $.ajax({
+																					      type:'post' ,
+																					       url:'http://40.1.16.31:8921/wcms/oap/clause/1234571_6101.html', //2. WCMS 경로
+																					       dataType:'html',
+																					       success:function(data){
+																					         $('#wcms9').html(data); //3. WCMS용  id 확인																         
+																					       }
+																					     });
+																					  });
+																					</script>																
+																					<!--// WCMS -->																			 			
+																				</article>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</section>
+														</div>
+														<!-- // 통신사별 이용 약관(필수) 내용 -->
+													</div>
+												</li>
+												<!-- 개인(신용)정보 수집 및 이용 약관(필수) 20190320 html전용(현행화)
+												<li class="accoin_wrap">
+													<div class="accoin_tit">
+														<input type="checkbox" name="agree2" id="term_chk4" /><label for="term_chk4">개인(신용)정보 수집 및 이용 약관(필수)</label>
+														<button type="button">열기</button>
+													</div>
+													<div class="accoin_cont agree_area">
+														약관
+													</div>
+												</li>-->
+											</ul>
+										</li>
+									</ul>
+								</div>
+								<!-- //약관동의-->
+								
+								<!-- 약관동의2 20190107 신규-->
+								<div class="accoin_box addType1 sub_mt add0320"> <!-- 20190320 add0320 추가-->
+									<div class="accoin_wrap"> <!-- open -->
+										<div class="accoin_tit">
+											<input type="checkbox" id="agree2_optcheck" class="agree2_optcheck"><label for="agree2_optcheck" class="agree2_optcheck_label">
+												<!--WCMS: PO0301-->
+												개인정보 수집 이용에 대한 동의 (선택)
+												<!--//WCMS: PO0301-->
+											</label>
+											<button type="button" class="openBtn">열기</button> <!-- on -->
+										</div>
+										<div class="accoin_cont">
+																			
+											<p class="term_txt">
+												<div class="txt_para">	
+													<!--WCMS: PO0301A											
+													삼성카드주식회사는 다이렉트 오토 서비스 이용을 위한 고객님의 상품별 한도조회 또는 각 상품신청을 완료하지 못한 경우 
+													고객님께 상품별 <span class="tcolor_b">한도조회 및 각 상품 신청</span>을 도와드리기 위한 전화를 드리기 위하여 고객님께서 입력하신 <span class="tcolor_b">전화번호, 차량구매예정일</span> 을 수집·이용하게 되며,
+													해당 정보는 <span class="tcolor_b">동의일로부터 일정기간(6개월)동안</span> 보유합니다.
+													이에 동의를 거부하실 수 있으며, 동의를 거부하더라도 아무런 불이익이 없습니다.
+													--//WCMS: PO0301A-->
+													<!-- WCMS --> 
+													<strong class="tcolor_o code">PO0301A</strong><!--0. wcns 입력 -->
+													<div id="wcms10"></div><!--1. WCMS용 div 추가-->
+													<script type="text/javascript">																
+													window.addEventListener("load",function(){
+													    $.ajax({
+													      type:'post' ,
+													       url:'http://40.1.16.31:8921/wcms/oap/clause/1234564_6101.html', //2. WCMS 경로
+													       dataType:'html',
+													       success:function(data){
+													         $('#wcms10').html(data); //3. WCMS용  id 확인																         
+													       }
+													     });
+													  });
+													</script>																
+													<!--// WCMS -->														
+												</div>										
+											</p>
+										</div>
+										
+										<!-- 20190320 "buycar_date_cont" 클래스 div로 감싸고 해당 소스 이동 -->
+										<div class="buycar_date_cont">
+											<p class="way_chk_tit on"><strong>차량구입 예정일</strong>(선택)</p>
+											<div class="way_chk on">
+												<input type="radio" id="agree_buycar1" name="agree_buycar"><label for="agree_buycar1"> 1개월 내 </label>
+												<input type="radio" id="agree_buycar2" name="agree_buycar"><label for="agree_buycar2"> 3개월 내</label>
+												<input type="radio" id="agree_buycar3" name="agree_buycar"><label for="agree_buycar3"> 6개월 내</label>
+												<input type="radio" id="agree_buycar4" name="agree_buycar"><label for="agree_buycar4"> 6개월 이후</label>
+												<input type="radio" id="agree_buycar5" name="agree_buycar"><label for="agree_buycar5"> 예정일 없음</label>
+											</div>
+	
+											<div class="sub_check_guide">											
+												<ul class="acco_box">
+													<li class="acco_wrap cont_close">
+														<div class="acco_tit">
+															<!--WCMS: PO0302-->
+															※ 개인정보 취급 위탁에 관한 사항
+															<!--//WCMS: PO0302-->
+															<button type="button">열기</button>
+														</div>
+														<div class="acco_cont ">
+															<p class="term_txt">
+																<div class="txt_para">
+																	<!--WCMS: PO0302A--																
+																	삼성카드주식회사는 다이렉트 오토 서비스 이용을 위한 고객님의 상품별 <span class="tcolor_b">한도조회 또는 각 상품신청</span>을 도와드리기 위한 TM관련 업무 처리를 위해 
+																	고객님으로부터 수집한 개인정보(전화번호)를 위탁업체 ㈜메타넷엠씨씨, ㈜윌앤비전, MG신용정보㈜, 효성itx, 이지오스, S&J 등에게 전달할 수 있으며,
+																	해당정보는 <span class="tcolor_b">전달일로부터 일정기간(6개월)동안 보유합니다.</span>
+																	!--//WCMS: PO0302A-->
+																	<!-- WCMS --> 
+																	<strong class="tcolor_o code">PO0302A</strong><!--0. wcns 입력 -->
+																	<div id="wcms11"></div><!--1. WCMS용 div 추가-->
+																	<script type="text/javascript">																
+																	window.addEventListener("load",function(){
+																	    $.ajax({
+																	      type:'post' ,
+																	       url:'http://40.1.16.31:8921/wcms/oap/clause/1234565_6101.html', //2. WCMS 경로
+																	       dataType:'html',
+																	       success:function(data){
+																	         $('#wcms11').html(data); //3. WCMS용  id 확인																         
+																	       }
+																	     });
+																	  });
+																	</script>
+																	<!--// WCMS -->																			
+																</div>
+															</p>										
+														</div>
+													</li>
+												</ul>
+											</div>												
+										
+										</div>
+										<!--// 20190320 "" 클래스 div로 감싸고 해당 소스 이동 -->
+										
+									</div>
+								</div>
+								<!--// 약관동의2 20190107 신규추가-->
+							</div>
+							<!--// 20193020 "agree_outlineBox" 감싸는 div추가-->							
+						</div>
+						
+							<!-- 신용조회 동의 -->
+							<div class="agreeCertBox">
+								<strong class="label">신용조회 동의</strong>
+								<ul class="acco_box add addType0"><!-- 20190107 addType1추가 -->
+									<!-- 개인(신용)정보 필수 동의서 -->
+									<li class="acco_wrap cont_close noline">
+										<div class="acco_tit">
+											<input type="checkbox" name="agree4" id="agree4_chk01" class="agree4_allcheck" /><label for="agree4_chk01">개인(신용)정보 필수 동의서</label>
+											<button type="button">열기</button>
+										</div>
+										<div class="acco_cont accoin_box">
+											<p class="txt_para mgt_m"><!-- wcms : ux1.5 -->아래의 사항은 대출 계약 및 유지를 위한 필수 사항입니다.<!--// wcms : ux1.5 --></p>
+											<ul>
+												<li class="accoin_wrap">
+													<div class="accoin_tit">
+														<input type="checkbox" name="agree4" id="agree4_chk02" /><label for="agree4_chk02">개인(신용)정보 필수 수집·이용에 관한 사항</label>
+														<button type="button">열기</button>
+													</div>
+													<div class="accoin_cont agree_area">
+														<!-- 약관 스크롤 영역 -->
+														<div class="ui_scrollview">
+															<div class="ui_scrollarea">
+																<div class="ui_content">
+																	<div class="cont_area">
+																		<article class="terms">
+																			<!-- WCMS --> 
+																			<strong class="tcolor_o code">PO0101_7</strong><!--0. wcns 입력 -->
+																			<div id="wcms12"></div><!--1. WCMS용 div 추가-->
+																			<script type="text/javascript">																
+																			window.addEventListener("load",function(){
+																			    $.ajax({
+																			      type:'post' ,
+																			       url:'http://40.1.16.31:8921/wcms/oap/clause/1251238_6101.html', //2. WCMS 경로
+																			       dataType:'html',
+																			       success:function(data){
+																			         $('#wcms12').html(data); //3. WCMS용  id 확인																         
+																			       }
+																			     });
+																			  });
+																			</script>
+																			<!--// WCMS -->		
+																		</article>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<!-- // 약관 스크롤 영역 -->
+													</div>
+												</li>
+												<li class="accoin_wrap">
+													<div class="accoin_tit">
+														<input type="checkbox" name="agree4" id="agree4_chk03" /><label for="agree4_chk03"> 본인 고유식별정보 처리에 대한 동의</label>
+														<button type="button">열기</button>
+													</div>
+													<div class="accoin_cont agree_area">
+														<!-- 약관 스크롤 영역 -->
+														<div class="ui_scrollview">
+															<div class="ui_scrollarea">
+																<div class="ui_content">
+																	<div class="cont_area">
+																		<article class="terms">
+																			<!-- WCMS --> 
+																			<strong class="tcolor_o code">UO001A</strong><!--0. wcns 입력 -->
+																			<div id="wcms13"></div><!--1. WCMS용 div 추가-->
+																			<script type="text/javascript">																
+																			window.addEventListener("load",function(){
+																			    $.ajax({
+																			      type:'post' ,
+																			       url:'http://40.1.16.31:8921/wcms/oap/clause/1222244_6101.html', //2. WCMS 경로
+																			       dataType:'html',
+																			       success:function(data){
+																			         $('#wcms13').html(data); //3. WCMS용  id 확인																         
+																			       }
+																			     });
+																			  });
+																			</script>
+																			<!--// WCMS -->	
+																		</article>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<!-- // 약관 스크롤 영역 -->
+													</div>
+												</li>
+												<!--개인(신용)정보 수집 및 이용 약관(필수)  -->
+												<li class="accoin_wrap">
+													<div class="accoin_tit">
+														<input type="checkbox" name="agree4" id="agree4_chk04" /><label for="agree4_chk04">개인(신용)정보 필수 조회에 관한 사항</label>
+														<button type="button">열기</button>
+													</div>
+													<div class="accoin_cont agree_area">
+														<!-- 약관 스크롤 영역 -->
+														<div class="ui_scrollview">
+															<div class="ui_scrollarea">
+																<div class="ui_content">
+																	<div class="cont_area">
+																		<article class="terms">
+																			<!-- WCMS --> 
+																			<strong class="tcolor_o code">PO0102</strong><!--0. wcns 입력 -->
+																			<div id="wcms14"></div><!--1. WCMS용 div 추가-->
+																			<script type="text/javascript">																
+																			window.addEventListener("load",function(){
+																			    $.ajax({
+																			      type:'post' ,
+																			       url:'http://40.1.16.31:8921/wcms/oap/clause/1221012_6101.html', //2. WCMS 경로
+																			       dataType:'html',
+																			       success:function(data){
+																			         $('#wcms14').html(data); //3. WCMS용  id 확인																         
+																			       }
+																			     });
+																			  });
+																			</script>
+																			<!--// WCMS -->		
+																		</article>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<!-- // 약관 스크롤 영역 -->
+													</div>
+												</li>
+												<!-- // 개인(신용)정보 수집 및 이용 약관(필수)  -->
+												<li class="accoin_wrap">
+													<div class="accoin_tit">
+														<input type="checkbox" name="agree4" id="agree4_chk05" /><label for="agree4_chk05"> 본인 고유식별정보 처리에 대한 동의</label>
+														<button type="button">열기</button>
+													</div>
+													<div class="accoin_cont agree_area">
+														<!-- 약관 스크롤 영역 -->
+														<div class="ui_scrollview">
+															<div class="ui_scrollarea">
+																<div class="ui_content">
+																	<div class="cont_area">
+																		<article class="terms">
+																		<!-- WCMS --> 
+																		<strong class="tcolor_o code">UO001A</strong><!--0. wcns 입력 -->
+																		<div id="wcms15"></div><!--1. WCMS용 div 추가-->
+																		<script type="text/javascript">																
+																		window.addEventListener("load",function(){
+																		    $.ajax({
+																		      type:'post' ,
+																		       url:'http://40.1.16.31:8921/wcms/oap/clause/1222244_6101.html', //2. WCMS 경로
+																		       dataType:'html',
+																		       success:function(data){
+																		         $('#wcms15').html(data); //3. WCMS용  id 확인																         
+																		       }
+																		     });
+																		  });
+																		</script>
+																		<!--// WCMS -->		
+																		</article>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<!-- // 약관 스크롤 영역 -->
+													</div>
+												</li>
+												<li class="accoin_wrap">
+													<div class="accoin_tit">
+														<input type="checkbox" name="agree4" id="agree4_chk06" /><label for="agree4_chk06">- 개인(신용)정보 필수 제공에 관한 사항</label>
+														<button type="button">열기</button>
+													</div>
+													<div class="accoin_cont agree_area">
+														<!-- 약관 스크롤 영역 -->
+														<div class="ui_scrollview">
+															<div class="ui_scrollarea">
+																<div class="ui_content">
+																	<div class="cont_area">
+																		<article class="terms">
+																		<!-- WCMS --> 
+																		<strong class="tcolor_o code">PO0103</strong><!--0. wcns 입력 -->
+																		<div id="wcms16"></div><!--1. WCMS용 div 추가-->
+																		<script type="text/javascript">																
+																		window.addEventListener("load",function(){
+																		    $.ajax({
+																		      type:'post' ,
+																		       url:'http://40.1.16.31:8921/wcms/oap/clause/1221013_6101.html', //2. WCMS 경로
+																		       dataType:'html',
+																		       success:function(data){
+																		         $('#wcms16').html(data); //3. WCMS용  id 확인																         
+																		       }
+																		     });
+																		  });
+																		</script>
+																		<!--// WCMS -->		
+																		</article>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<!-- // 약관 스크롤 영역 -->
+													</div>
+												</li>
+												<li class="accoin_wrap">
+													<div class="accoin_tit">
+														<input type="checkbox" name="agree4" id="agree4_chk07" /><label for="agree4_chk07"> 본인 고유식별정보 처리에 대한 동의</label>
+														<button type="button">열기</button>
+													</div>
+													<div class="accoin_cont agree_area">
+														<!-- 약관 스크롤 영역 -->
+														<div class="ui_scrollview">
+															<div class="ui_scrollarea">
+																<div class="ui_content">
+																	<div class="cont_area">
+																		<article class="terms">
+																		<!-- WCMS --> 
+																		<strong class="tcolor_o code">UO001A</strong><!--0. wcns 입력 -->
+																		<div id="wcms17"></div><!--1. WCMS용 div 추가-->
+																		<script type="text/javascript">																
+																		window.addEventListener("load",function(){
+																		    $.ajax({
+																		      type:'post' ,
+																		       url:'http://40.1.16.31:8921/wcms/oap/clause/1222244_6101.html', //2. WCMS 경로
+																		       dataType:'html',
+																		       success:function(data){
+																		         $('#wcms17').html(data); //3. WCMS용  id 확인																         
+																		       }
+																		     });
+																		  });
+																		</script>
+																		<!--// WCMS -->		
+																		</article>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<!-- // 약관 스크롤 영역 -->
+													</div>
+												</li>
+											</ul>
+										</div>
+									</li>
+									<!--// 개인(신용)정보 필수 동의서 -->
+									<!-- 개인(신용)정보 선택 동의서 20190107 삭제-->
+								</ul>
+							</div>
+							<!-- //신용조회 동의 -->						
+
+						<!-- 휴대폰인증 -->
+						<section>
+							<h2 class="hide">휴대폰인증</h2>
+							<div class="inputWrap">
+								<label for="fnm2">성명</label>
+								<div class="inp">
+									<input type="text" id="fnm2" placeholder="" />
+								</div>
+							</div>
+							<div class="inputWrap">
+								<label for="rrno">주민등록번호</label>
+								<div class="inp juminNumAll">
+									<!-- <span class="juminNumFont"><input type="tel" id="rrno" placeholder="앞 6자리"></span>
+									<span class="juminNumDash">-</span> 20180403 삭제-->
+									<span class="juminNumBack juminOne"><input type="tel" placeholder="[-]없이 입력"></span><!-- 20180403 class추가및 문구변경 -->
+									<div class="auth_mouse mg_none"><button type="button" class="btn_mouse" tabindex="-1" aria-hidden="true">카드번호 마우스입력</button></div>
+								</div>
+							</div>
+							<div class="inputWrap">
+								<label for="mpno">휴대전화번호</label>
+								<div class="btn_inp_wrap">
+									<ul>
+										<li><input type="radio" id="tel_radio1" name="radio_tel1" checked><label for="tel_radio1" class="tel_btn"><span>SKT</span></label></li>
+										<li><input type="radio" id="tel_radio2" name="radio_tel1"><label for="tel_radio2" class="tel_btn"><span>KT</span></label></li>
+										<li><input type="radio" id="tel_radio3" name="radio_tel1"><label for="tel_radio3" class="tel_btn"><span>LG U+</span></label></li>
+										<li><div class="sel_wrap">
+												<select title="알뜰폰 선택 목록" class="phone_sel" data-clone-class="phone_sel">
+													<option>알뜰폰</option>
+													<option>SKT알뜰폰</option>
+													<option>KT알뜰폰</option>
+													<option>LG U+알뜰폰</option>
+												</select>
+											</div>
+										</li>
+									</ul>
+								</div>
+								<div class="btn_inp_area">
+									<input type="tel" title="휴대전화번호 나머지번호" placeholder="[-] 없이 입력 (예 : 01012345678)" />
+									<span><button type="button" class="btn_cont_org" ><span>인증번호 발송</span></button></span>
+								</div>
+								<div class="btn_inp_area">
+									<input type="tel" title="휴대전화번호 나머지번호" placeholder="[-] 없이 입력 (예 : 01012345678)" />
+									<span><button type="button" class="btn_cont_org" disabled="disabled"><span>인증번호 발송</span></button></span>
+								</div>
+								<div class="btn_inp_area">
+									<input type="tel" title="휴대전화번호 나머지번호" placeholder="[-] 없이 입력 (예 : 01012345678)" />
+									<span><button type="button" class="btn_cont_dark"><span>인증번호 재발송</span></button></span>
+								</div>
+								<div class="btn_inp_area">
+									<input type="tel" title="휴대전화번호 나머지번호" placeholder="[-] 없이 입력 (예 : 01012345678)" />
+									<span><button type="button" class="btn_cont_dark" disabled="disabled"><span>인증번호 재발송</span></button></span>
+								</div>
+								<!-- 경고문구  제거-->
+								<p class="txt_error">휴대전화번호를 입력해 주세요.</p>
+								<p class="txt_error">통신사를 확인해 주세요.</p>
+								<!-- //경고문구 -->
+							</div>
+							
+							<!-- 휴대폰 인증일때  -->
+							<div class="inputWrap">
+								<label for="certno1">인증번호</label>
+								<div class="authbox">
+									<div class="input_auth">
+										<div class="btn_inp_area">
+											<input type="tel" title="인증번호" id="certno1" placeholder="인증번호 6자리 번호 입력">
+											<span><button type="button" class="btn_cont_org"><span>확인</span></button></span><span class="time">입력 시간 <em>2분 13초</em></span>
+										</div>
+									</div>
+									<!-- 경고문구 dishide 클래스 제거-->
+									<p class="txt_error ">인증번호를 정확하게 입력해 주세요</p>
+									<p class="txt_error ">인증번호를 재발송 받아 다시 입력해 주세요</p>
+									<!--// 경고문구 -->
+									<!-- wcms : ux1.5 -->
+									<p class="txt_info">본인 명의의 휴대전화로 인증번호를 받은 경우에 한해 이용할 수 있습니다.</p>
+									<p class="txt_info">인증번호 입력 오류로 인한 인증번호 재발송은 3회까지 가능합니다.</p>
+									<!--// wcms : ux1.5 -->
+								</div>
+							</div>
+							<!-- //휴대폰 인증일때  -->
+							
+							<div class="btn_ux15_stepbox">
+								<button type="button" class="btn_cont_p result_ok" onclick="location.href='P43107.html'" ><span>다음</span></button>
+								<!--<button type="button" class="btn_cont_p result_ok" disabled  onclick="location.href='P43107.html'" ><span>다음</span></button> //disable -->
+							</div>
+						</section>
+						<!--// 휴대폰인증 -->
+	
+						<!-- 신용카드인증 -->
+						<section>
+							<h2 class="hide">카드</h2>
+							<!-- 비 로그인  -->
+							<!-- <div class="inputWrap">
+								<strong class="label">국제브랜드사</strong>
+								<span class="cardBrand"><input type="radio" name="scard" id="card" checked="checked" /><label for="card">VISA/MASTER/UnionPay/국내전용</label></span>
+								<span><input type="radio" name="scard" id="amex" /><label for="amex">아멕스</label></span>
+							</div> 20180403 삭제-->
+							<div class="inputWrap">
+								<label for="cdno">카드번호</label>
+								<div class="inp cardNum">
+									<div class="cardNumFld"><input type="tel" id="cdno" placeholder="[-] 없이 입력" /></div>
+									<div class="auth_mouse"><button type="button" class="btn_mouse" tabindex="-1" aria-hidden="true">카드번호 마우스입력</button></div>
+								</div>
+								<p class="txt_error">숫자를 정확히 입력해 주세요.</p>
+							</div>
+							<div class="inputWrap">
+								<label for="pswd1">카드비밀번호</label>
+								<div class="inp cardPwd">
+									<div class="cardPwdFld"><input type="password" id="pswd1" maxlength="2" data-delbtn="no" placeholder="앞 2자리" /></div>
+									<div class="auth_mouse"><button type="button" class="btn_mouse" tabindex="-1" aria-hidden="true">카드비밀번호 마우스입력</button></div>
+								</div>
+								<p class="txt_error">숫자를 정확히 입력해 주세요.</p>
+							</div>
+							<div class="inputWrap">
+								<label for="cvc1">CVC번호</label>
+								<div class="inp cvcNum">
+									<div class="cvcNumFld"><input type="tel" placeholder="뒤 3자리" maxlength="3" id="cvc1" data-delbtn="no" /></div>
+									<div class="auth_mouse"><button type="button" class="btn_mouse" tabindex="-1" aria-hidden="true">CVC번호 마우스입력</button></div>
+									<div class="cvcNumImg"><span aria-hidden="true">카드 뒷면 끝 번호 3자리</span></div>
+								</div>
+								<p class="txt_info">카드 뒷면 끝 번호 3자리</p>
+								<p class="txt_error">숫자를 정확히 입력해 주세요.</p>
+							</div>
+							<!-- 비 로그인 -->
+							<!-- 로그인  -->
+							<div class="inputWrap">
+								<label for="cdno">카드선택</label>
+								<div class="sel_warp card">
+									<select id="cdno">
+										<option>카드를 선택해주세요</option>
+										<option>[개인] 숫자카드1/1234</option>
+									</select>
+								</div>
+								<p class="txt_error">카드를 선택해 주세요.</p>
+							</div>
+							<div class="inputWrap">
+								<label for="pswd2">카드비밀번호</label>
+								<div class="inp cardPwd">
+									<div class="cardPwdFld"><input type="password" id="pswd2" maxlength="2" data-delbtn="no" placeholder="앞 2자리" /></div>
+									<div class="auth_mouse"><button type="button" class="btn_mouse" tabindex="-1" aria-hidden="true">카드비밀번호 마우스입력</button></div>
+								</div>
+								<p class="txt_error">숫자를 정확히 입력해 주세요.</p>
+							</div>
+							<div class="inputWrap">
+								<label for="cvc2">CVC번호</label>
+								<div class="inp cvcNum">
+									<div class="cvcNumFld"><input type="tel" placeholder="뒤 3자리" maxlength="3" id="cvc2" data-delbtn="no" /></div>
+									<div class="auth_mouse"><button type="button" class="btn_mouse" tabindex="-1" aria-hidden="true">CVC번호 마우스입력</button></div>
+									<div class="cvcNumImg"><span aria-hidden="true">카드 뒷면 끝 번호 3자리</span></div>
+								</div>
+								<p class="txt_info">카드 뒷면 끝 번호 3자리</p>
+								<p class="txt_error">숫자를 정확히 입력해 주세요.</p>
+							</div>
+							<!-- 로그인 -->
+							<!-- 20180403 위치변경 -->
+							<div class="inputWrap">
+								<label for="mpno">휴대전화번호</label>
+								<!-- <div class="btn_inp_wrap">
+									<ul>
+										<li><input type="radio" id="tel_radio1" name="radio_tel1" checked><label for="tel_radio1" class="tel_btn"><span>SKT</span></label></li>
+										<li><input type="radio" id="tel_radio2" name="radio_tel1"><label for="tel_radio2" class="tel_btn"><span>KT</span></label></li>
+										<li><input type="radio" id="tel_radio3" name="radio_tel1"><label for="tel_radio3" class="tel_btn"><span>LG U+</span></label></li>
+										<li><div class="sel_wrap">
+												<select title="알뜰폰 선택 목록" class="phone_sel" data-clone-class="phone_sel">
+													<option>알뜰폰</option>
+													<option>SKT알뜰폰</option>
+													<option>KT알뜰폰</option>
+													<option>LG U+알뜰폰</option>
+												</select>
+											</div>
+										</li>
+									</ul>
+								</div> 20180403 삭제 -->
+								<div class="btn_inp_area">
+									<input type="tel" title="휴대전화번호 나머지번호" placeholder="[-] 없이 입력 (예 : 01012345678)" />
+									<span><button type="button" class="btn_cont_org" ><span>인증번호 발송</span></button></span>
+								</div>
+								<div class="btn_inp_area">
+									<input type="tel" title="휴대전화번호 나머지번호" placeholder="[-] 없이 입력 (예 : 01012345678)" />
+									<span><button type="button" class="btn_cont_org" disabled="disabled"><span>인증번호 발송</span></button></span>
+								</div>
+								<div class="btn_inp_area">
+									<input type="tel" title="휴대전화번호 나머지번호" placeholder="[-] 없이 입력 (예 : 01012345678)" />
+									<span><button type="button" class="btn_cont_dark"><span>인증번호 재발송</span></button></span>
+								</div>
+								<div class="btn_inp_area">
+									<input type="tel" title="휴대전화번호 나머지번호" placeholder="[-] 없이 입력 (예 : 01012345678)" />
+									<span><button type="button" class="btn_cont_dark" disabled="disabled"><span>인증번호 재발송</span></button></span>
+								</div>
+								<!-- 경고문구 hide 클래스 제거-->
+								<p class="txt_error hide">휴대전화번호를 입력해 주세요.</p>
+								<!-- <p class="txt_error hide">통신사를 확인해 주세요.</p> -->
+								<!-- //경고문구 -->
+								<p class="txt_info">이 번호로 가능확인 결과를 알려드립니다.</p><!-- 20180403 추가-->
+							</div>
+							<!-- 20180403 추가 -->
+							<div class="inputWrap">
+								<label for="certno2">인증번호</label>
+								<div class="authbox">
+									<div class="input_auth">
+										<div class="btn_inp_area">
+											<input type="tel" title="인증번호" id="certno2" placeholder="인증번호 4자리 번호 입력">
+											<span><button type="button" class="btn_cont_org"><span>확인</span></button></span><span class="time">입력 시간 <em>2분 13초</em></span>
+										</div>
+									</div>
+									<!-- 경고문구 dishide 클래스 제거-->
+									<p class="txt_error ">인증번호를 정확하게 입력해 주세요</p>
+									<p class="txt_error ">인증번호를 재발송 받아 다시 입력해 주세요</p>
+									<!--// 경고문구 -->
+								</div>
+							</div>
+							<!--// 20180403 추가 및 위치변경 -->
+						
+							<div class="btn_ux15_stepbox">
+								<button type="button" class="btn_cont_p result_ok"><span>다음</span></button>
+							</div>
+						</section>
+						<!--// 신용카드인증 -->
+						
+						<!-- 공인인증 -->
+						<section>
+							<h2 class="hide">공인인증서인증</h2>
+							<div class="inputWrap">
+								<label for="fnm1">성명</label>
+								<div class="inp">
+									<input type="text" id="fnm1" placeholder="">
+								</div>
+								<!-- 경고문구  제거-->
+								<p class="txt_error">성명을 입력해 주세요.</p>
+								<!-- //경고문구 -->
+							</div>
+							<div class="inputWrap">
+								<label for="rrnoc">주민등록번호</label>
+								<div class="inp juminNumAll">
+									<!-- <span class="juminNumFont"><input type="tel" id="rrno" placeholder="앞 6자리"></span>
+									<span class="juminNumDash">-</span> 20180403 삭제-->
+									<span class="juminNumBack juminOne"><input type="tel" id="rrnoc" placeholder="[-]없이 입력"></span><!-- 20180403 class추가 및 문구변경 -->
+									<div class="auth_mouse mg_none"><button type="button" class="btn_mouse" tabindex="-1" aria-hidden="true">카드번호 마우스입력</button></div>
+								</div>
+								<p class="txt_error">숫자를 정확히 입력해 주세요.</p>
+							</div>
+							<div class="inputWrap">
+								<label for="mpno">휴대전화번호</label>
+								<div class="btn_inp_area">
+									<input type="tel" id="mpno" placeholder="[-] 없이 입력 (예 : 01012345678)" />
+									<span><button type="button" class="btn_cont_org" ><span>인증번호 발송</span></button></span>
+								</div><!-- 20180403 class변경 버튼추가-->						
+								<div class="btn_inp_area">
+									<input type="tel" title="휴대전화번호 나머지번호" placeholder="[-] 없이 입력 (예 : 01012345678)" />
+									<span><button type="button" class="btn_cont_org" disabled="disabled"><span>인증번호 발송</span></button></span>
+								</div><!-- 20180403 추가-->
+								<div class="btn_inp_area">
+									<input type="tel" title="휴대전화번호 나머지번호" placeholder="[-] 없이 입력 (예 : 01012345678)" />
+									<span><button type="button" class="btn_cont_dark"><span>인증번호 재발송</span></button></span>
+								</div><!-- 20180403 추가-->
+								<div class="btn_inp_area">
+									<input type="tel" title="휴대전화번호 나머지번호" placeholder="[-] 없이 입력 (예 : 01012345678)" />
+									<span><button type="button" class="btn_cont_dark" disabled="disabled"><span>인증번호 재발송</span></button></span>
+								</div><!-- 20180403 추가-->
+								<!-- 경고문구  제거-->
+								<p class="txt_error">휴대전화번호를 입력해 주세요.</p>
+								<!-- //경고문구 -->
+								<p class="txt_info">이 번호로 가능확인 결과를 알려드립니다.</p><!-- 20180403 추가-->
+							</div>
+							<!-- 20180403 추가 -->
+							<div class="inputWrap">
+								<label for="certno3">인증번호</label>
+								<div class="authbox">
+									<div class="input_auth">
+										<div class="btn_inp_area">
+											<input type="tel" title="인증번호" id="certno3" placeholder="인증번호 4자리 번호 입력">
+											<span><button type="button" class="btn_cont_org"><span>확인</span></button></span><span class="time">입력 시간 <em>2분 13초</em></span>
+										</div>
+									</div>
+									<!-- 경고문구 dishide 클래스 제거-->
+									<p class="txt_error ">인증번호를 정확하게 입력해 주세요</p>
+									<p class="txt_error ">인증번호를 재발송 받아 다시 입력해 주세요</p>
+									<!--// 경고문구 -->
+								</div>
+							</div>
+							<!--// 20180403 추가 -->
+							<div class="btn_ux15_stepbox">
+								<button type="button" class="btn_cont_p result_ok"><span>공인인증</span></button>
+							</div>
+						</section>
+						<!-- //공인인증 -->
+
+						<div class="cert_area_no">
+							<!-- wcms : ux1.5: /wcms/oap/li/UOAPLI0203M2_04.html 
+							<div class="authbox_txt">
+								<ul class="list_hyphen">
+									<li>한도확인을 위한 신용조회는 신용등급에 영향을 주지 않습니다.</li>
+									<li>KCB 신용조회 차단 서비스 이용 시 한도조회 진행이 어려우므로, 차단 해제 후 조회하시기 바랍니다.<br>(해제 신청 및 문의 : 02-708-1000)</li>
+								</ul>
+							</div>wcms : ux1.5 -->
+							<!-- WCMS --> 
+							<strong class="tcolor_o code">/wcms/oap/li/UOAPLI0203M2_04.html </strong><!--0. wcns 입력 -->
+							<div id="wcms20"></div><!--1. WCMS용 div 추가-->
+							<script type="text/javascript">																
+							window.addEventListener("load",function(){
+							    $.ajax({
+							      type:'post' ,
+							       url:'http://40.1.16.31:8921/wcms/oap/li/UOAPLI0203M2_04.html ', //2. WCMS 경로
+							       dataType:'html',
+							       success:function(data){
+							         $('#wcms20').html(data); //3. WCMS용  id 확인																         
+							       }
+							     });
+							  });
+							</script>
+							<!--// WCMS -->									
+							
+						
+							<!-- 안내문 -->
+							<div class="moduleAcco_box">
+								<div class="moduleAcco_wrap open">
+									<div class="module_head">
+										<strong class="module_tit">안내문</strong>
+										<button type="button" class="module_btn">열기</button>
+									</div>
+									<div class="module_body">
+										<div class="moduleGuide_wrap">
+											<div class="module_body">
+												<ul class="acco_box">
+													<li class="acco_wrap pdl_0">
+														<div class="acco_tit sub">
+															<button type="button"><span>개인(신용)정보 위탁(제공) 현황</span><span class="hide">열기</span></button>
+														</div>
+														<div class="acco_cont agree_area" style="display: none;">
+															<!-- 약관 스크롤 영역 -->
+															<div class="ui_scrollview">
+																<div class="ui_scrollarea">
+																	<div class="ui_content">
+																		<div class="cont_area">
+																			<article class="terms">
+																			<!-- WCMS --> 
+																			<strong class="tcolor_o code">PO1601</strong><!--0. wcns 입력 -->
+																			<div id="wcms18"></div><!--1. WCMS용 div 추가-->
+																			<script type="text/javascript">																
+																			window.addEventListener("load",function(){
+																			    $.ajax({
+																			      type:'post' ,
+																			       url:'http://40.1.16.31:8921/wcms/oap/clause/1222043_6101.html', //2. WCMS 경로
+																			       dataType:'html',
+																			       success:function(data){
+																			         $('#wcms18').html(data); //3. WCMS용  id 확인																         
+																			       }
+																			     });
+																			  });
+																			</script>
+																			<!--// WCMS -->		
+																			</article>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<!-- // 약관 스크롤 영역 -->
+														</div>
+													</li>
+													<li class="acco_wrap pdl_0">
+														<div class="acco_tit sub">
+															<button type="button"><span>삼성카드 고객권리 안내문</span><span class="hide">열기</span></button>
+														</div>
+														<div class="acco_cont agree_area" style="display: none;">
+															<!-- 약관 스크롤 영역 -->
+															<div class="ui_scrollview">
+																<div class="ui_scrollarea">
+																	<div class="ui_content">
+																		<div class="cont_area">
+																			<article class="terms">
+																				<!-- WCMS --> 
+																				<strong class="tcolor_o code">PO0109</strong><!--0. wcns 입력 -->
+																				<div id="wcms19"></div><!--1. WCMS용 div 추가-->
+																				<script type="text/javascript">																
+																				window.addEventListener("load",function(){
+																				    $.ajax({
+																				      type:'post' ,
+																				       url:'http://40.1.16.31:8921/wcms/oap/clause/1221038_6101.html', //2. WCMS 경로
+																				       dataType:'html',
+																				       success:function(data){
+																				         $('#wcms19').html(data); //3. WCMS용  id 확인																         
+																				       }
+																				     });
+																				  });
+																				</script>
+																				<!--// WCMS -->		
+																			</article>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<!-- // 약관 스크롤 영역 -->
+															<div class="terms_in_txtinfo">
+																<p class="txt_info"><!-- wcms : ux1.5 -->고객의 소중한 권리를 지켜 드리기 위하여 최선의 노력을 다하겠습니다.<!--// wcms : ux1.5 --></p>
+															</div>
+														</div>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- //안내문 -->
+						</div>
+
+					</div>
+	
+				</div>
+			</div>
+
+		</section>
+
+		<!--########################## footer  Include ##########################-->
+		<script src="/js/oap/libs/jquery-1.11.2.min.js"></script>
+	    <footer id="footer">
+	    </footer>	
+		<script src="/pub_final/oap/ux15/html_inc/footerInc.js"></script>	
+		<!--##########################// footer  Include ##########################-->
+	    <a href="#header" id="pageTop" class="pageTop">맨위로 가기</a>
+	</div>
+	<!--  <script src="/js/oap/libs/jquery-1.11.2.min.js"></script> 20190320-->
+	<script src="/js/oap/libs/owl.carousel2.js"></script>
+	<script src="/js/oap/common/ui/plugins_ux15.js"></script>	
+	<script src="/js/oap/common/ui/common.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		
+		// 상단 Step option
+		lim_tips();
+		function lim_tips(){
+			$('.st1, .st2, .st3').hover(function(){
+				$(this).find('.ui_ux15_tips').addClass('on');
+				$(this).find($('.step_tips')).addClass('on');
+			}, function(){
+				$(this).find('.ui_ux15_tips').removeClass('on');
+				$(this).find($('.step_tips')).removeClass('on');
+			});
+		}
+
+		// 약관 내 아코디언
+		$('.accoin_box').accoTab({
+			toggleCont : true,
+			className : 'accoin',
+			baseView : false
+		});
+
+		// 내부 탭 호출
+		$('.in_tab').tabJo();
+		
+		// 휴대전화번호 focus
+			var $bt_tel = $('.btn_inp_wrap .tel_btn'),
+				$bt_select1 = $('.btn_inp_wrap .sel_wrap select'),
+				$bt_select2 = $('.btn_inp_wrap .sel_wrap').find('button');
+
+			$bt_tel.on('click', function(){
+				$bt_select1.removeClass('on');
+				$bt_select2.removeClass('on');
+			});
+
+			if($bt_tel.hasClass('on')){
+				$bt_select1.removeClass('on');
+				$bt_select2.removeClass('on');
+			}
+
+			$bt_select1.on('focus', function(){
+				$(this).addClass('on');
+				$('.btn_inp_wrap label.tel_btn').removeClass('on');
+			}).on('blur', function() {
+				if ($(this).children('option:selected')) {
+					$(this).addClass('on');
+				} else {
+					$(this).removeClass('on');
+				}
+            });
+
+            $bt_select2.on('focus', function(){
+            	$('.btn_inp_wrap label.tel_btn').removeClass('on');
+				$(this).addClass('on');
+			}).on('blur', function() {
+				if ($(this).hasClass('on')) {
+					$('.btn_inp_wrap label.tel_btn').removeClass('on');
+				} else {
+					$(this).removeClass('on');
+				}
+            });
+
+			// 휴대폰 인증 노출/비노출
+            hp_area();
+	        function hp_area(){
+	            var $btn_cert = $('.certTab li'),
+	            	$hp_cert = $('.certTab li.mb .label_radio'),
+	            	$cert_cert = $('.certTab li.cert .label_radio'),
+	            	$hp_area = $('.hp_area'),
+	            	$card_area = $('.card_area'),
+	            	$cert_area_no = $('.cert_area_no'),
+	            	$cert_area = $('.cert_area');
+
+	            $hp_area.show();
+	            //$card_area.hide(); //.mb .cd .cert
+	            $btn_cert.click(function(){
+	            	if( $hp_cert.hasClass('on')){
+		            	$hp_area.show();
+		            	$card_area.hide();
+		            	$cert_area.hide();
+		            } else {
+		            	$hp_area.hide();
+		            	$card_area.show();
+		            	$cert_area.hide();
+		            }
+	            	if( $cert_cert.hasClass('on')){
+		            	$card_area.hide();
+		            	$cert_area_no.show();
+		            	$cert_area.show();
+	            	} else {
+		            	$cert_area_no.show();
+		            	$cert_area.hide();
+	            	}
+	            });
+	        }
+				//scui에서 쓰는 내부 스크롤 영역 생성과 동일한 플러그인
+				//$('.ui_scrollview').scrollView(); 20190920  html 현행화로 제거
+		});
+		// 하단 플로팅 바 위치 조정
+
+	    var floatBar =  function floatBar(){
+	    	var dH = $(document).outerHeight(),
+	    		wH = $(window).outerHeight(),
+	    		fH = $('#footer').outerHeight(),
+	    		goPos = dH - wH - fH,
+	    		$el = $('.tab_cont > section.sec_on').find('.btn_ux15_stepbox');
+	    	
+	    	if( $(window).scrollTop() >= goPos ){
+	    		
+	    		if( !$('.btn_ux15_stepbox').hasClass('clone') ){
+		    		$clone = $el.clone(true).prependTo('#footer').addClass('clone');
+		    		$clone.show();
+					$el.hide();
+	    		} else{
+		    		$el.hide();
+			    	$('.btn_ux15_stepbox.clone').show();
+	    		}
+
+	    	} else{
+
+		    	$('.btn_ux15_stepbox.clone').hide();
+	    		$el.show();
+	    	}
+	    }
+
+	    //탭전환시 플로팅 추가 수정
+	    $('.certTab label').on('click',function(){
+	    	//하단 플로팅 버튼 초기화 
+       		 $('.btn_ux15_stepbox.clone').remove();
+			
+		    //하단 플로팅 위치 조정 초기화
+			$(window).off('scroll',function(){
+				if(floatBar){
+					floatBar();
+				}
+			});
+
+			//하단 플로팅 위치 조정 호출
+			$(window).on('scroll',function(){
+				floatBar();
+			});
+
+	    });
+
+	    //하단 플로팅 위치 조정 호출
+		$(window).on('scroll',function(){
+    		floatBar();
+		});
+	    
+	    //20190107 토글버튼 추가 -start
+	    /*20190320 체크박스클릭시 차량구입 예정일 토글처리 삭제
+		$('.agree2_optcheck_label').on('click',function(){//라벨 체크시
+			$(this).next().click(); 
+			if($(this).hasClass('on')){
+				$('.accoin_box.addType1 .accoin_cont .way_chk_tit, .accoin_box.addType1 .accoin_cont .way_chk').removeClass('on');
+			}else{
+				$('.accoin_box.addType1 .accoin_cont .way_chk_tit, .accoin_box.addType1 .accoin_cont .way_chk').addClass('on');
+			}
+		});*/
+		$('.sub_check_guide button').on('click',function(){//약관내 가이드 토글시
+			$(this).closest('.accoin_cont').css('height','auto');
+		});
+		//20190107 토글버튼 추가 -end		
+			    
+        if(window.location.href.indexOf("?code") > -1){ //20190725 파라미터 ?code일때는 약관 코드명 표시
+        	$('.tcolor_o.code').show();
+        }else{
+        	$('.tcolor_o.code').hide();
+        }			
+	</script>
+
+
+</body>
+</html>

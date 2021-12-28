@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>frontUxer</title>
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/frontUxer.css">
+<script src="js/jquery-1.11.2.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script type="text/javascript">        
+	var menuArry = ['3','6'];//1depth, 2depth
+	$("title").append("/ mov Player");
+</script>
+</head>
+<body>
+<script src="js/guide.js"></script><!-- site guide -->
+	
+	<div class="start_dim"><span></span></div>
+	
+	<h1 class="hide">module</h1>
+	
+	<div class="contents"><!-- contents -->
+	
+			
+        <!--##################### 비디오 플레이어 #####################-->
+		<section class="aws_box">
+			<h2 class="aws_tl">Video Player</h2>
+			<ul class="dcs">
+				<li>support: html5전용 video(mp4/ogg/webm) player</li>
+				<li>필요시 현재 full기능에서 퍼포먼스를 고려한 세부 조절 가능(웹킷 최적)</li>
+			</ul> 			
+			<div class="code_area">
+				<!-- 	        	
+				<div class="option_txt">
+					<strong class="js-show-code c-code__pre">html5전용 video 컨트롤</strong>
+				</div>-->
+					        	
+	        	<div class="sample_box_unset">
+		        	
+		        	<div class="play_box_in">
+		        		<!-- code -->
+		        		<article class="code_box">
+							<!-- run_sample -->
+							<div class="run_sample mov_video" style="background:#fff;">
+								<style>
+								/*인페이지 스타일 제거*/
+								.sample_box_unset {border: 1px solid #dee5ed; border-radius: 16px; margin-top: 15px; padding: 15px; background: #fff;}
+								.sample_box_unset button{padding:5px; margin-right:10px; border-radius:5px; min-width:60px; background-color: #fff; border: 1px solid #d9d9d9; margin-top:5px;}
+								.sample_box_unset button.on{background:#e5ffa1;}
+								.btn_video{padding:0 0 20px 0;}
+								</style>							
+
+								<div class="sample_div">
+									<div class="btn_video">										
+										<button type="button" data-autoplay="true" data-mvurl="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4">mov1 빅벅버니(auto: true)</button>
+										<button type="button" data-autoplay="false" data-mvurl="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4">mov2 코끼리꿈 (auto: false)</button>
+										<button type="button" data-autoplay="true" data-mvurl="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4">mov3 블레이즈(auto: true)</button>
+										<br/>
+										<button type="button" data-autoplay="true"
+											data-mvurl="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4, http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4, http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" 
+											id="fst_play">
+											mov 리스트1(auto: true)
+										</button>
+										<button type="button" data-autoplay="false" 
+											data-mvurl="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4,http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4,http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4">
+											mov 리스트2(auto: false)
+										</button>
+										<br/>								
+										<button type="button" data-autoplay="true" data-mvurl="">빈 비디오 오류 생성(auto: true)</button>																				
+									</div>
+										<div class="ad_func">
+											광고 선택
+											<span>
+												<select id="adUrl" style="width:200px;">
+													<option selected>http://techslides.com/demos/sample-videos/small.mp4</option>
+													<option>https://va.media.tumblr.com/tumblr_o600t8hzf51qcbnq0_480.mp4</option>
+													<option>https://media.w3.org/2010/05/sintel/trailer.mp4</option>
+												</select>
+											</span>											
+											삽입 지점<input type="number" value="33" style="width:50px; text-align:right;" id="falg_val">%
+											<button type="button" id="btn_ad">광고 영상 넣기</button> 
+											<style>
+											.ad_func{padding-bottom:5px;}
+											.ad_func.disabled,
+											.btn_video.disabled{pointer-events: none; opacity:0.5;}
+											</style>
+											<script>
+											$(document).ready( function(){
+												var adon = false;
+												var adurl = "";
+												var adHtml = '';
+												
+												var adTimer; //인터벌
+												
+												$("#btn_ad").on("click", function(){//광고영상 넣기
+													
+													var movCurrent = ($(".seek_slider .seek").width() / $(".seek_slider").width() *100).toFixed(1);
+													var adFlag_left = $("#falg_val").val();													
+												
+													 adTimer = setInterval(function(){
+														console.log("movCurrent: "+movCurrent);
+														movCurrent = ($(".seek_slider .seek").width() / $(".seek_slider").width() *100).toFixed(1);
+														
+														if(movCurrent > adFlag_left){ //지정한 시간보다 플레이시간이 지났다
+															clearInterval(adTimer);
+															console.log("시점이 어떻게????");
+															
+															$(".mov").css("position","relative");
+															$(".mov video").get(0).pause();
+															adurl = $("#adUrl").val();
+															adHtml = '<div class="ad_div">'+
+																			'<video autoplay preload="metadata"><source src="'+adurl+'"></source></video>'+
+																			'<span class="ad_jump ready"><button><span class="ad_txt">광고 건너뛰기</span> <span class="ad_index">&nbsp;</span></button></span>'+
+																			'<button class="ad_test" style="position:absolute; top:10px; right:10px;">종료 10초전(테스트)</button>'+ //광고 테스트용
+																			'<div class="ad_seekbox"><div class="seek_box"><span class="seek_bar"></span></div></div>'+
+																		'</div>';
+															$(".mov").append(adHtml);
+
+															var adPassNum = 0;
+															var adlimitNum = 6;
+															var adTimeNum = adlimitNum;
+															
+															var adPass = setInterval(function(){//광고 시간체크
+																adPassNum ++;
+																adTimeNum = adlimitNum - adPassNum;
+																console.log("adTimeNum: "+ adTimeNum + "/ adPassNum:"+adPassNum);
+																 $(".ad_index").text(adTimeNum);
+																 if(adPassNum > adlimitNum -1){
+																	 
+																	clearInterval(adPass);
+																	$(".ad_jump").removeClass("ready");
+																 }
+															},1000);//광고시간체크.end
+															
+															$(".ad_div video").get(0).ontimeupdate = function(){//seekbar 업데이트 //ontimeupdate
+																var percentage = (($(".ad_div video").get(0).currentTime / $(".ad_div video").get(0).duration)* 100).toFixed(1);
+																$(".ad_seekbox .seek_bar").width(percentage + "%");
+																if($(".ad_div video").get(0).ended){//영상이 끝나면
+																	$(".mov .ad_div .ad_jump").click(); //자동 광고 건너뛰기		
+																}
+															}
+															$(".mov .ad_div .ad_test").off().on("click",function(){//광고 테스트
+																$(".ad_div video").get(0).currentTime = $(".ad_div video").get(0).duration-10;
+															});
+															
+															
+															
+															$(".mov .ad_div .ad_jump").off().on("click",function(){//광고 건너뛰기
+																$(".ad_func").removeClass("disabled");
+																$(".btn_video").removeClass("disabled");
+
+																$(".mov .seek_slider .ad_flg").remove();
+																$(".ad_div").remove();
+																$(".mov video").get(0).play();
+															});//광고 건너뛰기.end															
+														}
+													},1000);
+
+													
+													adFlag();//광고 플래그
+													
+													
+													$(".ad_func").addClass("disabled");
+													$(".btn_video").addClass("disabled");													
+													
+													adon = true;
+													
+
+													
+												});//광고영상 넣기.end
+												
+												function adFlag(){//광고 플래그
+													$(".mov .seek_slider").append('<span class="ad_flg"></span>');
+													var slWidth = $(".mov .seek_slider").outerWidth();
+													var adFlag_left = $("#falg_val").val();
+													$(".mov .seek_slider .ad_flg").css("left", adFlag_left+"%");													
+												}//광고 플래그.end
+												
+												$("#falg_val").on("keyup, blur",function(){
+													if($(this).val() < 0 || $(this).val() > 100){
+														if($(this).val()< 0){
+															alert("0이상  숫자만 입력");
+															$(this).val(0);
+														}
+														if($(this).val() > 100){
+															alert("100이하 숫자만 입력");
+															$(this).val(100);															
+														}
+														
+													}
+												});
+
+											});
+											</script>
+										</div>									
+								</div>
+								
+								<script>
+								$(document).ready( function(){
+									$(".sample_div .btn_video button").on("click",function(){
+										$(".sample_div .btn_video button").removeClass("on");
+										$(this).addClass("on");
+										var mvUrl = $(this).data("mvurl");
+										//var mvAuto = $(this).data("autoplay");
+										var mvAuto = $(this).attr("data-autoplay");
+										$(".mov").fuvPlayer({
+											url: mvUrl,
+											auto: mvAuto
+										});
+										
+										
+										$(".sample_div .btn_video button").attr("disabled", true);
+										setTimeout(function(){
+											$(".sample_div .btn_video button").attr("disabled", false);	
+										},2000);
+									});
+									
+									/*
+									$(".mov").fuvPlayer({
+										url: "http://40.1.4.95:18081/SC_movie/20211103.mp4",
+										auto: "true" //auto: "true"
+									});*/
+									$("#fst_play").click();
+									
+									var pageInit = $(".aws_box .aws_tl").offset().top;
+																		
+									$("html,body").stop().animate({scrollTop: pageInit}, 500, 'swing');
+									
+								});
+								</script>
+
+
+<!--######################################################################################################### MOV Player ##########################################-->	        	
+<div class="mov">
+	<div style="background:#000;"><img src="player.svg" alt="front movPlayer" style="width:100%; max-width:600px; margin:0 auto;"/></div>
+</div>
+
+<style>
+
+/**** video ready *****/
+.ux_video.ready .loading{display: block; position: absolute; width:100%; left: 0%; top: 50%; color:#747474;  z-index:2; text-align:center; padding:35px 0 0 0; font-size:12px;}
+.ux_video.ready .loading:after{display: block; position:absolute; content:'';  left: 50%; top: 50%;   height: 30px; width: 30px; margin: -100px 0 0 -15px; z-index:2; 
+	border: 1px solid #fff0; border-right-color: #747474; border-top-color: #747474; border-left-color: #747474; border-radius: 100%;  animation: spin 800ms infinite linear;  transition:0.6s;}
+.ux_video.ready.not .loading:after{display:none;}	
+@keyframes spin{
+	from {transform: rotate(0deg);}
+	to {transform: rotate(359deg);}
+}    
+.ux_video.ready .vid_control .vid_control_box{opacity:0.5; pointer-events: none;}
+.ux_video.ready .seek_info .seek_slider{opacity:0.5;}
+.ux_video.ready .seek_info .seek_slider .seek{background:#fff;}
+.ux_video .loading{display:none;}
+
+/**** video *****/
+.ux_video {position:relative; border:1px solid #d9d9d9; overflow:hidden;}
+.ux_video video{display:block; background:#000; width:100%;}
+
+/**** poster *****/
+.ux_video .poster{position:absolute; width:100%; height:100%; top:0; left:0; background: rgba(0,0,0,0.0);}
+.ux_video .poster img{}/*custom*/
+.ux_video .poster.default:after{display:block; content:''; position:absolute; width:100%; height:100%; background:url('player.svg') no-repeat center center; background-size:20% auto; pointer-events:none;}/*default*/
+
+/**** button *****/
+.ux_video .vid_control {position:absolute; left:0; bottom:0; width:100%; z-index:2;  background: rgba(0,0,0,0.7); padding:0 0 10px 0;}
+.ux_video .vid_control .vid_control_box{position:relative; padding:10px 10px 0 10px;}
+.ux_video .vid_control .vid_control_box:after {display:block; content:''; clear:both;}
+.ux_video .vid_control button{padding:5px; margin-right:10px; border-radius:5px; min-width:60px; background-color: #fff; border: 1px solid #d9d9d9;}
+.ux_video .vid_control .play{}
+.ux_video .vid_control .pause{display:none;}
+.ux_video .vid_control .mute{}
+.ux_video .vid_control .unmute{display:none;}
+
+.ux_video .vid_control .info{float:right;}
+.ux_video .vid_control .sel_box{float:right; padding:0px; margin-top:5px; margin-right:10px; border-radius:5px; min-width:60px; background-color: #fff; border: 1px solid #d9d9d9;}
+.ux_video .vid_control .sel_box select{border:none; height:30px; line-height:30px; line-height:30px; padding:0 0 0 10px; width:100%; background:none;}
+.ux_video .vid_control .time{color:#fff;}
+
+/**** full/min screen*****/
+.ux_video .vid_control .min{float:right; margin-right:0; display:none;}
+.ux_video .vid_control .full{float:right; margin-right:0;}
+
+/*사이트 상황에 맞게 처리해야함*/
+html.fullscreen {overflow:hidden;}
+html.fullscreen *,
+html.fullscreen body.new_mopism .contents *,
+html.fullscreen body.new_mopism .contents{transition:none;}
+html.fullscreen .contents,
+html.fullscreen .sample_box_unset,
+html.fullscreen .code_area,
+html.fullscreen section.aws_box,
+html.fullscreen section.aws_box .run_sample{padding:0; margin:0; height:100%; border:none;}
+
+html.fullscreen .contents{max-width:100%;}
+
+html.fullscreen .ui_guideline,
+html.fullscreen .aws_tl,
+html.fullscreen .dcs,
+html.fullscreen .sample_div,
+html.fullscreen .icn_top,
+html.fullscreen .full_status .full{display:none;}
+html.fullscreen .full_status .min{display:inline-block;}
+
+html.fullscreen .ux_video{position:fixed; top:0; left:0; width:100%; height:100%; border:none;}
+html.fullscreen .ux_video .vid_box,
+html.fullscreen .ux_video video{height:100%;}
+
+html.fullscreen .ui,
+html.fullscreen .ui.bottom{display:none;}
+
+/**** volume ****/
+.ux_video .vol_area{display:inline-block; background: none; padding:0 10px 5px 5px; border-radius:10px; margin-left:10px;}
+
+.ux_video .vol_area .vol_slider{display:none; vertical-align:top; width:100px; position:relative; background: rgba(255,255,255,0.3); height: 3px; border-radius: 1px; margin:18px 0 0 0; }
+.ux_video .vol_area .vol_slider .bar_vol{display:inline-block;  position:absolute; top:0; left:0; height:3px; background:#fff;  border-radius: 1px;}
+.ux_video .vol_area .vol_slider .ui-slider-handle{width: 20px; height: 20px; background:none; box-shadow:none; top: -8px !important; border: none !important; cursor: pointer; border-radius:1px; margin-left: -10px;}
+.ux_video .vol_area .vol_slider .ui-slider-handle:after{display:block; content:''; width:4px; height:5px; left: 7px; top: 6px; border-radius: 0; background: #fff; border-radius:1px; border:1px solid #d9d9d9; box-shadow:none;}
+
+.ux_video .vol_area.ready{background: rgba(0,0,0,0.7);}
+.ux_video .vol_area.ready .vol_slider{display:inline-block;}
+
+/**** seek *****/
+.ux_video .seek_info{padding:0px 12px; position:relative;}
+.ux_video .seek_info .seek_slider{border: none; padding:10px 0; margin-bottom: 0; background: rgba(255,255,255,0.0); height: 3px; border-radius:1px; cursor:pointer; position:relative;}
+.ux_video .seek_info .seek_slider:after{display:block; content:''; position:absolute; top:10px; left:0; content:''; width:100%; height:3px; background: rgba(255,255,255,0.3)}
+
+.ux_video .seek_info .seek_slider .seek{display:block; background:#fff; width:1px; height:3px;  border-radius:1px;  cursor:pointer;} /*seekbar*/
+.ux_video .seek_info .seek_slider .pogress {display:block; position:absolute; top:10px; left:0px; background: rgba(255,255,255,0.3); width:1px; height:3px;  border-radius:1px; z-index:-1;} /*buffering*/
+.ux_video .seek_info .seek_slider .ui-slider-handle{width: 20px; height: 20px; background: none; box-shadow:none; top: 2px !important; border: none !important; cursor: pointer; border-radius:1px; margin-left: -10px;}
+.ux_video .seek_info .seek_slider .ui-slider-handle:after{display:block; content:''; width:14px; height:5px; left: 2px; top: 6px; border-radius: 0; background: #fff; border-radius:1px; border:1px solid #d9d9d9; box-shadow:none;}
+
+
+/**** seek_thumb *****/
+.ux_video .seek_thumb{display: block; width: 200px; position: absolute; left: 0; top: -132px; background: #fff; padding: 5px; border-radius: 5px; z-index:2; display:none;}
+
+/**** thumb_list *****/
+.ux_video .thumb_list{position:absolute; bottom:70px; left:0; background: rgba(0,0,0,0.5); z-index:1; width:100%;}
+.ux_video .thumb_list .thumb_box{text-align:center; padding:5px 10px 5px 5px;}
+.ux_video .thumb_list .thumb_box .btn_box{display:inline-block; width:12.5%; padding:0 5px; box-sizing:border-box;}
+.ux_video .thumb_list .thumb_box button{ margin:0; padding:3px; font-size:12px;}
+.ux_video .thumb_list .thumb_box button video{display:block; margin-bottom:3px;}
+
+/**** mov_list *****/
+.ux_video .move_list{position:absolute; top:0; right:0; background: rgba(0,0,0,0.3); height:100%; z-index:1;}
+.ux_video .move_list .list_box{padding:10px;}
+.ux_video .move_list .list_box:before{display:block; content:'Mov List'; color:#fff;}
+.ux_video .move_list .list_box p{}
+.ux_video .move_list .list_box p button{width:120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+
+/**** info_list *****/
+.ux_video .info_list{position:absolute; top:0; right:150px; background: rgba(0,0,0,0.3); height:100%; z-index:0;}
+.ux_video .info_list .info_box{padding:10px; width:150px; box-sizing:border-box;}
+.ux_video .info_list .info_box:before{display:block; content:'Mov Info'; color:#fff;}
+.ux_video .info_list .info_box p{color:#fff; font-size:12px; margin-top:5px;}
+
+/**** ad_div *****/
+.ad_div {display:block; width:100%; height:100%; position:absolute; top:0; left:0; background: rgba(0,0,0,0.8); z-index:3;}
+.ad_div video{width:100%;}
+.ad_div .ad_jump{display:block; position:absolute; top:10px; left:10px;}
+.ad_div .ad_jump button{background:red; color:#fff; border:1px solid red; border-radius:5px;}
+.ad_div .ad_jump.ready{pointer-events:none;}
+.ad_div .ad_jump .ad_index{display:none;}
+.ad_div .ad_jump.ready .ad_txt{display:none;}
+.ad_div .ad_jump.ready .ad_index{display:inline-block;}
+.ux_video .seek_slider .ad_flg{display:block; position:absolute; width:2px; height:16px; margin:-8px 0 0 0; background:red;}
+.ux_video .seek_slider .ad_flg:after{display:block; content:'ad'; background:red; color:#fff; border-radius:2px; width:20px; margin:14px 0 0 -9px; font-size:11px; text-align:center;}
+.ad_div .ad_seekbox{display:block; position:absolute; bottom:10px; left:0; width:100%; height:3px; box-sizing:border-box; padding:10px;}
+.ad_div .ad_seekbox .seek_box{display:block; position:relative; width:100%; height:3px; background: rgba(255,255,255,0.5);}
+.ad_div .ad_seekbox .seek_box .seek_bar{display:block; position:absolute; width:0%; height:3px; background:red;}
+
+/**** 모바일 *****/
+.mobile .ux_video{min-height:344px; background:#000;}
+.mobile .ux_video .vid_control .vid_control_box{padding-top:0;}
+.mobile .ux_video .vid_control button{min-width:30px; font-size:12px;}
+.mobile .vid_control{font-size:12px;}
+.mobile .ux_video .vol_area.ready,
+.mobile .ux_video .vol_area{display:block; margin-left:0; background:none; margin-top:0px; padding:0;}
+.mobile .ux_video .vol_area .vol_slider,
+.mobile .ux_video .vol_area.ready .vol_slider{display:inline-block;}
+.mobile .ux_video .move_list{font-size:11px; height:60%;}
+html.fullscreen .ux_video .move_list{height:25%;}
+.mobile .ux_video .move_list .list_box{ padding:3px;}
+.mobile .ux_video .move_list .list_box p button{width:40px;  font-size:11px; margin-right:0; padding:2px 3px;}
+
+.mobile .ux_video .seek_thumb{width:100px; border-radius:0; padding:1px;}
+
+.mobile .ux_video .info_list{height:60%;}
+html.fullscreen.mobile .ux_video .info_list{height:25%;}
+.mobile .ux_video .info_list .info_box{width:70px; font-size:11px; padding:3px;}
+.mobile .ux_video .thumb_list .thumb_box{padding:0;}
+.mobile .ux_video .thumb_list .thumb_box .btn_box{padding:2px; width:25%;}
+.mobile .ux_video .thumb_list .thumb_box button{border-radius:0px; padding:0px;}
+
+.mobile .ux_video .vid_control .sel_box{float:left;}
+.mobile .ad_div video{margin-top:65px;}
+</style>
+
+
+<script>
+
+(function($){//0. $변수를 쓰는 다른라이브러리와 충돌을 피하기 위해 즉시 호출 함수 표현을 사용해서 감싸준다
+	$.fn.fuvPlayer = function(options){//1.플러그인 name
+		var set = $.extend({//2. 옵션의 기본값 지정
+			url: '#',
+			poster: 'none', //'player.svg',
+			auto: "false", //auto: false //자동재생
+			thumb: true,//썸네일용 무비사용(시스템 점유율 큼)
+			rate: true,//배속 사용
+			info: true,// 동영상 정보 사용
+			listPlay: false //listPlay: false //리스트 플레이(플레이어 내부속성)
+		}, options);//2.end		
+		return this.each(function(){//3.set의 변수를 사용해서 어플리케이션 동작
+
+			var poster	= set.poster, //옵션 값 연결
+				urlText	= set.url,
+				autoplay	= set.auto,
+				thumb		= set.thumb,
+				rate		= set.rate,
+				info		= set.info,				
+				listPlay		= set.listPlay;
+		
+				var urlArray = urlText.split(","); //array 처리
+				
+				if(urlArray.length > 1){//1개 초과면 정상적으로 //console.log("동영상 리스트");
+					url = urlArray[0];
+				}else{//console.log("동영상 1개");
+					url = urlText;
+				}				
+		
+			var $this		= $(this),
+				$vid, //비디오 객체
+				vidStatus, //비디오 상태
+				autoplayTxt 	= "", //오토플레이 비디오 옵션
+				plyerHas = $this.find("video").length ? true: false; //플레이어 생성 여부 //console.log("plyerHas: "+ plyerHas);
+				
+			var rethisOff = $this.offset().top;//현재 동영상 위치
+			
+			var curmin	= 0, //시간
+				cursec		= 0,											
+				duemin	= 0,
+				duesec	= 0;				
+			
+			var volumefst = 0.5, //볼륨 초기값: 최대 1.0
+				volumeInit; //볼륨 지정
+			
+			if(autoplay == "true"){//오토플레이 설정
+				if(!$this.find("video").length){ //처음 재생임
+					autoplayTxt = "autoplay muted"; //처음 재생의 autoplay일때는 muted 처리					
+				}
+			}
+			
+			//초기 비디오 레이아웃 //bufferd controls
+			var movHtml = '<div class="ux_video ready"><div class="vid_box"><video '+autoplayTxt+' preload="metadata"><source src="'+url+'"  type="video/mp4" />HTML5만 브라우저만 지원합니다.</video></div><span class="loading"></span></div>';
+			var controlHtml = '<div class="vid_control"><div class="vid_control_box">'+
+									'<button type="button" class="play">play</button>'+
+									'<button type="button" class="pause">pause</button>'+
+									'<span class="time"><em class="now_txt">00:00</em> / <em class="duration_txt">00:00</em></span>'+
+									'<div class="vol_area">'+
+										'<button type="button" class="mute">mute</button>'+
+										'<button type="button" class="unmute">unmute</button>'+									
+										'<div class="vol_slider">'+									
+											'<span class="bar_vol"></span>'+
+										'</div>'+									
+									'</div>'+
+									'<button type="button" class="min">min</button>'+
+									'<button type="button" class="full">full</button>'+									
+									//'<button type="button" class="info">info</button>'+
+									'<span class="sel_box"><select class="speed_rate">'+
+										'<option value="0.2">0.2 배속</option>'+
+										'<option value="0.5">0.5 배속</option>'+
+										'<option value="1.0" selected>1 배속</option>'+
+										'<option value="2.0">2 배속</option>'+
+										'<option value="4.0">4 배속</option>'+
+										'<option value="8.0">8 배속</option>'+
+										'<option value="16.0">16 배속</option>'+
+									'</select></span>'+									
+								'</div></div>';
+			var seekHtml = '<div class="seek_info">'+
+									'<div class="seek_slider">'+
+										'<span class="pogress"></span>'+									
+										'<span class="seek"></span>'+
+									'</div>'+
+								'</div>';
+			var thumbHtml = '<div class="thumb_list">'+
+									'<div class="thumb_box">'+
+									'</div>'+
+								'</div>';								
+			var listHtml = '<div class="move_list">'+
+								'<div class="list_box">'+
+								'</div>'+
+							'</div>';
+			var infoHtml = '<div class="info_list">'+
+								'<div class="info_box">'+
+								'</div>'+
+							'</div>';							
+							
+									
+			var app = {
+				initialiazing: function(){ //initialiazing
+					$this.find(".seek_slider").slider("value", 0);				
+					$this.find(".seek_slider .pogress").width("0%");
+					$this.find(".seek_slider .seek").width("0%");
+					$this.find(".vid_control_box .duration_txt").text("00:00");
+					$this.find(".vid_control_box .now_txt").text("00:00");
+					$this.find(".ux_video").addClass("ready");
+					$this.find(".loading").text("로딩중");					
+					$this.find(".ux_video").removeClass("not");
+					$this.find(".thumb_list").remove();
+					//$this.find(".speed_rate").val("1.0");
+				}, //initialiazing.end					
+				init: function(){ //init
+					
+					//플레이어 생성
+					if(!plyerHas){ //초기 재생(플레이어 생성후 재생)
+						
+						$this.html(movHtml);
+						$this.find(".ux_video").append(controlHtml);
+						$this.find(".ux_video .vid_control").prepend(seekHtml);					
+
+						if(poster =="none"){//poster 
+							$this.find(".ux_video").append('<div class="poster default"></div>'); //default
+						}else{
+							$this.find(".ux_video").append('<div class="poster"><img src="'+poster+'" alt=""/></div>'); //custom
+						}//poster.end
+						
+						if(autoplay == "true"){//오토플레이 설정						
+							$this.find(".vid_control .mute").css("display","none");
+							$this.find(".vid_control .unmute").css("display","inline-block");
+						}else{
+							$this.find(".vid_control .mute").css("display","inline-block");
+							$this.find(".vid_control .unmute").css("display","none");
+						}						
+						
+						volumeInit = volumefst; //볼륨값은 초기값에서  
+						
+						
+					}else{//생성 플레이어 있음(url만 변경 재생)
+						
+						//$this.find(".ux_video video").get(0).currentTime = 0;
+					
+						setTimeout(function(){
+							$this.find(".ux_video video source").attr("src", url);
+							$this.find(".ux_video video").get(0).load();							
+						},10);
+						
+						if(autoplay != "true"){//오토플레이 설정시
+							$this.find(".ux_video video").get(0).play(); //일단 플레이 시켜서 버퍼확보후					
+							setTimeout(function(){
+								$this.find(".ux_video video").get(0).pause();	//일시정지
+							}, 500);
+						}
+						
+						//슬라이더 초기화 2 //슬라이더를 새로 생성하면 전역변수로 밸류값이 남아있어 제대로 초기화가 안됨
+						app.initialiazing();						
+						
+						if(poster =="none"){//poster 
+							$this.find(".ux_video poster").html(''); //default
+						}else{
+							$this.find(".ux_video poster img").attr('src',poster); //custom
+						}//poster.end
+						
+						volumeInit = $this.find(".ux_video video").get(0).volume; //볼륨값은 플레이어에서						
+					}
+				
+					app.list(); //비디오 리스트 처리
+					
+					//객체 선언
+					$vid = $this.find("video"); 
+					
+					
+						var stausChkNUm = 0;
+						var stausChk = setInterval(function(){
+							stausChkNUm++;
+							
+							//console.log(stausChkNUm +" networkState: "+$vid.get(0).networkState);
+							
+							if($vid.get(0).networkState == 0){ //0. 미디어 리소스 선택 전의 초기 상태 (NETWORK_EMPTY)
+								
+							}else if($vid.get(0).networkState == 1 || $vid.get(0).readyState == 4){ //1.유휴 상태 (NETWORK_IDLE) 거나 4.HAVE_ENOUGH_DATA 상태								
+																	
+								$this.find(".ux_video").removeClass("ready");
+								clearInterval(stausChk);	
+								
+								console.log("유휴상태: networkState: "+$vid.get(0).networkState);
+								
+								//$vid.get(0).onloadedmetadata = function(){
+								
+									setTimeout(function(){
+										app.button(); //버튼 생성
+										app.seek(); //seek 생성
+										
+										if(thumb == true){//썸네일 생성
+											app.thumb();
+										}else{//썸네일 사용안할때는 seek 썸네일
+											
+										}
+										app.seekThumb(); //seek시 썸네일	
+										
+										
+										if(info == true){//정보 사용
+											app.info();
+										}
+										
+										if(plyerHas){ //플레이어 있었다면
+											$vid.get(0).playbackRate =  $this.find(".sel_box .speed_rate").val();
+											app.info();
+										}
+										
+									}, 100);
+								
+									console.log("메타데이터 로드 완료");
+								//}					
+								
+							
+							}else if($vid.get(0).networkState == 2){ //2.미디어 리소스를 다운로드 중 (NETWORK_LOADING)
+								$this.find(".loading").text("로딩중");
+							
+								 if(stausChkNUm > 1000){// 딜레이가 길 경우(3초 이상)
+										$this.find(".ux_video").addClass("not");
+										$this.find(".loading").text("! 동영상이 없거나 네트웍이 원활하지 않습니다.");	
+										clearInterval(stausChk);	
+										
+										console.log($vid.get(0).networkState);
+								 }							
+							
+							}else if($vid.get(0).networkState == 3){ //3. 미디어 리소스를 찾을수 없는 경우 (NETWORK_NO_SOURCE)
+								console.log("stausChkNUm: "+stausChkNUm);
+	
+								 if(stausChkNUm > 300){// 딜레이가 길 경우(3초 이상)
+										$this.find(".ux_video").addClass("not");
+										$this.find(".loading").text("! 동영상이 없거나 네트웍이 원활하지 않습니다.");	
+										clearInterval(stausChk);	
+										
+										console.log($vid.get(0).networkState);
+								 }
+							}						
+							
+						},10);						
+
+					
+				}, //init.end			
+				seekThumb: function(){ //seekThumb
+
+					//*********************************************************************  seekTumb 생성 *********************************************************************
+					var vidSrc = $vid.find("source").attr("src");
+					
+					if($this.find(".seek_info .seek_thumb").length){
+						$this.find(".seek_info .seek_thumb").remove();
+					}
+					$this.find(".seek_info").append('<span class="seek_thumb"><video><source src="'+vidSrc+'"></source></video></span>');
+					
+					var $seekTumb = $this.find(".seek_thumb");
+					var $seekVid = $this.find(".seek_thumb video");
+					var $seekVidNum = 0;
+					var $seekarea = $this.find(".seek_info .seek_slider");
+						 
+					$seekarea.on("mousemove", function(e){							
+						 var parentOffset = $(this).parent().offset();
+						 var seekdue = $(this).width();
+						 var seekVidPer =(e.pageX - $(this).offset().left)  / seekdue;
+						 var vidTumbTime = ($seekVid.get(0).duration * seekVidPer).toFixed(0);
+						 $seekVid.get(0).currentTime = vidTumbTime;
+						 
+						 $this.find(".thumb_list").css("display","none");
+						 $this.find(".seek_thumb").css("display","block");
+						 $this.find(".seek_thumb").css("top", "-"+ $this.find(".seek_thumb").outerHeight()+"px");
+						
+						var thumbMinLeft = 0;
+						var thumbMaxLeft = seekdue -$this.find(".seek_thumb").width();
+						 var mouseLeft = e.pageX - $(this).offset().left;
+						 
+						 if( mouseLeft >  thumbMinLeft && mouseLeft < thumbMaxLeft){ //210보다 크고 614보다 작을때만..
+							 $this.find(".seek_thumb").css("left", e.pageX - $(this).offset().left );
+						 }
+						 
+						 
+					});
+					$seekarea.on("mouseleave", function(e){
+						$this.find(".seek_thumb").css("display","none");
+						$this.find(".thumb_list").css("display","block");
+					});
+					//*********************************************************************  seekTumb 생성 *********************************************************************					
+					
+				}, //init.end
+				thumb: function(){ //thumb
+					
+					$this.find(".thumb_list").remove(); //삭제하고 다시 시작하자
+					
+					//**************************************************************************************************************************************************************** 썸네일 생성
+					var flagBtnLeng = 0; //버튼갯수
+					var flagBtnArray = []; //타임라인 생성
+					var thumBtn = 8;//썸네일 갯수
+					
+					if($("html").hasClass("mobile")){
+						thumBtn = 4;//썸네일 갯수
+					}
+					
+					var timeEa = Math.floor($vid.get(0).duration / thumBtn);					
+					var InceaseTime = 0;
+					
+					var vidSrc = $vid.find("source").attr("src");
+					
+					$this.find(".ux_video").append(thumbHtml);//썸네일 박스 추가
+					var cntHeght = $this.find(".vid_control").outerHeight();
+					$this.find(".ux_video").find(".thumb_list").css("bottom",cntHeght);
+					
+					
+					for(var i = 0; i < thumBtn; i++){
+						InceaseTime = InceaseTime +  timeEa; //시간 증가 //console.log($vid.get(0).duration + " : "+ timeEa + " : " + InceaseTime);
+												
+						$this.find(".thumb_box").append('<span class="btn_box"><button class="button" data-timeline="'+InceaseTime+'"></button></span>');					
+						
+						
+						var thummin = Math.floor(InceaseTime / 60);
+						var thumsec =  Math.floor(InceaseTime - thummin * 60);
+						if(thumsec < 10){thumsec = "0" + thumsec;}
+						if(thummin < 10){thummin = "0" + thummin;}									
+						$this.find(".thumb_box .button").eq(i).text(thummin+":"+thumsec);
+											
+						$this.find(".thumb_box .button").eq(i).on("click",function(){
+							var thisSeek = $(this).data("timeline"); //console.log(thisSeek);
+							$vid.get(0).currentTime = thisSeek; 
+						});
+						
+						$this.find(".thumb_box .button").eq(i).prepend('<video class="mov'+i+'" data-sean="'+InceaseTime+'"><source src="'+vidSrc+'"></source></video>');
+						
+					}									
+					
+					
+					var loadArray = [];
+					var loadIndex = [];
+					$this.find(".thumb_box .btn_box").each(function(){ //썸네일 mov seek						
+						var $thisvid = $(this).find("video");
+						var thisNum = $(this).index();
+						var timeSean = $thisvid.data("sean");
+						loadArray.push("ready"+thisNum);
+						
+						
+						
+						$thisvid.on("loadedmetadata", function(){							
+						//$thisvid.on("loadeddata", function(){
+							
+							if(!isNaN($thisvid.get(0).duration)){//오류가 아니면
+								$thisvid.get(0).currentTime = timeSean;
+								console.log("make mov thumb"+thisNum);
+								loadIndex.push("loaded"+thisNum);
+							}							
+						});
+						
+					}); //썸네일 mov seek.end
+					
+					var intervalNum = 0;
+					var loadInterval = setInterval(function(){
+						 intervalNum ++;
+						console.log("로딩상태 체크 " +  intervalNum);
+						console.log("loadIndex: "+loadIndex + " / " +loadIndex.length);
+						console.log("loadArray: "+loadArray + " / " +loadArray.length);
+						
+						if(loadIndex.length == loadArray.length){
+
+							console.log("모든 썸네일 로드 완료");
+							
+							clearInterval(loadInterval);
+							
+							$this.find(".thumb_box .btn_box").each(function(){ //썸네일 mov seek
+								var $thisvid = $(this).find("video");
+								var thisNum = $(this).index();
+								var timeSean = $thisvid.data("sean");
+										
+								if(!isNaN($thisvid.get(0).duration)){//오류가 아니면
+									$thisvid.get(0).currentTime = timeSean;
+									console.log("mov"+thisNum+" 한번더");
+								}
+								
+							});							
+						}
+					},2000);
+					
+					
+					//**************************************************************************************************************************************************************** 썸네일 생성.end								
+				}, //thumb.end
+				list: function(){ //list
+					
+					if(urlArray.length > 1){//1개 초과면 정상적으로
+						if(!$this.find(".move_list").length){//console.log("리스트가 없을때만 추가");
+							$this.find(".ux_video").append(listHtml);
+						}else{//console.log("리스트가 있다면 삭제");
+							$this.find(".move_list .list_box").remove();
+							$this.find(".move_list").append('<div class="list_box"></div>');
+						}	
+					
+						for(var i=0; i< urlArray.length; i++){
+							var filename = urlArray[i].substring(urlArray[i].lastIndexOf('/')+1, urlArray[i].length ); //주소에서 파일명 추출 
+							$this.find(".move_list .list_box").append('<p><button type="button" data-autoplay="'+autoplay+'" data-mvurl="'+urlArray[i]+'" title="'+filename+'">'+filename+'</button></p>');
+							
+							$this.find(".move_list .list_box button").eq(i).off().on("click",function(){//리스트 버튼클릭
+								$this.find(".move_list .list_box button").removeClass("on");
+							
+								$this.find(".move_list .list_box button").attr("disabled", true);
+								setTimeout(function(){
+									$this.find(".move_list .list_box button").attr("disabled", false);	
+								},2000);
+							
+								$(this).addClass("on");
+								
+								var mvUrl = $(this).data("mvurl");
+								var mvAuto = $(this).attr("data-autoplay");
+								
+								$this.fuvPlayer({//$(".mov")
+									url: mvUrl,//http://40.1.4.95:18081/SC_movie/20211103.mp4
+									auto: mvAuto,
+									listPlay: true
+								});
+							});//리스트 버튼클릭.end
+							
+						}
+						$this.find(".move_list .list_box button").eq(0).addClass("on");
+					}else{//1개 미만이네
+						if($this.find(".move_list").length){//리스트가 없다면
+							if(!listPlay){ //console.log("내부 플레이가 아니면 리스트를 삭제해");
+								$this.find(".move_list").remove();
+							}							
+						}
+					}	
+								
+					
+				}, //list.end
+				info: function(){ //info
+					if(!$this.find(".info_list").length){//console.log("info_list가 없을때만 추가");
+						$this.find(".ux_video").append(infoHtml);
+					}
+				
+					if($this.find(".move_list").length){//console.log("무비 리스트 있다면");
+						$this.find(".info_list").css("right", $this.find(".move_list").outerWidth());
+					}else{//console.log("무비 리스트 없다면");
+						$this.find(".info_list").css("right", 0);
+					}
+					
+					var vidTxt ='';
+						vidTxt = '<p class="size_txt">video Size:<br/>'+$vid.get(0).videoWidth + ' x ' + $vid.get(0).videoHeight+'</p>' + 
+							'<p class="rate_txt">play speed:<br/> x' + $vid.get(0).playbackRate + ' Rate</p>';
+						
+					$this.find(".info_list .info_box").html(vidTxt);
+					
+					
+				}, //info.end							
+				button: function(){ //button					
+					$vidBtnbox	= $this.find(".vid_control");
+					$vidBtn	= $this.find(".vid_control button");
+					
+					$vidBtn.off().on("click",function(){
+						if($(this).hasClass("play")){//재생
+							$vid.get(0).play();
+							app.playEv();
+						}else if($(this).hasClass("pause")){//일시 멈춤
+							$vid.get(0).pause();
+							app.pauseEv();
+						}else if($(this).hasClass("mute")){//음 소거
+							$vid.get(0).muted = true;
+							$(this).css("display","none");
+							$vidBtnbox.find(".unmute").css("display","inline-block");
+						}else if($(this).hasClass("unmute")){//음 재생
+							$vid.get(0).muted = false;
+							$(this).css("display","none");
+							$vidBtnbox.find(".mute").css("display","inline-block");
+						}else if($(this).hasClass("full")){//전체화면							
+							$this.addClass("full_status");
+							$("html").addClass("fullscreen");
+							
+							/*시스템*/
+							if(document.documentElement.requestFullscreen) return document.documentElement.requestFullscreen();//일반
+							if(document.documentElement.webkitRequestFullscreen) return document.documentElement.webkitRequestFullscreen();//webkit
+							if(document.documentElement.mozRequestFullscreen) return document.documentElement.mozRequestFullscreen();//moz
+							if(document.documentElement.msRequestFullscreen) return document.documentElement.msRequestFullscreen();//ms
+						}else if($(this).hasClass("min")){//최소화면
+							$this.removeClass("full_status");
+							$("html").removeClass("fullscreen");
+							
+							setTimeout(function(){
+								$("html,body").scrollTop(rethisOff);
+							},100);							
+							
+							/*시스템*/
+							if(document.exitFullscreen) return document.exitFullscreen();//일반
+							if(document.webkitCancelFullscreen) return document.webkitCancelFullscreen();//webkitCancel
+							if(document.mozCancelFullscreen) return document.mozCancelFullscreen();//mozCancel
+							if(document.msExitFullscreen) return document.msExitFullscreen();//msExit
+							
+
+							
+						}						
+					});	
+					$vidBtn.on("mouseenter",function(){
+						if($(this).hasClass("mute")||$(this).hasClass("unmute")){
+							$(this).closest(".vol_area").addClass("ready");
+						}
+					});
+					$vidBtnbox.find(".vol_area").on("mouseleave",function(){
+						$(this).removeClass("ready");
+					});
+					
+					/*### 재생속도 처리 ###*/
+					 $this.find(".sel_box .speed_rate").on("change",function(){ //$(".mov").find(".vid_control").find(".speed_rate").
+						var optVal = $(this).val();
+						console.log(optVal);
+						$vid.get(0).playbackRate = optVal;
+						
+						$this.find(".info_list .info_box .rate_txt").html('<p class="rate_txt">play speed:<br/> x' + $vid.get(0).playbackRate + ' Rate</p>');
+												
+						
+					});
+					/*###// 재생속도 처리 ###*/							
+					
+				}, //button.end
+				volume: function(){ //volume
+					var $volSlider = $this.find(".vol_slider");
+					var $volBar = $this.find(".vol_slider .bar_vol");
+					var volSlider = $volSlider.slider({
+						create: function(event, ui){
+						},						
+						slide: function(event, ui){
+							var percentage = ui.value / 100;
+							if(percentage > 0){//볼륨조절 상태
+								$vid.get(0).muted = false;
+								$this.find(".vid_control .mute").css("display","inline-block");
+								$this.find(".vid_control .unmute").css("display","none");
+							}else{//muted 상태
+								$vid.get(0).muted = true;
+								$this.find(".vid_control .mute").css("display","none");
+								$this.find(".vid_control .unmute").css("display","inline-block");								
+							}
+							
+							$vid.get(0).volume = percentage; //$(".mov").find("video").get(0).volume
+							$volBar.width(ui.value+"%");				
+							
+						}
+					});
+					
+					//볼륨 초기화
+					$volSlider.slider("value", volumeInit *100);
+					$vid.get(0).volume = volumeInit;
+					$volBar.width( volumeInit*100 +"%");
+										
+				}, //volume.end
+				seek: function(){ //seek				
+					
+					app.volume();//볼륨바 생성
+					
+
+				
+					//seek 생성					
+					var $slider = $this.find(".seek_slider");
+					var $seekbar = $this.find(".seek_slider .seek");					
+					
+					var seekSlider = $slider.slider({
+						create: function(event, ui){
+
+						},						
+						slide: function(event, ui){
+							var percentage = ui.value / 100;
+							var vidTime = $vid.get(0).duration * percentage;
+							
+							$vid.get(0).currentTime = vidTime;
+							$seekbar.width(ui.value+"%");
+						}
+					});
+					
+					app.TimerEv(1); //동영상 타임 텍스트
+					
+					$vid.get(0).onprogress = function(){//버퍼링 bar 업데이트 //onprogress
+						var duration = $vid.get(0).duration;
+						var $thisVid = $vid.get(0);
+						
+						if(duration > 0){
+							for(var i=0; i< $thisVid.buffered.length; i++){
+								if( $thisVid.buffered.start($thisVid.buffered.length - 1 - i ) < $thisVid.currentTime ){
+									bufferWidth = ($thisVid.buffered.end($thisVid.buffered.length-1-i) / duration) * 100;
+									$this.find(".seek_slider .pogress").width(bufferWidth+"%");
+									break
+								}
+							}
+						}
+					} //onprogress.end
+					
+					$vid.get(0).ontimeupdate = function(){//seekbar 업데이트 //ontimeupdate
+						var percentage = (($vid.get(0).currentTime / $vid.get(0).duration)* 100).toFixed(1);
+					
+						$slider.slider("value", percentage);
+					
+						$this.find(".seek_slider .seek").width(percentage+"%");
+						
+						app.TimerEv(); //동영상 타임 텍스트
+						
+						if($vid.get(0).paused == true){//동영상이 일시멈춤이면
+							app.pauseEv();
+						}else{//일시멈춤이 아닐때
+							app.playEv();
+						}
+						
+						if($vid.get(0).ended == true){//동영상이 끝났으면 //$(".mov video").get(0).ended
+							//app.playEv();		
+							//$vid.get(0).currentTime = 0;							
+							if($this.find(".move_list").length){//리스트가 있으면
+								var movlength = $this.find(".move_list").find("p").length;
+								var movIndex = $this.find(".move_list button.on").closest("p").index(); 
+								var nxtMov = movIndex + 1;
+								console.log("movlength:"+movlength + "/ movIndex: "+ movIndex + "/ nxtMov: "+ nxtMov);
+								if(movlength > movIndex){//console.log("전체 동영상수보다 현재 index가 작을때");
+									$this.find(".move_list").find("button").eq(nxtMov).click();	
+								}
+							}//리스트가 있으면.end
+						}
+					}//ontimeupdate.end
+					
+				}, //seek.end
+				pauseEv: function(){ //pauseEv
+					$this.find(".play").css("display","inline-block");
+					$this.find(".pause").css("display","none");
+					$this.find(".ux_video .poster").css("display","block"); //poster								
+				}, //pauseEv.end
+				playEv: function(){ //playEv
+					$this.find(".play").css("display","none");
+					$this.find(".pause").css("display","inline-block");
+					$this.find(".ux_video .poster").css("display","none"); //poster
+				},//playEv.end
+				TimerEv: function(index){ //TimerEv 1일때만 전체시간 불러옴
+					
+					if(index==1){
+						duemin = Math.floor($vid.get(0).duration / 60);
+						duesec =  Math.floor($vid.get(0).duration - duemin * 60);
+						if(duemin < 10){duemin = "0" + duemin;}						
+						if(duesec < 10){duesec = "0" + duesec;}					
+						
+						$this.find(".duration_txt").text(duemin + ":" + duesec);	
+					}
+					curmin = Math.floor($vid.get(0).currentTime / 60);
+					cursec =  Math.floor($vid.get(0).currentTime - curmin * 60);
+					if(cursec < 10){cursec = "0" + cursec;}
+					if(curmin < 10){curmin = "0" + curmin;}				
+					
+					$this.find(".now_txt").text(curmin + ":" + cursec);
+													
+				},//TimerEv.end
+			}
+			app.init();
+		});//3.end
+	};//1.end
+}(jQuery));//0.end
+
+</script>
+
+
+<!-- 	        	
+<video id="mv" poster="movplayer/player.svg">
+	<source src="http://40.1.4.95:18081/SC_movie/20211103.mp4"  type="video/mp4" preload="metadata" />								
+	HTML5만 브라우저만 지원합니다.
+</video>	        	
+-->
+<!--#########################################################################################################// MOV Player ##########################################-->	   
+								
+							</div>
+							<!--// run_sample -->
+	
+		        		</article>
+		        		<!-- code -->
+					</div>		               		
+		        	
+	        	</div>
+			</div>
+		</section>
+        <!--##################### 비디오 플레이어 #####################-->	
+        
+	</div><!--// contents -->
+
+	<script src="js/jquery-ui.min.js"></script><!-- jquery ui-->
+	<script src="js/jquery.ui.touch-punch.js"></script><!-- jquery ui using mobile -->
+    <script src="js/frontUxer.js"></script><!-- plugin -->
+
+	<script type="text/javascript">
+	
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>frontUxer</title>
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/frontUxer.css">
+<script src="js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript">        
+	var menuArry = ['1','3'];//1depth, 2depth
+</script>
+</head>
+<body>
+<script src="js/guide.js"></script><!-- site guide -->
+	
+	<div class="start_dim"><span></span></div>
+	
+	<h1 class="hide">module</h1>
+
+	<div class="contents"><!-- contents -->
+	
+		<!--##################### 스크롤 박스 #####################-->     
+		<section class="aws_box">
+	        <h1 class="aws_tl"> 스크롤 뷰 </h1>
+			<ul class="dcs">
+				<li>데스크탑용 스크롤바 플러그인 (모바일 작동 잘 되지만 디바이스 기본을 추천)</li>
+			</ul> 	        
+	        
+	        <div class="code_area">
+	        
+	            <div class="play_box">
+	            	<!-- code -->
+	            	<div class="option_txt">
+	            		<strong>실행</strong> : <span class="incodebox"><code class="language-javascript">$('셀렉터').uxScrollView();</code></span>
+	            		<p><strong>uxAgent()</strong>와 같이 실행해 support.awse.swipeAble(스와이프가 가능한지 체크해주는 역활)을 사용해야함</p>
+	            	</div>
+	            	               		
+               		<style>
+					.desktop .ui_scrollview {margin-top:20px;}
+					.desktop .ui_scrollarea .ui_content{padding:10px;}
+					.mobile .ui_scrollview {margin-top:20px;}
+					.mobile .ui_scrollarea .ui_content{padding:10px;}
+	                </style>
+	                  
+					<!-- run_sample -->
+					<div class="run_sample">
+					
+	        			<dl class="dcs">
+	               			<dt><strong>패치 노트:</strong></dt>
+	               			<dd>20191202: 토글 컨텐츠내 스크롤바 사라지는 현상 수정</dd>
+	               			<dd>20191202: 박스내 Key(38/40)업다운 패치</dd>
+	               		</dl>
+	               		
+	                    <!-- sample_box -->	                    
+	                    <article class="sample_box">
+	                    
+		                    <div class="clear">
+			                    <span><strong>스크롤 뷰</strong></span>
+			                    <button type="button" id="add-test" style="display:block; float:right;">스크롤 박스 생성</button>
+		                    </div>
+		                    
+		                    <div id="addbox">
+		                    	<!--
+		                    	<div class="ui_scrollview">
+		                    		<div class="ui_scrollarea">
+		                    			<div class="ui_content" style="height:150px;">
+										</div>
+									</div>
+								</div>-->
+							</div>
+	                    </article>
+	                    <!--// sample_box -->	
+	                                   		
+	               		               							
+					</div>
+					<!--// run_sample -->
+						                  
+	                  
+
+                    	                  
+     	
+	                <!--// code -->
+	                
+	            </div>
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-css">
+/************************************** uxScrollview **************************************/
+.ui_scrollview {position: relative; height:80px; /* outline-color:transparent; */}
+.ui_scrollview .ui_scrollarea {overflow: hidden; height: 100%; border: 0}
+.ui_scrollview .ui_scrollbar {position:absolute;right: 8px;top:0;cursor:pointer;}
+.ui_scrollview .ui_scrollbar span {position: absolute; left: 0; width: 8px; padding: 0; margin: 0; font-size: 0; line-height: 0; border-radius: 3px;}
+.ui_scrollview .ui_scrollbar .bg_mid {top:0;background:#545559;}
+.ui_scrollview .ui_scrollbar.active .bg_mid{ background:#333;}
+.ui_scrollview .ui_scrollarea:-ms-scrollbar {display:none;}
+.ui_scrollview .ui_scrollarea::-webkit-scrollbar {display:none;}
+.mobile .ui_scrollview .ui_scrollarea {overflow: scroll;}
+</code>
+</pre>
+<!--// codebox -->  
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-markup">
+<!-- 스크롤바 시작 -->
+<div class="ui_scrollview">
+	<div class="ui_scrollarea">
+		<div class="ui_content">
+			컨텐츠
+		</div>
+	</div>
+</div>
+<!--// 스크롤바 끝 -->
+</code>
+</pre>
+<!--// codebox -->     
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-javascript">            
+$.fn.extend({//#################### 4.fxScrollView ####################
+	uxScrollView : function(opt){
+		var defaults = {
+			duration: 600,
+			speedLimit: 1.2,
+			moveThreshold: 100,
+			offsetThreshold: 30,
+			startThreshold: 5,
+			acceleration: 0.1,
+			accelerationT: 250,
+			watch: true,
+			watchInterval: 400,
+			preventScroll: true,
+			startPosY : 20
+		}
+		var opt = $.extend(defaults,opt);
+		
+		return this.each(function(){
+			var $this =  $(this),
+				$wrapper = $this.find('.ui_scrollarea'),
+				$scroller = $this.find('.ui_scrollarea .ui_content'),
+				$vscrollbar = $this.find('.ui_scrollbar');
+			
+			var app={
+				init: function(){
+					
+					this.maxScrollY = 0;
+					this.scrollHeight = 0;
+					this.wrapperHeight = 0;
+					this.visibleScroll = false;
+					
+					if ($vscrollbar.size() === 0) {// 스크롤바가 없으면 자동 생성해 준다.
+						//$vscrollbar = $('<div class="scroll ui_scrollbar"><span class="bg_mid"></span></div>'); //asis
+						$vscrollbar = $('<div class="scroll ui_scrollbar">' +
+								'<span class="bg_top"></span><span class="bg_mid"></span>' +
+								'<span class="bg_btm"></span></div>'); //2019202 "bg_top"이 있어야 아래 토글내에 ".bg_mid"의 위치가 정확히 잡힘
+						$this.append($vscrollbar);
+					}
+					
+					this.scrollbarStyle = $vscrollbar[0].style;
+					this.scrollbarStyle.display = 'none';
+					var $inner = $vscrollbar.find('span.bg_mid');
+					if ($inner.length) {
+						this.scrollbarInnerStyle = $inner[0].style;
+						this.scrollbarInnerStyle.paddingBottom = 0;
+					}
+					
+					$this.attr('tabindex', 0);
+					app._bindEvents();
+				},
+				
+				_bindEvents: function () {
+					var $this = this;
+					
+					if ($vscrollbar.size()){
+						$wrapper.on('scroll', function () {
+							var rate = ($this.wrapperHeight - $this.scrollbarHeight) / ($this.scrollHeight - $this.wrapperHeight);
+							$this._moveScrollbar($wrapper[0].scrollTop * rate);
+						});
+						
+						if (opt.watch === true) { //사이즈 변화 감시
+							var totalTime = 0, dur = opt.watchInterval;
+							$this.updateTimer = setInterval(function () {// 40초에 한번씩 dom에서 제거 됐건지 체크해서 타이머를 멈춘다.
+								if (totalTime > 40000) {
+									totalTime = 0;
+									if (!$.contains(document, $wrapper[0])) {
+										clearInterval($this.updateTimer);
+										$this.updateTimer = null;
+										return;
+									}
+								} else {
+									totalTime += dur;// console.log(totalTime);
+								}
+								$this.update();//console.log("업데이트");
+							}, dur);
+						} //사이즈 변화 감시.end
+                	}
+                }, //_bindEvents.end
+                  
+  				_watchStart: function(){
+  					var $this = this;
+				},
+				
+				/**
+				* pc에서 상하키로 스크롤할 수 있도록 바인딩
+				* @private
+				*/
+				_bindKeys: function () {
+					//var $this = this; //20191202 제거
+					
+					//$wrapper.on('keydown', function (e) {//asis
+					$this.on('keydown', function (e) {//20191202  대상 element를 수정
+					var keyCode = e.keyCode || e.which,
+						wrapperHeight = $wrapper.innerHeight(),
+						scrollTop = $wrapper.prop('scrollTop'),
+						maxScrollY = $wrapper.prop('scrollHeight') - wrapperHeight,
+						newY;
+					
+					switch (keyCode) {
+						case 38: // up
+							e.preventDefault();
+							if (scrollTop <= 0) {
+								return;
+							}
+							newY = scrollTop - wrapperHeight;//console.log("업");
+							break;
+						case 40: // down
+							e.preventDefault();
+							if (scrollTop >= maxScrollY) {
+								return;
+							}
+							newY = scrollTop + wrapperHeight;//console.log("다운");
+							break;
+						default:
+							return;
+					}
+					if (newY) {
+						$wrapper.stop(true, false).animate(
+							{scrollTop: newY},
+							{duration: opt.duration});
+						}
+					});
+				},
+				
+				/**
+				* pc에서 스크롤바로 컨텐츠를 스크롤할 수 있도록 바인딩
+				* @private
+				*/
+				_bindScrollbar: function () {
+					var $this = this,
+					$doc = $(document),
+					//isTouch = SSCA.swipeAble,
+					isTouch = support.awse.swipeAble, //awse의 browserCheck()내의 support.awse.swipeAble을 사용해야함
+					currY, downY, moveY;
+					
+					function getY(e){
+						if (isTouch && e.originalEvent.touches) {
+							e = e.originalEvent.touches[0];
+						}
+						return e.pageY;
+					}
+					
+					$vscrollbar.on('mousedown touchstart', function (e) {
+						e.preventDefault();
+						if (isTouch) {
+							e.stopPropagation();
+						}
+						
+						$this.isMouseDown = true;
+						currY = $vscrollbar.position().top;
+						downY = getY(e);
+						
+						$doc.on('mouseup.' + $this.cid + ' mousecancel.' + $this.cid +
+							' touchend.' + $this.cid + ' mousemove.' + $this.cid +
+							' touchmove.' + $this.cid + ' touchcancel.' + $this.cid, function (e) {
+							if (!$this.isMouseDown) {
+								$doc.off('.' + $this.cid);
+								return;
+							}
+							
+							switch (e.type) {
+								case 'mouseup':
+								case 'touchend':
+								case 'mousecancel':
+								case 'touchcancel':
+								$this.isMouseDown = false;
+								if (!$this.isScrollbarActive) {
+									$vscrollbar.removeClass('active');
+								}
+								moveY = 0;
+								$doc.off('.' + $this.cid);
+									break;
+								case 'mousemove':
+								case 'touchmove':
+									moveY = getY(e);
+									
+									var top = currY - (downY - moveY),
+										scrollHeight = $this.wrapperHeight - $this.scrollbarHeight,
+										y;
+									$this.scrollbarStyle.top = (top = Math.max(0, Math.min(top, scrollHeight)));
+									y = ($this.scrollHeight - $this.wrapperHeight) * (top / scrollHeight);
+									$wrapper.scrollTop(y);
+									e.preventDefault();
+									break;
+							}
+						});
+						return false;
+					}).on('mouseenter mouseleave', function(e) {
+						$this.isScrollbarActive = e.type === 'mouseenter';
+						$vscrollbar.toggleClass('active', $this.isScrollbarActive || $this.isMouseDown);
+					});
+				},//_bindEvents.end
+				
+				/**
+				* pc에서 마우스로 스크롤할 수 있도록 바인딩
+				* @private
+				*/
+				_bindWheel: function () {
+					var $this = this;
+					$wrapper.on('mousewheel DOMMouseScroll wheel', function (ev) {
+						var e = ev.originalEvent;
+						var delta     = app.getDeltaY(e) * 100,
+							scrollTop = $wrapper[0].scrollTop;
+						
+							$wrapper.scrollTop(scrollTop - delta); // -: down +: up
+						if (opt.preventScroll) {
+							ev.preventDefault();
+							ev.stopPropagation();
+						} else {
+							if ($wrapper[0].scrollTop != scrollTop) {
+								ev.preventDefault();
+								ev.stopPropagation();
+							}
+						}
+					});
+				},
+				
+				/**
+				* 휠이벤트의 deltaY 추출(위로: 1, 아래로: -1)
+				* @param {jQuery#Event}
+				* @return {number} deltaY
+				* @example
+				* $el.on('mousewheel DOMMouseScroll wheel', function (e) {
+				*     var deltaY = scui.util.getDeltaY(e);
+				* });
+				*/
+				getDeltaY: function (e) {
+					return this.getWheelDelta(e).y;
+				},
+				
+				/**
+				* 휠이벤트의 deltaX, deltaY 추출(상: 1, 하: -1, 우: 1, 좌: -1)
+				* @param {jQuery#Event}
+				* @return {{x:number, y:number}}
+				* @example
+				* $el.on('mousewheel DOMMouseScroll wheel', function (e) {
+				*     var delta = scui.util.getWheelDelta(e);
+				*     // delta.x;
+				*     // delta.y;
+				* });
+				*/
+				getWheelDelta: function (e) {
+					var wheelDeltaX, wheelDeltaY;
+					
+					e = e.originalEvent || e;
+					if ( 'deltaX' in e ) {
+						if (e.deltaMode === 1) {
+							wheelDeltaX = -e.deltaX;
+							wheelDeltaY = -e.deltaY;
+						} else {
+							wheelDeltaX = -e.deltaX;
+							wheelDeltaY = -e.deltaY;
+						}
+					} else if ( 'wheelDeltaX' in e ) {
+						wheelDeltaX = e.wheelDeltaX;
+						wheelDeltaY = e.wheelDeltaY;
+					} else if ( 'wheelDelta' in e ) {
+						wheelDeltaX = wheelDeltaY = e.wheelDelta;
+					} else if ( 'detail' in e ) {
+						wheelDeltaX = wheelDeltaY = -e.detail;
+					} else {
+						wheelDeltaX = wheelDeltaY = 0;
+					}
+					return {
+						x: wheelDeltaX === 0 ? 0 : (wheelDeltaX > 0 ? 1 : -1),
+						y: wheelDeltaY === 0 ? 0 : (wheelDeltaY > 0 ? 1 : -1)
+					};
+				},
+				
+				/**
+				* 스크롤바를 움직여주는 함수
+				* @param top
+				* @param height
+				* @private
+				*/
+				_moveScrollbar: function (top, height) {
+					var $this = this;
+					
+					if (!$this.visibleScroll) { return; }
+					if (isNaN(top)) { top = 0; }
+					if (height !== undefined && $this.scrollbarHeight != height) {
+						height = Math.max(height, 18);
+						if ($this.scrollbarInnerStyle){
+							var roundSize = $vscrollbar.children().eq(0).height();
+							$this.scrollbarInnerStyle.top = roundSize + 'px';
+							$this.scrollbarInnerStyle.bottom = roundSize + 'px';
+						}
+						$this.scrollbarStyle.height = height+'px';
+						$this.scrollbarHeight = height;
+					} else {
+						height = $this.scrollbarHeight;
+					}
+					if ($this.wrapperHeight < height + top) {
+						top = $this.wrapperHeight - height;
+					} else {
+						$this.scrollbarStyle.top = top + 'px';
+					}
+				},
+				
+				/**
+				* 사이즈 변화에 따른 UI 갱신
+				*/
+				update: function (){
+					var $this = this,
+						wrapperHeight, scrollHeight, visibleScroll, scrollbarHeight, rate;
+					
+					wrapperHeight = $wrapper[0].offsetHeight;
+					if (wrapperHeight === 0){
+						$this.wrapperHeight = 0;
+						return;
+					}
+					
+					scrollHeight = $wrapper[0].scrollHeight;
+					visibleScroll = wrapperHeight < scrollHeight - 1;
+					if (visibleScroll && !app._bindedEventOver) {
+						app._bindedEventOver = true;
+						// 실질적으로 컨텐츠가 래퍼를 오버했을 때만 스크롤을 붙인다.
+						if (isMobile) {
+							//app._bindContentScroll();
+							// scard.log.debug('t');
+							return;
+						} else {
+							// scard.log.debug('e t');
+							app._bindScrollbar();
+							app._bindKeys();
+							app._bindWheel();
+						}
+					}
+					// 영역보다 내용이 작을 경우 스크롤바 감추기
+					this.scrollbarStyle.display = visibleScroll ? '' : 'none';
+					
+					if (visibleScroll !== $this.visibleScroll) {
+						$this.visibleScroll = visibleScroll;
+						// $this.toggleClass('strack', visibleScroll);
+					}
+					if (visibleScroll && (scrollHeight !== $this.scrollHeight || wrapperHeight !== $this.wrapperHeight)) {
+						$this.wrapperHeight = wrapperHeight;
+						$this.scrollHeight = scrollHeight;
+						$this.scrollRate = wrapperHeight / scrollHeight;
+						rate = ($this.wrapperHeight - $this.scrollbarHeight) / ($this.scrollHeight - $this.wrapperHeight);
+						$this._moveScrollbar($wrapper[0].scrollTop * rate, wrapperHeight * $this.scrollRate);
+					}
+				},
+				
+				/**
+				* scrollTop 설정
+				* @param top
+				* @returns {*}
+				*/
+				scrollTop: function (top) {
+					var $this = this;
+					if (arguments.length > 0) {
+						$wrapper.scrollTop(top);
+						$this.update();
+					} else {
+						return $this.$wrapper.scrollTop();
+					}
+				},
+				
+				release: function () {
+					var $this = this;
+					
+					$this.updateTimer && (clearInterval($this.updateTimer), $this.updateTimer = null);
+					$this.supr();
+				}
+			}
+			app.init();
+			console.log("스크롤바: uxScrollView();");
+		});
+	}
+});//####################// 4.uxerScrollView ####################
+</code>
+</pre>
+<!--// codebox -->      
+	        
+	        </div>
+		</section>
+		<!--#####################// 스크롤 박스 #####################-->
+		
+	</div><!--// contents --> 
+	
+	<script src="js/jquery-ui.min.js"></script><!-- jquery ui-->
+	<script src="js/jquery.ui.touch-punch.js"></script><!-- jquery ui using mobile -->
+    <script src="js/frontUxer.js"></script><!-- plugin -->
+
+	<script type="text/javascript">		
+		//$(window).load(function(){
+		$(function() {
+			
+			var ttNum = 0;//추가 툴팁 넘버
+			var contBox ='', contTxt;
+			
+			function addToolTip(index){				
+				contTxt = ttNum;
+				contBox ='<div class="ui_scrollview add'+ttNum+'">\
+					<div class="ui_scrollarea">\
+						<div class="ui_content bg_psd" style="height:300px;">'+contTxt+'</div>\
+					</div>\
+				</div>';
+				$('#addbox').append(contBox);	
+				$(".ui_scrollview.add"+ttNum).uxScrollView(); //셀렉터 실행
+			}	
+			
+			$('#add-test').on('click',function(){				
+				ttNum ++;
+				addToolTip(ttNum);//console.log(ttNum);
+			});
+			
+			addToolTip(1);//console.log(ttNum);
+			
+   		});
+	</script>
+
+</body>
+</html>

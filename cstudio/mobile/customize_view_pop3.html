@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<title> C STUDIO </title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=2.0" /><!--20150914 maximum-scale 수정-->
+<!--[if IE]>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<![endif]-->
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script><!--jquery flatform.js-->
+<!--[if lt IE 9]>
+<script src="js/html5shiv.js" type="text/javascript"></script>
+<script src="js/placeholder-uncompressed.js" type="text/javascript"></script>
+<![endif]-->
+<script type="text/javascript" src="js/common.js"></script><!-- common.js -->
+<script type="text/javascript" src="js/jquery.ezmark.js"></script><!-- jquery.ezmark.js -->
+<link rel="stylesheet" type="text/css" href="css/basic.css" /><!--basic.css-->
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.pop_mydesign .mycheck input').ezMark({checkboxCls: 'ez-checkbox'});//checkbox 이미지처리
+});
+</script>
+</head>
+
+<body class="bg_wt"><!--배경색이 흰 색일 경우 bg_wt 클래스 붙임-->
+
+<!--wrap-->
+<div class="wrap">
+
+<!--popup_top-->
+<div class="popup_top">
+	<h1 class="pop_tit">DESIGN SNS</h1>
+	<a href="#" class="pop_cls" onclick="javascript:var win = window.open('','_self');win.close();return false;"><span>닫기</span></a>
+</div>
+<!--//popup_top-->
+
+<!--pop_mydesign-->
+<div class="pop_mydesign mt20">
+	<div class="thumb">
+		<img src="img/temp/tmp_product2.png" alt="" />
+	</div>
+</div>
+<!--//pop_mydesign-->
+
+<!--compare_snsArea-->
+<div class="compare_snsArea">
+	<h2>SNS 친구에게 공유하기</h2>
+	<div class="mt15">
+		<a href="#" class="bt_sns_comm bt_sns_fb"><span>facebook</span></a>
+		<a href="#" class="bt_sns_comm bt_sns_kas"><span>kakaostory</span></a>
+		<a href="#" class="bt_sns_comm bt_sns_pin"><span>pinterest</span></a>
+	</div>
+</div>
+<!--//compare_snsArea-->
+
+</div>
+<!--//wrap-->
+
+</body>
+</html>

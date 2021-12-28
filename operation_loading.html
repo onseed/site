@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>frontUxer</title>
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/frontUxer.css">
+<script src="js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript">         
+    var menuArry = ['2','3'];//1depth, 2depth
+</script>
+</head>
+<body>
+<script src="js/guide.js"></script><!-- site guide -->
+	
+	<div class="start_dim"><span></span></div>
+	
+	<h1 class="hide"> Etc</h1>	
+
+
+    <div class="contents"><!-- contents -->
+    
+        <!--##################### 이미지 로딩 II #####################-->
+        <section class="aws_box">
+            <h1 class="aws_tl"> 마케팅용 로딩</h1>
+			<ul class="dcs">
+				<li>이미지 로딩을 시간별로 세분화, 중지시 마케팅에 필요한 만큼 강제 딜레이</li>
+				<li>애니메이션 세분화 및 딜레이 처리</li>				
+			</ul>	                      
+            
+            <div class="code_area">
+            
+                <div class="play_box">
+                   <!-- code -->
+                   <div class="option_txt">
+                		<p class="incodebox"><strong>실행: </strong><code class="language-javascript">$(window).nloading_show();</code></p>
+                		<p class="incodebox"><strong>중지: </strong><code class="language-javascript">$(window).nloading_hide();</code></p>
+                		<br/>
+                		<p class="incodebox"><strong>실행 옵션: </strong><code class="language-javascript">
+	$(window).nloading_show({
+		aniType : 'a', //기본: a, 스케일: b,  슬라이드: c
+		aniDelay : 500 //딜레이 ms 초단위 기본: 500ms (0.5s)
+		txtDelay : 1000 //기본: 1000ms (1s) = 애니메이션 2컷당 1번, 2배		
+	});</code></p>                		
+                		<p class="incodebox"><strong>중지 옵션: </strong><code class="language-javascript">
+	$(window).nloading_hide({
+		closeTime : 1000 //1초 후 중지: ms 초단위(기본: 0ms)
+	});</code></p>                			
+					</div>
+					
+					<!-- run_sample -->
+					<div class="run_sample">
+						<strong>★ 기본 실행</strong>
+						<!-- sample_box -->	                    
+	                    <article class="sample_box">
+	                    
+		                    <div>
+		                        <button class="ui_loading">기본 로딩 실행</button><br/>		                        
+		                        <button class="ui_loading_end" style="position:relative; z-index: 10000;" disabled>로딩 중지</button>
+		                        <button class="ui_loading_end2" style="position:relative; z-index: 10000;" disabled>1.5초후 로딩 중지</button>
+		                        <button class="ui_loading_end3" style="position:relative; z-index: 10000;" disabled>3초후 로딩 중지</button>
+		                    </div>		                                 
+		                    
+		                    
+		                    <style>	
+		                    	body.new_mopism section.aws_box .sample_box{padding-top:0px;}
+		                    	
+		                    	.ui_loading_sec,
+		                    	.loading_dim{pointer-events:none;}
+		                    	 
+		                    	button{cursor:pointer;}
+		                    	button:disabled {background:#f7f7f7 !important; opacity:0.5;}
+		                    	.ui_loading_sec .loading_bg {pointer-events: fill;}
+		                    </style>
+		                    
+		                    
+		                    <script>
+		            		$(function() {
+		    					$('.ui_loading').on('click',function(){
+		    						$(window).nloading_show();
+		    						$('.ui_loading_end, .ui_loading_end2, .ui_loading_end3').attr("disabled",false);
+		    						
+		    						$('.ui_loading, .ui_loading_atype, .ui_loading_btype').attr("disabled",true);
+		    						
+		    						
+
+		    						if(ckInvert=='light'){//check Invert none
+		    							$('.ui_loading_sec').css("filter","hue-rotate(-"+ckHueNum+"deg)");
+		    						}else{//check Invert "dark"
+		    							if(ckInverHueNum<0){ //음수일때 
+		    								ckInverHueNum = ckInverHueNum * -1;
+		    								$('.ui_loading_sec').css("filter","invert(1) hue-rotate("+ckInverHueNum+"deg)");
+		    							}else{
+		    								$('.ui_loading_sec').css("filter","invert(1) hue-rotate(-"+ckInverHueNum+"deg)");
+		    						}}
+		    						
+		    						$(this).closest(".run_sample").find(".sample_box").css("filter","none"); //중지버튼 css
+		    						$(this).closest(".run_sample").find(".sample_box").css("z-index","unset"); //중지버튼 css		    						
+		    								    						
+		    						
+		    					});	
+		                		$('.ui_loading_end').on('click',function(){
+		                			$(window).nloading_hide();
+		                			$('.ui_loading_end, .ui_loading_end2, .ui_loading_end3').attr("disabled",true);
+		                			$('.ui_loading, .ui_loading_atype, .ui_loading_btype').attr("disabled",false);
+		                		});
+		                		$('.ui_loading_end2').on('click',function(){
+		                			timetxt(15);
+		                			$(window).nloading_hide({closeTime : 1500});
+		                			$('.ui_loading_end, .ui_loading_end2, .ui_loading_end3').attr("disabled",true);
+		                			$('.ui_loading, .ui_loading_atype, .ui_loading_btype').attr("disabled",false);
+		                		});              			
+		                		$('.ui_loading_end3').on('click',function(){
+		                			timetxt(30);
+		                			$(window).nloading_hide({closeTime : 3000});
+		                			$('.ui_loading_end, .ui_loading_end2, .ui_loading_end3').attr("disabled",true);
+		                			$('.ui_loading, .ui_loading_atype, .ui_loading_btype').attr("disabled",false);
+		                			
+		                		});
+		                		function timetxt(num){
+		                			$('.ui_loading_sec').append('<p class="timetxt" style="display:block; position:absolute; width:100%; top:10%; font-size:12px; color:#fff; text-align:center;">0</p>');
+		                			var numInit = 0; 
+		                			var interv = setInterval(function(){
+		                				numInit ++;
+		                				$('.timetxt').html("<span>"+numInit + "00</span>ms");
+		                				if(numInit===num){
+		                					clearInterval(interv);		
+		                				}
+		                			}, 100);
+		                		}		
+		            		});
+		                    </script>
+		                    
+	                    
+	                    </article>
+	                    <!-- sample_box -->
+	                    
+						<div style="margin-top:15px;"><strong>★ 애니메이션 타입</strong></div>
+						<!-- sample_box -->	                    
+	                    <article class="sample_box">
+	                    	<button class="ui_loading_atype">scale 로딩 실행 <p class="incodebox"><code class="language-javascript">$(window).nloading_show({ aniType : 'b', aniDelay : 600, txtDelay : 1200});</code></p></button><br/>
+	                    	<button class="ui_loading_btype">slide 로딩 실행 <p class="incodebox"><code class="language-javascript">$(window).nloading_show({ aniType : 'c', aniDelay : 800, txtDelay : 1600});</code></p></button><br/>
+		                    <script>
+		            		$(function() {
+		            			$('.ui_loading_atype').on('click',function(){
+		    						$(window).nloading_show({ aniType : 'b', aniDelay : 600, txtDelay : 1200});
+		    						$('.ui_loading_end, .ui_loading_end2, .ui_loading_end3').attr("disabled",false);
+		    						$('.ui_loading, .ui_loading_atype, .ui_loading_btype').attr("disabled",true);
+		    						
+		    						if(ckInvert=='light'){//check Invert none
+		    							$('.ui_loading_sec').css("filter","hue-rotate(-"+ckHueNum+"deg)");
+		    						}else{//check Invert "dark"
+		    							if(ckInverHueNum<0){ //음수일때 
+		    								ckInverHueNum = ckInverHueNum * -1;
+		    								$('.ui_loading_sec').css("filter","invert(1) hue-rotate("+ckInverHueNum+"deg)");
+		    							}else{
+		    								$('.ui_loading_sec').css("filter","invert(1) hue-rotate(-"+ckInverHueNum+"deg)");
+		    						}}		    						
+		    						$(this).closest(".run_sample").find(".sample_box").css("filter","none"); //중지버튼 css
+		    						$(this).closest(".run_sample").find(".sample_box").css("z-index","unset"); //중지버튼 css
+		            			});
+		            			$('.ui_loading_btype').on('click',function(){
+		    						$(window).nloading_show({ aniType : 'c', aniDelay : 800, txtDelay : 1600});
+		    						$('.ui_loading_end, .ui_loading_end2, .ui_loading_end3').attr("disabled",false);
+		    						$('.ui_loading, .ui_loading_atype, .ui_loading_btype').attr("disabled",true);
+		    						
+		    						if(ckInvert=='light'){//check Invert none
+		    							$('.ui_loading_sec').css("filter","hue-rotate(-"+ckHueNum+"deg)");
+		    						}else{//check Invert "dark"
+		    							if(ckInverHueNum<0){ //음수일때 
+		    								ckInverHueNum = ckInverHueNum * -1;
+		    								$('.ui_loading_sec').css("filter","invert(1) hue-rotate("+ckInverHueNum+"deg)");
+		    							}else{
+		    								$('.ui_loading_sec').css("filter","invert(1) hue-rotate(-"+ckInverHueNum+"deg)");
+		    						}}		    						
+		    						$(this).closest(".run_sample").find(".sample_box").css("filter","none"); //중지버튼 css
+		    						$(this).closest(".run_sample").find(".sample_box").css("z-index","unset"); //중지버튼 css		    						
+		            			});		            			
+		            			
+		            		});
+		            		</script>
+	                    </article>
+	                    <!-- sample_box -->	                    	                    
+	                    
+	                </div>
+					<!-- run_sample -->					
+					
+
+                    
+                    <script type="text/javascript">                    	
+//*******************************************************************************************신규 로딩 제작 20200305 *******************************************************************************************//                    
+//#################### 휠스크롤 막기 ####################
+var keys = {37: 1, 38: 1, 39: 1, 40: 1};
+function preventDefault(e) {
+	e = e || window.event;
+  	if (e.preventDefault){
+  		e.preventDefault();
+  	}
+  	e.returnValue = false
+}
+function preventDefaultForScrollKeys(e) {
+	if (keys[e.keyCode]) {
+		preventDefault(e);
+  		return false;
+  	}
+}
+function disableScrollOnly() {//console.log("스크롤 막기");
+	if (window.addEventListener){ // older FF
+		window.addEventListener('DOMMouseScroll', preventDefault, false);
+	}
+	window.addEventListener('wheel', preventDefault, {passive:false}); //modern standard 20190917 chrome 패치
+	window.ontouchmove  = preventDefault; // mobile
+	document.onkeydown  = preventDefaultForScrollKeys;
+}
+function enableScrollOnly() {//console.log("스크롤 풀기");
+	if (window.removeEventListener){
+		window.removeEventListener('DOMMouseScroll', preventDefault, false);
+	}
+	window.removeEventListener('wheel', preventDefault, {passive:false}); //modern standard 20190917 chrome 추가
+	window.ontouchmove = null;
+	document.onkeydown = null;
+}
+//####################// 휠스크롤 막기 ####################
+
+$.fn.extend({
+//#################### nloading_show ####################
+nloading_show : function(opt) {
+	var defaults = {
+			aniType : 'a', //기본: a, 스케일: b,  슬라이드: c
+			aniDelay : 500,
+			txtDelay : 1000
+		},
+		opt = $.extend(defaults, opt);
+	
+	return this.each(function(){
+		var aniInDelay = opt.aniDelay,
+			aniType = opt.aniType,
+			txtInDelay = opt.txtDelay;
+		
+		if ($.contains($("body")[0], $("div.ui_loading_sec")[0])) {// 이미 딤처리가 되어 있으면 처리하지 않음
+			return;
+		}
+		
+		var $loadingSec = $('<div class="ui_loading_sec"><div class="loading_dim"></div></div>'),
+			$el		= $('<div class="loading_text_box"><span class="svtxt txt0"></span><span class="svcom">마케팅용<br/>이미지 로딩</span></div><div class="loading_bg"><div class="loading_img">잠시만 기다려주세요</div></div>'), //신규 로딩
+			//$el		= $('<div class="loading_bg"><div class="loading_img">잠시만 기다려주세요</div></div>'), //기존 로딩
+			width	= 0,
+			total	= 0,
+			left		= 0;
+		
+		$loadingSec.append($el).appendTo('body');
+		width = $('.loading_img').width();
+		total = width * -6; //애니컷은 모두 6컷
+		
+		if(aniType=='b'){//스케일
+			$('.loading_img').css("animation","scaleMv "+aniInDelay+"ms infinite");
+		}else if(aniType=='c'){//슬라이드
+			$('.loading_img').css("animation","transMv "+aniInDelay+"ms infinite");
+		}
+		
+		var txtNum = 0;
+		var txtPrevNum = 0;
+		function txtTimer() {
+			txtNum += 1;
+			txtPrevNum = txtNum-1; 
+			if(txtNum == 4) { txtNum = 0; txtPrevNum = 3;}
+			
+			$('.loading_text_box .svtxt').removeClass('txt'+txtPrevNum);
+			$('.loading_text_box .svtxt').addClass('txt'+txtNum);
+			
+			if($.contains($("body")[0], $("div.ui_loading_sec")[0])){
+				setTimeout(txtTimer, txtInDelay); //텍스트 애니
+			}			
+		}
+		
+		function timer() {
+			left -= width;
+			(left <= total) ? left = 0 : '';
+			
+			$('.loading_img').css('background-position', left );
+			if($.contains($("body")[0], $("div.ui_loading_sec")[0])){
+				setTimeout(timer, aniInDelay); //아이콘 애니
+			}
+			
+			setTimeout(function(){
+				$('.loading_dim').stop().animate({
+					opacity : 0.7
+				},200);
+			},0);
+		}
+		
+		if($.contains($("body")[0], $("div.ui_loading_sec")[0])){
+			setTimeout(timer, aniInDelay);
+			setTimeout(txtTimer, txtInDelay); //텍스트 애니
+		}
+		
+		//if(SSCA.isMobile == true){//plugin 적용시
+		if($("html").hasClass("mobile")){
+			$('html').css('overflow','hidden');
+		}
+		
+		disableScrollOnly();
+	});
+},
+nloading_hide : function(opt) {
+	var defaults = {
+			closeTime : 0,
+		},
+		opt = $.extend(defaults, opt);
+	
+	return this.each(function(){
+		var closeTime = opt.closeTime;
+		
+			setTimeout(function(){
+				$('.ui_loading_sec').stop().animate({
+					opacity : 0
+				},200,function(){
+					$('.ui_loading_sec').remove();
+				});
+				
+				//if(SSCA.isMobile == true){//plugin 적용시
+				if($("html").hasClass("mobile")){
+					$('html').removeAttr('style');
+				}
+				enableScrollOnly();				
+			}, closeTime);
+		
+		});
+	}
+//#################### nloading_show ####################
+});
+//*******************************************************************************************//신규 로딩 제작 20200305 *******************************************************************************************
+            		
+                    </script>
+                                        
+<style>
+/* loading */
+.ui_loading_sec {position:fixed; top:0; left:0; z-index:1000; width:100%; height:100%;}
+.loading_dim{position:fixed; width:100%; height:100%; background:#000; opacity:0;z-index: -1;}
+
+.ui_loading_sec .loading_bg{position:absolute;top:50%;left:50%;width:80px;height:80px;margin-left:-40px;margin-top:-84px;  border-radius:50%; background-image:url('img/nloading_img_mo_bg.svg'); z-index:998;  background-size:auto 100%; overflow:hidden;}
+.desktop .ui_loading_sec .loading_bg{background-image:url('img/nloading_img_pc_bg.svg'); }
+
+.loading_img {position:absolute;top:50%;left:50%; width:80px;height:80px; margin:-40px 0 0 -40px; border-radius:50%; background-image:url('img/nloading_img_mo.svg'); z-index:999; font-size:0; background-size:auto 100%;}
+.desktop .loading_img{background-image:url('img/nloading_img_pc.svg');}
+
+.loading_text_box{position:absolute;top:50%;left:50%;width:146px;height:190px;margin-left:-73px;margin-top:-105px; border-radius:10px 10px; font-size:14px; background:#fff; text-align:center; color:#222; letter-spacing:-0.05em; z-index:996; }
+.loading_text_box:before{display:block; content:'잠시만 기다려주세요...'; position:absolute;top:50%;left:50%; width:150px;height:20px;margin-left:-75px; margin-top:110px; color:#fff; font-size:13px; text-align:center; letter-spacing:0em; }
+.loading_text_box .loading_img {position:static;top:0;left:0; margin:0;}
+.loading_text_box .svtxt{display:block; margin-top:112px;}
+.loading_text_box .svtxt:after{display:block; font-size:13px; font-weight:bold; text-align:center;}
+.loading_text_box .svtxt.txt0:after{content:'새 차 살 땐 !';}
+.loading_text_box .svtxt.txt1:after{content:'중고차 살 때도 !';}
+.loading_text_box .svtxt.txt2:after{content:'렌트/리스도 !';}
+.loading_text_box .svtxt.txt3:after{content:'차 살때, 차 바꿀 땐';}
+
+.loading_text_box .svcom{display:block; text-align:center;  font-size:11px; margin-top:2px;}
+.loading_text_box i{font-style: italic;}
+    
+@keyframes scaleMv{
+	0% {transform: scale(0.6);}
+	20% {transform: scale(1);}
+	80% {transform: scale(1);}
+	100% {transform: scale(0.6);}
+}
+@keyframes transMv{
+	0% {transform: translateX(-80px);}
+	15% {transform: translateX(0px);}	
+	85% {transform: translateX(0px);}		
+	100% {transform: translateX(80px);}
+}
+						
+.ui_loading_sec{transform-style:preserve-3d; perspective: 300px;} 
+.ui_loading_sec  .loading_bg{transition: all ease 0.4s;}
+.ui_loading_sec .loading_bg:hover {transform: rotatey(180deg)  scale(0.75);}
+
+.loading_box{box-shadow:0 0 5px rgba(0,0,0,0.1); position:absolute; top:50%; left:50%; background:#fff; width:175px; height:100px; border-radius:10px; margin:-50px 0 0 -87px; text-align:center; overflow:hidden}
+.loading_box .loading_img{top:-22px; margin-top:0; z-index:1}
+.loading_box p{padding-top:63px; position:relative; z-index:2; font-weight:bold}
+.loading_box .bar{position:absolute; top:54px; overflow:hidden; height:5px; width:120px; left:50%; margin-left:-60px; background:#eeeff1; border-radius:4px 4px; z-index:2; color:transparent}
+.loading_box .bar strong{display:block; height:100%; width:0; background:#f05100}
+</style>		  
+                    <!--// code -->
+                </div>                
+
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-javascript">
+//#################### 휠스크롤 막기 ####################
+var keys = {37: 1, 38: 1, 39: 1, 40: 1};
+function preventDefault(e) {
+	e = e || window.event;
+  	if (e.preventDefault){
+  		e.preventDefault();
+  	}
+  	e.returnValue = false
+}
+function preventDefaultForScrollKeys(e) {
+	if (keys[e.keyCode]) {
+		preventDefault(e);
+  		return false;
+  	}
+}
+function disableScrollOnly() {//console.log("스크롤 막기");
+	if (window.addEventListener){ // older FF
+		window.addEventListener('DOMMouseScroll', preventDefault, false);
+	}
+	window.addEventListener('wheel', preventDefault, {passive:false}); //modern standard 20190917 chrome 패치
+	window.ontouchmove  = preventDefault; // mobile
+	document.onkeydown  = preventDefaultForScrollKeys;
+}
+function enableScrollOnly() {//console.log("스크롤 풀기");
+	if (window.removeEventListener){
+		window.removeEventListener('DOMMouseScroll', preventDefault, false);
+	}
+	window.removeEventListener('wheel', preventDefault, {passive:false}); //modern standard 20190917 chrome 추가
+	window.ontouchmove = null;
+	document.onkeydown = null;
+}
+//####################// 휠스크롤 막기 ####################
+
+$.fn.extend({
+//#################### nloading_show ####################
+nloading_show : function(opt) {
+	var defaults = {
+			aniType : 'a', //기본: a, 스케일: b,  슬라이드: c
+			aniDelay : 500,
+			txtDelay : 1000
+		},
+		opt = $.extend(defaults, opt);
+	
+	return this.each(function(){
+		var aniInDelay = opt.aniDelay,
+			aniType = opt.aniType,
+			txtInDelay = opt.txtDelay;
+		
+		if ($.contains($("body")[0], $("div.ui_loading_sec")[0])) {// 이미 딤처리가 되어 있으면 처리하지 않음
+			return;
+		}
+		
+		var $loadingSec = $('<div class="ui_loading_sec"><div class="loading_dim"></div></div>'),
+			$el		= $('<div class="loading_text_box"><span class="svtxt txt0"></span><span class="svcom">마케팅용<br/>이미지 로딩</span></div><div class="loading_bg"><div class="loading_img">잠시만 기다려주세요</div></div>'),
+			width	= 0,
+			total	= 0,
+			left		= 0;
+		
+		$loadingSec.append($el).appendTo('body');
+		width = $('.loading_img').width();
+		total = width * -6; //애니컷은 모두 6컷
+		
+		if(aniType=='b'){//스케일
+			$('.loading_img').css("animation","scaleMv "+aniInDelay+"ms infinite");
+		}else if(aniType=='c'){//슬라이드
+			$('.loading_img').css("animation","transMv "+aniInDelay+"ms infinite");
+		}
+		
+		var txtNum = 0;
+		var txtPrevNum = 0;
+		function txtTimer() {
+			txtNum += 1;
+			txtPrevNum = txtNum-1; 
+			if(txtNum == 4) { txtNum = 0; txtPrevNum = 3;}
+			
+			$('.loading_text_box .svtxt').removeClass('txt'+txtPrevNum);
+			$('.loading_text_box .svtxt').addClass('txt'+txtNum);
+			
+			if($.contains($("body")[0], $("div.ui_loading_sec")[0])){
+				setTimeout(txtTimer, txtInDelay); //텍스트 애니
+			}			
+		}
+		
+		function timer() {
+			left -= width;
+			(left == total) ? left = 0 : '';
+			
+			$('.loading_img').css('background-position', left );
+			if($.contains($("body")[0], $("div.ui_loading_sec")[0])){
+				setTimeout(timer, aniInDelay); //아이콘 애니
+			}
+			
+			setTimeout(function(){
+				$('.loading_dim').stop().animate({
+					opacity : 0.7
+				},200);
+			},0);
+		}
+		
+		if($.contains($("body")[0], $("div.ui_loading_sec")[0])){
+			setTimeout(timer, aniInDelay);
+			setTimeout(txtTimer, txtInDelay); //텍스트 애니
+		}
+		
+		//if(SSCA.isMobile == true){//plugin 적용시
+		if($("html").hasClass("mobile")){
+			$('html').css('overflow','hidden');
+		}
+		
+		disableScrollOnly();
+	});
+},
+nloading_hide : function(opt) {
+	var defaults = {
+			closeTime : 0,
+		},
+		opt = $.extend(defaults, opt);
+	
+	return this.each(function(){
+		var closeTime = opt.closeTime;
+		
+			setTimeout(function(){
+				$('.ui_loading_sec').stop().animate({
+					opacity : 0
+				},200,function(){
+					$('.ui_loading_sec').remove();
+				});
+				
+				//if(SSCA.isMobile == true){//plugin 적용시
+				if($("html").hasClass("mobile")){
+					$('html').removeAttr('style');
+				}
+				enableScrollOnly();				
+			}, closeTime);
+		
+		});
+	}
+//#################### nloading_show ####################
+});
+</code>
+</pre>
+
+<pre class="codebox">
+<code class="language-css"> 
+/* loading */
+.ui_loading_sec {position:fixed; top:0; left:0; z-index:1000; width:100%; height:100%;}
+.loading_dim{position:fixed; width:100%; height:100%; background:#000; opacity:0;z-index: -1;}
+
+.ui_loading_sec .loading_bg{position:absolute;top:50%;left:50%;width:80px;height:80px;margin-left:-40px;margin-top:-64px;  border-radius:50%; background-image:url('/images/oap/nloading_img_mo_bg.png'); z-index:998;  background-size:auto 100%; overflow:hidden;}
+.desktop .ui_loading_sec .loading_bg{background-image:url('/images/oap/nloading_img_pc_bg.png'); }
+
+.loading_img {width:80px;height:80px; border-radius:50%; background-image:url('/images/oap/nloading_img_mo.png'); z-index:999; font-size:0; background-size:auto 100%;}
+.desktop .loading_img{background-image:url('/images/oap/nloading_img_pc.png');}
+
+.loading_text_box{position:absolute;top:50%;left:50%;width:146px;height:190px;margin-left:-73px;margin-top:-105px; border-radius:10px 10px; font-size:14px; background:#fff; text-align:center; color:#222; letter-spacing:-0.05em; z-index:996; }
+.loading_text_box:after{display:block; content:''; position:absolute;top:50%;left:50%;width:89px;height:8px;margin-left:-44px;/*89px*/  margin-top:-77px; background-image:url('/images/oap/desktop/logo.png'); background-size:auto 8px; z-index:997;}
+.loading_text_box:before{display:block; content:'잠시만 기다려주세요...'; position:absolute;top:50%;left:50%; width:150px;height:20px;margin-left:-75px; margin-top:142px; color:#fff; font-size:13px; text-align:center; letter-spacing:0em; }
+.loading_text_box .svtxt{display:block; margin-top:129px;}
+.loading_text_box .svtxt:after{display:block; font-size:13px; font-weight:bold; text-align:center;}
+.loading_text_box .svtxt.txt0:after{content:'새 차 살 땐 !';}
+.loading_text_box .svtxt.txt1:after{content:'중고차 살 때도 !';}
+.loading_text_box .svtxt.txt2:after{content:'렌트/리스도 !';}
+.loading_text_box .svtxt.txt3:after{content:'차 살때, 차 바꿀 땐';}
+
+.loading_text_box .svcom{display:block; text-align:center;  font-size:11px; margin-top:2px;}
+.loading_text_box i{font-style: italic;}
+    
+@keyframes scaleMv{
+	0% {transform: scale(0.6);}
+	20% {transform: scale(1);}
+	80% {transform: scale(1);}
+	100% {transform: scale(0.6);}
+}
+@keyframes transMv{
+	0% {transform: translateX(-80px);}
+	15% {transform: translateX(0px);}	
+	85% {transform: translateX(0px);}		
+	100% {transform: translateX(80px);}
+}
+
+.loading_box{box-shadow:0 0 5px rgba(0,0,0,0.1); position:absolute; top:50%; left:50%; background:#fff; width:175px; height:100px; border-radius:10px; margin:-50px 0 0 -87px; text-align:center; overflow:hidden}
+.loading_box .loading_img{top:-22px; margin-top:0; z-index:1}
+.loading_box p{padding-top:63px; position:relative; z-index:2; font-weight:bold}
+.loading_box .bar{position:absolute; top:54px; overflow:hidden; height:5px; width:120px; left:50%; margin-left:-60px; background:#eeeff1; border-radius:4px 4px; z-index:2; color:transparent}
+.loading_box .bar strong{display:block; height:100%; width:0; background:#f05100}
+</code>
+</pre> 
+<!--// codebox -->      
+            
+            </div>
+        </section>
+        <!--#####################// 이미지 로딩 II #####################-->
+        
+    </div><!-- contents -->
+    
+	<script src="js/jquery-ui.min.js"></script><!-- jquery ui-->
+	<script src="js/jquery.ui.touch-punch.js"></script><!-- jquery ui using mobile -->
+    <script src="js/frontUxer.js"></script><!-- plugin -->
+      
+</body>
+</html>

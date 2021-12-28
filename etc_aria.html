@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>frontUxer</title>
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/frontUxer.css">
+<script src="js/jquery-1.11.2.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script type="text/javascript">
+	var menuArry = ['3','9'];//1depth, 2depth
+</script>
+</head>
+<body>
+<script src="js/guide.js"></script><!-- site guide -->
+	
+	<div class="start_dim"><span></span></div>
+	
+	<h1 class="hide">module</h1>
+	
+	<div class="contents"><!-- contents -->
+	
+        <!--##################### Wai- Aria Navigation #####################-->
+		<section class="aws_box">
+			<h2 class="aws_tl">Wai- Aria Navigation</h2>
+			<ul class="dcs">
+				<li>navigation 샘플</li>				
+			</ul> 			
+			<div class="code_area">
+	        	 <!-- 
+				<div class="option_txt">
+					<strong class="js-show-code c-code__pre">효과 버튼을 클릭하거나 슬라이더로 값을 조정하세요.</strong>
+				</div>-->
+					        	
+	        	<div class="sample_box">
+		        	
+		        	<div class="play_box">
+		        		<!-- code -->
+		        		<article class="code_box">
+							<!-- run_sample -->
+							탭키 운용 및 aria 적용 샘플
+<nav role="navigation" aria-label="신차할부" class="navigation"> <!-- aria-label은 특정 페이지 메뉴일때만-->
+	<ul role="menubar">
+		<li aria-expanded = "false">
+			<a href="javascript:void(0);" role="menuitem">상품 안내</a>
+		</li>
+		<li aria-expanded = "false">
+			<a href="javascript:void(0);" role="menuitem" aria-controls="submenu1">신차할부</a>
+			<dl role="menu" id="submenu1">
+				<dd><a href="javascript:void(0);" role="menuitem">카드할부</a></dd>
+				<dd><a href="javascript:void(0);" role="menuitem">오토할부</a></dd>
+				<dd><a href="javascript:void(0);" role="menuitem">오토론</a></dd>
+			</dl>
+		</li>
+		<li aria-expanded = "false">
+			<a href="javascript:void(0);" role="menuitem"  aria-controls="submenu2">중고차할부</a> 
+			<dl role="menu" id="submenu2">				
+				<dd><a href="javascript:void(0);" role="menuitem">오토할부</a></dd>
+				<dd><a href="javascript:void(0);" role="menuitem"  aria-haspopup="true">오토론</a></dd><!-- arai-haspopup은 팝업링크 속성일때 -->
+			</dl>			
+		</li> 		 
+	</ul>
+</nav>									
+<script>
+var ariaMenu = {
+	set: {depth1: 0, depth2: 0}, //1뎁스, 2뎁스 (default: 0, 0)
+	init: function(opt){
+		(opt == null || opt == "undefined")? opt = this.set : ""; //옵션 null일경우 default옵션
+		var inx1 = opt.depth1, 
+			inx2 = opt.depth2;
+		ariaMenu.ux(inx1, inx2);
+		ariaMenu.current(inx1, inx2);
+	},	
+	current: function(inx1, inx2){//메뉴 current
+		var $thisIndex1 = $(".navigation li > a").eq(inx1);
+		$thisIndex1.addClass("current");
+		$thisIndex1.attr("aria-current","true");		
+		if($thisIndex1.next("dl").length){
+			var $thisIndex2 = $(".navigation li dl a").eq(inx2);
+			$(".navigation li dl").css("display","none");
+			$thisIndex1.next("dl").css("display","block");		
+			$thisIndex2.addClass("current");
+			$thisIndex2.attr("aria-current","true");
+		}
+	}, //메뉴 current.end
+	ux: function(inx1, inx2){//메뉴작동
+		$(".navigation").on("mouseleave", function(){//메뉴 이탈시 current메뉴
+			ariaMenu.current(inx1, inx2); 
+		});
+		$(".navigation li a:first-child , .navigation li a:last-child").on("blur", function(){//탭키 포커스 이탈시 current메뉴
+			ariaMenu.current(inx1, inx2);
+		});		
+		$(".navigation li > a").on("mouseover , focus",function(){//1뎁스 처리
+			$(".navigation li dl").css("display","none");	
+			if($(this).next("dl").length){//하위 메뉴가 있을경우
+				$(".navigation li").attr("aria-expanded","false");
+				$(this).closest("li").attr("aria-expanded","true");
+				if($(this).next("dl").is(":visible")){
+					$(this).next("dl").css("display","none");	
+				}else{
+					$(this).next("dl").css("display","block");
+				}
+			}	
+		});		
+	}//메뉴작동.end
+}
+//ariaMenu.init(); //메뉴 실행(default)
+ariaMenu.init({depth1: 1, depth2: 0,}); //메뉴 current 실행
+</script>
+<style>
+.navigation{display:block; margin-top:10px; width:400px; background:#f8f8f8; border-radius:10px; padding:10px;}
+.navigation:after,
+.navigation dl:after{display:block; content:''; clear:both;}
+.navigation li{display:block; border-left:1px solid #d9d9d9; float:left; padding:10px;}
+.navigation dl{display:none; clear:both; margin-top:10px;}
+.navigation dl dd {display:block; float:left; border-left:1px solid #d9d9d9; padding:5px;}
+.navigation li:first-child,
+.navigation dl dd:first-child{border-left:none;}
+.navigation li > a.current{border-bottom:2px solid #333; color:blue;} /*선택된 1뎁스 메뉴*/
+.navigation li dl a.current{ color:blue;} /*선택된 2뎁스 메뉴*/
+.navigation li a:hover,
+.navigation li a:focus{color:blue;}
+</style>
+							<!--// run_sample -->
+						</article>
+						<!--// code -->
+					</div>
+				</div>
+				
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-markup">
+<nav role="navigation" aria-label="신차할부" class="navigation"> <!-- aria-label은 특정 페이지 메뉴일때만-->
+	<ul role="menubar">
+		<li aria-expanded = "false">
+			<a href="javascript:void(0);" role="menuitem">상품 안내</a>
+		</li>
+		<li aria-expanded = "false">
+			<a href="javascript:void(0);" role="menuitem" aria-controls="submenu1">신차할부</a>
+			<dl role="menu" id="submenu1">
+				<dd><a href="javascript:void(0);" role="menuitem">카드할부</a></dd>
+				<dd><a href="javascript:void(0);" role="menuitem">오토할부</a></dd>
+				<dd><a href="javascript:void(0);" role="menuitem">오토론</a></dd>
+			</dl>
+		</li>
+		<li aria-expanded = "false">
+			<a href="javascript:void(0);" role="menuitem"  aria-controls="submenu2">중고차할부</a> 
+			<dl role="menu" id="submenu2">				
+				<dd><a href="javascript:void(0);" role="menuitem">오토할부</a></dd>
+				<dd><a href="javascript:void(0);" role="menuitem"  aria-haspopup="true">오토론</a></dd><!-- arai-haspopup은 팝업링크 속성일때 -->
+			</dl>			
+		</li> 		 
+	</ul>
+</nav>			     
+</code>
+</pre>
+<!--// codebox: markup, css, clike, javascript -->				
+				
+<!-- codebox: markup, css, clike, javascript -->
+<pre class="codebox">
+<code class="language-javascript">
+var ariaMenu = {
+	set: {depth1: 0, depth2: 0}, //1뎁스, 2뎁스 (default: 0, 0)
+	init: function(opt){
+		(opt == null || opt == "undefined")? opt = this.set : ""; //옵션 null일경우 default옵션
+		var inx1 = opt.depth1, 
+			inx2 = opt.depth2;
+		ariaMenu.ux(inx1, inx2);
+		ariaMenu.current(inx1, inx2);
+	},	
+	current: function(inx1, inx2){//메뉴 current
+		var $thisIndex1 = $(".navigation li > a").eq(inx1);
+		$thisIndex1.addClass("current");
+		$thisIndex1.attr("aria-current","true");		
+		if($thisIndex1.next("dl").length){
+			var $thisIndex2 = $(".navigation li dl a").eq(inx2);
+			$(".navigation li dl").css("display","none");
+			$thisIndex1.next("dl").css("display","block");		
+			$thisIndex2.addClass("current");
+			$thisIndex2.attr("aria-current","true");
+		}
+	}, //메뉴 current.end
+	ux: function(inx1, inx2){//메뉴작동
+		$(".navigation").on("mouseleave", function(){//메뉴 이탈시 current메뉴
+			ariaMenu.current(inx1, inx2); 
+		});
+		$(".navigation li a:first-child , .navigation li a:last-child").on("blur", function(){//탭키 포커스 이탈시 current메뉴
+			ariaMenu.current(inx1, inx2);
+		});		
+		$(".navigation li > a").on("mouseover , focus",function(){//1뎁스 처리
+			$(".navigation li dl").css("display","none");	
+			if($(this).next("dl").length){//하위 메뉴가 있을경우
+				$(".navigation li").attr("aria-expanded","false");
+				$(this).closest("li").attr("aria-expanded","true");
+				if($(this).next("dl").is(":visible")){
+					$(this).next("dl").css("display","none");	
+				}else{
+					$(this).next("dl").css("display","block");
+				}
+			}	
+		});		
+	}//메뉴작동.end
+}
+//ariaMenu.init(); //메뉴 실행(default)
+ariaMenu.init({depth1: 1, depth2: 0,}); //메뉴 current 실행	
+</code>
+</pre>
+<!--// codebox: markup, css, clike, javascript -->
+				
+			</div>
+		</section>
+		<!--#####################// Wai- Aria Navigation #####################-->
+								
+			
+        <!--##################### Wai- Aria Role속성 #####################-->
+		<section class="aws_box">
+			<h2 class="aws_tl">Wai- Aria Role 속성</h2>
+			<ul class="dcs">
+				<li>접근성 리더기별 지원이 달라 되도록 주속성만 이용.</li>
+				<li>컨포넌트 및 모듈 제작시 포커스와 같이 적극적으로 적용 .</li>
+				<li>관련 상세 내용 추가 예정 (2020.11.17 update)</li>						
+			</ul> 			
+			<div class="code_area">
+	        	 <!-- 
+				<div class="option_txt">
+					<strong class="js-show-code c-code__pre">효과 버튼을 클릭하거나 슬라이더로 값을 조정하세요.</strong>
+				</div>-->
+					        	
+	        	<div class="sample_box">
+		        	
+		        	<div class="play_box">
+		        		<!-- code -->
+		        		<article class="code_box">
+							<!-- run_sample -->
+							<style>
+							.tb_basic{width:100%;}
+							.tb_basic th,
+							.tb_basic td{border:1px solid #d9d9d9; padding:10px;}
+							.tb_basic thead th{background:#f1f1f1; color:#737373;}
+							.tb_basic tbody th{background:#f7f7f7; font-weight:normal;}
+							.tb_basic tbody td .normal code[class*="language-"]{font-size:12px;}
+							.tb_basic tbody td .tb_insource{background:#f8f8f8; border-radius:10px; padding:10px; margin-top:10px;}														
+							</style>
+							
+							<strong>주로 사용되는 WAI-ARIA</strong>
+							<table class="tb_basic" style="margin-top:10px;">
+								<caption> wai-aria 분류 및 속성 설명</caption>
+								<colgroup>
+									<col style="width:150px;"></col>
+									<col></col>
+								</colgroup>
+								<tbody>
+								<tr>
+									<th scope="col">역할(roles)</th>
+									<td>
+									
+										<div class="code_normal">
+<!-- incodebox: markup, css, clike, javascript -->					
+<pre class="incodebox">
+<code class="language-markup">
+<element role="tablist"></element>
+<element role="tab"></element>
+<element role="tabpanel"></element>
+<element role="tooltip"></element>
+<element role="status"></element>
+<element role="alert"></element>
+<element role="alertdialog"></element>
+<element role="dialog"></element>
+<element role="navigation"></element>
+<element role="complementary"></element>
+<element role="none"></element>
+</code>
+</pre>
+<!--// incodebox: markup, css, clike, javascript -->				
+										</div>	
+														
+									</td>
+								</tr>
+								<tr>
+									<th>상태(status)</th>
+									<td>
+									
+										<div class="code_normal">
+<!-- incodebox: markup, css, clike, javascript -->					
+<pre class="incodebox">
+<code class="language-markup">
+<element aria-current="page | step | location | date | time | true | false(default)"></element>
+<element aria-selected="false | true | undefined(default)"></element>
+<element aria-haspopup="false | menu | dialog | listbox | tree | grid | false(default)"></element>
+<element aria-expanded="true | false | undefined(default)"></element>
+<element aria-pressed="true | false | mixed |undefined(default)"></element>
+<element aria-hidden="true | false | undefined(default)"></element>
+<element aria-invalid="true | false(default) | gramer | speling"></element>
+</code>
+</pre>
+<!--// incodebox: markup, css, clike, javascript -->				
+										</div>									
+										
+									</td>
+								</tr>			
+								<tr>
+									<th>속성(properties)</th>
+									<td>
+										<div class="code_normal">
+<!-- incodebox: markup, css, clike, javascript -->					
+<pre class="incodebox">
+<code class="language-markup">
+<element aria-controls="id reperence list"></element>
+<element aria-live="polite | assertive | off(default)"></element>
+<element aria-labelledby="id reperence list"></element>
+<element aria-label="string"></element>
+<element aria-describedby="id reperence list"></element>
+<element aria-errormessage="id reperence list"></element>
+<element aria-modal="true | false(default)"></element>
+</code>
+</pre>
+<!--// incodebox: markup, css, clike, javascript -->										
+										</div>
+									</td>
+								</tr>																																													
+								</tbody>
+							</table>
+							<!--// run_sample -->
+		        		</article>
+		        		<!-- code -->
+					</div>		               		
+		        	
+	        	</div>
+			</div>
+		</section>
+		<!--#####################// Wai- Aria Role속성 #####################-->				
+		
+        <!--##################### Wai- Aria 분리 인식 속성 #####################-->
+		<section class="aws_box">
+			<h2 class="aws_tl">Wai- Aria 분리 인식 속성</h2>
+			<!--
+			<ul class="dcs">
+				<li>접근성 리더기별 지원이 다르니 되도록 기본 속성(주적용)만 이용.</li>
+			</ul> 			-->
+			<div class="code_area">
+	        	 <!-- 
+				<div class="option_txt">
+					<strong class="js-show-code c-code__pre">효과 버튼을 클릭하거나 슬라이더로 값을 조정하세요.</strong>
+				</div>-->
+					        	
+	        	<div class="sample_box">
+		        	
+		        	<div class="play_box">
+		        		<!-- code -->
+		        		<article class="code_box">
+							<!-- run_sample -->
+							<table class="tb_basic">
+								<caption> wai-aria 분리 인식 속성 안내</caption>
+								<thead>
+								<tr>
+									<th scope="row">속성</th>
+									<th scope="row">내용</th>
+									<th scope="row">주의</th>
+								</tr>
+								</thead>
+								<tbody>
+								<tr>
+									<th>aria-hidden</th>
+									<td>
+										강제적으로 보조기술이 읽지 않게함(true, 비 콘텐츠 영역)<br>
+										보조기술이 출력함(false, 기본값 콘텐츠 영역)
+									</td>
+									<td>
+										aria-hidden="true"로 지정하면 그 안에 포함된 모든 영역에 적용됨
+									</td>
+								</tr>
+								<tr>
+									<th>tabindex</th>
+									<td>
+										비 콘텐츠 영역에 "-1"일괄 지정
+									</td>
+									<td>
+										신규 콘텐츠 영역에 포커스를 이동하게 해주어 탭키 네비게이션의 혼란을 방지하도록 함
+									</td>
+								</tr>
+								<tr>
+									<th>presentation (role)</th>
+									<td>
+										해당 영역을 보여주기 전용 영역으로 지정해 보조기술에서 무시하게 함
+									</td>
+									<td>
+										중요한 내용을 presentation영역으로 넣는 경우가 있음 
+									</td>
+								</tr>								
+								</tbody>
+							</table>
+							<!--// run_sample -->
+		        		</article>
+		        		<!-- code -->
+					</div>		               		
+		        	
+	        	</div>
+			</div>
+		</section>
+		<!--#####################// Wai- Aria 분리 인식 속성 #####################-->			
+
+       <!--##################### Wai- Aria 알림 영역 지정 #####################-->
+		<section class="aws_box">
+			<h2 class="aws_tl">Wai- Aria 알림 영역 지정</h2>
+
+			<div class="code_area">
+	        	 
+				<div class="option_txt">					
+					<p style="padding:0 0 0 15px; font-weight:bold;">실시간 알림이 필요한 상황</p>
+					<ul class="dcs">
+						<li>활성 레이어에 변경 사항이 있을때</li>
+						<li>현재 위치한 컨트롤 상태가 변화할 때</li>
+						<li>반복 동작을 통해 내용 변화를 탐지하는 작업이 있을 때</li>
+						<li>중요한 이벤트가 발생할 때</li>
+					</ul>
+				</div>
+					        	
+	        	<div class="sample_box">
+		        	
+		        	<div class="play_box">
+		        		<!-- code -->
+		        		<article class="code_box">
+							<!-- run_sample -->
+							<p style="padding:0 0 10px 0; font-weight:bold;">aria-live 속성 <span style="font-weight:normal;">실시간으로 변화되는 요소에 대한 읽기 방법 </span></p>
+							<table class="tb_basic">
+								<caption> aria-live 속성 안내</caption>
+								<tbody>
+								<tr>
+									<th scope= col">off</th>
+									<td>
+										기본값, 읽지 않음
+									</td>
+								</tr>
+								<tr>
+									<th scope= col">prolite</th>
+									<td>
+										사용자의 동작이 없을 경우 읽기
+									</td>
+								</tr>
+								<tr>
+									<th scope= col">assertive</th>
+									<td>
+										assertive
+									</td>
+								</tr>			
+								<tr>
+									<th scope= col">rude</th>
+									<td>
+										현재 진행 중인 읽기를 중단하고 바로 읽기
+									</td>
+								</tr>															
+								</tbody>
+							</table>
+							
+							<p style="padding:30px 0 10px 0; font-weight:bold;">aria-atomic 속성 <span style="font-weight:normal;">변경된 내용에 대한 범위 </span></p>
+							<table class="tb_basic">
+								<caption> aria-atomic 속성 안내</caption>
+								<tbody>
+								<tr>
+									<th scope= col">false</th>
+									<td>
+										aria-live 전체 범위
+									</td>
+								</tr>
+								<tr>
+									<th scope= col">true</th>
+									<td>
+										새로 추가된 내용만 읽기
+									</td>
+								</tr>										
+								</tbody>
+							</table>							
+							<!--// run_sample -->
+		        		</article>
+		        		<!-- code -->
+					</div>		               		
+		        	
+	        	</div>
+			</div>
+		</section>
+		<!--#####################// Wai- Aria 분리 인식 속성 #####################-->	
+		
+	</div><!--// contents -->
+
+	<script src="js/jquery-ui.min.js"></script><!-- jquery ui-->
+	<script src="js/jquery.ui.touch-punch.js"></script><!-- jquery ui using mobile -->
+    <script src="js/frontUxer.js"></script><!-- plugin -->
+
+	<script type="text/javascript">
+	
+    </script>
+    
+</body>
+</html>

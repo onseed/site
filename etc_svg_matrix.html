@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>frontUxer</title>
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/frontUxer.css">
+<script src="js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript">        
+	var menuArry = ['3','4'];//1depth, 2depth
+</script>
+</head>
+<body>
+<script src="js/guide.js"></script><!-- site guide -->
+	
+	<div class="start_dim"><span></span></div>
+	
+	<h1 class="hide">module</h1>
+	
+	<div class="contents"><!-- contents -->
+    
+        <!--##################### SVG ColorMetrix Generator #####################-->
+		<section class="aws_box">
+			<h2 class="aws_tl">SVG ColorMetrix Generator</h2>
+			<ul class="dcs">
+				<li>SVG  filter내 feColorMatrix속성을 ColorMetrix Generator 시뮬레이션</li>
+			</ul> 			
+			<div class="code_area">
+	        	
+	        	<div class="play_box">
+	        		<!-- code -->
+	        		<article class="code_box">
+						<!-- run_sample -->
+
+						<div class="run_sample">						
+							<style>
+								/* html용 스타일 */
+								.desktop .contents{min-width:1060px;}
+								body.new_mopism section.aws_box .sample_box{padding:0px;}
+								.sample_box.clear:after{display:block; content:''; clear:both;}
+								body.new_mopism section.aws_box .sample_box {border:0; border-radius:0 0 16px 16px; margin-top:0;}								
+								body.new_mopism .option_txt {background: #f9f9f9; border-radius: 14px 14px 0 0;
+									box-shadow: inset 0px -17px 60px 0px rgba(0, 0, 0, 0.17), 0px 0px 4px 0px rgba(43, 43, 43, 0.63), 0px 0px 40px 0px rgba(0, 0, 0, 0.12);
+								}
+								
+								.ui_scrollview .ui_scrollbar{right: 12px;}
+								.ui_scrollview .ui_scrollbar span{width:6px;}
+																
+								.svg_canvas{/*border:1px solid #d9d9d9;*/ width:600px; height:400px;}								
+								.generator{margin-top:5px;}								
+								
+								.generator.player {vertical-align:top; border-radius:0 0 14px 14px ; overflow:hidden;   position:relative; min-width:890px; margin:0 auto;
+									box-shadow: inset 0px 0px 60px 8px rgba(0, 0, 0, 0.16), 0px 1px 4px 0px rgba(0, 0, 0, 0.5), 0px 0px 40px 0px rgba(0, 0, 0, 0.15);}
+																	
+								.generator.player .inbox{text-align:center; box-shadow:inset 0px 10px 30px 10px rgba(255, 255, 255, 0.2); padding:20px; margin-right:250px;}
+								.generator .inbox.real{background-image:url("img/bg_trance_psd.svg");}
+								.generator .inbox.bg_w{background:#fff;}
+								.generator .inbox.bg_b{background:#111;}
+								
+								
+								.generator_controll{display:block; position:absolute; top:0; right:0; width:250px; background:#fff; box-shadow: -5px 0px 20px 2px rgba(0, 0, 0, 0.2), inset 0px 0px 20px 0px rgba(0, 0, 0, 0.13);}
+										
+								.generator_controll .matrix_tb_box{padding:10px;}
+								
+								.generator_controll .matrix_tb_box .top_th strong{
+								    background: #ffffff;
+								    border-radius: 10px;
+								    display: inline-block;
+								    padding: 2px 5px;
+								    box-shadow: inset -5px -5px 10px 0px rgb(230, 230, 230), inset 5px 5px 10px 0px rgb(249, 249, 249), -1px -1px 10px rgb(224, 224, 224), 4px 4px 8px rgb(189, 189, 189);								
+								}
+								
+
+															
+								.generator_controll td span{display:inline-block; vertical-align:middle; margin-left:5px;}
+								.generator_controll .c-color{width:195px;}
+																
+								.generator_controll .sl_group_frame_box{/*padding:10px 5px 10px 10px; width:210px; margin:0 auto; border-radius:10px;  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.15);*/ position:relative; overflow:hidden;}
+								/*
+								.generator_controll .sl_group_frame_box:before{display:block; content:''; width:100%; height:10px; position:absolute; top:-10px; left:0px; background:red; z-index:10px;
+									box-shadow: 0px 10px 20px 0px rgba(0,0,0,0.5); } */
+								    
+								.generator_controll .sl_group_frame{height:385px;}
+								.generator_controll .sl_group{min-width:250px; font-size:11px;}
+								.generator_controll .sl_group .sl_group_box {
+									 margin:0 5px; padding: 5px 0;}
+									
+								.generator_controll .sl_group .sl_group_box .c-color{
+								    background: #ececec;								    
+								    height: 20px;
+								    border-radius: 16px;
+								    padding: 6px 0px 6px 6px;
+								    margin: 10px 10px;	
+								    box-shadow: -5px -5px 10px 0px rgb(230, 230, 230), 5px 5px 10px 0px rgb(249, 249, 249), inset -1px -1px 10px rgb(224, 224, 224), inset 2px 2px 4px rgb(212, 212, 212);																
+								}	
+									
+
+									
+								.generator_controll .sl_group:last-child .sl_group_box{border:none;}
+								.generator_controll .sl_group_frame.ui_scrollview{outline:none;}
+														
+								
+								
+								.generator_controll .sl_group .c-color input{width:80px; /*padding:0; margin:0;*/}
+								
+								.generator_controll .controll_back_btn{display:block; height:150px; padding-top:10px;}
+								.generator_controll .controll_back_btn .back_box{text-align:center;}
+								section.aws_box .sample_box .generator_controll .controll_back_btn .back_box button{margin:0 2px; font-size:12px; padding:5px 10px; border:none !important;
+									box-shadow:2px 2px 5px 0px rgba(0, 0, 0, 0.11), -2px 0px 5px 0px rgb(241, 241, 241);}
+								section.aws_box .sample_box .generator_controll .controll_back_btn .back_box button.point{ border:none !important; background: #5a5a5a; color: #fff !important; 
+									box-shadow: inset 2px 2px 5px 0px rgba(0, 0, 0, 0.32), inset -5px 0px 10px 0px rgba(0, 0, 0, 0.4), -1px -1px 5px 0px rgba(0, 0, 0, 0.32);}
+								
+								.generator.player .color_change{box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.12); padding:5px 15px 20px 15px; margin-right:250px; text-align:center;}
+								section.aws_box .sample_box .generator.player .color_change button{margin-top:15px; border:none !important; font-size: 13px;
+									box-shadow:2px 2px 5px 0px rgba(0, 0, 0, 0.11), -2px 0px 5px 0px rgb(241, 241, 241);}
+								section.aws_box .sample_box .generator.player .color_change button.point{border: none !important; background: #5a5a5a; color: #fff !important; 
+    								box-shadow: inset 2px 2px 5px 0px rgba(0, 0, 0, 0.32), inset -5px 0px 10px 0px rgba(0, 0, 0, 0.4), -1px -1px 5px 0px rgba(0, 0, 0, 0.32);}			
+								
+								.codeBox.option_txt{/*color: #fff;*/ border-radius: 15px 15px 0 0; margin-bottom: 0px; padding-bottom: 20px; 
+									box-shadow: inset 0px 8px 10px rgba(255, 255, 255, 0.16);}
+								.c-color__name{display:inline-block; padding-left:7px; margin-left:2px; border-left:1px solid #d8d8d8; vertical-align:top; margin-top:2px; position:relative;}
+								.c-color__name:after{display:block; content:''; width:1px; height:100%; position:absolute; top:0; left:0; background:#e8e8e8;}
+								.c-color__value{display:inline-block; font-size:12px; vertical-align:top; margin-top:2px;}
+								
+								
+								/*3d 테스트*/
+								
+								.code_area{transform-style: preserve-3d; perspective:1000px;}
+								section.aws_box .play_box{transition: all ease 2s;/* transform:rotateX(0deg) rotateY(45deg) rotateZ(0deg) scale(0.98);*/ transition-timing-function: cubic-bezier(0.680, -0.550, 0.265, 1.550)} /*etc_ani 내 CSS3 Easing 참고*/
+								.code_area .play_box.effec_rr{transform:rotateY(3deg) rotateX(0deg) scale(0.99); transition: all ease 1s;} /*좌.좌 클릭*/
+								.code_area .play_box.effec_rd{/*transform:rotateY(-1deg) rotateX(-3deg) scale(0.99);*/   transform:rotateY(-20deg) rotateX(30deg)  rotateZ(20deg) translateX(-200px) translateY(-80px) scale(0.85) ;  transition: all ease 1s;} /*우.하 클릭*/
+								
+								body.new_mopism .play_box.effec_rd .option_txt{box-shadow:inset 0px -17px 60px 0px rgba(0, 0, 0, 0.17), 0px 0px 4px 0px rgba(43, 43, 43, 0.63), 30px 30px 5px 0px rgba(0, 0, 0, 0.1);} /*우.하 클릭시 그림자*/
+								body.new_mopism .play_box.effec_rd .generator.player{box-shadow: inset 0px 0px 60px 8px rgba(0, 0, 0, 0.16), 30px 30px 5px 0px rgba(0, 0, 0, 0.1), 0px 0px 40px 0px rgba(0, 0, 0, 0.15);}
+								
+								.code_area .play_box.effec_ld{transform:rotateY(-3deg) rotateX(-1deg) scale(0.99); transition: all ease 1s;} /*좌.하 클릭*/
+								
+								section.aws_box .play_box.effec_dd{transform:scale(1.4);}
+								
+							</style>
+								<script>
+								$(window).load(function(){
+									$(".back_box button").mousedown(function(){//백그라운드 버튼
+										$(".code_area .play_box").addClass("effec_rd");
+										$(".code_area .play_box").removeClass("effec_dd");
+									/*
+										setTimeout(function(){
+											$(".code_area .play_box").removeClass("effec_rd");	
+										},2000);	*/									
+									});
+									
+									$(".c-color input").mousedown(function(){//백그라운드 버튼
+										$(".code_area .play_box").removeClass("effec_rd");
+										$(".code_area .play_box").removeClass("effec_dd");
+									
+										$(".code_area .play_box").addClass("effec_rr");									
+										setTimeout(function(){
+											$(".code_area .play_box").removeClass("effec_rr");	
+										},2000);	
+									});
+									
+									
+									$("#svg_canvas").mousedown(function(){//백그라운드 버튼
+										$(".code_area .play_box").removeClass("effec_rd");
+									
+										//$(".code_area .play_box").addClass("effec_dd");
+										$(".code_area .play_box").toggleClass("effec_dd");
+									});
+									
+									
+									
+								});
+								</script>
+							
+<style>
+/************************** 인풋 range reDesign css  ********************************/
+/****** 01. reset ******/
+input[type=range]{ -webkit-appearance: none; /*슬라이더를 커스텀 가능하게 디폴트, */ 
+	width:100%; /*firefox를 위해 추가*/ 
+	background:transparent;  /*크롬 속성*/
+	padding:0; margin:0 0 0 3px; /*ie 속성*/
+} 
+input[type=range]::-webkit-slider-thumb{ -webkit-appearance: none;}
+input[type=range]:focus{outline:none; /*파란색 아웃라인 삭제, 임의 커스텀도 가능할수도.*/}
+input[type=range]::-ms-track{width:100%; cursor:pointer; background:transparent; border-color:transparent; color:transparent;/*ie전용 커스텀 가능하게 디폴트*/}
+
+/***** 02. design *****/
+/** 02-1. slide Handle **/
+input[type=range]::-webkit-slider-thumb{/* webkit 계열  */
+ 	-webkit-appearance: none; 
+ 	margin-top:-8px !important; /*크롬에는 적용되지만 firfox와  ie는 auto*/ 	
+	width: 18px; height: 18px; border-radius:50%;
+    background: #fff;
+    box-shadow: inset 1px 1px 3px 0px rgb(255, 255, 255), inset -1px -1px 4px 0px rgb(177, 177, 177), 0px 0px 5px 0px rgb(97, 97, 97) /*effect*/	
+}
+input[type=range]::-moz-range-thumb{ /*firefox 계열*/
+	width: 18px; height: 18px; border-radius:50%;
+ 	border:none;
+    background: #fff;
+    box-shadow: inset 1px 1px 3px 0px rgb(255, 255, 255), inset -1px -1px 4px 0px rgb(177, 177, 177), 0px 0px 5px 0px rgb(97, 97, 97) /*effect*/	
+}
+input[type=range]::-ms-thumb{ /*ie 계열*/
+ 	cursor:pointer;
+ 	width: 18px; height: 18px; border-radius:50%;
+ 	border:none;
+    background: #fff;
+    box-shadow: inset 1px 1px 3px 0px rgb(255, 255, 255), inset -1px -1px 4px 0px rgb(177, 177, 177), 0px 0px 5px 0px rgb(97, 97, 97) /*effect*/	
+}
+
+/** 02-2. slide liner bg **/
+input[type=range]::-webkit-slider-runnable-track{/* webkit 계열  */
+	width:100%;
+	height:2px;
+	cursor:pointer;
+	border-radius:0px;
+	border:none;
+	background:#999;	
+}
+input[type=range]:focus::-webkit-slider-runnable-track{/* webkit 계열  */
+	background:#999;	
+}
+input[type=range]::-moz-range-track{ /*firefox 계열*/
+	width:100%;
+	height:2px;
+	cursor:pointer;
+	background:#999;
+	box-shadow: none;	
+	border-radius:0px;
+	border:none;	
+}
+input[type=range]::-ms-track{ /*ie 계열*/
+	width:100%;
+	height:2px;
+	cursor:pointer;
+	background:transparent;
+	border-color:transparent;
+	border-width:9px 0;	
+	color:transparent;
+}
+input[type=range]::-ms-fill-lower{
+	background: red;
+	border:1px solid #999;
+	border-radius:0px;
+	box-shadow: none;
+}
+input[type=range]:focus::-ms-fill-lower{
+	background: #999;
+}
+input[type=range]::-ms-fill-upper{
+	background: red;
+	border:1px solid #999;
+	border-radius:0px;
+	box-shadow: none;
+}
+input[type=range]:focus::-ms-fill-upper{
+	background: #999;
+}
+
+/**************************// 인풋 range reDesign css  ********************************/
+</style>														
+							
+							<div class="codeBox option_txt">
+								filter code: <br/>
+								<strong class="js-show-code c-code__pre">효과 버튼을 클릭하거나 슬라이더로 값을 조정하세요.</strong>
+							</div>
+							
+							<div class="sample_box clear">
+
+								<div class="generator player">
+									<div class="inbox real" id="svg_canvas">
+										<svg class="svg_canvas">
+											<defs>
+												<filter id="filterVal"><feColorMatrix type="matrix" values= "0" id="fillterMetrix"/></filter>
+											</defs>							
+											<image  filter="url(#filterVal)"
+											xlink:href="img/data/ul_pic_land_car02.svg" x="0px" y="0px" width="300px" height="200px" preserveAspectRatio="xMinYMin meet"/>
+											<image  filter="url(#filterVal)"
+											xlink:href="img/data/ul_pic_land_car04.svg" x="300px" y="0px" width="300px" height="200px" preserveAspectRatio="xMinYMin meet"/>
+											<image  filter="url(#filterVal)"
+											xlink:href="img/data/ul_pic_land_car03.svg" x="0px" y="200px" width="300px" height="200px" preserveAspectRatio="xMinYMin meet"/>
+											<image  filter="url(#filterVal)"
+											xlink:href="img/data/ul_pic_land_car05.svg" x="300px" y="200px" width="300px" height="200px" preserveAspectRatio="xMinYMin meet"/>																																									
+										</svg>										
+									</div>
+									<!-- generator_controll -->
+									<div class="generator_controll">
+										<!-- matrix_tb_box -->										
+					        			<div class="matrix_tb_box">
+											<style>
+											.matrix_tb {}
+											.matrix_tb table{width:100%;}						
+											.matrix_tb table th,
+											.matrix_tb table td{padding:2px 5px; text-align:center; font-size:11px;}
+											.matrix_tb table td:last-child{}
+											.matrix_tb table tr.top_th th,
+											.matrix_tb table tr.top_th td{}
+											</style>
+											
+											<div class="matrix_tb" >
+												<table>
+													<tr class="top_th">
+														<td><strong style="color:red;">			R</strong></td>
+														<td><strong style="color:green;">		G</strong></td>
+														<td><strong style="color:blue;">		B</strong></td>
+														<td><strong style="color:gray;">			A</strong></td>
+														<td><strong style="color:black;">	*</strong></td>
+														<td></td>
+													</tr>								
+													<tr>
+														<td data-matrix="r1"><strong style="color:red;">			1</strong></td>
+														<td data-matrix="r2"><strong style="color:green;">		0</strong></td>
+														<td data-matrix="r3"><strong style="color:blue;">		0</strong></td>
+														<td data-matrix="r4"><strong style="color:gray;">			0</strong></td>
+														<td data-matrix="r5"><strong style="color:black;">	0</strong></td>
+														<td><strong style="color:red;">			R</strong></td>
+													</tr>
+													<tr>
+														<td data-matrix="g1"><strong style="color:red;">			0</strong></td>
+														<td data-matrix="g2"><strong style="color:green;">		1</strong></td>
+														<td data-matrix="g3"><strong style="color:blue;">		0</strong></td>
+														<td data-matrix="g4"><strong style="color:gray;">			0</strong></td>
+														<td data-matrix="g5"><strong style="color:black;">	0</strong></td>
+														<td><strong style="color:green;">		G</strong></td>
+													</tr>
+													<tr>
+														<td data-matrix="b1"><strong style="color:red;">			0</strong></td>
+														<td data-matrix="b2"><strong style="color:green;">		0</strong></td>
+														<td data-matrix="b3"><strong style="color:blue;">		1</strong></td>
+														<td data-matrix="b4"><strong style="color:gray;">			0</strong></td>
+														<td data-matrix="b5"><strong style="color:black;">	0</strong></td>
+														<td><strong style="color:blue;">		B</strong></td>
+													</tr>
+													<tr>
+														<td data-matrix="a1"><strong style="color:red;">			0</strong></td>
+														<td data-matrix="a2"><strong style="color:green;">		0</strong></td>
+														<td data-matrix="a3"><strong style="color:blue;">		0</strong></td>
+														<td data-matrix="a4"><strong style="color:gray;">			1</strong></td>
+														<td data-matrix="a5"><strong style="color:black;">	0</strong></td>
+														<td><strong style="color:gray;">			A</strong></td>
+													</tr>								
+												</table>
+											</div>
+					        			</div>									
+					        			<!--// matrix_tb_box -->
+					        			
+					        			<!-- sl_group_frame -->
+					        			<div class="sl_group_frame_box">
+						        			<div class="sl_group_frame ui_scrollview">
+						        				<div class="ui_scrollarea">
+						        					<div class="ui_content">
+						        					
+														<div class="sl_group"><!--  style="border-color: #ff6000;" -->
+															<div class="sl_group_box">
+																<div class="c-color">
+																	<input type="range" id="r1" min="-1" max="2" step=".1" value="1">
+																	<span class="c-color__value" id="">1</span>
+																	<strong class="c-color__name" style="color:red;"> R to R</strong>
+																</div>
+																<div class="c-color">
+																	<input type="range" id="r2" min="-1" max="2" step=".1" value="0">
+																	<span class="c-color__value" id="">0</span>
+																	<span class="c-color__name"> G to R</span>
+																</div>
+																<div class="c-color">
+																	<input type="range" id="r3" min="-1" max="2" step=".1" value="0">
+																	<span class="c-color__value" id="">0</span>
+																	<span class="c-color__name"> B to R</span>
+																</div>
+																<div class="c-color">
+																	<input type="range" id="r4" min="-1" max="2" step=".1" value="0">
+																	<span class="c-color__value" id="">0</span>
+																	<span class="c-color__name"> Alpha to R</span>
+																</div>																						
+																<div class="c-color">
+																	<input type="range" id="r5" min="-1" max="2" step=".1" value="0">
+																	<span class="c-color__value" id="">0</span>
+																	<span class="c-color__name"> Add to R</span>
+																</div>
+															</div>
+														</div>
+														
+														<div class="sl_group"><!--  style="border-color: #4aa036;" -->
+															<div class="sl_group_box">
+																<div class="c-color">
+																	<input type="range" id="g1" min="-1" max="2" step=".1" value="0">
+																	<span class="c-color__value" id="">0</span>
+																	<span class="c-color__name"> R to G</span>
+																</div>
+																<div class="c-color">
+																	<input type="range" id="g2" min="-1" max="2" step=".1" value="1">
+																	<span class="c-color__value" id="">1</span>
+																	<strong class="c-color__name" style="color:green;"> G to G</strong>
+																</div>
+																<div class="c-color">
+																	<input type="range" id="g3" min="-1" max="2" step=".1" value="0">
+																	<span class="c-color__value" id="">0</span>
+																	<span class="c-color__name"> B to G</span>
+																</div>
+																<div class="c-color">
+																	<input type="range" id="g4" min="-1" max="2" step=".1" value="0">
+																	<span class="c-color__value" id="">0</span>
+																	<span class="c-color__name"> Alpha to G</span>
+																</div>
+																<div class="c-color">
+																	<input type="range" id="g5" min="-1" max="2" step=".1" value="0">
+																	<span class="c-color__value" id="">0</span>
+																	<span class="c-color__name"> Add to G</span>
+																</div>
+															</div>
+														</div>		
+														
+														<div class="sl_group"><!--  style="border-color:#007cff;" -->
+															<div class="sl_group_box">
+																<div class="c-color">
+																	<input type="range" id="b1" min="-1" max="2" step=".1" value="0">
+																	<span class="c-color__value" id="">0</span>
+																	<span class="c-color__name"> R to B</span>
+																</div>
+																<div class="c-color">
+																	<input type="range" id="b2" min="-1" max="2" step=".1" value="0">
+																	<span class="c-color__value" id="">0</span>
+																	<span class="c-color__name"> G to B</span>
+																</div>
+																<div class="c-color">
+																	<input type="range" id="b3" min="-1" max="2" step=".1" value="1">
+																	<span class="c-color__value" id="">1</span>
+																	<strong class="c-color__name" style="color:blue;"> B to B</strong>
+																</div>
+																<div class="c-color">
+																	<input type="range" id="b4" min="-1" max="2" step=".1" value="0">
+																	<span class="c-color__value" id="">0</span>
+																	<span class="c-color__name"> Alpha to B</span>
+																</div>
+																<div class="c-color">
+																	<input type="range" id="b5" min="-1" max="2" step=".1" value="0">
+																	<span class="c-color__value" id="">0</span>
+																	<span class="c-color__name"> Add to B</span>
+																</div>
+															</div>
+														</div>
+																								
+														<div class="sl_group"><!--  style="border-color:gray;" -->
+															<div class="sl_group_box">
+																<div class="c-color">
+																	<input type="range" id="a1" min="-1" max="2" step=".1" value="0">
+																	<span class="c-color__value" id="">0</span>
+																	<span class="c-color__name"> R to Alpha</span>
+																</div>
+																<div class="c-color">
+																	<input type="range" id="a2" min="-1" max="2" step=".1" value="0">
+																	<span class="c-color__value" id="">0</span>
+																	<span class="c-color__name"> G to Alpha</span>
+																</div>
+																<div class="c-color">
+																	<input type="range" id="a3" min="-1" max="2" step=".1" value="0">
+																	<span class="c-color__value" id="">0</span>
+																	<span class="c-color__name"> B to Alpha</span>
+																</div>
+																<div class="c-color">
+																	<input type="range" id="a4" min="-1" max="2" step=".1" value="1">
+																	<span class="c-color__value" id="">1</span>
+																	<strong class="c-color__name"> Alpha to Alpha</strong>
+																</div>
+																<div class="c-color">
+																	<input type="range" id="a5" min="-1" max="2" step=".1" value="0">
+																	<span class="c-color__value" id="">0</span>
+																	<span class="c-color__name"> Add to Alpha</span>
+																</div>										
+															</div>	
+														</div>
+														<script>
+														$(window).load(function(){
+															$('.ui_scrollview').uxScrollView();
+														});
+														</script>
+						        					</div>
+						        				</div>
+											</div>										
+										</div>
+					        			<!--// sl_group_frame -->										
+										
+										<div class="controll_back_btn">
+											<div class="back_box">
+												<button class="bg_tile">tile bg</button>
+												<button class="bg_white">white bg</button>											
+												<button class="bg_black">black bg</button>											
+											</div>
+										</div>															
+									</div>
+									<!--// generator_controll -->									
+									<div class="color_change"><!-- append button --></div>
+								</div>
+								
+
+								
+								<script>								
+									var colorMetrix= document.getElementById("fillterMetrix");
+									var rangeSliders = Array.apply(null, document.querySelectorAll('input[type="range"]'));
+									var colorMatrixObj = {};
+									var showCodeIn = document.querySelector(".js-show-code");
+									
+									function updateMatrix(colorID, value){
+										colorMatrixObj[colorID] = value.toString();
+										var matrixArray = [];
+										for(var val in colorMatrixObj){
+											matrixArray.push(colorMatrixObj[val]);
+										}
+										colorMetrix.setAttribute("values", matrixArray.join(' '));
+									}
+									
+									function getCode(el){
+										var nodeClone = el.cloneNode(true);
+										var tmp = document.createElement('div');
+											tmp.appendChild(nodeClone);
+										return tmp.innerHTML;
+									}
+									
+									function onRangeChange(rangeSlider){
+										var sliderValue = Math.round(rangeSlider.value*10)/10;
+											rangeSlider.nextElementSibling.innerHTML = sliderValue;
+										updateMatrix(rangeSlider.id, sliderValue);
+										showCodeIn.textContent = getCode(colorMetrix);
+										//console.log(colorMetrix);
+										console.log(rangeSlider.id);
+										
+										//$(".matrix_tb td").data("matrix",rangeSlider.id)
+										$(".matrix_tb td[data-matrix='"+rangeSlider.id+"'] strong").text(sliderValue);
+									}
+									
+									rangeSliders.forEach(function(rangeSlider){
+										var t = rangeSlider;
+										updateMatrix(t.id, t.value);
+										rangeSlider.addEventListener('change',function(){
+											onRangeChange(rangeSlider);
+											console.log(rangeSlider);
+										}, false);
+									});
+									
+	
+									var matrixCh = [];								
+									
+									/******************************************************************************* 버튼 처리 ***************************************************************/
+									btnAppend('btn_normal','normal');
+									$(".btn_normal").click(function(){
+										$(".color_change button").removeClass("point"); $(this).addClass("point");									
+										matrixInit();//matrix 초기화 //console.log(colorMetrix);									 
+										matrixCh = [ ["r1",1], ["g2",1], ["b3",1], ["a4",1] ]; //생성
+										matrixApply();//metrix 적용
+									});
+	
+									btnAppend('btn_lighten','lighten');
+									$(".btn_lighten").click(function(){
+										$(".color_change button").removeClass("point"); $(this).addClass("point");
+										matrixInit();//matrix 초기화 //console.log(colorMetrix);									 
+										matrixCh = [ ["r1",1.5], ["g2",1.5], ["b3",1.5], ["a4",1] ]; //생성
+										matrixApply();//metrix 적용
+									});								
+									
+									btnAppend('btn_gray','gray');
+									$(".btn_gray").click(function(){
+										$(".color_change button").removeClass("point"); $(this).addClass("point");
+										matrixInit();//matrix 초기화 //console.log(colorMetrix);									 
+										matrixCh = [ ["r2",1], ["g2",1], ["b2",1], ["a4",1] ]; //생성
+										matrixApply();//metrix 적용
+									});
+									
+									btnAppend('btn_graylight','light gray');
+									$(".btn_graylight").click(function(){
+										$(".color_change button").removeClass("point"); $(this).addClass("point");
+										matrixInit();//matrix 초기화 //console.log(colorMetrix);									 
+										matrixCh = [ ["r1",1], ["g1",1], ["b1",1], ["a4",1] ]; //생성
+										matrixApply();//metrix 적용
+									});
+									
+									
+									btnAppend('btn_graydark','dark gray');
+									$(".btn_graydark").click(function(){
+										$(".color_change button").removeClass("point"); $(this).addClass("point");
+										matrixInit();//matrix 초기화 //console.log(colorMetrix);									 
+										matrixCh = [ ["r3",1], ["g3",1], ["b3",1], ["a4",1] ]; //생성
+										matrixApply();//metrix 적용
+									});	
+	
+									btnAppend('btn_peachy','peachy');
+									$(".btn_peachy").click(function(){
+										$(".color_change button").removeClass("point"); $(this).addClass("point");
+										matrixInit();//matrix 초기화 //console.log(colorMetrix);									 
+										matrixCh = [ ["r1",1], ["g2",.5], ["b4",.5], ["a4",1] ]; //생성
+										matrixApply();//metrix 적용
+									});								
+	
+									btnAppend('btn_red','red');
+									$(".btn_red").click(function(){
+										$(".color_change button").removeClass("point"); $(this).addClass("point");
+										matrixInit();//matrix 초기화 //console.log(colorMetrix);									 
+										matrixCh = [ ["r1",1], ["a4",1] ]; //생성
+										matrixApply();//metrix 적용
+									});
+	
+									btnAppend('btn_ngred','no-green-red');
+									$(".btn_ngred").click(function(){
+										$(".color_change button").removeClass("point"); $(this).addClass("point");
+										matrixInit();//matrix 초기화 //console.log(colorMetrix);									 
+										matrixCh = [ ["r1",1], ["r2",1],["b3",1],  ["a4",1] ]; //생성
+										matrixApply();//metrix 적용
+									});								
+	
+									btnAppend('btn_magenta','magenta');
+									$(".btn_magenta").click(function(){
+										$(".color_change button").removeClass("point"); $(this).addClass("point");
+										matrixInit();//matrix 초기화 //console.log(colorMetrix);									 
+										matrixCh = [ ["r1",1], ["b3",1], ["a4",1] ]; //생성
+										matrixApply();//metrix 적용
+									});
+	
+									btnAppend('btn_blue','blue');
+									$(".btn_blue").click(function(){
+										$(".color_change button").removeClass("point"); $(this).addClass("point");
+										matrixInit();//matrix 초기화 //console.log(colorMetrix);									 
+										matrixCh = [ ["b3",1], ["a4",1] ]; //생성
+										matrixApply();//metrix 적용
+									});
+	
+									btnAppend('btn_cyan','cyan');
+									$(".btn_cyan").click(function(){
+										$(".color_change button").removeClass("point"); $(this).addClass("point");
+										matrixInit();//matrix 초기화 //console.log(colorMetrix);									 
+										matrixCh = [ ["g2",1], ["b3",1], ["a4",1] ]; //생성
+										matrixApply();//metrix 적용
+									});
+	
+									btnAppend('btn_green','green');
+									$(".btn_green").click(function(){
+										$(".color_change button").removeClass("point"); $(this).addClass("point");
+										matrixInit();//matrix 초기화 //console.log(colorMetrix);									 
+										matrixCh = [ ["g2",1], ["a4",1] ]; //생성
+										matrixApply();//metrix 적용
+									});
+	
+									btnAppend('btn_lime','lime');
+									$(".btn_lime").click(function(){
+										$(".color_change button").removeClass("point"); $(this).addClass("point");
+										matrixInit();//matrix 초기화 //console.log(colorMetrix);									 
+										matrixCh = [ ["r1",1],["g2",2], ["b4",.5], ["a4",1] ]; //생성
+										matrixApply();//metrix 적용
+									});
+									
+									btnAppend('btn_Yellow','Yellow');
+									$(".btn_Yellow").click(function(){
+										$(".color_change button").removeClass("point"); $(this).addClass("point");
+										matrixInit();//matrix 초기화 //console.log(colorMetrix);									 
+										matrixCh = [ ["r1",1], ["g2",1], ["a4",1] ]; //생성
+										matrixApply();//metrix 적용
+									});					
+	
+									btnAppend('btn_hardYellow','hardYellow');
+									$(".btn_hardYellow").click(function(){
+										$(".color_change button").removeClass("point"); $(this).addClass("point");
+										matrixInit();//matrix 초기화 //console.log(colorMetrix);									 
+										matrixCh = [ ["r1",1], ["r4",1],  ["g2",1], ["g4",1], ["b3",1], ["a4",1] ]; //생성
+										matrixApply();//metrix 적용
+									});
+	
+									btnAppend('btn_bmhighlight','blue magenta highlight');
+									$(".btn_bmhighlight").click(function(){
+										$(".color_change button").removeClass("point"); $(this).addClass("point");
+										matrixInit();//matrix 초기화 //console.log(colorMetrix);									 
+										matrixCh = [ ["r1",1], ["b3",1], ["b4",1], ["a4",1] ]; //생성
+										matrixApply();//metrix 적용
+									});
+	
+									btnAppend('btn_elimblue','elim blue');
+									$(".btn_elimblue").click(function(){
+										$(".color_change button").removeClass("point"); $(this).addClass("point");
+										matrixInit();//matrix 초기화 //console.log(colorMetrix);									 
+										matrixCh = [ ["r1",1], ["g2",1], ["b3",1], ["a3",-2], ["a4",1] ]; //생성
+										matrixApply();//metrix 적용
+									});											
+									$(".btn_normal").addClass("point");
+									/******************************************************************************* 버튼 처리.end ***************************************************************/
+									
+									function btnAppend(className,name){
+										$(".color_change").append("<button class='"+className+"'>"+name+"</button>");
+									}								
+									
+									$(".color_change button").mousedown(function(){
+										$(".code_area .play_box").removeClass("effec_rd");
+										$(".code_area .play_box").removeClass("effec_dd");
+										
+										$(".code_area .play_box").addClass("effec_ld");
+										setTimeout(function(){
+											$(".code_area .play_box").removeClass("effec_ld");	
+										},2000);
+									});
+									
+									function matrixInit(){ //matrix 초기화
+										var rgbaArry = ["r","g","b","a"];
+										for(var m=0; m<rgbaArry.length; m++){
+											var mArry = rgbaArry[m];										
+											for(var i=1; i<6; i++){
+												$('#'+mArry+i).val(0);
+												colorMatrixObj[mArry+i] = $('#'+mArry+i).val();
+												var matrixArray = [];
+												for(var val in colorMatrixObj){
+													matrixArray.push(colorMatrixObj[val]);
+												}
+												colorMetrix.setAttribute("values", matrixArray.join(' '));
+												//console.log(mArry+i);
+												$(".matrix_tb td[data-matrix='"+mArry+i+"'] strong").text(0);
+												$('#'+mArry+i).next('span').text(0);
+											}
+										}
+									}
+									function matrixApply(){ //matrix 적용
+										 for(var i=0; i<matrixCh.length; i++){
+												$('#'+matrixCh[i][0]).val(matrixCh[i][1]);
+												updateMatrix(matrixCh[i][0], $('#'+matrixCh[i][0]).val());
+												$(".matrix_tb td[data-matrix='"+matrixCh[i][0]+"'] strong").text($('#'+matrixCh[i][0]).val());
+												$('#'+matrixCh[i][0]).next('span').text(matrixCh[i][1]);
+										 }//console.log(colorMetrix);
+										showCodeIn.textContent = getCode(colorMetrix);									
+									}
+									
+									var $svg_cns = $("#svg_canvas");
+									$(".bg_white").click(function(){
+										$svg_cns.removeClass("real");
+										//$svg_cns.removeClass("bg_w");
+										$svg_cns.removeClass("bg_b");
+										$svg_cns.addClass("bg_w");
+										
+										$(".controll_back_btn .back_box button").removeClass("point");
+										$(this).addClass("point");
+									});
+									$(".bg_black").click(function(){
+										$svg_cns.removeClass("real");
+										$svg_cns.removeClass("bg_w");
+										//$svg_cns.removeClass("bg_b");
+										$svg_cns.addClass("bg_b");
+										
+										$(".controll_back_btn .back_box button").removeClass("point");
+										$(this).addClass("point");
+									});
+									$(".bg_tile").click(function(){										
+										//$svg_cns.removeClass("real");
+										$svg_cns.removeClass("bg_w");
+										$svg_cns.removeClass("bg_b");
+										$svg_cns.addClass("real");
+										
+										$(".controll_back_btn .back_box button").removeClass("point");
+										$(this).addClass("point");
+									});
+									//$(".bg_tile").addClass("point");
+									$(".bg_black").click();
+								</script>
+														
+							</div>
+						</div>
+						<!--// run_sample -->
+
+	        		</article>
+	        		<!-- code -->
+				</div>		               		
+	        
+			</div>
+		</section>
+		<!--#####################// SVG ColorMetrix Generator #####################-->
+		
+	</div><!--// contents -->
+
+	<script src="js/jquery-ui.min.js"></script><!-- jquery ui-->
+	<script src="js/jquery.ui.touch-punch.js"></script><!-- jquery ui using mobile -->
+    <script src="js/frontUxer.js"></script><!-- plugin -->
+
+	<script type="text/javascript">
+	
+    </script>
+    
+</body>
+</html>

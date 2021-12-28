@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="format-detection" content="telephone=no, address=no, email=no" /><!-- 숫자인식, 메일주소, 지도상의 주소링크 막기-->
+<meta name="title" content="사이트 제목">
+<meta name="keywords" content="검색 키워드">
+<meta name="description" content="사이트 소개내용">
+<meta name="twitter:title" content="사이트 제목">
+<meta name="twitter:description" content="사이트 소개내용">
+<meta property="og:title" content="사이트 제목">
+<meta property="og:description" content="사이트 소개내용">
+<title>가이드 - 탭/스텝</title>
+<link rel="shortcut icon" type="image/x-icon" href="img/site.ico">
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/guide_mobile.css">
+<script src="js/jquery-1.11.2.min.js"></script>
+<script src="js/init.js"></script>
+</head>
+<body>
+<div class="wrap">
+	
+	<nav id="skip"><a href="#contents" class="skip">본문바로가기</a></nav>
+
+	<!-- header -->
+	<header><script src="inc/inc_header.js"></script></header>
+	<!--// header -->
+	
+	<!-- Content -->
+	<section id="contents">
+		<aside>
+			<nav>
+				<ul>
+					<li>
+						<a href="#sec_1">탭</a>						
+						<dl>
+							<dd>2단계 선택</dd>
+							<dd>3단계 무선택</dd>
+						</dl>
+					</li>
+					<li>
+						<a href="#sec_2">스텝</a>
+						<dl>
+							<dd>3단계</dd>
+							<dd>5단계</dd>
+						</dl>
+					</li>										
+				</ul>
+			</nav>
+		</aside>
+		
+		<section class="content">
+			
+			<!-- sec_1 -->
+			<section class="lg_box" id="sec_1">
+				<h1>탭</h1>			
+				<!-- <h2 class="hide">3단계</h2>-->
+				<div class="mg_box">
+					apply plugin <strong>$(".tab_list").tapList();</strong>	<br/><br/>
+					<dl class="txt_list normal">
+						<dt>.tab_list</dt>
+						<dd>
+							<!-- 소스 입력 -->							
+							<ul class="tab_list">
+								<li><a href="#" aria-controls="tab_mobile" class="on">휴대폰인증</a></li>
+								<li><a href="#" aria-controls="tab_card">신용카드인증</a></li>
+							</ul>
+							<div class="tab_cont" >
+								<section id="tab_mobile" aria-label="휴대폰인증 입력">휴대폰인증 컨텐츠 입력</section>
+								<section id="tab_card" aria-label="신용카드인증 입력">신용카드인증 컨텐츠 입력</section>							
+							</div>
+							<!--// 소스 입력 -->
+						</dd>			
+					</dl>	
+					<!-- code -->
+					<div class="code">						
+<xmp>
+<ul class="tab_list">
+	<li><a href="#" aria-controls="tab_mobile" class="on">휴대폰인증</a></li>
+	<li><a href="#" aria-controls="tab_card">신용카드인증</a></li>
+</ul>
+<div class="tab_cont" >
+	<section id="tab_mobile" aria-label="휴대폰인증 입력">휴대폰인증 컨텐츠 입력</section>
+	<section id="tab_card" aria-label="신용카드인증 입력">신용카드인증 컨텐츠 입력</section>							
+</div>
+</xmp>					
+					</div>
+					<!--// code -->	
+					
+					<dl class="txt_list normal">
+						<dt>.tab_list.tab3</dt>
+						<dd>
+							<!-- 소스 입력 -->							
+							<ul class="tab_list tab3">
+								<li><a href="#" aria-controls="tab_mobile_cont">휴대폰</a></li>
+								<li><a href="#" aria-controls="tab_card_cont">신용카드</a></li>
+								<li><a href="#" aria-controls="tab_license_cont">인증서</a></li>								
+							</ul>
+							<div class="tab_cont" >
+								<section id="tab_mobile_cont" aria-label="휴대폰 정보입력">휴대폰 입력 컨텐츠 </section>
+								<section id="tab_card_cont" aria-label="신용카드 정보입력">신용카드 입력 컨텐츠 </section>
+								<section id="tab_license_cont" aria-label="인증서 정보입력">인증서 입력 컨텐츠</section>															
+							</div>
+							<!--// 소스 입력 -->
+						</dd>			
+					</dl>		
+					
+					<!-- code -->
+					<div class="code">										
+<xmp>
+<ul class="tab_list tab3">
+	<li><a href="#" aria-controls="tab_mobile_cont">휴대폰</a></li>
+	<li><a href="#" aria-controls="tab_card_cont">신용카드</a></li>
+	<li><a href="#" aria-controls="tab_license_cont">인증서</a></li>								
+</ul>
+<div class="tab_cont" >
+	<section id="tab_mobile_cont" aria-label="휴대폰 정보입력">휴대폰 입력 컨텐츠 </section>
+	<section id="tab_card_cont" aria-label="신용카드 정보입력">신용카드 입력 컨텐츠 </section>
+	<section id="tab_license_cont" aria-label="인증서 정보입력">인증서 입력 컨텐츠</section>															
+</div>
+</xmp>
+					</div>
+					<!--// code -->	
+												
+				</div>
+			</section>	
+			<!--// sec_1 -->
+			
+			<!-- sec_2 -->
+			<section class="lg_box" id="sec_2">
+				<h1>스텝</h1>			
+				<!-- <h2 class="hide">스텝</h2>-->
+				<div class="mg_box">
+					<dl class="txt_list normal">
+						<dt>.step_list.step3</dt>
+						<dd>
+							<!-- 소스 입력 -->							
+							<ol class="step_list step3" arial-label="조회 및 신청 3단계">
+								<li class="pre"><span>1</span> 확인</li>
+								<li class="on"><span aria-current="step">2</span> 입력</li>
+								<li><span>3</span> 결과</li>
+							</ol>
+							<!--// 소스 입력 -->
+						</dd>			
+					</dl>		
+					<dl class="txt_list normal">
+						<dt>.step_list.step5</dt>
+						<dd>
+							<!-- 소스 입력 -->
+							<ol class="step_list step5" arial-label="조회 및 신청 5단계">
+								<li class="pre"><span>1</span> 안내</li>
+								<li class="pre"><span>2</span> 확인</li>								
+								<li class="on"><span aria-current="step">3</span> 입력</li>
+								<li><span>4</span> 신청</li>
+								<li><span>5</span> 결과</li>								
+							</ol>
+							<!--// 소스 입력 -->
+						</dd>			
+					</dl>
+					
+					<!-- code -->
+					<div class="code">						
+<xmp>
+<ol class="step_list step5" arial-label="조회 및 신청 5단계">
+	<li class="pre"><span>1</span> 안내</li>
+	<li class="pre"><span>2</span> 확인</li>								
+	<li class="on"><span aria-current="step">3</span> 입력</li>
+	<li><span>4</span> 신청</li>
+	<li><span>5</span> 결과</li>								
+</ol>
+</xmp>
+					</div>
+					<!-- code -->	
+																			
+				</div>
+			</section>
+			<!--// sec_2 -->					
+			
+		</section>
+	</section>
+	<!--// Content -->
+
+	<!-- footer -->
+	<footer id="footer"><script src="inc/inc_footer.js"></script></footer>
+	<!-- footer -->
+
+<script src="js/module.js"></script>
+<script src="js/common.js"></script>	
+</div>
+
+</body>
+</html>

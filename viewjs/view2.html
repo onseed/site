@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>babylonjs.01</title>
+<!-- <script src="vue.js"></script>-->
+<script src="/js/oap/libs/jquery-1.11.2.min.js"></script>
+<link rel="stylesheet" href="../guide/css/guide.css">
+<script src="babylon.js"></script>
+<style>
+html, body{overflow:hidden; width:100%; height:100%; margin:0; padding:0;}
+.babylon_sec{width:100%; height:100%; box-sizing:border-box; padding-right:170px; position:relative;}
+.babylon_sec #renderCanvas{display:block; width:100%; height:100%; touch-action:none; background:#f8f8f8; }
+.babylon_sec .babylon_cont{display:block; position:absolute; width:170px; top:0; right:0; height:100%; box-sizing:border-box; padding:10px; overflow-y:auto; overflow-x:hidden;}
+</style>
+</head>
+<body>
+
+<!--################ babylon ################## -->
+<section class="babylon_sec">
+	<canvas id="renderCanvas"></canvas>
+	<!--###  babylon_cont ###-->
+	<div class="babylon_cont">
+
+		<style>
+		.control_box {text-align:center;}
+		.control_box h2{display:inline-block; font-weight:bold; font-size:14px; text-align:center; margin:30px 0 0 0; background:#b5b5b5; color:#fff; padding:2px 10px; min-width:130px; border-radius:5px; cursor:pointer;}
+		.control_box h2.fst{margin-top:0;}
+		.control_box h2.on{background:#70bbcb;}
+		.control_box h2.camera{background:#c3bf93; cursor:auto;}
+		.control_box .offset_num{padding:10px 0 5px 0; font-size:11px;}
+		.control_box .offset_num li{display:inline-block; margin-left:10px; }
+		.control_box .offset_num li:first-child{ margin-left:0px;}
+		.control_box .offset_num li em{color:#6297d9; font-weight:bold;}
+		.control{position:relative; width:80px; height:80px; background:#fff; border-radius:50%; overflow:hidden; border:1px solid #f1f1f1; margin:0 auto;}
+		.control_box.disabled .control{ pointer-events:none; opacity:0.3;}
+		.control_box.disabled .offset_num{ opacity:0.3;}
+		
+		.control.camera{background:#fff68e;}
+		.control .offset{display:block; position:absolute; width:50%; height:50%; z-index:2;}
+		.control .offset button{display:block; width:100%; height:100%; background:none; border:none;}
+		.control .offset.up{top:0; left:50%; height:25%; margin:0 0 0 -25%;}
+		.control .offset.down{bottom:0; left:50%;  height:25%; margin:0 0 0 -25%;}
+		.control .offset.left{top:50%; left:0; width:25%; margin:-25% 0 0 0;}
+		.control .offset.right{top:50%; right:0; width:25%; margin:-25% 0 0 0;}
+		
+		.control .offset.back{top:50%; left:50%; width:40%; height:25%; margin:-25% 0 0 -20%; background:#f1f1f1; border-radius:100% 100% 20% 20%; font-size:11px; box-sizing:border-box; border-bottom:1px solid #fff;
+			box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.2); overflow:hidden;  z-index:1;}
+		.control .offset.front{top:50%; left:50%; width:40%; height:25%; margin:0 0 0  -20%; background:#f1f1f1; border-radius:20% 20% 100% 100%; font-size:11px; box-sizing:border-box; border-top:1px solid #fff;
+			box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.2);  overflow:hidden;  z-index:1;} 
+		.control.camera .offset.back,
+		.control.camera .offset.front{background:#ddd57f; border-color:#fff68e;}
+		.control .offset.back .btn em{display:block; transform: scale(1.8, 0.5) translateY(8px);}
+		.control .offset.front .btn em{display:block; transform: scale(1.8, 0.5) translateY(-8px);}
+			
+		</style>
+		
+		
+		<div class="control_box" id="obj5">
+			<h2 class="camera fst">camera</h2>			
+			<ul class="offset_num">
+				<li>α <em class="offset_x"></em></li>
+				<li>β <em class="offset_y"></em></li>
+				<li>radius <em class="zoom_z"></em></li>			
+			</ul>
+			<div class="control camera">
+				<span class="offset up"><button class="btn up" title="alpha up">▲</button>	</span>
+				<span class="offset left"><button class="btn left" title="alpha left">◀</button></span>
+				<span class="offset right"><button class="btn right" title="beta up">▶</button></span>
+				<span class="offset down"><button class="btn down" title="beta down">▼</button></span>
+				<span class="offset back"><button class="btn back" title="zoom out"><em>▲</em></button></span>
+				<span class="offset front"><button class="btn front" title="zoom in"><em>▼</em></button></span>
+			</div>
+		</div>			
+		
+		<div class="control_box disabled" id="obj1">
+			<h2>Sphere</h2>
+			<ul class="offset_num">
+				<li>X <em class="offset_x"></em></li>
+				<li>Y <em class="offset_y"></em></li>
+				<li>Z <em class="offset_z"></em></li>			
+			</ul>
+			<div class="control">
+				<span class="offset up"><button class="btn up" title="move up">▲</button>	</span>
+				<span class="offset left"><button class="btn left" title="move left">◀</button></span>
+				<span class="offset right"><button class="btn right" title="move right">▶</button></span>
+				<span class="offset down"><button class="btn down" title="move down">▼</button></span>
+				<span class="offset back"><button class="btn back" title="zoom out"><em>▲</em></button></span>
+				<span class="offset front"><button class="btn front" title="zoom in"><em>▼</em></button></span>
+			</div>
+		</div>
+		
+		<div class="control_box" id="obj2">
+			<h2 class="on">Man</h2>
+			<ul class="offset_num">
+				<li>X <em class="offset_x"></em></li>
+				<li>Y <em class="offset_y"></em></li>
+				<li>Z <em class="offset_z"></em></li>			
+			</ul>
+			<div class="control">
+				<span class="offset up"><button class="btn up" title="move up">▲</button>	</span>
+				<span class="offset left"><button class="btn left" title="move left">◀</button></span>
+				<span class="offset right"><button class="btn right" title="move right">▶</button></span>
+				<span class="offset down"><button class="btn down" title="move down">▼</button></span>
+				<span class="offset back"><button class="btn back" title="zoom out"><em>▲</em></button></span>
+				<span class="offset front"><button class="btn front" title="zoom in"><em>▼</em></button></span>
+			</div>
+		</div>		 
+		
+		<div class="control_box" id="obj3">
+			<h2 class="on">veloster</h2>			
+			<ul class="offset_num">
+				<li>X <em class="offset_x"></em></li>
+				<li>Y <em class="offset_y"></em></li>
+				<li>Z <em class="offset_z"></em></li>			
+			</ul>
+			<div class="control">
+				<span class="offset up"><button class="btn up" title="move up">▲</button>	</span>
+				<span class="offset left"><button class="btn left" title="move left">◀</button></span>
+				<span class="offset right"><button class="btn right" title="move right">▶</button></span>
+				<span class="offset down"><button class="btn down" title="move down">▼</button></span>
+				<span class="offset back"><button class="btn back" title="zoom out"><em>▲</em></button></span>
+				<span class="offset front"><button class="btn front" title="zoom in"><em>▼</em></button></span>
+			</div>
+		</div>			
+		
+		<div class="control_box" id="obj4">
+			<h2 class="on">stinger</h2>			
+			<ul class="offset_num">
+				<li>X <em class="offset_x"></em></li>
+				<li>Y <em class="offset_y"></em></li>
+				<li>Z <em class="offset_z"></em></li>			
+			</ul>
+			<div class="control">
+				<span class="offset up"><button class="btn up" title="move up">▲</button>	</span>
+				<span class="offset left"><button class="btn left" title="move left">◀</button></span>
+				<span class="offset right"><button class="btn right" title="move right">▶</button></span>
+				<span class="offset down"><button class="btn down" title="move down">▼</button></span>
+				<span class="offset back"><button class="btn back" title="zoom out"><em>▲</em></button></span>
+				<span class="offset front"><button class="btn front" title="zoom in"><em>▼</em></button></span>
+			</div>
+		</div>		
+
+				
+	</div>
+	<!--###//  babylon_cont ###-->
+	
+	<script>
+	
+	(function($){//0. $변수를 쓰는 다른라이브러리와 충돌을 피하기 위해 즉시 호출 함수 표현을 사용해서 감싸준다
+		$.fn.objMov = function(options){//1.플러그인 name
+			var set = $.extend({//2. 옵션의 기본값 지정
+				target: "", //타겟지정
+			}, options);//2.end
+			return this.each(function(){//3.set의 변수를 사용해서 어플리케이션 동작
+				var target	 = set.target; // '타겟 obj'
+				
+				var $this = $(this);
+				var sphereX = target.position.x;
+				var sphereY = target.position.y;
+				var sphereZ = target.position.z;
+				
+				$this.find(".offset_x").text(sphereX);
+				$this.find(".offset_y").text(sphereY);
+				$this.find(".offset_z").text(sphereZ);
+				
+				var isPressed = false;//연속 event
+				$this.find(".btn").on("mousedown", function(){
+					isPressed = true;
+					if($(this).hasClass("up")){
+						//upInterval();						
+						moveInterval("up");
+					}else if($(this).hasClass("down")){
+						//downInterval();
+						moveInterval("down");
+					}else if($(this).hasClass("left")){
+						//leftInterval();
+						moveInterval("left");
+					}else if($(this).hasClass("right")){
+						//rightInterval();
+						moveInterval("right");
+					}else if($(this).hasClass("back")){
+						//backInterval();
+						moveInterval("back");
+					}else if($(this).hasClass("front")){
+						//frontInterval();			
+						moveInterval("front");
+					}else{
+						return false;
+					}
+				});
+				
+				$this.find(".btn").on("mouseup", function(){
+					isPressed = false;
+				});
+
+				function moveInterval(move){
+					if(isPressed){
+						if(move == "up"){
+							sphereY += 0.1; //sphereY ++;
+							target.position.y = sphereY;
+							$this.find(".offset_y").text(sphereY.toFixed(1));
+							//console.log("up:" + sphereY);
+						}else if(move == "down"){
+							sphereY -= 0.1; 
+							target.position.y = sphereY;
+							$this.find(".offset_y").text(sphereY.toFixed(1));
+							//console.log("down:" + sphereY);
+						}else if(move == "left"){
+							sphereX -= 0.1;
+							target.position.x = sphereX;
+							$this.find(".offset_x").text(sphereY.toFixed(1));							
+						}else if(move == "right"){
+							sphereX += 0.1;
+							target.position.x = sphereX;
+							$this.find(".offset_x").text(sphereY.toFixed(1));
+						}else if(move == "back"){
+							sphereZ += 0.1;
+							target.position.z = sphereZ;
+							$this.find(".offset_z").text(sphereZ.toFixed(1));
+						}else if(move == "front"){
+							sphereZ -= 0.1;
+							target.position.z = sphereZ;
+							$this.find(".offset_z").text(sphereZ.toFixed(1));
+						}
+						setTimeout(function(){moveInterval(move)},10);
+					}
+				}				
+				
+				function upInterval(){
+					if(isPressed){
+						sphereY += 0.1; //sphereY ++;
+						target.position.y = sphereY;
+						$this.find(".offset_y").text(sphereY.toFixed(1));
+						//console.log("up:" + sphereY); 
+						setTimeout(function(){upInterval()},10);							
+					}
+				}
+				function downInterval(){
+					if(isPressed){
+						sphereY -= 0.1; 
+						target.position.y = sphereY;
+						$this.find(".offset_y").text(sphereY.toFixed(1));
+						//console.log("down:" + sphereY); 
+						setTimeout(function(){downInterval()},10);							
+					}
+				}
+				function leftInterval(){
+					if(isPressed){
+						sphereX -= 0.1;
+						target.position.x = sphereX;
+						$this.find(".offset_x").text(sphereY.toFixed(1));
+						//console.log("left:" + sphereX);
+						setTimeout(function(){leftInterval()},10);							
+					}
+				}
+				function rightInterval(){
+					if(isPressed){
+						sphereX += 0.1;
+						target.position.x = sphereX;
+						$this.find(".offset_x").text(sphereY.toFixed(1));
+						//console.log("right:" + sphereX);
+						setTimeout(function(){rightInterval()},10);							
+					}
+				}				
+				function backInterval(){
+					if(isPressed){
+						sphereZ += 0.1;
+						target.position.z = sphereZ;
+						$this.find(".offset_z").text(sphereZ.toFixed(1));
+						//console.log("back:" + sphereZ);
+						setTimeout(function(){backInterval()},10);							
+					}
+				}
+				function frontInterval(){
+					if(isPressed){
+						sphereZ -= 0.1;
+						target.position.z = sphereZ;
+						$this.find(".offset_z").text(sphereZ.toFixed(1));
+						//console.log("back:" + sphereZ);
+						setTimeout(function(){frontInterval()},10);							
+					}
+				}	
+				
+				$this.find("h2").on("click", function(){ //타이틀 클릭
+					if($(this).hasClass("on")){
+						$(this).removeClass("on");
+						$(this).closest(".control_box").addClass("disabled");
+						
+						target.isVisible = false;
+					}else{
+						$(this).addClass("on");
+						$(this).closest(".control_box").removeClass("disabled");
+						target.isVisible = true;
+					}
+				});					
+			});//3.end
+		};//1.end
+		
+		$.fn.zoomMov = function(options){//1.플러그인 name
+			var set = $.extend({//2. 옵션의 기본값 지정
+				target: "", //타겟지정
+			}, options);//2.end
+			return this.each(function(){//3.set의 변수를 사용해서 어플리케이션 동작
+				var target	 = set.target; // '타겟 obj'
+				
+				var $this = $(this);
+				var zoomRad = target.radius;
+				var viewX = target.alpha;
+				var viewY = target.beta;
+				
+				
+				$this.find(".zoom_z").text(zoomRad.toFixed(1));
+				$this.find(".offset_x").text(viewX.toFixed(2));
+				$this.find(".offset_y").text(viewY.toFixed(2));
+				
+				var isPressed = false;//연속 event
+				$this.find(".btn").on("mousedown", function(){
+					isPressed = true;
+					if($(this).hasClass("up")){
+						viewUpInterval();
+					}else if($(this).hasClass("down")){
+						viewDownInterval();						
+					}else if($(this).hasClass("left")){
+						viewLeftInterval();
+					}else if($(this).hasClass("right")){
+						viewRightInterval();
+					}else if($(this).hasClass("back")){
+						zoomOutInterval();
+					}else if($(this).hasClass("front")){
+						zoomInInterval();						
+					}else{
+						return false;
+					}
+				});
+				
+				$this.find(".btn").on("mouseup", function(){
+					isPressed = false;
+				});
+				
+				function zoomOutInterval(){
+					if(isPressed){
+						zoomRad += 0.1; //sphereY ++;
+						target.radius = zoomRad;
+						$this.find(".zoom_z").text(zoomRad.toFixed(1));
+						setTimeout(function(){zoomOutInterval()},10);							
+					}
+				}
+				function zoomInInterval(){
+					if(isPressed){
+						zoomRad -= 0.1;
+						target.radius = zoomRad;
+						$this.find(".zoom_z").text(zoomRad.toFixed(1));
+						setTimeout(function(){zoomInInterval()},10);								
+					}
+				}
+				function viewUpInterval(){
+					if(isPressed){
+						viewY += 0.01;
+						target.beta = viewY;
+						$this.find(".offset_y").text(viewY.toFixed(2));
+						setTimeout(function(){viewUpInterval()},10);							
+					}
+				}
+				function viewDownInterval(){
+					if(isPressed){
+						viewY -= 0.01;
+						target.beta = viewY;
+						$this.find(".offset_y").text(viewY.toFixed(2));
+						setTimeout(function(){viewDownInterval()},10);							
+					}
+				}
+				function viewLeftInterval(){
+					if(isPressed){
+						viewX -= 0.01;
+						target.alpha = viewX;
+						$this.find(".offset_x").text(viewX.toFixed(2));
+						setTimeout(function(){viewLeftInterval()},10);							
+					}
+				}						
+				function viewRightInterval(){
+					if(isPressed){
+						viewX += 0.01;
+						target.alpha = viewX;
+						$this.find(".offset_x").text(viewX.toFixed(2));
+						setTimeout(function(){viewRightInterval()},10);							
+					}
+				}
+				
+				/*
+				$("#renderCanvas").on("mousemove", function(){ //캔버스 카메라
+					var txtY = target.beta;
+					$this.find(".offset_y").text(txtY.toFixed(2));
+					console.log(txtY);
+				});*/
+				
+			});//3.end
+		};//1.end		
+	}(jQuery));//0.end
+	
+	$(window).load(function(){
+		//$("#obj1").objMov({target: sphere});//구 #sphere
+		//$("#obj5").zoomMov({target: camera});//구 #sphere
+		
+	});
+	</script>	
+	
+</section>
+
+<script>
+//################################################# playground #################################################//
+var sphere = null, //구
+	mobileobj = null, //스마트폰
+	manobj = null, //사람
+	velosterobj = null, //차
+	stingerobj =null, //차: 스팅어
+
+	camera =null, //카메라
+	light = null, //빛
+	myMaterial = null; //재질
+	
+var carobj = null; 	
+
+var wcmsImgUrl = "http://40.1.16.31:8921/wcms/oap/images/work/"; //wcms 경로
+var BabylonLocation = "http://40.1.16.31:8931/js/oap/demo/sft0128A/"; //이재혁 프로님
+var localImgUrl = "babylon_mesh/"; //wcms 경로
+
+var canvas = document.getElementById("renderCanvas");
+var engine = null;
+var scene = null;
+var scenetoRender = null;
+var createDefaultEngine = function(){
+		return new BABYLON.Engine(canvas, true, {preserveDrawingBuffer: true, stencil: true, disableWebGL2Support: true}); 
+};
+
+	
+class Playground {
+	
+	static CreateScene(engine, canvas){
+		//장면 생성
+		scene = 	new BABYLON.Scene(engine);
+		//scene.clearColor = new BABYLON.Vector3(0.51, 0.51, 0.51); // 0~1
+		
+		//카메라 설정		
+		//var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0,5,-10), scene);//설정 1
+		camera = new BABYLON.ArcRotateCamera("camera1", -Math.PI/2, -Math.PI/2 / 2.5, 3, new BABYLON.Vector3(0, 1, -12), scene); //설정2
+		
+		camera.setTarget(new BABYLON.Vector3.Zero());
+		camera.attachControl(canvas, true); //마우스로 컨트롤 가능
+		
+		
+		//조명 설정
+		light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(19, 15, -20), scene);
+		light.intensity = 0.7; //빛의 강도
+		
+		
+		//오브젝트 생성
+		//var ground = BABYLON.MeshBuilder.CreateGround("ground", {width:10, height:10}, scene); // 지면
+		//var box = new BABYLON.MeshBuilder.CreateBox("box", {width:1, height:1}, scene); //박스
+		
+		sphere = new BABYLON.MeshBuilder.CreateSphere("sphere1", {diameter: 2, segments: 32}, scene);
+		sphere.position.x = -4;
+		sphere.position.y = 1;
+		sphere.isVisible=false;
+		
+		$("#obj1").objMov({target: sphere});//구 #sphere
+		$("#obj5").zoomMov({target: camera});//구 #sphere		
+		
+		//BABYLON.SceneLoader.ImportMeshAsync("모델명","폴더 경로","파일명", scene); //babylon obj버전이 달라 나오지 않는다.
+		//BABYLON.SceneLoader.ImportMeshAsync("stingerobj", BabylonLocation, "StingerGT.babylon");
+
+		//아래 방법으로  외부 babylon을 직접 append 한다.		(babylon안에 이미 id값이 있음)
+		//var mobileobj = BABYLON.SceneLoader.Append(wcmsImgUrl, "SmartPhone.png", scene);
+		//stingerobj = BABYLON.SceneLoader.Append(BabylonLocation,"StingerGT.babylon", scene);
+		
+		BABYLON.SceneLoader.ImportMesh('',localImgUrl,"mobile.babylon", scene, function(newMeshes){
+			mobileobj = newMeshes[0];
+			mobileobj.position = new BABYLON.Vector3(-2.1 , 0, -3); // X, Y, Z
+			mobileobj.scaling = new BABYLON.Vector3(0.3 , 0.3, 0.3);
+			
+			
+			//mobileobj.isVisible = false;
+			for (var i =0; i < 5; i++){
+				var newInstance = mobileobj.createInstance("i"+i);
+				//mobileobj.position = new BABYLON.Vector3(-2.1 , (0.1)+i/3 , -i); // X, Y, Z
+				mobileobj.position = new BABYLON.Vector3(-2.1+i , 0 , -3); // X, Y, Z
+			}
+		});		
+		BABYLON.SceneLoader.ImportMesh('',localImgUrl,"giantman.babylon", scene, function(newMeshes){
+			manobj = newMeshes[0];
+			manobj.position = new BABYLON.Vector3(-2.1 , 0.2, 0); // X, Y, Z
+			
+			$("#obj2").objMov({target: manobj});//사람 
+		});
+		BABYLON.SceneLoader.ImportMesh('',localImgUrl,"car_veloster.babylon", scene, function(newMeshes){
+			velosterobj = newMeshes[0];
+			carobj = document.getElementById("Veloster");
+			velosterobj.position = new BABYLON.Vector3(2.6 , 0, -1.3); // X, Y, Z
+			
+			$("#obj3").objMov({target: velosterobj});//차 벨로스터
+		});
+		
+		BABYLON.SceneLoader.ImportMesh('',localImgUrl,"car_stinger.babylon", scene, function(newMeshes){
+			stingerobj = newMeshes[1];//newMeshes[0] 0이 아니네;;
+			stingerobj.position = new BABYLON.Vector3(0 , 0, -1.6); // X, Y, Z
+			
+			$("#obj4").objMov({target: stingerobj});//차 스팅어
+		});
+		
+		
+		//재질 최종은 빛의 강도(intensity)와 함께 아래 4개의 값으로 최종 표현됨 
+		myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
+		
+		//물체의 색(텍스처) diffuse = diffuse*intensity
+		//myMaterial.diffuseColor = new BABYLON.Color3(1, 1 ,1); 
+		
+		//하이라이트 = diffus*specular; 강도(power)와 퍼지는 정도(gloss)값에 의해 조정
+		//myMaterial.specularColor = new BABYLON.Color3(1, 0.5 ,1);
+		
+		//빛의 발산
+		myMaterial.emissiveColor = new BABYLON.Color3(0.3, 0.3 ,0.3); 
+		
+		//주변광, 빛이 없더라도 해당 조명은 존재함
+		//myMaterial.ambientColor = new BABYLON.Color3(1, 0.5 ,1); 
+		
+		sphere.material = myMaterial;
+		
+		
+		//StingerGT.StingerMirror
+		//document.getElementById("HyundaiVeloster.Window");
+		//$("#HyundaiVeloster.Window").
+		
+		return scene;		
+	}
+}
+//################################################# playground.end #################################################//
+createScene = function(){
+	return Playground.CreateScene(engine, engine.getRenderingCanvas() ); 
+}
+window.initFunction = async function(){
+	var asyncEngineCreation = async function(){
+		try {
+			return createDefaultEngine();
+		}catch(e){console.log("엔진로드 실패!");
+			return createDefaultEngine(); 
+		}
+	}
+	window.engine = await asyncEngineCreation();
+	if(!engine) throw '엔진이 null입니다.';
+	window.scene = createScene();
+}
+initFunction().then(( ) => {sceneToRender = scene
+	engine.runRenderLoop(function(){
+		if(sceneToRender && sceneToRender.activeCamera){sceneToRender.render();} 
+	});
+});
+window.addEventListener("resize", function(){
+	engine.resize();	
+});
+</script>
+<!--################ babylon ################## -->
+
+
+<!--################ 샘플1 ################## --
+<div class="box test1">
+	<h2>샘플1</h2>
+	<p id="app" v-bind:title="message" v-if="seen">
+	  {{ message }}
+	</p>
+	<button id="text1">메세지</button>
+	<button id="text2">숨기기</button>
+</div>
+
+<script>
+var app = new Vue({
+	  el: '#app',
+	  data: {
+	    message: '하단 메세지 버튼을 클릭',
+	    seen: true
+	  }
+	});
+$("#text1").click(function(){	
+	 app.message =  '안녕하세요 VueJS (update: ' + new Date() + ")";	
+});
+$("#text2").click(function(){
+	if(app.seen == false){
+		app.seen = true;
+		$("#text2").text("숨기기");
+	}else{
+		app.seen = false;
+		$("#text2").text("보이기");
+	}
+	
+});
+</script>
+!--################// 샘플1 ################## --
+
+!--################ 샘플2 ################## --
+<div class="box test2">
+	<h2>샘플2</h2>
+	<div id="app2">
+	  <p>{{ message }}</p>
+	  <input v-model="message"/>
+	</div>
+</div>
+<script>
+var app2 = new Vue({
+	el: "#app2",
+	data: {
+		message: '인풋에 내용을 입력하세요'
+	}
+});	
+</script>
+!--################// 샘플2 ################## -->
+
+</body>
+</html>

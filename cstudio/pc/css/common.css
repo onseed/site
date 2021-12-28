@@ -1,0 +1,16 @@
+@charset "utf-8";
+
+* { margin: 0; padding: 0; }
+body { font-size: 12px; font-family: 'Malgun Gothic', '돋움', 'dotum'; color: #5e5e5e; }
+input, button, select, textarea { font-size: 12px; font-family: 'Malgun Gothic', '돋움', 'dotum'; color: #5e5e5e; }
+input, button, select { vertical-align: middle; }
+button { cursor: pointer; }
+h1, h2, h3, h4, h5, h6 { font-size: 12px; font-weight: normal; }
+img { border: 0; vertical-align: middle; }
+ol, ul, li { list-style-type: none; }
+a { color: #5e5e5e; text-decoration: none; }
+a:hover { color: #ff4e00; text-decoration: none; }
+fieldset { border: 0 solid transparent; }
+caption { display: none; }
+legend { width: 0; height: 0; font-size: 0; line-height: 0; visibility: hidden; position: absolute; }
+table, th, td { border-collapse: collapse; border: 0; }

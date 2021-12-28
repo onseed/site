@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>frontUxer</title>
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/frontUxer.css">
+<script src="js/jquery-1.11.2.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/guide.js"></script>
+<script type="text/javascript">        
+	var menuArry = ['3','5'];//1depth, 2depth
+</script>
+</head>
+<body>
+	<h1 class="hide">module</h1>
+	
+	<div class="contents"><!-- contents -->
+	
+	
+	
+    		
+        <!--##################### SVG Effect #####################-->
+		<section class="aws_box">
+			<h2 class="aws_tl">SVG Image Viewer</h2>
+			<ul class="dcs">
+				<li>비트맵  Image를 SVG Viewer내로 로드해 확대 및 이동할수 있는 viewer</li>
+				<li>svg소스내 엘리먼트 이벤트 연결 테스트</li>
+			</ul> 			
+			<div class="code_area">
+				<style>
+					.svgef_canvas{width:400px; height:300px; background-image: url(img/bg_trance_psd.svg); border: 1px solid #d9d9d9;}
+					.svgef_canvas svg{width:100%; height:100%:}
+					 svg {display:block;}
+				</style>
+			
+				<!--###### feGaussianBlur ######-->    	
+	        	<div class="play_box">	        	
+	        		<!-- code -->
+	        		<h3 class="hide"><strong>SVG Control</strong></h3>
+      		
+	        		<article class="code_box">
+						<!-- run_sample -->
+												
+						<div class="svgef_canvas" id="svg_ajax" style="display:none;">
+							<!--01. ajax로 load -->
+							<!-- 						
+							<svg width="100%" height="100%"  viewBox="0 0 300 200">
+								<defs>
+									<filter id="fillterGaussian">
+										<feGaussianBlur stdDeviation="5"/>
+									</filter>
+									<style> 
+									.cls-1{stroke:#ff0000; stroke-width:5px;}
+									</style>
+								</defs>	
+								
+								<image  xlink:href="http://40.1.16.31:8921/wcms/oap/images/work/img_home_car01.jpg" x="0px" y="0px" width="300px" height="200px"/>								
+								<rect x="34" y="50" width="59" height="37" rx="2" ry="2" class="cls-1"/>																																																								
+							</svg>-->
+							<script>
+							var svgLoader = {//1.플러그인 네임
+								load: function(opt){
+									var name	= opt.name,
+										target	= opt.target;
+										callback	= opt.callback;
+								    $.ajax({
+								    	type:'post', url:name, dataType:'html',
+								    	success:function(data){
+								    		$(target).append(data);								    		
+								    		eval(callback+"();");
+								    	}
+								    });
+								}
+							}
+							svgLoader.load({name: 'svg_tester.svg', target: '#svg_ajax', callback:'svgLoadCallback1'});
+							
+							
+							function svgLoadCallback1(){
+						    	$('.cls-1').click(function(){
+						    		alert('callback 1');
+						    	});
+						    }
+							</script>
+							<!--//01. ajax로 load -->							
+						</div>
+						
+						<div style="text-align:right; padding:0 0 10px 0;">
+							<button id="btn_zero">50%</button>
+							<button id="btn_zero2x">100%</button>
+							<button id="btn_minus"><strong>-</strong> </button>				
+							<button id="btn_plus"><strong>+</strong> </button>				
+						</div>	  						
+						
+						<div style="width:100%; height:350px; overflow:hidden; position:relative;" class="svgef_canvas">
+							<style>
+								#svg_mov{cursor:move; cursor:grab;}
+								#svg_mov:active{cursor:grabbing;}
+								.cls{stroke:#fff; stroke-width:10px;fill-opacity:0.4;  stroke-opacity:0.5; cursor:pointer;}
+								.cls-2{fill:red;}
+								.cls-3{fill:green;}
+								.cls-4{fill:blue;}
+							</style>
+							
+							<div style="width:960px; height:200px; position:absolute; left:50%; top:50%; margin:-100px 0 0 -480px;" id="svg_mov">
+								<svg width="100%" height="100%" viewBox="0 0 960 200" id="svgImg">
+									<image  xlink:href="http://40.1.16.31:8921/wcms/oap/images/desktop/cardinst_v8_hero_pc_bg.jpg" x="0px" y="0px" width="960px" height="200px" id="img_url"/>
+									
+									<rect x="60%" y="40%" width="50" height="50" rx="50%" ry="50%" class="cls cls-4"/>
+									<rect x="50%" y="50%" width="50" height="50" rx="50%" ry="50%" class="cls cls-2"/>
+									<rect x="41.5%" y="53.5%" width="50" height="50" rx="50%" ry="50%" class="cls cls-3"/>
+									
+								</svg>						
+							</div>
+							
+						</div>
+						<div style="text-align:right; padding:0 0 10px 0; position:relative;">
+							<style>
+								input[type="text"]{width:100%; height:40px; margin:0; padding:0 10px 0 10px; line-height:21px; border:1px solid #b8b8b8; border-radius:2px; background-color:#f7f7f7;
+									color:#303030; box-shadow:1px 2px 2px rgba(0,0,0,.06) inset; letter-spacing:-0.5px; vertical-align:middle; font-size:14px; box-sizing:border-box;}							
+							</style>
+							<div style="display:block; float:left; padding:5px 70px 0 0; position:relative; width:50%;">
+								<input type="text" placeholder="이미지 주소 입력" id="img_input">
+								<button class="btn_confirm" style="display:block; position:absolute; right:0; top:0;">적용</button>
+							</div>
+							<div style="display:block; float:right; width:40%;">
+								<button class="btn_load img1 point">img1</button>
+								<button class="btn_load img2">img2</button>
+								<button class="btn_load img3">img3</button>
+								<button class="btn_load img4">img4</button>
+								<button class="btn_load img5">img5</button>							
+							</div>							
+						</div>
+						<div style="clear:both;">
+							/pub_final/test/aws/img/dao_bot_70x88_w.svg<br/>
+							http://40.1.16.31:8921/wcms/oap/images/work/pic_mycar_price.png <br/>
+							http://40.1.16.31:8921/wcms/oap/images/work/bnr_benefit_v1_pc.jpg
+						</div>
+						
+																														
+						<script>
+						
+						$('.btn_confirm').click(function(){
+							var imgSrc = $('#img_input').val();
+							//var imgSrc = "http://40.1.16.31:8921/wcms/oap/images/work/pic_mycar_price.png";
+							
+							if(imgSrc==""){
+								alert("이미지 주소를 입력하세요");
+							}else{//console.log(imgSrc);
+							    $.ajax({
+							        type: "POST",
+							        url: imgSrc,
+							        dataType: "html",
+							        success: function (data) {							        	
+							        	$('body').append("<img src='"+imgSrc+"' id='appendImg'' style='width:auto; position:absolute; top:-100%; left:0; display:none;''>");
+							        	
+							        	$('.cls').css("display","none");//클릭 유닛
+							        	
+							        	setTimeout(function(){
+								        	var imgWidth = $('#appendImg').width();
+								        	var imgHeight = $('#appendImg').height();
+								        	console.log(imgWidth +" : "+ imgHeight);
+								        	
+								        	$('#img_url').attr({"xlink:href":imgSrc, width: imgWidth+"px", height: imgHeight+"px"}); 
+								        	//$('#svgImg').attr("viewBox","0 0 "+imgWidth+" "+imgHeight);
+								        	
+								        	var svgImgId = document.getElementById('svgImg');
+								        	svgImgId.setAttribute("viewBox","0 0 "+imgWidth+" "+imgHeight);		
+								        	
+								        	var mgl = -(imgWidth/2);
+											var mgt = -(imgHeight/2);
+											
+											$('#svg_mov').stop().animate({
+												width: imgWidth,
+												height: imgHeight,
+												"margin-left": mgl+"px",
+												"margin-top": mgt+"px",
+											});
+								        	
+							        	},100);
+							        	
+
+							        },
+							        error:function (jqXHR){
+							        	alert("확인가능한 url을 입력하세요");
+							        }
+							    });
+							}
+						});
+						
+						var imgSrcArry = [//img url
+											"http://40.1.16.31:8921/wcms/oap/images/desktop/cardinst_v8_hero_pc_bg.jpg",
+											"//40.1.16.31:8921/wcms/oap/images/desktop/cashbag_v9_hero_pc_bg.jpg",
+											"//40.1.16.31:8921/wcms/oap/images/desktop/mycar_v1_pchero_bg.jpg",
+											"//40.1.16.31:8921/wcms/oap/images/desktop/benefit_v1_bg_phero.jpg",
+											"//40.1.16.31:8921/wcms/oap/images/desktop/jaguar_v1_pchero_bg.jpg"
+										];						
+						var btnSetAtty1 = [//blue
+								["60%","40%"],["35%","50%"],["40%","25%"],["33%","56%"],["65%","55%"] //x	, y	
+							];
+						var btnSetAtty2 = [//red
+								["50%","50%"],["53.5%","56%"],["52.5%","62%"],["41%","60%"],["57.5%","56%"] //x	, y
+							];
+						var btnSetAtty3 = [//green
+								["41.5%","53.5%"],["45.9%","20.5%"],["54.5%","34.5%"],["49.2%","50.3%"],["46%","32%"] //x	, y
+							];
+						
+				    	$('.btn_load').click(function(){
+				    		$('.btn_load').removeClass("point");
+				    		$(this).addClass("point");
+				    		
+				    		$('.cls').css("display","block");//클릭 유닛
+				    		
+				    		if($(this).hasClass("img1")){
+				    			$('#img_url').attr("xlink:href",imgSrcArry[0]);
+				    			btnmov('.cls-4','btnSetAtty1', 0);//blue
+				    			btnmov('.cls-2','btnSetAtty2', 0);//red
+				    			btnmov('.cls-3','btnSetAtty3', 0);//green
+				    			
+				    			redTxt="좌측 헤드램프",
+					    		blueTxt="우측 헤드램프",
+					    		greenTxt="삼성카드 이벤트";
+				    			
+				    		}else if($(this).hasClass("img2")){
+				    			$('#img_url').attr("xlink:href",imgSrcArry[1]);
+				    			btnmov('.cls-4','btnSetAtty1',1);	//blue
+				    			btnmov('.cls-2','btnSetAtty2', 1);//red
+				    			btnmov('.cls-3','btnSetAtty3', 1);//green
+				    			
+				    			redTxt="헤드램프",
+					    		blueTxt="중앙 그릴",
+					    		greenTxt="캐시백 이벤트";				    			
+				    			
+				    		}else if($(this).hasClass("img3")){
+				    			$('#img_url').attr("xlink:href",imgSrcArry[2]);
+				    			btnmov('.cls-4','btnSetAtty1',2);	//blue
+				    			btnmov('.cls-2','btnSetAtty2', 2);//red
+				    			btnmov('.cls-3','btnSetAtty3', 2);//green
+				    			
+				    			redTxt="그랜저 front",
+					    		blueTxt="헤드램프",
+					    		greenTxt="내차 시세조회";				    			
+				    			
+				    		}else if($(this).hasClass("img4")){
+				    			$('#img_url').attr("xlink:href",imgSrcArry[3]);
+				    			btnmov('.cls-4','btnSetAtty1',3);	//blue
+				    			btnmov('.cls-2','btnSetAtty2', 3);//red
+				    			btnmov('.cls-3','btnSetAtty3', 3);//green
+				    			
+				    			redTxt="그릴",
+					    		blueTxt="헤드램프",
+					    		greenTxt="혜택알림 이벤트";				    					    			
+				    			
+				    		}else if($(this).hasClass("img5")){
+				    			$('#img_url').attr("xlink:href",imgSrcArry[4]);
+				    			btnmov('.cls-4','btnSetAtty1',4);//blue
+				    			btnmov('.cls-2','btnSetAtty2', 4);//red
+				    			btnmov('.cls-3','btnSetAtty3', 4);//green
+				    			
+				    			redTxt="좌측 헤드램프",
+					    		blueTxt="우측 헤드램프",
+					    		greenTxt="포인트 이벤트";						    			
+				    		}
+				    	});	
+				    	
+				    	function btnmov(selelctor, arryname, index){		
+				    		eval("var arryname = "+arryname);//eval함수로 변수처리
+			    			if($('html').hasClass("ie")){
+			    				$(selelctor).attr({"x": arryname[index][0] , "y": arryname[index][1]});		
+			    			}else{
+			    				$(selelctor).stop().animate({"x": arryname[index][0] , "y": arryname[index][1]});
+			    			}
+				    		
+							$('#svg_mov').stop().animate({
+								width: 960,
+								height: 200,
+								"margin-left": "-480px",
+								"margin-top": "-100px"
+							});
+								
+				    		
+				        	var svgImgId = document.getElementById('svgImg');
+				        	svgImgId.setAttribute("viewBox","0 0 960 200");
+				        					        					        	
+				        	var img_urlId = document.getElementById('img_url');
+				        	img_urlId.setAttribute("width", "960px");
+				        	img_urlId.setAttribute("height", "200px");
+				    	}
+						
+		    			var redTxt="좌측 헤드램프",
+			    			blueTxt="우측 헤드램프",
+			    			greenTxt="삼성카드 이벤트";
+						
+				    	$('.cls-2').click(function(){
+				    		alert(redTxt);
+				    	});
+				    	$('.cls-4').click(function(){
+				    		alert(blueTxt);
+				    	});
+				    	$('.cls-3').click(function(){
+				    		alert(greenTxt);
+				    	});				    	
+						
+						var rWidth = $('#svg_mov').width();
+						var rHeight = $('#svg_mov').height();
+						var rMgl = -(rWidth/2);
+						var rMgt = -(rHeight/2);
+						
+						var $svg_mov_num = 200;
+						var $svg_ratio = $('#svg_mov').height()/$('#svg_mov').width(); //가로가 세로보다 넓은 경우만 (960/200)
+						var ratio_increa =  $svg_ratio * $svg_mov_num;
+												
+						$('#btn_plus').click(function(){
+
+							var svWidth = $('#svg_mov').width() + $svg_mov_num ;
+							var svHeight = $('#svg_mov').height()+ratio_increa;							
+							var mgl = -(svWidth/2);
+							var mgt = -(svHeight/2);
+							
+							$('#svg_mov').stop().animate({
+									width: svWidth,
+									height: svHeight,
+									"margin-left": mgl+"px",
+									"margin-top": mgt+"px"
+								},"fast");
+						});
+						
+						$('#btn_minus').click(function(){
+							var svWidth = $('#svg_mov').width() -  $svg_mov_num ;
+							var svHeight = $('#svg_mov').height()- ratio_increa;							
+							var mgl = -(svWidth/2);
+							var mgt = -(svHeight/2);
+							
+							$('#svg_mov').stop().animate({
+								width: svWidth,
+								height: svHeight,
+								"margin-left": mgl+"px",
+								"margin-top": mgt+"px"
+							},"fast");							
+						});		
+						$('#btn_zero').on("click",function(){
+							$('#svg_mov').stop().animate({
+								width: rWidth,
+								height: rHeight,
+								"margin-left": rMgl+"px",
+								"margin-top": rMgt+"px",
+								"left": "50%",
+								"top": "50%"
+							},"fast");					
+						});
+						
+						//setTimeout(function(){$('#btn_zero2x').click();},600);
+						
+						$('#btn_zero2x').on("click",function(){
+							var svWidth = rWidth *2 ;
+							var svHeight = rHeight *2;							
+							var mgl = -(svWidth/2);
+							var mgt = -(svHeight/2);
+							$('#svg_mov').stop().animate({
+								width: svWidth,
+								height: svHeight,
+								"margin-left": mgl+"px",
+								"margin-top": mgt+"px",
+								"left": "50%",
+								"top": "50%"								
+							},"fast");					
+						});
+						
+						$('#svg_mov').draggable(); //"js/jquery-ui.min.js" 활용						
+						
+						</script>
+						<!--.. run_sample -->					
+
+					</article>
+					<!--// code -->
+				</div>
+				<!--######// feGaussianBlur ######-->
+												
+			</div>
+		</section>
+		<!--#####################// SVG Effect #####################-->		
+		
+        <!--##################### SVG Effect #####################-->
+		<section class="aws_box">
+			<h2 class="aws_tl">SVG Filter Effect</h2>
+			<ul class="dcs">
+				<li>SVG Filter Effect</li>
+			</ul> 			
+			<div class="code_area">
+	        	
+				<div class="option_txt">
+					<strong class="js-show-code c-code__pre">효과 버튼을 클릭하거나 슬라이더로 값을 조정하세요.</strong>
+				</div>	        	
+	        	
+	        	<div class="play_box">
+	        		<!-- code -->
+	        		<article class="code_box">
+						<!-- run_sample -->
+						
+						<style>
+							.svg_ef_canvas{width:300px; height:200px; background-image:url("img/bg_trance_psd.svg"); border:1px solid #d9d9d9; padding:10px;}
+							.svg_ef_box{display:inline-block;}
+							.svg_ef_box strong{display:block; padding:10px 0 5px 0;}
+						</style>
+
+						<div class="run_sample">
+							<span class="svg_ef_box">
+								<strong>feGaussian</strong>
+								<svg class="svg_ef_canvas">
+									<defs>
+										<filter id="fillterGaussian">
+											<feGaussianBlur stdDeviation="5"/>
+										</filter>
+									</defs>	
+									<image   filter="url(#fillterGaussian)"
+									xlink:href="http://40.1.16.31:8921/wcms/oap/images/work/img_home_car01.jpg" x="0px" y="0px" width="300px" height="200px" preserveAspectRatio="xMinYMin meet"/>																																									
+								</svg>
+							</span>
+							
+							<span class="svg_ef_box">
+								<strong>feGaussianBlur(x y)</strong>
+								<svg class="svg_ef_canvas">
+									<defs>
+										<filter id="fillterGaussianBlur">
+											<feGaussianBlur stdDeviation="5 0"/>
+										</filter>
+									</defs>	
+									<image   filter="url(#fillterGaussianBlur)"
+									xlink:href="http://40.1.16.31:8921/wcms/oap/images/work/img_home_car01.jpg" x="0px" y="0px" width="300px" height="200px" preserveAspectRatio="xMinYMin meet"/>																																									
+								</svg>
+							</span>			
+							
+							<span class="svg_ef_box">
+								<strong>feGaussianBlur HardEdge</strong>
+								<svg class="svg_ef_canvas">
+									<defs>
+										<filter id="fillterGaussianHard" x="0%" y="0%" width="100%" height="100%">
+											<feGaussianBlur stdDeviation="5"/>
+											<feComponentTransfer>
+												<feFuncA type="table" tableValues="1 1"/>
+											</feComponentTransfer>
+										</filter>
+									</defs>	
+									<image   filter="url(#fillterGaussianHard)"
+									xlink:href="http://40.1.16.31:8921/wcms/oap/images/work/img_home_car01.jpg" x="0px" y="0px" width="300px" height="200px" preserveAspectRatio="xMinYMin meet"/>																																									
+								</svg>
+							</span>												
+							
+							<span class="svg_ef_box">
+								<strong>feGaussianBlur HardEdge2</strong>
+								<svg class="svg_ef_canvas">
+									<defs>
+										<filter id="fillterGaussianHard2">
+											<feConvolveMatrix order="3" kernelMatrix=" 1 1 1
+																								   1 1 1
+																								   1 1 1 "/>
+										</filter>
+									</defs>	
+									<image   filter="url(#fillterGaussianHard2)"
+									xlink:href="http://40.1.16.31:8921/wcms/oap/images/work/img_home_car01.jpg" x="0px" y="0px" width="300px" height="200px" preserveAspectRatio="xMinYMin meet"/>																																									
+								</svg>
+							</span>	
+							
+							
+							<span class="svg_ef_box">
+								<strong>feGaussianBlur Bokeh Blur (3 Layer, multi channel Merge)</strong>
+								<svg class="svg_ef_canvas" style="width:600px; height:400px;">
+									<defs>
+										<filter id="fillterGaussianBoke" color-interpolation-filters="sRGB">
+										
+											<feGaussianBlur stdDeviation="2" result="blurSource"/>
+											<feColorMatrix type="luminanceToAlpha"/>
+											<feComponentTransfer result="brightness-mask">
+												<feFuncA type="discrete" tableValues="0 0 0 1 1"/>
+											</feComponentTransfer> 
+											
+											<!-- boke layer1 -->
+											<feTurbulence type="fractalNoise" seed="1" baseFrequency=".67" numOctaves="3"/>
+											<feColorMatrix type="luminanceToAlpha"/>
+											<feComponentTransfer>
+												<feFuncA type="discrete" tableValues="0 0 0 1"/>
+											</feComponentTransfer>
+											<feComposite operator="in" in="brightness-mask"/>
+											<feComposite operator="in" in="blurSource"/>
+											
+											<feMorphology operator="dilate" radius="5"/>
+											<feGaussianBlur stdDeviation="8"/>
+											<feColorMatrix type="matrix" values="1 0 0 0 0 	0 1 0 0 0 	0 0 1 0 0 	0 0 0 9 0" /> 
+											<feComponentTransfer result="boke1">
+												<feFuncA type="linear" slope=".5" />
+											</feComponentTransfer>
+											
+											<!-- boke layer2 -->
+											<feTurbulence type="fractalNoise" seed="49" baseFrequency=".67" numOctaves="3"/>
+											<feColorMatrix type="luminanceToAlpha"/>
+											<feComponentTransfer>
+												<feFuncA type="discrete" tableValues="0 0 0 1"/>
+											</feComponentTransfer>
+											<feComposite operator="in" in="brightness-mask"/>
+											<feComposite operator="in" in="blurSource"/>
+											
+											<feMorphology operator="dilate" radius="10"/>
+											<feGaussianBlur stdDeviation="8"/>
+											<feColorMatrix type="matrix" values="1 0 0 0 0 	0 1 0 0 0 	0 0 1 0 0 	0 0 0 15 0" /> 
+											<feComponentTransfer result="boke2">
+												<feFuncA type="linear" slope=".3" />
+											</feComponentTransfer>				
+											
+											<!-- boke layer3 -->
+											<feTurbulence type="fractalNoise" seed="44" baseFrequency=".67" numOctaves="3"/>
+											<feColorMatrix type="luminanceToAlpha"/>
+											<feComponentTransfer>
+												<feFuncA type="discrete" tableValues="0 0 0 1"/>
+											</feComponentTransfer>
+											<feComposite operator="in" in="brightness-mask"/>
+											<feComposite operator="in" in="blurSource"/>
+											
+											<feMorphology operator="dilate" radius="10"/>
+											<feGaussianBlur stdDeviation="18"/>
+											<feColorMatrix type="matrix" values="1 0 0 0 0 	0 1 0 0 0 	0 0 1 0 0 	0 0 0 15 0" /> 
+											<feComponentTransfer result="boke3">
+												<feFuncA type="linear" slope=".2" />
+											</feComponentTransfer>
+											
+											<!-- Merge -->
+											<feBlend mode="multiply" in="boke3" in2="boke2"/>
+											<feBlend mode="lighten" in2="boke1"/>
+											
+											<feMorphology  operator="erode" radius="0" result="bokeh"/>
+											<feGaussianBlur stdDeviation="9" in="SourceGraphic"/>
+											<feComposite operator="over" in="boke"/>
+											<feComposite operator="in" in2="SourceGraphic"/>
+																																										
+											
+																					
+										</filter>
+									</defs>	
+									<image filter="url(#fillterGaussianBoke)"
+									xlink:href="http://40.1.16.31:8921/wcms/oap/images/work/img_home_car01.jpg" x="0px" y="0px" width="300px" height="200px" preserveAspectRatio="xMinYMin meet"/>
+									<image filter="url(#fillterGaussianBoke)"
+									xlink:href="http://40.1.16.31:8921/wcms/oap/images/work/img_home_car02.jpg" x="0px" y="200px" width="300px" height="200px" preserveAspectRatio="xMinYMin meet"/>
+									<image filter="url(#fillterGaussianBoke)"
+									xlink:href="http://40.1.16.31:8921/wcms/oap/images/work/img_home_car03.jpg" x="300px" y="0px" width="300px" height="200px" preserveAspectRatio="xMinYMin meet"/>
+									<image filter="url(#fillterGaussianBoke)"
+									xlink:href="http://40.1.16.31:8921/wcms/oap/images/work/img_home_car04.jpg" x="300px" y="200px" width="300px" height="200px" preserveAspectRatio="xMinYMin meet"/>																																																																				
+								</svg>
+							</span>								
+							
+																				
+						</div>
+						<!--// run_sample -->
+
+	        		</article>
+	        		<!-- code -->
+				</div>		               		
+	        
+			</div>
+		</section>
+		<!--#####################// SVG Effect #####################-->				
+		
+	</div><!--// contents -->
+
+    <script src="js/frontUxer.js"></script>
+
+	<script type="text/javascript">
+	
+    </script>
+    
+</body>
+</html>

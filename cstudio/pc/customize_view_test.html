@@ -1,0 +1,2976 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<title> C STUDIO </title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=1280" />
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script><!--jquery flatform.js-->
+<script type="text/javascript" src="js/common.js"></script><!-- common.js -->
+<link rel="stylesheet" type="text/css" href="css/basic.css" /><!--basic.css-->
+<script src="js/jquery.flexslider.js" type="text/javascript"></script><!-- jquery.flexslider.js -->
+</head>
+<body>
+<link rel="stylesheet" type="text/css" href="css/custom_ui.css" /><!--custom_ui.css: 커스텀 전용 css-->
+<script src="js/velocity.min.js" type="text/javascript"></script><!-- velocity.js -->
+<script src="js/svg-pan-zoom.js" type="text/javascript"></script><!-- svg-pan-zoom.js -->
+<script src="js/canvg.js" type="text/javascript"></script><!-- canvg.js -->
+<script src="js/iscroll.js" type="text/javascript"></script><!-- iscroll.js -->
+
+<script type="text/javascript">
+//### 변수 및 설정값 : 이미지 폴더내 파일규칙 참고
+
+/*설정값 - default*/
+var bag_base = 0; //컬러값 base: strab, 밑판, 내피등 기본 선택
+var bag_front = 0; //컬러값 front 선택
+var bag_back = 0; //컬러값 back 선택
+var bag_side = 0; //컬러값 side 선택
+var bag_handle = 0; //컬러값 handle 선택
+var bag_front_pattern = 0; //패턴값 front 선택
+var bag_back_pattern = 0; //패턴값 back 선택
+var bag_side_pattern = 0; //패턴값 side 선택
+var bag_emblem = 0; //엠블렘값 선택
+var bag_glimm= false; //엠블렘 glimm 선택 20150914 추가
+var strab_spec = "normal"; // 스트랩 선택
+var id_spec = "apply"; // ID 선택 20160105 테스트
+
+/*와펜 설정값 - staphanie*/
+var small_select_num = new Array(); // small Array
+var small_select_Imgnum = new Array(); // small Img Array
+
+var big_select_num = new Array(); // big Array
+var big_select_Imgnum = new Array(); // big Img Array
+
+var select_num = new Array( ); //기본 Array
+var limit = 40; // total 영역
+var delete_small_rec = new Array("2","3","4","5","6","7","10","11","12","13","14","15"); //small 제외 영역 
+var delete_big_rec = new Array("2","3","4","5","6","7","10","11","12","13","14","15","1","8","9","16","24","32","33","34","35","36","37","38","39","40");//big 제외 영역 
+
+var wappen_num; //와펜 numer 체크
+var wappen_status="small"; //와펜 처리상태: small,big,delete
+var wappen_img;
+
+/*파일 경로*/
+var svg_front_url = "svg/svg_stephanie_front2.html"; //svg front url
+var svg_side_url = "svg/svg_stephanie_side.html";  //svg side url
+var svg_back_url = "svg/svg_stephanie_back.html"; //svg back url
+var svg_top_url = "svg/svg_stephanie_top.html"; //svg top url
+var img_url="img/custom/" //이미지폴더 경로
+var base_url="img/custom/bag/" //custom_bag 이미지 폴더 경로
+//var img_url="http://www.thinkbud.co.kr/cstudio/img/custom/" //이미지폴더 경로
+//var base_url="http://www.thinkbud.co.kr/cstudio/img/custom/bag/" //custom_bag 이미지 폴더 경로
+
+var bag_type="staphanie" //bag type(파일이름)
+
+var wappen_url; //와펜 이미지 주소 fabric 1번대, metal 100번대  ex: wappen_set_small15.jpg
+var wappen_url_none = img_url + "wappen/wappen0.png"; //와펜 이미지 없음 생성
+
+</script>
+
+<script src="js/custom_stephine_svg_ui_test.js" type="text/javascript"></script><!-- custom_stephine_svg_ui.js : stephine SVG 및 zoom 로드 //-->
+<script src="js/custom_stephine_wappen.js" type="text/javascript"></script><!-- custom_stephine_wappen.js : stephine wappen 로드 20150925 와펜로드할수 있는 형태로 순서바꿈//-->
+
+<!--loading-->
+<div id="loading_div"><img src="img/loding.gif"></div>
+<!--//loading-->
+<!--container-->
+<div id="container">
+
+<!--header-->
+<div id="header">
+	<!--h_top-->
+	<div class="h_top">
+		<h1 class="h_logo"><a href="/">C STUDIO</a></h1><!--로그인 되어있으면 a태그에 on 클래스 붙임-->
+		<h2 class="hidden">C STUDIO 상단영역</h2>
+
+		<h3 class="hidden">GNB</h3>
+		<div class="h_right">
+			<ul>
+				<li><a href="#">LOG IN</a></li>
+				<li><a href="#">JOIN</a></li>
+				<li><a href="#">MY PAGE</a></li>
+			</ul>
+		</div>
+		<div class="h_couronne">
+			<a href="http://www.couronne.co.kr/" target="_blank">COURONNE</a>
+		</div>
+
+		<h3 class="hidden">SNS</h3>
+		<div class="h_left">
+			<div class="h_sns">
+				<a href="#" class="facebook" target="_blank">facebook</a>
+				<a href="#" class="instagram" target="_blank">instagram</a>
+				<a href="#" class="youtube" target="_blank">youtube</a>
+			</div>
+		</div>
+	</div>
+	<!--//h_top-->
+
+	<!--h_buttom-->
+	<div class="h_buttom">
+		<h3 class="hidden">MAIN MENU</h3>
+		<ul class="h_menu">
+			<li><a href="#">YOUR STUDIO</a></li>
+			<li><a href="#">CUSTOMIZE</a></li>
+			<li><a href="#">MY STUDIO</a></li>
+		</ul>
+	</div>
+	<!--//h_buttom-->
+</div>
+<!--//header-->
+
+<!--contents-->
+<h2 class="hidden">C STUDIO 본문영역</h2>
+<div id="cstudioContent">
+	<!--내용-->
+
+	<!--###custom_layout###-->
+	<div id="custom_layout">
+		<h3 class="custom_title"><img src="img/tl_custom_stephnie.png" alt="New stephnie"/></h3>
+
+		<div id="viewport_set">
+			<span id="front_view" onclick="view_status='front'" class="on"><button>fornt</button></span>
+			<span id="side_view" onclick="view_status='side'"><button>side</button></span>
+			<span id="back_view" onclick="view_status='back'"><button>back</button></span>
+			<span id="top_view" onclick="view_status='top'"><button>top</button></span>
+		</div>
+
+		<!--view&zoom tool-->
+		<div id="view_tool">
+			<span class="zoom_layout"><button id="zoom_layout"><img src="img/btn_zoom_in.png" alt="zoom_in"/></button></span>
+			<span class="rule_guide"><button id="rule_guide"><img src="img/btn_rule.png" alt="rule guide"/></button></span>
+			<!--20151113 가이드버튼 추가-->
+			<span class="ui_guide"><button id="ui_guide"><img src="img/btn_guide.png" alt="UI guide"/></button></span>
+			<!--//20151113 가이드버튼 추가-->
+		</div>
+
+		<div id="zoom_tool">
+			<div id="zoom_control">
+				<span class="zoom-in"><button id="zoom-in">+</button></span>
+				<span class="reset"><button id="reset">@</button></span>
+				<span class="zoom-out"><button id="zoom-out">-</button></span>
+			</div>
+			<span class="zoom_close"><button id="zoom_close">close</button></span>
+		</div>
+		<!--//view&zoom tool-->
+
+		<!--##custom_visual##-->
+		<div id="custom_visual">
+
+		</div>
+		<!--##//custom_visual##-->
+
+		<!--##visual_360  20151113 추가 및 변경##-->
+		<div class="visual_360_ly">
+			<div class="ly">
+				<div id='visual_360'></div>
+			</div>			
+		</div>
+		<script type="text/javascript" src="js/spritespin.js"></script><!-- spritespin.js -->
+		<script type="text/javascript">
+			var play360 = false; //20151113 360도 조건변수 추가
+			
+			$(".ui_guide_layer").css("display","none");
+
+			$(document).ready(function(){//화면 가이드 UI 그만보기 쿠키처리
+					cookiedata = document.cookie; 
+					if (cookiedata.indexOf("guide_ui=done") < 0 ){ //쿠키전
+						play360 = false;
+						$(".ui_guide_layer").css("display","block");
+					}else{//쿠키 후
+						play360 = true;
+						init_360();//360도 처리
+						$(".ui_guide_layer").css("display","none");
+					}	
+			});
+
+			function init_360(){//function 처리
+				//stepani
+				var spin1 = $('#visual_360');
+				var frames1 = SpriteSpin.sourceArray('img/custom/360/new_stepani.{frame}.jpg', {
+					frame: [1, 20], 
+					digits: 3 
+				});
+				spin1.spritespin({
+					source: frames1,
+					sense: -1,
+					renderer: 'canvas',
+					animate : true,
+					loop: false,//360도 loop
+					lanes: 1,
+					module: '360',
+					width: 856,
+					height: 856
+				});
+				var api1 = spin1.spritespin("api");
+				spin1.bind("onFrame", function(){
+						var data = api1.data;
+						if(data.frame == 19){//마지막컷 체크후 실행
+							$(".visual_360_ly").fadeOut("fast");		
+						}	
+				});				
+			}
+
+			if(play360==true){//360도 조건처리
+				init_360();
+			}
+
+			$('#visual_360').click(function(){//360도 클릭시 out
+				$(".visual_360_ly").fadeOut("fast");
+				return false;
+			});
+
+			$('#ui_guide').click(function(){//가이드 화면 다시 불러오기
+				$(".ui_guide_layer").fadeIn("fast");
+				return false;
+			});
+
+		</script>		
+		<!--##end. visual_360  20151113 추가 및 변경##-->
+
+		<!--##wappen_system##-->
+		<div class="wappen_module">
+			<div class="wappen_box">
+				<ul class="selelct">
+					<li id="wappen_svg1" small_chk="false" big_chk="false" class="wappen_svg"></li>
+					<li id="wappen_svg2" small_chk="false" big_chk="false" class="wappen_svg"></li>
+					<li id="wappen_svg3" small_chk="false" big_chk="false" class="wappen_svg"></li>
+					<li id="wappen_svg4" small_chk="false" big_chk="false" class="wappen_svg"></li>
+					<li id="wappen_svg5" small_chk="false" big_chk="false" class="wappen_svg"></li>
+					<li id="wappen_svg6" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg7" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg8" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg9" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg10" small_chk="false" big_chk="false" class="wappen_svg"></li>			
+					<li id="wappen_svg11" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg12" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg13" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg14" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg15" small_chk="false" big_chk="false" class="wappen_svg"></li>
+					<li id="wappen_svg16" small_chk="false" big_chk="false" class="wappen_svg"></li>
+					<li id="wappen_svg17" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg18" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg19" small_chk="false" big_chk="false" class="wappen_svg"></li>
+					<li id="wappen_svg20" small_chk="false" big_chk="false" class="wappen_svg"></li>
+					<li id="wappen_svg21" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg22" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg23" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg24" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg25" small_chk="false" big_chk="false" class="wappen_svg"></li>
+					<li id="wappen_svg26" small_chk="false" big_chk="false" class="wappen_svg"></li>
+					<li id="wappen_svg27" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg28" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg29" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg30" small_chk="false" big_chk="false" class="wappen_svg"></li>
+					<li id="wappen_svg31" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg32" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg33" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg34" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg35" small_chk="false" big_chk="false" class="wappen_svg"></li>
+					<li id="wappen_svg36" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg37" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg38" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg39" small_chk="false" big_chk="false" class="wappen_svg"></li>	
+					<li id="wappen_svg40" small_chk="false" big_chk="false" class="wappen_svg"></li>
+				</ul>	
+			</div>
+		</div>
+		<!--##//wappen_system##-->
+
+
+		<div id="gride_rule1"><span><img src="img/grid_rule.png" alt=""/></span></div>
+
+		<!--## SVG 저장하기 -->
+		<style>
+		#canvas_capture img{width:100%;}
+		</style>
+
+		<canvas id="canvas_capture" style="display:none;"></canvas>
+		<script type="text/javascript" >
+		$(document).ready(function(){			
+
+			$("#page_save").click(function(){
+
+				view_status='front';//viewside를 front로 만들고 캡춰
+				$("#front_view").click();
+
+				check_skin_ev(); //저장된 정보를 뿌려줌
+
+				$('#front_svg').each(function () {// 20150916 캡춰사이즈로 변환후
+					$(this)[0].setAttribute('viewBox', '0 0 856 856');
+					$(this)[0].setAttribute('width', '640');
+					$(this)[0].setAttribute('height', '640');
+				});
+
+				var svg = $("#front_svg_layout").html().replace(/>\s+/g, ">").replace(/\s+</g, "<");
+				var canvas = $("#canvas_capture")[0];
+				var saveWindow = window.open('','MyNewWindow'); //테스트용 이미지 호출
+
+				canvg(canvas, svg, {//canvg();실행 https://github.com/gabelerner/canvg 참고
+					renderCallback : function(){
+
+						$('#front_svg').each(function () {// 20150916 캡춰사이즈 완료후 원본사이즈로 처리
+							$(this)[0].setAttribute('viewBox', '0 0 856 856');
+							$(this)[0].setAttribute('width', '856');
+							$(this)[0].setAttribute('height', '856');
+						});
+
+						var imgData = canvas.toDataURL('image/png');
+						var img = new Image();
+						img.src = imgData; //이미지 데이터 저장
+
+						saveWindow.document.write("<img src='"+imgData+"'/>");
+					}
+				});//end
+
+
+			});
+		});
+		</script>
+		<!--##// SVG 저장하기 -->
+
+		<!--btn_custom_page-->
+		<div class="btn_custom_page" id="btn_custom_page">
+			<span><button id="page_save" onclick="save_design_popup_open()">SAVE</button></span>
+			<!--<span><button id="page_preview">PREVIEW</button></span> 20151027 삭제 -->
+			<span><button id="page_sns" onclick="sns_popup_open();">SNS</button></span>
+		</div>
+		<!--//btn_custom_page-->
+
+	</div>
+	<!--//###custom_layout###-->
+
+	<!--##side_menu##-->
+	<div id="side_menu" class="side_menu stephanie">
+		<!--<button class="select_change"  onclick="wappen_status='big'; wappen_num=2; wappen_img=21; console.log(wappen_status + ' : ' + wappen_num);" id="107W3">와펜107클릭</button>	 20150925 wappen_img 임시추가 -->	
+		<h3 class="hidden">customize menu</h3>
+
+		<!--20151027 옵션 바로가기 추가-->
+		<div class="option_tab">
+			<ul>	
+				<li class="tab_color on"><a href="#">컬러 옵션</a></li>
+				<li class="tab_print"><a href="#">프린트 옵션</a></li>
+				<li class="tab_emblem"><a href="#">엠블렘 옵션</a></li>
+				<li class="tab_strap"><a href="#">스트랩 옵션</a></li>
+				<li class="tab_patch"><a href="#">패치 옵션</a></li>
+			</ul>
+		</div>
+		<!--//20151027 옵션 바로가기 추가-->
+
+		<!--side_menu_wrap-->
+		<div class="side_menu_wrap">
+			<div id="side_menu_wrap">
+				<div class="scroller">
+
+				<!--01. 컬러 선택-->
+				<div class="menu_section color_choice">
+					<table>
+						<colgroup>
+							<col class="col1"/><col class="col2"/>
+						</colgroup>
+						<caption class="hidden">컬러선택 컨텐츠</caption>
+						<tr>
+							<td class="icn_box">
+								<div class="tl_sec tl01">
+									<h4>Color Choice</h4>
+									<!-- 20151113 안내문구 -->
+									<a href="#" class="option_tip">안내</a>
+									<div class="tip_layer">
+										<span class="tipspan layerT"></span>
+										<span class="tipspan layerC">
+											해상도에 따라 색상 차이가 있을 수 있습니다.
+										</span>
+										<span class="tipspan layerB"></span>										
+									</div>
+									<!--// 20151113 안내문구 -->
+								</div>
+
+								<div class="sort_tab color" id="sort_color_tab">
+									<ul>
+										<li class="tab01 on" id="section_color_base"><button>base</button></li>
+										<li class="tab02" id="section_color_side"><button>side</button></li>
+										<!--<li class="tab03" id="section_color_front"><button>front</button></li> 20151113 삭제-->
+										<li class="tab04" id="section_color_handle"><button>handle</button></li>
+									</ul>
+								</div>
+
+								<div class="btn_set chip01" id="btn_color_set">
+									<ul>
+										<li>
+											<span>
+												<button class="select_change on" onclick="bag_color_Img_url_make(0); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/btn_none.png" alt=""/></button>
+												<button class="select_detail"><img src="img/btn_detail_none.png" alt=""/></button>
+											</span>
+										</li>
+										<li>
+											<span>
+												<button class="select_change" onclick="bag_color_Img_url_make(1); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/color/stephanie_color_small1.jpg" alt=""/></button>
+												<button class="select_detail" onclick="color_layer_open(1)"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+										</li>
+										<li>
+											<span>
+												<button class="select_change" onclick="bag_color_Img_url_make(2); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/color/stephanie_color_small2.jpg" alt=""/></button>			
+												<button class="select_detail" onclick="color_layer_open(2)"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+										</li>
+										<li>
+											<span>
+												<button class="select_change" onclick="bag_color_Img_url_make(3); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/color/stephanie_color_small3.jpg" alt=""/></button>				
+												<button class="select_detail" onclick="color_layer_open(3)"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+										</li>
+										<li>
+											<span>
+												<button class="select_change" onclick="bag_color_Img_url_make(4); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/color/stephanie_color_small4.jpg" alt=""/></button>			
+												<button class="select_detail" onclick="color_layer_open(4)"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+										</li>
+										<li>
+											<span>
+												<button class="select_change" onclick="bag_color_Img_url_make(5); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/color/stephanie_color_small5.jpg" alt=""/></button>			
+												<button class="select_detail" onclick="color_layer_open(5)"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+										</li>
+										<li>
+											<span>
+												<button class="select_change" onclick="bag_color_Img_url_make(6); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/color/stephanie_color_small6.jpg" alt=""/></button>				
+												<button class="select_detail" onclick="color_layer_open(6)"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+										</li>
+										<li>
+											<span>
+												<button class="select_change" onclick="bag_color_Img_url_make(7); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/color/stephanie_color_small7.jpg" alt=""/></button>			
+												<button class="select_detail" onclick="color_layer_open(7)"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+										</li>
+										<li>
+											<span>
+												<button class="select_change" onclick="bag_color_Img_url_make(8); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/color/stephanie_color_small8.jpg" alt=""/></button>			
+												<button class="select_detail" onclick="color_layer_open(8)"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+										</li>
+										<li>
+											<span>
+												<button class="select_change" onclick="bag_color_Img_url_make(9); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/color/stephanie_color_small9.jpg" alt=""/></button>			
+												<button class="select_detail" onclick="color_layer_open(9)"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+										</li>
+										<li>
+											<span>
+												<button class="select_change" onclick="bag_color_Img_url_make(10); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/color/stephanie_color_small10.jpg" alt=""/></button>			
+												<button class="select_detail" onclick="color_layer_open(10)"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+										</li>
+									</ul>
+								</div>
+
+							</td>
+							<td class="txt_box">
+								<span>FREE</span>
+							</td>
+						</tr>
+					</table>
+				</div>					
+				<!--//01. 컬러 선택-->
+
+				<!--02. 패턴 선택-->
+				<div class="menu_section pattern_choice">
+					<table>
+						<colgroup>
+							<col class="col1"/><col class="col2"/>
+						</colgroup>
+						<caption class="hidden">패턴선택 컨텐츠</caption>
+						<tr>
+							<td class="icn_box">
+								<div class="tl_sec tl02">
+									<h4>패턴 Choice</h4>
+									<!-- 20151113 안내문구 -->
+									<a href="#" class="option_tip">안내</a>
+									<div class="tip_layer">
+										<span class="tipspan layerT"></span>
+										<span class="tipspan layerC">
+											패턴의 경우 제작에 따라 위치가 다소 차이가 있을 수 있습니다.
+										</span>
+										<span class="tipspan layerB"></span>										
+									</div>
+									<!--// 20151113 안내문구 -->
+								</div>
+
+								<div class="sort_tab pattern" id="sort_pattern_tab">
+									<ul>
+										<li class="tab01 on" id="section_pattern_body"><button>body</button></li>
+										<!--<li class="tab02" id="section_pattern_front"><button>front</button></li> 20151113 삭제 -->
+										<li class="tab03" id="section_pattern_side"><button>side</button></li>
+									</ul>
+								</div>
+
+								<div class="btn_set" id="btn_pattern_set">
+									<ul>
+										<li>
+											<span>
+												<button class="select_change on" onclick="bag_pattrern_Img_url_make(0); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/btn_none.png" alt=""/></button>
+												<button class="select_detail"><img src="img/btn_detail_none.png" alt=""/></button>
+											</span>
+										</li>
+										<li>
+											<span>
+												<button class="select_change" onclick="bag_pattrern_Img_url_make(1); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/pattern/stephanie_pattern_small1.jpg" alt=""/></button>
+												<button class="select_detail" onclick="print_layer_open(1);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+										</li>
+										<li>
+											<span>
+												<button class="select_change" onclick="bag_pattrern_Img_url_make(2); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/pattern/stephanie_pattern_small2.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="print_layer_open(2);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+										</li>
+										<li>
+											<span>
+												<button class="select_change" onclick="bag_pattrern_Img_url_make(3); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/pattern/stephanie_pattern_small3.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="print_layer_open(3);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+										</li>
+										<li>
+											<span>
+												<button class="select_change" onclick="bag_pattrern_Img_url_make(4); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/pattern/stephanie_pattern_small4.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="print_layer_open(4);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+										</li>
+										<li>
+											<span>
+												<button class="select_change" onclick="bag_pattrern_Img_url_make(5); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/pattern/stephanie_pattern_small5.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="print_layer_open(5);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+										</li>
+										<li>
+											<span>
+												<button class="select_change"  onclick="bag_pattrern_Img_url_make(6); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/pattern/stephanie_pattern_small6.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="print_layer_open(6);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+										</li>
+										<li>
+											<span>
+												<button class="select_change" onclick="bag_pattrern_Img_url_make(7); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/pattern/stephanie_pattern_small7.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="print_layer_open(7);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+										</li>
+										<li>
+											<span>
+												<button class="select_change" onclick="bag_pattrern_Img_url_make(8); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/pattern/stephanie_pattern_small8.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="print_layer_open(8);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+										</li>
+										<li>
+											<span>
+												<button class="select_change" onclick="bag_pattrern_Img_url_make(9); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/pattern/stephanie_pattern_small9.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="print_layer_open(9);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+										</li>
+										<li>
+											<span>
+												<button class="select_change" onclick="bag_pattrern_Img_url_make(10); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/pattern/stephanie_pattern_small10.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="print_layer_open(10);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+										</li>
+									</ul>
+								</div>
+
+								<!-- 20151202 print가 없을때 나타나는 문구-->
+								<span class="custom_des_txt">적용되는 Print가 없습니다</span>
+								<!-- 20151202 -->
+
+							</td>
+							<td class="txt_box">
+								<span>FREE</span>
+							</td>
+						</tr>
+					</table>
+				</div>					
+				<!--//02. 패턴 선택-->
+
+<!--<script>
+$(document).ready(function(){
+	$(".menu_section.emblem_choice tr").css("background","#f2f2f2");
+});
+</script>-->
+
+
+				<!--03. 엠블렘 선택-->
+				<div class="menu_section emblem_choice">
+					<table>
+						<colgroup>
+							<col class="col1"/><col class="col2"/>
+						</colgroup>
+						<caption class="hidden">엠블렘선택 컨텐츠</caption>
+						<tr>
+							<td class="icn_box">
+								<div class="tl_sec tl03">
+									<h4>엠블렘 Choice</h4>
+									<!-- 20151113 안내문구 -->
+									<a href="#" class="option_tip">안내</a>
+									<div class="tip_layer">
+										<span class="tipspan layerT"></span>
+										<span class="tipspan layerC">
+											선택한 엠블렘의 유형에 따라 부자재 컬러가 자동으로 선택됩니다.
+										</span>
+										<span class="tipspan layerB"></span>										
+									</div>
+									<!--// 20151113 안내문구 -->
+								</div>
+
+								<div class="sort_tab emblem" id="sort_emblem_tab">
+									<ul>
+										<li class="basic on" style="background-image:url(img/custom/emblem/stephanie_emblem_small0.jpg);"><button>basic</button></li>
+										<li class="glimm"><button>glimm</button></li>
+									</ul>
+								</div>
+
+								<div class="btn_set emblem_basic" id="btn_emblem_set1">
+									<ul>
+										<li>
+											<span>
+												<button class="select_change on" onclick="bag_emblem_url_make(0); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/emblem/stephanie_emblem_small0.jpg" alt=""/></button>
+												<button class="select_detail" onclick="emblem_layer1_open(0)"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+										</li>
+										<li>
+											<span>
+												<button class="select_change" onclick="bag_emblem_url_make(1); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/emblem/stephanie_emblem_small1.jpg" alt=""/></button>
+												<button class="select_detail" onclick="emblem_layer1_open(1)"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+										</li>
+										<li>
+											<span>
+												<button class="select_change" onclick="bag_emblem_url_make(2); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/emblem/stephanie_emblem_small2.jpg" alt=""/></button>
+												<button class="select_detail" onclick="emblem_layer1_open(2)"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+										</li>
+									</ul>
+								</div>
+
+								<div class="btn_set emblem_glimm" id="btn_emblem_set2">
+									<ul>
+										<li>
+											<span>
+												<button class="select_change on" onclick="bag_emblem_url_make(0); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/emblem/stephanie_emblem_small0.jpg" alt=""/></button>
+												<button class="select_detail" onclick="emblem_layer2_open(0)"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+										</li>
+										<li>
+											<span>
+												<button class="select_change" onclick="bag_emblem_url_make(1); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/emblem/stephanie_emblem_small1.jpg" alt=""/></button>
+												<button class="select_detail" onclick="emblem_layer2_open(1)"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+										</li>
+										<li>
+											<span>
+												<button class="select_change" onclick="bag_emblem_url_make(2); load_skin();"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/emblem/stephanie_emblem_small2.jpg" alt=""/></button>
+												<button class="select_detail" onclick="emblem_layer2_open(2)"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+										</li>
+									</ul>
+								</div>
+
+								<!--20151113 글림 버튼추가 및 문구 삭제-->
+								<!--<span class="custom_des_txt">선택한 엠블럼의 유형에 따라 부자재<br/>컬러가 자동으로 선택됩니다.</span>-->
+
+								<span class="custom_btn" onclick="glimme_popup_open(); return false;"><a href="#">glimm 샘플보기</a></span>
+								<!--//20151113 글림 버튼추가-->
+
+							</td>
+							<td class="txt_box">
+								<span>FREE</span>
+							</td>
+						</tr>
+					</table>
+				</div>					
+				<!--//03. 엠블렘 선택-->
+
+				<!--04. 스트랩 선택-->
+<script>
+	function idcahange(){//20160105 id 적용체크
+		if(id_spec=='apply'){//id 적용
+			$("#unit01_id").css("display","block");
+		}else{//id 없음
+			$("#unit01_id").css("display","none");
+		}
+	}
+</script>
+				<div class="menu_section strab_choice">
+					<table>
+						<colgroup>
+							<col class="col1"/><col class="col2"/>
+						</colgroup>
+						<caption class="hidden">스트랩선택 컨텐츠</caption>
+						<tr>
+							<td class="icn_box">
+								<div class="tl_sec tl04">
+									<h4>스트랩 Choice</h4>
+								</div>
+								<!-- 20160105 id 옵션 -->
+								<div class="strab_select_set">
+									<ul>
+										<li><button class="strab_select select1 on" onclick="id_spec='apply'; idcahange();"><span></span> ID 있음</button></li>
+										<li><button class="strab_select select2" onclick="id_spec='none'; idcahange();"><span></span> ID 없음</button></li>
+									</ul>
+								</div>
+								<!--// 20160105 id 옵션 -->
+							</td>
+							<td class="txt_box">
+								<span>FREE</span>
+							</td>
+						</tr>
+					</table>
+				</div>					
+				<!--//04. 스트랩 선택-->
+
+				<!--05. 와펜 선택-->
+				<div class="menu_section wappen_choice">
+					<table>
+						<colgroup>
+							<col class="col1"/><col class="col2"/>
+						</colgroup>
+						<caption class="hidden">와펜선택 컨텐츠</caption>
+						<tr>
+							<td class="icn_box">
+								<div class="tl_sec tl05">
+									<h4>와펜 Choice</h4>
+									<!-- 20151113 안내문구 -->
+									<a href="#" class="option_tip">안내</a>
+									<div class="tip_layer">
+										<span class="tipspan layerT"></span>
+										<span class="tipspan layerC">
+											먼저 원하시는 패치를 선택하고<br/>
+											제품위의 그리드에 올리시면서<br/>
+											디자인 하시면 됩니다.
+											<ul>
+												<li><img src="img/icn_pacth_guide1.png" alt="삭제"> 선택된 PATCH를 삭제합니다.</li>
+												<li><img src="img/icn_pacth_guide2.png" alt="삭제"> 디자인된 PATCH를 리셋합니다.</li>
+												<li><img src="img/icn_pacth_guide3.png" alt="삭제"> PATCH의 위치 선택을 위한<br/>&nbsp; &nbsp; &nbsp; 그리드를 표시합니다.</li>
+											</ul>
+										</span>
+										<span class="tipspan layerB"></span>										
+									</div>
+									<!--// 20151113 안내문구 -->
+								</div>
+
+								<div class="sort_tab wappen" id="sort_wappen_tab">
+									<ul>
+										<li class="fabric on"><button>fabric</button></li>
+										<li class="metal"><button>metal</button></li>
+									</ul>
+								</div>
+
+								<!--와펜-->
+								<div class="btn_set fabric_wappen" id="fabric_wappen">
+									<ul class="slides">
+										<li>
+											<span>
+												<button class="select_change"  onclick="wappen_status='big'; wappen_num=1;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big1.jpg" alt="" class="soldout"/></button>	<!--20150915 품절일때-->		
+												<button class="select_detail" onclick="wappen_layer1_open(0);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<!--<button class="select_change"  onclick="wappen_status='big'; wappen_num=2; wappen_img=21; console.log(wappen_status + ' : ' + wappen_num);" id="107W3"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big2.jpg" alt=""/></button>-->
+												<button class="select_change"  onclick="wappen_status='big'; wappen_num=2; wappen_img=21;" id="107W3"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big2.jpg" alt=""/></button><!-- console.log 삭제함 20151125 -->
+												<button class="select_detail" onclick="wappen_layer1_open(1);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='small'; wappen_num=3; wappen_img=26; console.log(wappen_status + ' : ' + wappen_num);" id="108W4"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big3.jpg" alt="" class="soldout"/></button>	<!--20150915 품절일때-->	 	<!-- 20150925 wappen_img 임시추가 -->									
+												<button class="select_detail" onclick="wappen_layer1_open(2);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='big'; wappen_num=4;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big4.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer1_open(3);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='big'; wappen_num=5;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big5.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer1_open(4);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='big'; wappen_num=6;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big6.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer1_open(5);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='big'; wappen_num=7;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big7.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer1_open(6);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='big'; wappen_num=8;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big8.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer1_open(7);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='big'; wappen_num=9;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big9.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer1_open(8);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='big'; wappen_num=10;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big10.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer1_open(9);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='big'; wappen_num=11;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big11.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer1_open(10);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='big'; wappen_num=12;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big12.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer1_open(11);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+										</li>
+										<li>
+											<span>
+												<button class="select_change"  onclick="wappen_status='big'; wappen_num=13;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big13.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer1_open(12);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='big'; wappen_num=14;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big14.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer1_open(13);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='big'; wappen_num=15;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big15.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer1_open(14);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='big'; wappen_num=16;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big16.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer1_open(15);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='big'; wappen_num=17;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big17.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer1_open(16);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='big'; wappen_num=18;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big18.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer1_open(17);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='small'; wappen_num=1;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small1.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer1_open(18);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='small'; wappen_num=2;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small2.jpg" alt="" class="soldout"/></button>	<!--20150915 품절일때-->										
+												<button class="select_detail" onclick="wappen_layer1_open(19);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='small'; wappen_num=3;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small3.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer1_open(20);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='small'; wappen_num=4;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small4.jpg" alt="" class="soldout"/></button>	<!--20150915 품절일때-->											
+												<button class="select_detail" onclick="wappen_layer1_open(21);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='small'; wappen_num=5;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small5.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer1_open(22);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='small'; wappen_num=6;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small6.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer1_open(23);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+										</li>
+										<li>
+											<span>
+												<button class="select_change"  onclick="wappen_status='small'; wappen_num=7;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small7.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer1_open(24);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='small'; wappen_num=8;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small8.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer1_open(25);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='small'; wappen_num=9;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small9.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer1_open(26);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='small'; wappen_num=10;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small10.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer1_open(27);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='small'; wappen_num=11;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small11.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer1_open(28);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='small'; wappen_num=12;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small12.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer1_open(29);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='small'; wappen_num=13;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small13.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer1_open(30);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='small'; wappen_num=14;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small14.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer1_open(31);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='small'; wappen_num=15;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small15.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer1_open(32);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+										</li>
+									</ul>
+								</div>
+								<div class="btn_set metal_wappen" id="metal_wappen">
+									<ul class="slides">
+										<li>
+											<span>
+												<button class="select_change"  onclick="wappen_status='big'; wappen_num=101;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big101.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer2_open(0);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='big'; wappen_num=102;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_big102.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer2_open(1);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='small'; wappen_num=101;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small101.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer2_open(2);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='small'; wappen_num=102;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small102.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer2_open(3);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='small'; wappen_num=103;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small103.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer2_open(4);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='small'; wappen_num=104;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small104.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer2_open(5);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='small'; wappen_num=105;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small105.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer2_open(6);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='small'; wappen_num=106;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small106.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer2_open(7);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='small'; wappen_num=107;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small107.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer2_open(8);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='small'; wappen_num=108;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small108.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer2_open(9);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+											<span>
+												<button class="select_change"  onclick="wappen_status='small'; wappen_num=109;"><img src="img/btn_over.png" alt="" class="over"/><img src="img/custom/wappen/wappen_small109.jpg" alt=""/></button>											
+												<button class="select_detail" onclick="wappen_layer2_open(10);"><img src="img/btn_detail.png" alt=""/></button>
+											</span>
+
+
+										</li>
+									</ul>
+								</div>
+								<div class="wappen_tool">
+									<span><button id="wappen_del" onclick="wappen_status='del'; alert('삭제하시려는 패치를 클릭하세요.');">wappen del</button></span><!--20150915 alert창 추가-->
+									<span><button id="wappen_reset" onclick="wappen_reset();">wappen reset</button></span>
+									<span><button id="wappen_grid">wappen grid</button></span>
+								</div>
+								<!--//와펜-->
+
+								<!-- 20151202 ie9일때 side 와펜 안내 문구 -->
+								<script>
+								$(window).load(function(){										
+									var agent = navigator.userAgent.toLowerCase();
+									if (agent.indexOf("msie 9.0") != -1) {
+										$("#ie9_text").css("display","block");
+									}
+								});
+								</script>
+								<span class="custom_des_txt" id="ie9_text" style="display:none;">와펜적용시 측면각도 와펜은<br/> 익스플로어 10이상에서만 보입니다.</span>
+								<!-- 20151202 ie9일때 side 와펜 안내 문구 -->
+
+							</td>
+							<td class="txt_box">
+								<span>350,000</span>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<!--//05. 와펜 선택-->
+
+				</div>
+
+				<!--more_div 20151113 추가-->
+				<div class="more_div">
+					<div id="side_more"><img src="img/bl_side_more.png" alt=""/></div>
+				</div>
+				<!--//more_div-->
+				<div class="side_shadow"><img src="img/bg_side_shadow.png" alt=""/></div>
+			</div>
+		</div>
+		<!--//side_menu_wrap-->
+
+		<!--06. 합계-->
+		<div class="custom_total" id="custom_total">
+			<div class="total_box"> 
+				<div class="total_price">
+					<span class="price">835,000</span> <span class="won">won</span>  
+					<div class="point">8,350 <span>point</span></div>
+				</div>
+				<div class="qty_box">
+					<span class="tl">Qty</span>
+					<span>
+						<a href="#" class="bt_down_click">-</a>
+						<label for="u_qty" class="hidden">수량 입력</label>
+						<span class="qty_input"><input type="text" name="order_qty" class="qty_inputbox" id="u_qty" readonly="readonly" value="1" /></span>
+						<a href="#" class="bt_up_click">+</a>
+					</span>
+				</div>
+				<div class="btn_total_set">
+					<span><button id="btn_buy" onclick="login_popup_open()">BUY</button></span><!--로그인-->
+					<span><button id="btn_cart" onclick="add_cart_popup_open()">CART</button></span><!--장바구니 추가 20150924 추가-->
+				</div>
+				<div class="btn_guide_more">
+					<span><button id="btn_guide_more">PRODUCT/BUYING GUIDE</button></span>					
+				</div>
+			</div>
+		</div>
+		<!--//06. 합계-->
+
+	</div>
+	<!--##//side_menu##-->
+
+	<!--#more_info_cont#-->
+	<div class="more_info_cont" id="more_info_cont">
+		<h3 class="hidden">product guide &  buying guide</h3>
+		<!--custom_product_guide-->
+		<div class="custom_product_guide">
+			<div class="custom_txtbox">
+				<h4>PRODUCT GUIDE</h4>
+				<ul>
+					<li class="detail">
+						<h5>PRODUCT DETAIL</h5>
+						<div class="txt">
+							<p>- 이번 시즌 새롭게 선보이는 New Stephaine!<br>- 기존 쉐입을 유지하며 업그레이드 된 디자인.<br>- 소프트 엠보 소가죽을 사용하여 고급스러움.<br>- 메인 공간 마그넷 오픈으로 편리하며 지퍼칸을 추가하여<br>&nbsp; 효율적인 수납이 가능한 아이템.<br>- 사이드 날개 부분을 넣고 뺄 수 있어 다양한&nbsp;실루엣&nbsp;연출&nbsp;가능.<br>- 길이 조절이 가능한 스트랩으로 숄더백으로 활용 가능한 아이템.</p>
+						</div>
+					</li>
+					<li class="info">
+						<h5>PRODUCT INFO</h5>
+						<div class="txt">
+							<ul>
+								<li>- 소재정보 : 소가죽</li>
+								<li>- 계절구분 : 사계절</li>
+								<li>- 원산지 : 대한민국</li>
+								<li>- 제조사 : 코오롱인더스트리(주) FnC부문</li>
+								<li>- 제조년월 : 2015년 07월</li>
+							</ul>
+						</div>
+					</li>
+					<li class="size">
+						<h5>SIZE INFO</h5>
+						<!--size_info-->
+						<div class="size_info">
+							<img src="img/item_schema/23.gif" alt="상품 사이즈" class="thumb">
+							<div class="tbl">
+								<table border="1" summary="제품의 길이, 너비, 두께 등 사이즈에 대한 표">
+									<caption>제품 사이즈</caption>
+									<thead>                                				    
+										<tr>
+											<th scope="col">&nbsp;</th>
+											<th scope="col">SIZE</th>
+											<th scope="col">XXX</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<th scope="row"><img src="img/item_schema/ico_size_a.gif" alt="a. Height"></th>
+											<td>Height</td>
+											<td>24cm</td>
+										</tr>
+										<tr>
+											<th scope="row"><img src="img/item_schema/ico_size_b.gif" alt="b. Width"></th>
+											<td>Width</td>
+											<td>33cm</td>
+										</tr>
+										<tr>
+											<th scope="row"><img src="img/item_schema/ico_size_c.gif" alt="c. depth"></th>
+											<td>depth</td>
+											<td>15cm</td>
+										</tr>
+										<tr>
+											<th scope="row"><img src="img/item_schema/ico_size_d.gif" alt="d. Handle"></th>
+											<td>Handle</td>
+											<td>14cm</td>
+										</tr>
+										</tbody>
+									</table>
+							</div>
+						</div>		
+						<!--//size_info-->
+					</li>
+				</ul>			
+			</div>
+		</div>
+		<!--//custom_product_guide-->
+
+		<!--custom_buying_guide-->
+		<div class="custom_buying_guide">
+			<div class="custom_txtbox">
+				<h4>BUYING GUIDE</h4>
+				<ul>
+					<li class="info1">
+						<h5>배송안내</h5>
+						<div class="txt deliver">
+							<h6>배송업체명</h6>
+							<div class="dec">COURONNE</div>
+						</div>
+						<div class="txt notice">
+							<h6>배송안내</h6>
+							<div class="dec">C-STUDIO는 고객의 기호에 따라 주문제작 되는 상품으로, 주문 시 선택한 옵션에 따라 발송지연 또는 품절 될 수 있으니 양해 부탁드립니다. 배송이 지연되는 경우 고객님께 빠르게 안내 할 수 있도록 노력하겠습니다.</div>
+						</div>
+						<div class="txt reserve">
+							<h6>예약 구매</h6>
+							<div class="dec">상품의 경우는 예약 발송일에 일괄 배송해 드립니다.</div>
+						</div>
+						<div class="txt howdeliver">
+							<h6>배송방법</h6>
+							<div class="dec">30,000원 미만 구매시 2,500원<br/>30,000원 이상 구매시 무료<br/>(도서,산간,오지 일부 지역 및 해외지역은 배송비가 추가됩니다.)</div>
+						</div>
+						<div class="txt term">
+							<h6>배송기간</h6>
+							<div class="dec">C-STUDIO는 주문 제작 상품으로, 주문 시 공지된 일자에 배송됩니다.<br/>결제완료 후 평균 3~4주(휴일 및 공휴일제외) 이내에 배송됩니다.</div>
+						</div>
+					</li>
+					<li class="info2">
+						<h5>교환/반품 안내</h5>
+						<div class="txt change">
+							<div class="dec">C-STUDIO는 주문 후 고객이 선택한 옵션에 맞춰 별도 제작되는 상품으로, <br/>고객변심에 의한 교환/반품은 불가능합니다.<br/>단, 상품 불량으로 인한 교환/반품 희망 시, 상품 수령 후 7일 이내에 요청해주시고, <br/>배송비는 무료입니다.<br/>My page에서 교환/반품 신청에서 확인 가능합니다.</div>
+						</div>
+						<h5>품질보증/수선 안내</h5>
+						<div class="txt deliver">
+							<h6>품질보증 기간</h6>
+							<div class="dec">코오롱 인더스트리㈜ FnC부문 제품의 품질보증 기간은 구입일로부터 1년입니다.<br/><a href="http://www.couronne.co.kr/call_center/afterService.jsp" target="_blank">품질보증 자세히 보기</a></div>
+							<h6>수선품 접수 안내</h6>
+							<div class="dec">수선품 접수는 구입기간(오래된 제품이라도)에 관계없이 가능합니다.<br/>구입매장 또는 인근지역 내 브랜드 매장을 방문하시어 의뢰하십니다.<br/>인근지역 내 매장이 없을 경우 우편 또는 고객상담실로 방문해주십시오.<br/>수선작업에 소요되는 기간은 평균적으로 매장접수일로부터 3주 이내입니다.<br/>3년 이상 된 제품들은 유상으로 진행되고 있으며(제품별 상이할 수 있음), <br/>항목별로 가격 조견표는 매장에 비치되어 있습니다.<br/><a href="http://www.couronne.co.kr/call_center/afterService.jsp#asContent2" target="_blank">수선/AS 자세히 보기</a></div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!--custom_buying_guide-->
+
+	</div>
+	<!--//#more_info_cont#-->
+
+	<!--//내용-->
+</div>
+<!--//contents-->
+
+<!--contentFooter-->
+<div class="contentFooter">
+	<div class="CFContent CFCustomer">
+		<h4><a href="/call_center/noticeList.jsp">고객센터</a></h4>
+		<strong>1588-7667</strong>
+		월~금 (10:00~18:00)
+	</div>
+	<div class="CFContent CFOrder">
+		<h4>주문/배송</h4>
+		<ul>
+			<li><a href="/mypage/order/orderList.jsp">주문/배송 조회</a></li>
+			<li><a href="/mypage/order/cancleList.jsp">취소/교환/반품 조회</a></li>
+			<li><a href="/call_center/orderSearch.jsp">비회원주문조회</a></li>
+		</ul>
+	</div>
+	<div class="CFContent CFQna">
+		<h4>문의사항</h4>
+		<ul>
+			<li><a href="/call_center/faqList.jsp">자주묻는 질문 FAQ</a></li>
+			<li><a href="/call_center/afterService.jsp">A/S</a></li>
+			<li><a href="/call_center/qnaList.jsp">1:1 상담</a></li>
+		</ul>
+	</div>
+	<div class="CFContent CFMyInfo">
+		<h4>혜택정보</h4>
+		<ul>
+			<li><a href="/mypage/diary/mycheckProduct.jsp">관심상품</a></li>
+			<li><a href="/mypage/diary/myKolonCardPointList.jsp">나의 포인트/쿠폰/예치금</a></li>
+			<li><a href="/html/event/membership_event.jsp">온라인 스토어 맴버쉽</a></li>
+		</ul>
+	</div>
+	<div class="CFContent CFNotice">
+		<h4>공지사항</h4>
+		<ul>
+			<li><a href="#">[공지] 우편번호 체계 변경으로 인한 시스템 작업 안내</a></li>
+			<li><a href="#">[공지] 우편번호 체계 변경으로 인한 시스템 작업 안내</a></li>
+			<li><a href="#">[공지] 우편번호 체계 변경으로 인한 시스템 작업 안내</a></li>
+		</ul>
+	</div>
+</div>
+<!--//contentFooter-->
+
+<!--footer-->
+<div id="footer">
+	<h2><img src="img/logo_footer.png" alt="COURONNE" /></h2><!--20151214이미지경로 수정-->
+
+	<h3 class="hidden">하단메뉴</h3>
+	<!--f_menu-->
+	<div class="f_menu">
+		<ul>
+			<li><a href="#">매장정보</a></li>
+			<li><a href="#">바이어 상담</a></li>
+			<li><a href="#">고객센터</a></li>
+			<li><a href="#">이용약관</a></li>
+			<li><a href="#">개인정보취급방침</a></li>
+			<li><a href="#">개인정보처리방침</a></li>
+		</ul>
+	</div>
+	<!--//f_menu-->
+
+	<h3 class="hidden">사이트 정보 및 카피라이트</h3>
+	<!--f_siteInfo-->
+	<div class="f_siteInfo">
+		<span>코오롱인더스트리 FnC부문</span>
+		<span>대표이사 : 박동문</span>
+		<span>개인정보관리 책임자 : 경영지원본부 손정현 상무</span>
+		<span>개인정보관리 담당자 : 빅데이터팀 김정혁 과장</span><br />
+		<address>서울시 서초구 서초대로 411 GT타워</address>
+		<span>통신판매업신고:제2012-서울서초-0593호</span>
+		<span>사업자등록번호:138-85-19612</span>
+		<button type="button" class="trans_xsBk w84" onclick="window.open('http://www.ftc.go.kr/info/bizinfo/communicationList.jsp');" title="사업자등록확인 새창열기">사업자등록확인</button><br />
+		<span>EMAIL: <a href="mailto:couronne_admin@kolon.com">couronne_admin@kolon.com</a></span>
+		<span>TEL : 1588-7667</span>
+		<span>FAX : 02-3677-7546</span>
+		<div class="copyright">Copyright © 2013 couronne All Rights Reserved.</div>
+	</div>
+	<!--//f_siteInfo-->
+
+	<h3 class="hidden">구매안전서비스 안내</h3>
+	<!--f_escro-->
+	<div class="f_escro"><img src="img/escro.gif" alt="LG U+ 에스크로"><!--20151214이미지경로 수정-->
+		<p>
+			고객님은 안전거래를 위해 결제시<br />
+			저희 사이트에서 가입한 LG U+의<br />
+			구매안전서비스를 이용하실 수 있습니다.
+		</p>
+		<button type="button" class="trans_xsBk w75" onclick="window.open('https://pgweb.uplus.co.kr/pg/wmp/mertadmin/jsp/mertservice/s_escrowYn.jsp?mertid=joykolon','_winPop','width=340px,height=263px');" title="LG U+ 에스크로 가입사실 확인하기 새창열기">가입사실확인</button>
+	</div>
+	<!--//f_escro-->
+</div>
+<!--//footer-->
+	
+</div>
+<!--//container-->
+
+<!--레이어팝업 20150916  20150916 가격추가 -->
+<div class="layer_bg"></div>
+<div class="layer_popup" id="color_layer">
+	<div class="popup">
+		<div class="pop_basic pb30">
+			<h2 class="pop_tit">COLOR DETAIL</h2>
+
+			<!--popup_slide-->
+			<div class="popup_slide" id="baseColorSlider">
+				<ul class="slides">
+					<li>
+						<img src="img/custom/color/stephanie_color1.jpg" alt="" class="thumb_img" />
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--color-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">COLOR</th>
+									<th class="th_w">Base</th>
+									<th class="th_w">Side</th>
+									<th class="th_w">Handle</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+									<td><span>\2,000</span></td>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<img src="img/custom/color/stephanie_color2.jpg" alt="" class="thumb_img" />
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--color-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">COLOR</th>
+									<th class="th_w">Base</th>
+									<th class="th_w">Side</th>
+									<th class="th_w">Handle</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+									<td><span>\2,000</span></td>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<img src="img/custom/color/stephanie_color3.jpg" alt="" class="thumb_img" />
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--color-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">COLOR</th>
+									<th class="th_w">Base</th>
+									<th class="th_w">Side</th>
+									<th class="th_w">Handle</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+									<td><span>\2,000</span></td>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<img src="img/custom/color/stephanie_color4.jpg" alt="" class="thumb_img" />
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--color-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">COLOR</th>
+									<th class="th_w">Base</th>
+									<th class="th_w">Side</th>
+									<th class="th_w">Handle</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+									<td><span>\2,000</span></td>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<img src="img/custom/color/stephanie_color5.jpg" alt="" class="thumb_img" />
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--color-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">COLOR</th>
+									<th class="th_w">Base</th>
+									<th class="th_w">Side</th>
+									<th class="th_w">Handle</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+									<td><span>\2,000</span></td>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<img src="img/custom/color/stephanie_color6.jpg" alt="" class="thumb_img" />
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--color-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">COLOR</th>
+									<th class="th_w">Base</th>
+									<th class="th_w">Side</th>
+									<th class="th_w">Handle</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+									<td><span>\2,000</span></td>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<img src="img/custom/color/stephanie_color7.jpg" alt="" class="thumb_img" />
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--color-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">COLOR</th>
+									<th class="th_w">Base</th>
+									<th class="th_w">Side</th>
+									<th class="th_w">Handle</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+									<td><span>\2,000</span></td>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<img src="img/custom/color/stephanie_color8.jpg" alt="" class="thumb_img" />
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--color-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">COLOR</th>
+									<th class="th_w">Base</th>
+									<th class="th_w">Side</th>
+									<th class="th_w">Handle</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+									<td><span>\2,000</span></td>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<img src="img/custom/color/stephanie_color9.jpg" alt="" class="thumb_img" />
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--color-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">COLOR</th>
+									<th class="th_w">Base</th>
+									<th class="th_w">Side</th>
+									<th class="th_w">Handle</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+									<td><span>\2,000</span></td>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<img src="img/custom/color/stephanie_color10.jpg" alt="" class="thumb_img" />
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--color-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">COLOR</th>
+									<th class="th_w">Base</th>
+									<th class="th_w">Side</th>
+									<th class="th_w">Handle</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+									<td><span>\2,000</span></td>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+				</ul>
+			</div>
+			<!--//popup_slide-->
+
+			<a href="#" class="pop_cls" onclick="pop_close();return false;"><img src="img/btn_close.png" alt="창닫기" /></a>
+		</div>
+		
+	</div>
+</div>
+<div class="layer_popup" id="print_layer">
+	<div class="popup">
+		<div class="pop_basic pb30">
+			<h2 class="pop_tit">IMAGE DETAIL</h2><!-- 20151113 텍스트 변경 -->
+
+			<!--popup_slide-->
+			<div class="popup_slide" id="imagePrintSlider">
+				<ul class="slides">
+					<li>
+						<img src="img/custom/pattern/stephanie_pattern1.jpg" alt="" class="thumb_img" />
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--print-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">IMAGE</th>
+									<th class="th_w">Body</th>
+									<th class="th_w">Side</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<img src="img/custom/pattern/stephanie_pattern2.jpg" alt="" class="thumb_img" />
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--print-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">IMAGE</th>
+									<th class="th_w">Body</th>
+									<th class="th_w">Side</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<img src="img/custom/pattern/stephanie_pattern3.jpg" alt="" class="thumb_img" />
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--print-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">IMAGE</th>
+									<th class="th_w">Body</th>
+									<th class="th_w">Side</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<img src="img/custom/pattern/stephanie_pattern4.jpg" alt="" class="thumb_img" />
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--print-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">IMAGE</th>
+									<th class="th_w">Body</th>
+									<th class="th_w">Side</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<img src="img/custom/pattern/stephanie_pattern5.jpg" alt="" class="thumb_img" />
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--print-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">IMAGE</th>
+									<th class="th_w">Body</th>
+									<th class="th_w">Side</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<img src="img/custom/pattern/stephanie_pattern6.jpg" alt="" class="thumb_img" />
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--print-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">IMAGE</th>
+									<th class="th_w">Body</th>
+									<th class="th_w">Side</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<img src="img/custom/pattern/stephanie_pattern7.jpg" alt="" class="thumb_img" />
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--print-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">IMAGE</th>
+									<th class="th_w">Body</th>
+									<th class="th_w">Side</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<img src="img/custom/pattern/stephanie_pattern8.jpg" alt="" class="thumb_img" />
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--print-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">IMAGE</th>
+									<th class="th_w">Body</th>
+									<th class="th_w">Side</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<img src="img/custom/pattern/stephanie_pattern9.jpg" alt="" class="thumb_img" />
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--print-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">IMAGE</th>
+									<th class="th_w">Body</th>
+									<th class="th_w">Side</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<img src="img/custom/pattern/stephanie_pattern10.jpg" alt="" class="thumb_img" />
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--print-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">IMAGE</th>
+									<th class="th_w">Body</th>
+									<th class="th_w">Side</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+				</ul>
+			</div>
+			<!--//popup_slide-->
+
+			<a href="#" class="pop_cls" onclick="pop_close();return false;"><img src="img/btn_close.png" alt="창닫기" /></a>
+		</div>
+		
+	</div>
+</div>
+<div class="layer_popup" id="emblem_layer1">
+	<div class="popup">
+		<div class="pop_basic pb30">
+			<h2 class="pop_tit">EMBLEM DETAIL</h2>
+
+			<!--popup_slide-->
+			<div class="popup_slide" id="emblemSlider1">
+				<ul class="slides">
+					<li>
+						<img src="img/custom/emblem/stephanie_emblem0.jpg" alt="" class="thumb_img" />
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">EMBLEM</th>
+									<th class="th_w">Basic</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<img src="img/custom/emblem/stephanie_emblem1.jpg" alt="" class="thumb_img" />
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">EMBLEM</th>
+									<th class="th_w">Basic</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<img src="img/custom/emblem/stephanie_emblem2.jpg" alt="" class="thumb_img" />
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">EMBLEM</th>
+									<th class="th_w">Basic</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+				</ul>
+			</div>
+			<!--//popup_slide-->
+
+			<a href="#" class="pop_cls" onclick="pop_close();return false;"><img src="img/btn_close.png" alt="창닫기" /></a>
+		</div>
+		
+	</div>
+</div>
+<div class="layer_popup" id="emblem_layer2">
+	<div class="popup">
+		<div class="pop_basic pb30">
+			<h2 class="pop_tit">EMBLEM DETAIL</h2>
+
+			<!--popup_slide-->
+			<div class="popup_slide" id="emblemSlider2">
+				<ul class="slides">
+					<li>
+						<img src="img/custom/emblem/stephanie_emblem100.jpg" alt="" class="thumb_img" />
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">EMBLEM</th>
+									<th class="th_w">Glimm</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<img src="img/custom/emblem/stephanie_emblem101.jpg" alt="" class="thumb_img" />
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">EMBLEM</th>
+									<th class="th_w">Glimm</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<img src="img/custom/emblem/stephanie_emblem102.jpg" alt="" class="thumb_img" />
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">EMBLEM</th>
+									<th class="th_w">Glimm</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+				</ul>
+			</div>
+			<!--//popup_slide-->
+
+			<a href="#" class="pop_cls" onclick="pop_close();return false;"><img src="img/btn_close.png" alt="창닫기" /></a>
+		</div>
+		
+	</div>
+</div>
+<div class="layer_popup" id="wappen_layer1">
+	<div class="popup">
+		<div class="pop_basic pb30">
+			<h2 class="pop_tit">PATCH DETAIL</h2><!-- 20151113 텍스트 변경 -->
+
+			<!--popup_slide-->
+			<div class="popup_slide" id="wappenSlider1">
+				<ul class="slides">
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_big1.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_big2.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_big3.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_big4.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_big5.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_big6.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_big7.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_big8.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_big9.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_big10.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_big11.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_big12.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_big13.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_big14.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_big15.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_big16.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_big17.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_big18.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_small1.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_small2.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_small3.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_small4.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_small5.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_small6.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_small7.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_small8.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_small9.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_small10.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_small11.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_small12.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_small13.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_small14.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_small15.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_small16.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_small17.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_small18.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_small19.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_small20.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+
+
+				</ul>
+			</div>
+			<!--//popup_slide-->
+
+			<a href="#" class="pop_cls" onclick="pop_close();return false;"><img src="img/btn_close.png" alt="창닫기" /></a>
+		</div>
+		
+	</div>
+</div>
+<div class="layer_popup" id="wappen_layer2">
+	<div class="popup">
+		<div class="pop_basic pb30">
+			<h2 class="pop_tit">PATCH DETAIL</h2><!-- 20151113 텍스트 변경 -->
+
+			<!--popup_slide-->
+			<div class="popup_slide" id="wappenSlider2">
+				<ul class="slides">
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_big101.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_big102.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_small101.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_small102.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_small103.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_small104.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_small105.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_small106.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_small107.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_small108.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+					<li>
+						<span class="wappen_img"><img src="img/custom/wappen/wappen_set_small109.png" alt="" class="thumb_img" /></span>
+						<!--20151113 수정-->
+						<div class="pop_info_table mt10">
+							<!--emblem-->
+							<table class="sol_tb">
+								<tr class="sol_th">
+									<th rowspan="10" class="section_tl">PATCH</th>
+									<th class="th_w">wappen Name</th>
+								</tr>
+								<tr>
+									<td><span>\2,000</span></td>
+								</tr>
+							</table>
+						</div>
+						<!--//20151113 수정-->
+					</li>
+				</ul>
+			</div>
+			<!--//popup_slide-->
+
+			<a href="#" class="pop_cls" onclick="pop_close();return false;"><img src="img/btn_close.png" alt="창닫기" /></a>
+		</div>
+		
+	</div>
+</div>
+<div class="layer_popup" id="sns_layer">
+	<div class="popup">
+		<div class="pop_basic">
+
+			<!--pop_mydesign-->
+			<div class="pop_mydesign share">
+				<img src="img/temp/tmp_product2.png" alt="" class="thumb" />
+				<div class="thumb_etc pt115">
+					<h2>SNS</h2>
+
+					<div class="mycheck mt15">
+						친구에게 공유하기
+					</div>
+
+					<div class="mt10">
+						<a href="#" class="bt_sns_commB bt_sns_fbB"><span>facebook</span></a>
+						<a href="#" class="bt_sns_commB bt_sns_kasB"><span>kakaostory</span></a>
+						<a href="#" class="bt_sns_commB bt_sns_pinB"><span>pinterest</span></a>
+					</div>
+				</div>
+			</div>
+			<!--//pop_mydesign-->
+
+			<a href="#" class="pop_cls" onclick="pop_close();return false;"><img src="img/btn_close.png" alt="창닫기" /></a>
+		</div>
+		
+	</div>
+</div>
+<!-- 20151113 로그인 전체수정 -->
+<div class="layer_popup" id="login_layer">
+	<div class="popup">
+		<div class="pop_basic">
+			<h2 class="pop_tit">LOGIN</h2>
+
+			<div class="pop_logintxt">상품 구입을 위해 로그인이 필요합니다.</div>
+
+			<div class="login_wrap">
+				<dl>
+					<dt><label for="u_id">ID</label></dt>
+					<dd><input type="text" name="cust_id" id="u_id" /></dd>
+					<dt><label for="u_pw">PW</label></dt>
+					<dd><input type="password" name="cust_password" id="u_pw" /></dd>
+				</dl>
+				<div class="saveId">
+					<input type="checkbox" id="u_save" name="idcheck" />
+					<label for="u_save">아이디 저장</label> <span>|</span> <a href="#">아이디/비밀번호 찾기</a>
+				</div>
+				<div class="loginBtn">
+					<button type="button">LOG IN</button>
+				</div>
+			</div>
+
+			<div class="pop_logintxt2 mt20">
+				COURONNE의 회원이 되시면 더 많은 혜택을 누리실 수 있습니다. 
+				<a href="#">회원가입</a>
+				<a href="#"  onclick="pop_close(); not_member_popup_open(); return false;">비회원 구매</a>
+			</div>
+
+			<a href="#" class="pop_cls" onclick="pop_close();return false;"><img src="img/btn_close.png" alt="창닫기" /></a>
+		</div>
+	</div>
+</div>
+<!--// 20151113 로그인 전체수정 -->
+<!--20150924 추가-->
+<div class="layer_popup" id="addcart_layer">
+	<div class="popup">
+		<div class="pop_basic">
+			<h2 class="pop_tit">장바구니 추가</h2>
+
+			<div class="pop_logintxt">상품이 장바구니에 추가되었습니다.<br/>장바구니를 확인하시겠습니까?</div>
+
+			<!--pop_roundBtn-->
+			<div class="pop_roundBtn ctr mt40 mb40">
+				<a href="#" class="l_bt">Yes</a><a href="#" class="r_bt">No</a>
+			</div>
+			<!--//pop_roundBtn-->
+
+			<a href="#" class="pop_cls" onclick="pop_close();return false;"><img src="img/btn_close.png" alt="창닫기" /></a>
+		</div>
+	</div>
+</div>
+<!--//20150924 추가-->
+<div class="layer_popup" id="not_member_layer">
+	<div class="popup">
+		<div class="pop_basic pb30">
+			<h2 class="pop_tit">비회원 주문</h2>
+			
+			<div class="pop_policy">
+				<h3>수집하는 개인정보의 항목</h3>
+				성명, 주민등록번호, e-mail, 전화번호, 주소, 은행계좌번호, 신용카드번호
+
+				<h3>개인정보의 수집ㆍ이용목적</h3>
+				성명, 비밀번호, e-mail, 전화번호: 고지의 전달. 불만 처리나 주문/배송 정보 안내 등 원활한 의사소통 경로의 확보.<br />
+				주소: 고지의 전달, 청구서, 정확한 상품 배송지의 확보.<br />
+				은행계좌번호, 신용카드번호: 유료정보에 대한 이용 및 상품구매에 대한 결제
+
+				<h3>수집하는 개인정보의 보유기간</h3>
+				계약 또는 청약철회 등에 관한 기록 : 5년<br />
+				대금결제 및 재화 등의 공급에 관한 기록 : 5년<br />
+				소비자의 불만 또는 분쟁처리에 관한 기록 : 3년<br />
+				본인확인에 관한 기록 : 6개월
+
+				<h3>개인정보 수집 동의 거부 권리</h3>
+				코오롱인더스트리(주)는 원활한 서비스 제공을 위해 개인정보를 수집하고 있습니다.<br />
+				개인정보수집, 이용에 대한 동의를 거부할 수 있으나, 일부 서비스 이용이 제한될 수 있습니다.
+			</div>
+
+			<div class="pop_policychk mt30">
+				<div class="top">비회원 주문시 비회원 개인정보 수집/이용에 동의하십니까?</div>
+				<div class="chk">
+					<input type="radio" name="radio" checked="checked" /> 동의합니다. &nbsp; &nbsp; &nbsp; &nbsp; 
+					<input type="radio" name="radio" /> 동의하지 않습니다.
+				</div>
+			</div>
+
+			<!--pop_roundBtn-->
+			<div class="pop_roundBtn ctr mt30">
+				<a href="#" class="l_bt">Confirm</a><a href="#" class="r_bt">Cancel</a>
+			</div>
+			<!--//pop_roundBtn-->
+
+			<a href="#" class="pop_cls" onclick="pop_close();return false;"><img src="img/btn_close.png" alt="창닫기" /></a>
+		</div>
+	</div>
+</div>
+<div class="layer_popup" id="save_design">
+	<div class="popup">
+		<div class="pop_basic">
+
+			<!--pop_mydesign-->
+			<div class="pop_mydesign">
+				<img src="img/temp/tmp_product2.png" alt="" class="thumb" />
+				<div class="thumb_etc">
+					<h2>내 디자인 정하기</h2>
+
+					<div class="mt15"><input type="text" class="input_add" style="width:238px;" value="DESIGNE NAME" /></div>
+
+					<div class="mycheck mt10">
+						<input type="checkbox" checked="checked" />
+						디자인을 다른 회원에게 오픈합니다.
+					</div>
+
+					<!--pop_roundBtn 20151123 수정-->
+					<div class="pop_roundBtn mt25">
+						<a href="#" class="c_bt">SAVE</a><!-- 20151123 class 변경-->
+						<!--<a href="#" class="r_bt">SNS</a> 20151123 sns 삭제-->
+					</div>
+					<!--//pop_roundBtn-->
+
+					<div class="mt10">※ 디자인은 최대 20개까지 저장 가능합니다. </div><!-- 20151123 수정 -->
+				</div>
+			</div>
+			<!--//pop_mydesign-->
+
+			<a href="#" class="pop_cls" onclick="pop_close();return false;"><img src="img/btn_close.png" alt="창닫기" /></a>
+		</div>
+		
+	</div>
+</div>
+<!--글림상세설명 팝업 20151113-->
+<div class="layer_popup" id="glime_detail">
+	<div class="popup">
+		<div class="pop_basic">
+			<!--pop_glimm_detail-->
+			<div class="pop_glimm_detail">
+				<h2 class="hidden">글림 상세 설명</h2>
+				<iframe width="690" height="388" src="about:blank" frameborder="0" id="movPlayer"></iframe>
+				<div class="gl_txt">
+					<span class="gl_tl">스마트한 백 글림(glimm)</span>
+					<span>- LED 조명을 통해 휴대 전화 (전화 / 문자 메시지 / SNS)의 정보를 통보</span>
+					<span>- 가방과 휴대전화가 일정거리 (약10M) 떨어지게 되면 경고등이 켜져 분실 및 도난 방지</span>
+				</div>
+			</div>
+			<!--//pop_glimm_detail-->
+			<a href="#" class="pop_cls" onclick="pop_close();return false;"><img src="img/btn_close.png" alt="창닫기" /></a>
+		</div>
+		
+	</div>
+</div>
+<!--//글림상세설명 팝업 20151113-->
+<!--로드시 적용된 커스터마이징 제품에 대한 품절 안내 20151113 -->
+<div class="layer_popup" id="soldout_layer">
+	<div class="popup">
+		<div class="pop_basic">
+			<h2 class="pop_tit">품절항목 안내(New Stephanie)</h2>
+			<div class="pop_info_table">
+				<span class="pop_desc">* 본 제품은 아래와 같이 품절된 옵션이 있습니다.</span>
+				<!--color-->
+				<table class="sol_tb">
+					<tr class="sol_th">
+						<th rowspan="10" class="section_tl">COLOR</th>
+						<th class="th_w">Back</th>
+						<th class="th_w">Side</th>
+						<th class="th_w">Handle</th>
+					</tr>
+					<tr>
+						<td><span class="soldout">Sold out</span></td>
+						<td><span>OK</span></td>
+						<td><span>OK</span></td>
+					</tr>
+				</table>
+				<!--//color-->
+				<!--image-->
+				<table class="sol_tb">
+					<tr class="sol_th">
+						<th rowspan="10" class="section_tl">IMAGE</th>
+						<th class="th_w">Back</th>
+						<th class="th_w">Side</th>
+					</tr>
+					<tr>
+						<td><span class="soldout">Sold out</span></td>
+						<td><span>OK</span></td>
+					</tr>
+				</table>
+				<!--//image-->
+				<!--pacth-->
+				<table class="sol_tb">
+					<tr class="sol_th">
+						<th rowspan="10" class="section_tl">PACTH</th>
+						<th class="th_w">wappen Name1</th>
+						<th class="th_w">wappen Name2</th>
+						<th class="th_w">wappen Name3</th>
+						<th class="th_w">wappen Name4</th>
+					</tr>
+					<tr>
+						<td><span class="soldout">Sold out</span></td>
+						<td><span>OK</span></td>
+						<td><span>OK</span></td>
+						<td><span>OK</span></td>
+					</tr>
+					<!--아래 리스트는 없을수도 있음 무조건 tr당 td는 4개씩 끊음-->
+					<tr>
+						<th class="th_w">wappen Name5</th>
+						<th class="th_w">wappen Name6</th>
+						<th class="th_w"> </th>
+						<th class="th_w"> </th>
+					</tr>
+					<tr>
+						<td><span class="soldout">Sold out</span></td>
+						<td><span>OK</span></td>
+						<td> </td>
+						<td> </td>
+					</tr>
+				</table>
+				<!--//pacth-->
+			</div>
+			<a href="#" class="pop_cls" onclick="pop_close();return false;"><img src="img/btn_close.png" alt="창닫기" /></a>
+		</div>
+	</div>
+</div>
+<!--//로드시 적용된 커스터마이징 제품에 대한 품절 안내 20151113 -->
+<!--가이드 팝업 20151113 추가-->
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".ui_guide_layer").css("height",$(document).height());	
+});
+</script>
+<div class="ui_guide_layer" id="ui_guide_layer">
+	<div class="guide_inbox">
+		<div class="guide_inbox_menu">
+			<a href="#" class="color_ui" id="color_ui" onclick="closeGuide(); $('.tab_color a').click();"><span>마음에 드는 컬러를 BASE / SIDE / FRONT / HANDLE에 선택해 보세요</span></a>
+			<a href="#" class="print_ui" id="print_ui" onclick="closeGuide(); $('.tab_print a').click();"><span>마음에 드는 이미지를 BODY / FRONT / SIDE에 선택해 보세요</span></a>
+			<a href="#" class="emblem_ui" id="emblem_ui" onclick="closeGuide(); $('.tab_emblem a').click();"><span>마음에 드는 EMBLEM을 선택해 보세요</span></a>
+			<a href="#" class="strap_ui" id="strap_ui" onclick="closeGuide(); $('.tab_strap a').click();"><span>STRAP 사이즈를 선택 할 수 있어요</span></a>
+			<a href="#" class="patch_ui" id="patch_ui" onclick="closeGuide(); $('.tab_patch a').click();"><span>다양한 PATCH를 자유롭게 위치할 수 있어요</span></a>
+		</div>		
+	</div>
+	<a href="#" class="guide_close" onclick="closeGuide_cookie();"><img src="img/bnt_uiguide_close.png" alt="그만보기"/></a>
+	<a href="#" class="guide_view" onclick="closeGuide(); return false;">
+		<img src="img/pic_guide_ui011.png" alt="다양한 뷰"/><!-- 스테파니 일때-->
+		<!--<img src="img/pic_guide_ui012.png" alt="다양한 뷰"/> 에이미 일때-->
+		<!--<img src="img/pic_guide_ui013.png" alt="다양한 뷰"/> 잭키 일때-->
+		<!--<img src="img/pic_guide_ui014.png" alt="다양한 뷰"/> 왈렛 일때-->
+	</a>
+	<a href="#" class="guide_price" onclick="closeGuide(); return false;"><img src="img/pic_guide_ui02.png" alt="옵션 가격"/></a>
+	<div class="guide_btn"><a href="#" onclick="closeGuide(); return false;"><img src="img/pic_guide_ui03.png" alt="버튼기능"/></a></div>
+	<a href="#" class="guide_buy" onclick="closeGuide(); return false;"><img src="img/pic_guide_ui04.png" alt="구매하기"/></a>
+</div>
+<!--//가이드 팝업 20151113 추가-->
+
+<!--//레이어팝업-->
+</body>
+</html>
