@@ -1,4 +1,7 @@
-@charset "utf-8";@import 'common.css';.navigation{width:100%;height:68px;line-height:68px;background:#fff;border-bottom:1px solid #d8d8d8;position:fixed;top:0;left:0;z-index:100;}
+@charset "utf-8";
+@import 'common.css';
+
+.navigation{width:100%;height:68px;line-height:68px;background:#fff;border-bottom:1px solid #d8d8d8;position:fixed;top:0;left:0;z-index:100;}
 .navigation .logo{display:block;position:absolute;top:22px;left:30px;width:95px;height:auto;}
 .navigation .logo img{display:block;width:100%;}
 .navigation ul.Lmenu{display:block;text-align:center;}
