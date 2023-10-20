@@ -17,9 +17,10 @@ html{overflow:overlay;}
 ::-webkit-scrollbar-track {background-color:transparent;}
 		
 html, body{overflow:hidden; width:100%; height:100%; margin:0; padding:0;}
-.babylon_sec{width:100%; height:100%; box-sizing:border-box; padding-right:180px; position:relative;}
+.babylon_sec{width:100%; height:100%; box-sizing:border-box; /*padding-right:180px;*/ position:relative;}
 .babylon_sec #renderCanvas{display:block; width:100%; height:100%; touch-action:none; background:#f8f8f8; }
-.babylon_sec .babylon_cont{display:block; position:absolute; width:180px; top:0; right:0; height:100%; box-sizing:border-box; padding:10px; overflow-y:auto; overflow-x:hidden;}
+.babylon_sec .babylon_cont{display:block; background:rgba(255,255,255,0.9); 
+	position:absolute; width:180px; top:0; right:0; height:100%; box-sizing:border-box; padding:10px; overflow-y:auto; overflow-x:hidden;}
 .babylon_sec .babylon_cont .btn_barmenu{display:block; position:fixed; width:10px; height:80px; top:50%; right:180px; margin:-40px 0 0 0; z-index:2;}
 .babylon_sec .babylon_cont .btn_barmenu button{width:100%; height:100%; background:#e1e1e1 url(""); border:none; border-radius:2px;}
 </style>
@@ -39,13 +40,13 @@ html, body{overflow:hidden; width:100%; height:100%; margin:0; padding:0;}
 						$(this).removeClass("on");
 						$(this).closest(".btn_barmenu").css("right","0");
 						$(".babylon_cont").css("right","-180px");
-						$(".babylon_sec").css("padding-right","0px");
+						//$(".babylon_sec").css("padding-right","0px");
 						
 					}else{
 						$(this).addClass("on");
 						$(this).closest(".btn_barmenu").css("right","180px");
 						$(".babylon_cont").css("right","0px");
-						$(".babylon_sec").css("padding-right","180px");
+						//$(".babylon_sec").css("padding-right","180px");
 					}
 				});
 			});
