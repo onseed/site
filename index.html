@@ -708,8 +708,66 @@ $.fn.uxIdMake = function(opt){
 		<!--#####################// Unique ID 생성 #####################-->
 		    
     </div>
+
+	<style>
+		/******************************************* uxerLayerPop *******************************************/
+		html.desktop.noscroll {overflow:hidden;}
+		html.desktop.noscroll .wrap{padding-right:17px;}
+		
+		.modal_cont {display:none; overflow:hidden; position:fixed; z-index:10001; margin:0; background:#fff; border-radius:10px; outline:none;}
+		.modal_cont > header {position:relative; width:100%; font-size:16px; padding:15px; text-align:left; border-bottom:1px solid #f8f8f8; box-sizing:border-box;}
+		.modal_cont > header h1{margin:0 !important; font-weight:bold; color:#333;}
+		.modal_cont .cont{padding:10px;}
+		.modal_cont .cont .btn_wrap{padding:10px; text-align:center;}
+		
+		.modal_cont .modal_footer{position:relative; height:60px; text-align:center; box-sizing:border-box; padding:10px; margin-top:0; border-top:1px solid #f8f8f8;}
+		.modal_cont .modal_footer:after{display:block; content:''; clear:both;}
+		.modal_cont.notice .modal_footer{border:none; height:45px;  text-align:left; padding:0 10px; }
+		
+		.modal_bg, .modal_bg2 {position:fixed; top:0; left:0; z-index:10000; width:100%; height:100%; background:#25252f; opacity:0.7}
+		
+		.modal_cont .cont > .ui_scrollview {height:500px;}
+		.mobile .modal_cont .cont > .ui_scrollview {height:auto;}
+		
+		/*.modal_cont .btn_close{position:absolute; top:10px; right:10px; height:30px; width:30px; min-width:30px; line-height:30px; text-align:center; padding:0;} 
+		.modal_cont .modal_footer .btn_close{top:0;}*/
+		.modal_cont .modal_footer button{margin:0 5px;}
+		
+		.modal_cont.notice .modal_footer{border:none; height:45px;  text-align:left; padding:0 10px;}
+		.modal_cont.notice .modal_footer button{margin:0px; float:right;}
+		
+		.width800{max-width:800px;}
+		.height300{height:300px;}
+
+		.bg_info_guide{background:url(https://www.toilnet.com/img/renew/bnr_news_hero_01.jpg)no-repeat 0 0; width:100%; min-width:300px; margin:0 auto; height:450px; background-size: cover; 
+			background-position: center;}
+		.bg_info_guide .txt{display:block; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5);}
+		.bg_info_guide .txt span{display:block; font-size: 26px; color:#fff;  font-weight: 100; width: 100%; padding-top:30%}
+		.bg_info_guide .txt span strong{font-size: 30px;}
+
+		</style>	
+
+	<section id="modal_a" class="modal_cont " role="dialog">
+		<div class="cont center">
+			<p class="cont_bg">
+				<div class="bg_info_guide">
+					<div class="txt"><span>현재 <strong>토일넷</strong>에서<br/> 사이트 리뉴얼 및 <strong>협업중</strong>입니다. <br/><br/>www.toilnet.com</span></div>
+				</div>
+			</p>
+			<div class="btn_wrap">
+				<!--<button type="button" data-dismiss="modal">바로가기</button>-->
+				<button type="button" id="outLink">바로가기</button>
+			</div>
+		</div>
+	</section>			
     
     <script>
+		$(document).ready(function(){
+			$('#modal_a').uxLayerPop({auto: true}); //자동열기 //자동닫기 popClose: true
+			$("#outLink").click(function(){
+				window.open("https://www.toilnet.com","_recept");
+			});
+		});		    
 		/* index메인은 nav파라미터 처리안함
     	if(window.location.href.indexOf("?nav") > -1){//모듈일때
     		
